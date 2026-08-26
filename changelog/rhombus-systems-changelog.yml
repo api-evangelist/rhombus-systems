@@ -1,0 +1,71 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.rhombus.community/changelog
+url: https://api-docs.rhombus.community/changelog
+machine_readable: https://api-docs.rhombus.community/changelog.md
+scheme: dated
+scheme_detail: >-
+  Entries are dated and titled, tagged New Features / Enhancements / Breaking Changes. There is
+  no semantic version number attached to an entry — the API itself is unversioned (see
+  lifecycle/rhombus-systems-lifecycle.yml).
+current_version: '1.0'
+most_recent_entry: '2026-08-03'
+entries:
+- date: '2026-08-03'
+  title: US & EU API regions documented
+  type: [enhancements]
+  breaking: false
+  highlights:
+  - Regional endpoint documentation for EU infrastructure
+  - CLI region support
+  - Multi-region API key guidance (keys are region-bound)
+- date: '2026-07-10'
+  title: 'EdgeCaster: sub-second latency, unlimited streams, and 24/7 self-healing'
+  type: [new-features, enhancements]
+  breaking: false
+  highlights:
+  - Sub-second latency optimization
+  - Removed the 10-stream cap
+  - Frame-level stall recovery and self-healing
+  - Health dashboard, webhook alerts, live logs
+  - Secure public access
+- date: '2026-07-08'
+  title: New implementation guides and a full accuracy pass
+  type: [new-features, enhancements]
+  breaking: false
+  highlights:
+  - Added Access Control, LPR/Vehicle, Faces/People Counting and Reports guides
+  - Corrected the OAuth flow documentation
+  - Corrected webhook payload structure
+  - Corrected the WebSocket event schema
+- date: '2026-06-29'
+  title: Partner API documentation
+  type: [new-features]
+  breaking: false
+  highlights:
+  - Guide for MSPs and resellers covering partner authentication and org scoping
+- date: '2026-04-20'
+  title: Developer tools and integrations
+  type: [new-features, enhancements]
+  breaking: false
+  highlights:
+  - Released the Rhombus CLI
+  - Released the React SDK
+  - Released the MCP server
+  - Released an n8n community node
+  - Added OAuth 2.0 support
+  - Added SAML and SCIM support
+  - Reorganized the API Reference
+- date: '2026-04-02'
+  title: Major API Expansion
+  type: [new-features]
+  breaking: false
+  highlights:
+  - Added 29 endpoints across the Relay and Access Control Integrations categories
+observations:
+- >-
+  No entry in the harvested window is marked as a breaking change, consistent with the published
+  unversioned policy that only breaking changes would force versioning.
+- >-
+  The changelog is where deprecations are announced; the API surface itself carries no
+  Deprecation/Sunset headers and no `deprecated: true` flags.

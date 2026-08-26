@@ -1,0 +1,177 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the Rhombus Public REST API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-08-26'
+  method: generated
+  source: openapi/rhombus-systems-openapi.json
+  note: >-
+    Non-destructive Overlay 1.0.0 capturing API Evangelist enrichment of the provider's spec.
+    The original document at openapi/rhombus-systems-openapi.json is never mutated. Every action
+    below adds information Rhombus documents in PROSE (auth.md, the rate-limits page,
+    VERSIONING.md) but does not express in the machine-readable contract.
+extends: ../openapi/rhombus-systems-openapi.json
+actions:
+- target: $.info
+  description: Record the license, contact and machine-readable companions absent from info.
+  update:
+    contact:
+      name: Rhombus developer support
+      email: developer@rhombussystems.com
+      url: https://api-docs.rhombus.community/
+    x-documentation-url: https://api-docs.rhombus.community/
+    x-llms-txt: https://www.rhombus.com/api/llms.txt
+    x-auth-guide: https://www.rhombus.com/auth.md
+    x-api-catalog: https://www.rhombus.com/.well-known/api-catalog
+    x-agent-card: https://www.rhombus.com/.well-known/agent-card.json
+    x-changelog: https://api-docs.rhombus.community/changelog
+    x-status-page: https://status.rhombus.com/
+- target: $.servers
+  description: >-
+    Add the EU regional server. The published spec declares only the US production host, but
+    Rhombus documents a separate EU region at api2.eu.rhombussystems.com with region-bound API
+    keys (https://api-docs.rhombus.community/api-regions).
+  update:
+  - url: https://api2.eu.rhombussystems.com
+    description: Production Server (EU region — organizations provisioned in the EU)
+- target: $.components.securitySchemes
+  description: >-
+    Add the OAuth 2.0 authorization-code-with-PKCE scheme. Rhombus fully documents this flow in
+    auth.md and advertises it on its own agent card, but the published OpenAPI declares only the
+    ApiKeyAuth scheme.
+  update:
+    OAuth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authorization code with PKCE (S256). Send the resulting token with headers
+        x-auth-scheme: api-oauth-token and x-auth-access-token. Discovery:
+        https://api2.rhombussystems.com/.well-known/oauth-protected-resource (RFC 9728) then
+        https://auth.rhombussystems.com/oauth/.well-known/oauth-authorization-server (RFC 8414).
+      flows:
+        authorizationCode:
+          authorizationUrl: https://console.rhombus.com/oauth/authorize
+          tokenUrl: https://auth.rhombussystems.com/oauth/token
+          refreshUrl: https://auth.rhombussystems.com/oauth/token
+          scopes: {}
+    AuthSchemeHeader:
+      type: apiKey
+      in: header
+      name: x-auth-scheme
+      description: >-
+        Required companion to every credential. api-token for standard API key auth,
+        partner-api-token for partner API auth, api-oauth-token for an OAuth access token.
+- target: $.components.responses
+  description: >-
+    Add the error responses. The published spec declares 948 x 200 and 4 x default and NO 4xx or
+    5xx at all, so a generated client has no error model. These shapes are transcribed verbatim
+    from the provider's own auth.md error table.
+  update:
+    Unauthorized:
+      description: No credential, or the request matched no auth scheme.
+      headers:
+        WWW-Authenticate:
+          description: Bearer challenge carrying the RFC 9728 resource_metadata URL.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              authenticationFailed:
+                type: boolean
+          example:
+            authenticationFailed: true
+    Forbidden:
+      description: Credential present but invalid, expired, or lacking permission.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              error:
+                type: string
+              timestamp:
+                type: integer
+                format: int64
+              msg:
+                type: string
+          example:
+            status: 403
+            error: Forbidden
+            msg: Access Denied
+    TooManyRequests:
+      description: >-
+        The organization's token bucket is exhausted. Rate limiting is per-organization, shared
+        across every API key and OAuth token in the org.
+      headers:
+        Retry-After:
+          description: >-
+            Seconds to wait before retrying, computed from the org's refill rate. Always at least
+            1 second. This is the ONLY rate-limit header Rhombus returns — there are no
+            X-RateLimit-* or RateLimit-* quota headers.
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        text/plain:
+          schema:
+            type: string
+          example: Too many api requests. Enhance your calm.
+- target: $.tags
+  description: >-
+    Declare the tag list. All 952 operations carry tags, but the root tags[] array is EMPTY, so
+    tooling that renders navigation from tags[] sees nothing. These are the ten largest of the 64
+    tags actually used.
+  update:
+  - name: Access Control Integrations Webservice
+    description: Third-party access-control platform integrations (101 operations).
+  - name: Access Control Webservice
+    description: Credentials, grants, revocations, door unlock and lockdown (65 operations).
+  - name: Component Webservice
+    description: Logical components — doors, elevators, readers — and their events (62 operations).
+  - name: Camera Webservice
+    description: Camera state, configuration, footage, seekpoints and shared streams (61 operations).
+  - name: Policy Webservice
+    description: Policies, rules and policy alerts (54 operations).
+  - name: Org Webservice
+    description: Organization settings, SAML, SCIM and notification templates (47 operations).
+  - name: Event Webservice
+    description: Event and motion-grid search (42 operations).
+  - name: Incident Management Integrations Webservice
+    description: Incident-management platform integrations (34 operations).
+  - name: Integrations Webservice
+    description: General third-party integration management (32 operations).
+  - name: Report Webservice
+    description: Counting, occupancy and time-series analytics reporting (30 operations).
+- target: $
+  description: Record cross-cutting runtime semantics Rhombus documents only in prose.
+  update:
+    x-api-evangelist:
+      http_method_convention: >-
+        EVERY operation is POST, including pure reads. HTTP method carries no safety or
+        idempotency semantics in this API.
+      idempotency:
+        supported: false
+        header: null
+      pagination:
+        style: opaque-cursor
+        request_field: lastEvaluatedKey
+        secondary: [limit, pageToken, pageSize]
+        time_window: [createdAfterMs, createdBeforeMs]
+        uniform: false
+      versioning:
+        scheme: unversioned
+        mechanism: parallel V2 operationIds, no version selector
+        policy: https://api-docs.rhombus.community/VERSIONING.md
+      deprecation:
+        headers: false
+        minimum_notice: 6 months
+        naming_convention: operationIds suffixed Dep
+      event_surfaces:
+        websocket: https://api-docs.rhombus.community/rhombus_asyncapi.json
+        webhooks: https://api-docs.rhombus.community/webhooks
+      partner_scoping_header: x-auth-org

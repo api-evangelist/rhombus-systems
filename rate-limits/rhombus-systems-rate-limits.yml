@@ -1,0 +1,50 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.rhombus.community/rate-limits
+limit_count: 1
+algorithm: token-bucket
+rate_limits:
+- name: Organization API request rate
+  scope: per-organization
+  scope_detail: >-
+    Shared across every API key AND every OAuth access token in the organization — one noisy
+    integration consumes the same bucket as every other client in the org.
+  window: continuous-refill
+  limit: null
+  burst: null
+  burst_rule: roughly 10x the sustained refill rate by default
+  limit_published: false
+  note: >-
+    Rhombus documents the MECHANISM but not the NUMBER. It states a sustained refill rate in
+    requests per second plus a burst capacity of roughly 10x that rate, and says "default rates
+    apply to all organizations", but publishes no actual requests-per-second figure. limit is
+    therefore recorded as null: a consumer cannot compute their budget from the docs and must
+    contact support to learn or raise it.
+  applies_to:
+  - https://api2.rhombussystems.com/api
+response:
+  status_on_exhaustion: 429
+  body: 'Too many api requests. Enhance your calm.'
+  headers:
+  - name: Retry-After
+    description: >-
+      Seconds to wait before retrying. Computed from the organization's refill rate; always at
+      least 1 second.
+    always_present_on_429: true
+  quota_headers_published: false
+  quota_headers_note: >-
+    No X-RateLimit-Limit / X-RateLimit-Remaining / X-RateLimit-Reset and no RFC 9239-style
+    RateLimit-* headers are returned. There is no pre-exhaustion signal at all — an agent cannot
+    observe how much budget remains and can only react to a 429 after the fact. Retry-After is
+    the entire runtime rate-limit contract.
+increase_path:
+  method: contact support
+  self_serve: false
+guidance_published:
+- exponential backoff with jitter
+- honor Retry-After
+websocket:
+  note: >-
+    The STOMP WebSocket surface is the documented alternative to polling for real-time state.
+    Rhombus positions it explicitly as the way to avoid consuming request budget.
+  spec: asyncapi/rhombus-systems-console-websocket-asyncapi.json

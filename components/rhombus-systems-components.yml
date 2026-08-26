@@ -1,0 +1,46 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.rhombus.community/implementations/react-sdk.md
+note: >-
+  Rhombus ships client-side embeddable video components, distinct from an API client SDK. The
+  package is a React component library for rendering Rhombus camera and audio streams inside a
+  customer's own application.
+families:
+- name: React SDK
+  package: "@rhombussystems/react"
+  registry: npm
+  version: 2.3.1
+  published: '2026-08-12'
+  repository: https://github.com/RhombusSystems/rhombus-react-sdk
+  license: MIT
+  documentation: https://api-docs.rhombus.community/implementations/react-sdk
+  kind: react-component-library
+  capabilities:
+  - Live camera video playback
+  - Recorded (VOD) video playback
+  - DASH buffered playback
+  - Real-time H.264 WebSocket player via WebCodecs
+  - Audio playback
+  - Two-way talkback
+  - LAN realtime AI detection bounding-box overlay
+loader_libraries: []
+hosted_surfaces:
+- name: Shared live video stream
+  kind: hosted-link
+  operations:
+  - createCameraSharedLiveVideoStream
+  - deleteSharedLiveVideoStream
+  note: >-
+    The API can mint a shareable public playback URL for a live stream, and revoke it. This is a
+    hosted embed surface rather than a client component.
+- name: Shared video wall
+  kind: hosted-link
+  operations:
+  - createSharedVideoWall
+  - deleteSharedVideoWall
+related:
+- name: Custom video player guide
+  url: https://api-docs.rhombus.community/implementations/video-player
+- name: player-example
+  url: https://github.com/RhombusSystems/player-example
+  note: Lightweight standalone player example driven by an API key.

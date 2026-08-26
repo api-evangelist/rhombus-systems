@@ -1,0 +1,211 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  derived from openapi/rhombus-systems-openapi.json and
+  asyncapi/rhombus-systems-console-websocket-asyncapi.json, plus
+  https://www.rhombus.com/auth.md, https://www.rhombus.com/trust/ and the probed
+  /.well-known surface
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    openapi/rhombus-systems-openapi.json declares "openapi": "3.0.1" with 952 paths and 4,038
+    component schemas. Served at https://api2.rhombussystems.com/api/openapi/public.json
+    (HTTP 200, application/json).
+- id: asyncapi-3.0
+  conforms: true
+  evidence: >-
+    asyncapi/rhombus-systems-console-websocket-asyncapi.json declares "asyncapi": "3.0.0" with
+    one channel (orgChangeStream), one operation (receiveOrgChanges) and modeled messages
+    (PolicyAlertChangeEvent, ChangeEvent). Served at
+    https://api-docs.rhombus.community/rhombus_asyncapi.json (HTTP 200).
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Authorization code flow with PKCE S256. Authorization endpoint
+    https://console.rhombus.com/oauth/authorize, token endpoint
+    https://auth.rhombussystems.com/oauth/token, revocation endpoint /oauth/token/revoke.
+    Grants: authorization_code, refresh_token.
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: >-
+    https://auth.rhombussystems.com/oauth/.well-known/oauth-authorization-server returned HTTP
+    200 with issuer, authorization_endpoint, token_endpoint, revocation_endpoint,
+    registration_endpoint, code_challenge_methods_supported [S256], grant_types_supported and
+    token_endpoint_auth_methods_supported.
+  deviation: >-
+    Served at a path-prefixed location (/oauth/.well-known/...) rather than the RFC 8414 root of
+    the issuer. www.rhombus.com/.well-known/oauth-authorization-server 301-redirects to it.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: >-
+    https://api2.rhombussystems.com/.well-known/oauth-protected-resource returned HTTP 200
+    anonymously with resource, authorization_servers, bearer_methods_supported, resource_name and
+    resource_documentation — the only path on that host that is not 401-gated.
+- id: rfc9728-challenge
+  name: WWW-Authenticate resource_metadata challenge
+  conforms: true
+  evidence: >-
+    Unauthenticated requests return 401 with
+    WWW-Authenticate: Bearer resource_metadata="https://api2.rhombussystems.com/.well-known/oauth-protected-resource",
+    making the full discovery chain reachable from one anonymous probe.
+- id: rfc9727
+  name: API Catalog (/.well-known/api-catalog)
+  conforms: true
+  evidence: >-
+    https://www.rhombus.com/.well-known/api-catalog returned HTTP 200 as
+    application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727", carrying
+    service-desc (the OpenAPI), service-doc (the developer docs) and service-meta (the RFC 9728
+    document). Saved to well-known/rhombus-systems-api-catalog.json.
+- id: rfc9116
+  name: security.txt
+  conforms: true
+  evidence: >-
+    https://www.rhombus.com/.well-known/security.txt returned HTTP 200 with Contact, Expires
+    (2027-06-10), Preferred-Languages, Canonical and Policy fields.
+- id: a2a-1.0.0
+  name: A2A Agent Card
+  conforms: true
+  grade: conformant
+  evidence: >-
+    https://www.rhombus.com/.well-known/agent-card.json returned HTTP 200 with protocolVersion
+    0.3.0, capabilities as an object, skills as an array, plus preferredTransport and default
+    input/output modes. Also served at the legacy /.well-known/agent.json path. See
+    a2a/rhombus-systems-a2a.yml.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    A remote documentation MCP server at https://api-docs.rhombus.community/mcp answered an
+    anonymous tools/list with HTTP 200 and 3 tools. A local-stdio action server is published as
+    npm rhombus-node-mcp with an MCP server.json card
+    (schema 2025-07-09) at https://www.rhombus.com/.well-known/mcp/server-card.json.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    A four-document llms.txt family — https://www.rhombus.com/llms.txt (site),
+    https://www.rhombus.com/api/llms.txt (API-scoped),
+    https://api-docs.rhombus.community/llms.txt (docs index), plus /auth.md and /pricing.md as
+    machine-readable companions. All HTTP 200.
+- id: stomp-1.2
+  name: STOMP 1.2 messaging protocol
+  conforms: true
+  evidence: >-
+    The AsyncAPI document specifies a STOMP 1.2 session framed on wss, with CONNECT
+    (accept-version:1.2), SUBSCRIBE to /topic/change/{orgUuid}, MESSAGE frames and 10s
+    heartbeats. Reference page: https://api-docs.rhombus.community/websocket/stomp-protocol
+- id: saml2
+  name: SAML 2.0 single sign-on
+  conforms: true
+  evidence: >-
+    getSAMLSettings, getSAMLSettingsV2, updateSAMLSettings, updateSAMLSettingsV2 in the OpenAPI,
+    plus https://api-docs.rhombus.community/implementations/saml-sso-provisioning documenting
+    Okta, Azure AD, Google Workspace and OneLogin.
+- id: rfc9457
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence: >-
+    "problem+json" appears zero times in the OpenAPI document. Errors are vendor JSON with two
+    different envelope shapes across 401 and 403. See errors/rhombus-systems-problem-types.yml.
+- id: rfc8594
+  name: Sunset header
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation header is documented, and zero operations carry `deprecated: true`
+    — including the three whose operationId ends in "Dep".
+- id: openidconnect
+  conforms: false
+  evidence: >-
+    https://www.rhombus.com/.well-known/openid-configuration returned 404 and no
+    openIdConnect securityScheme appears in the OpenAPI. OAuth 2.0 is implemented without an
+    OIDC discovery document.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or client-supplied request key exists. Only two Honeywell OnGuard
+    integration operations are described as naturally idempotent. See
+    conventions/rhombus-systems-conventions.yml.
+domain_standards:
+- id: scim2
+  name: SCIM 2.0 user provisioning (RFC 7643 / RFC 7644)
+  market: identity and access management
+  conforms: partial
+  role: consumer
+  evidence: >-
+    The contract exposes SCIM provisioning as a configurable org capability —
+    setupSCIMAccessForOrg, findSCIMSettingsForOrg, updateSCIMSettingsForOrg,
+    getScimDisplayInfo and revokeSCIMAccessForOrg (/api/org/*). Documented at
+    https://api-docs.rhombus.community/implementations/saml-sso-provisioning.
+  deviation: >-
+    Rhombus is the SCIM SERVICE PROVIDER for user provisioning but does not publish the SCIM
+    resource surface in this OpenAPI: no /scim/v2/Users or /Groups paths and no
+    urn:ietf:params:scim:schemas:* URNs appear in the document. Only the enablement and settings
+    endpoints are contracted. Graded partial for that reason.
+- id: osdp
+  name: OSDP (SIA Open Supervised Device Protocol)
+  market: physical access control
+  conforms: true
+  evidence: >-
+    First-class reader type in the contract: createOsdpDoorReader, createRhombusOsdpDoorReader,
+    updateOsdpDoorReader, updateRhombusOsdpDoorReader (/api/accesscontrol/*). OSDP is the SIA
+    standard that replaced Wiegand wiring for reader-to-controller communication.
+- id: wiegand-card-formats
+  name: Wiegand / HID card data formats
+  market: physical access control credentials
+  conforms: true
+  evidence: >-
+    The credential surface implements named industry card formats as distinct operations rather
+    than as opaque blobs — createWiegandH10301Credential (HID 26-bit H10301),
+    createWiegandH10302Credential, createWiegandH10304Credential,
+    createWiegandD10202Credential, create35BitCorp1000StdCredential and
+    create48BitCorp1000StdCredential (HID Corporate 1000), plus
+    createWiegand64BitRawCredential, createStandardCsnCredential and
+    createRhombusSecureCsnCredential. A badge population already encoded in these formats
+    migrates with no bespoke translation layer.
+- id: onvif
+  name: ONVIF
+  market: IP video surveillance interoperability
+  conforms: partial
+  role: consumer
+  evidence: >-
+    addThirdPartyCameraViaOnvif (/api/relay/*) lets Rhombus ingest third-party ONVIF cameras.
+  deviation: >-
+    Rhombus CONSUMES ONVIF to onboard other vendors' cameras; it does not expose its own cameras
+    as ONVIF services. The reverse direction is served by the separate EdgeCaster gateway, which
+    re-broadcasts Rhombus streams as RTSP for legacy VMS/NVR systems
+    (https://api-docs.rhombus.community/implementations/edgecaster-rtsp).
+- id: rtsp
+  name: RTSP
+  market: video streaming to legacy VMS/NVR
+  conforms: true
+  evidence: >-
+    getRtspEndpoints and findDiscoveriesWithUnassignedRtspEndpoints in the contract; EdgeCaster
+    re-broadcasts Rhombus camera streams as sub-second-latency RTSP.
+- id: hls-dash
+  name: HLS / MPEG-DASH
+  market: video delivery
+  conforms: true
+  evidence: >-
+    getCameraMediaUris returns HLS stream URIs; the React SDK documents DASH buffered playback
+    and audio retrieval uses DASH MPD manifests.
+compliance_certifications:
+  source: https://www.rhombus.com/trust/
+  detail: security/rhombus-systems-trust-center.yml
+  named:
+  - SOC 2
+  - GDPR
+  - HIPAA
+  - PCI
+  - BIPA
+  - PIPEDA
+  - CMMC
+  - NIST
+  - CJIS
+  - NDAA
+  - TAA
+  caveat: >-
+    These are claims on the provider's own trust page. No report, attestation letter, audit
+    period, or Type designation (SOC 2 Type I vs Type II) is published, and there is no trust
+    portal or report-request flow. Recorded as published claims, not as verified attestations.

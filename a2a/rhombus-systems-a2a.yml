@@ -1,0 +1,68 @@
+generated: '2026-08-26'
+method: probed
+source: https://www.rhombus.com/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: www.rhombus.com
+  note: >-
+    Rhombus serves the card at BOTH the canonical A2A 1.0.0 path and the pre-0.3 legacy
+    /.well-known/agent.json path (also HTTP 200, saved as
+    well-known/rhombus-systems-agent-legacy.json). The canonical document is the one graded here.
+x-evidence:
+  fetched: '2026-08-26'
+  url: https://www.rhombus.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 2751
+  host_is_catch_all: false
+  catch_all_control: >-
+    https://www.rhombus.com/.well-known/openid-configuration returned 404, so this host does not
+    answer 200 for arbitrary /.well-known/* paths.
+conformance:
+  spec: A2A 1.0.0
+  grade: conformant
+  protocol_version: 0.3.0
+  preferred_transport: JSONRPC
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  optional_fields:
+    preferred_transport: true
+    default_input_modes: true
+    default_output_modes: true
+  deviations: []
+card:
+  name: Rhombus
+  version: 1.0.0
+  url: https://api2.rhombussystems.com/api
+  documentation_url: https://api-docs.rhombus.community/
+  provider_organization: Rhombus
+  provider_url: https://www.rhombus.com
+  capabilities:
+    streaming: false
+    push_notifications: true
+  security_schemes:
+  - apiKey
+  - oauth2
+  skills:
+  - id: camera-operations
+    name: Camera operations
+  - id: access-control
+    name: Access control
+  - id: sensors
+    name: Sensors and environment
+  - id: alerts-events
+    name: Alerts and events
+  - id: ai-video-search
+    name: AI video search
+notes:
+- >-
+  The card's declared url (https://api2.rhombussystems.com/api) is the REST API base, not a
+  JSON-RPC A2A endpoint, and preferredTransport is JSONRPC. Rhombus's own description says the
+  card fronts "the Rhombus public REST API and MCP server" — treat the card as a discovery
+  document for those two surfaces rather than as an A2A message endpoint.
+- >-
+  The card's oauth2 scheme declares an empty scopes object; Rhombus publishes no OAuth scope
+  vocabulary (see authentication/rhombus-systems-authentication.yml).

@@ -1,0 +1,572 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Rhombus Console WebSocket API",
+    "version": "1.0.0",
+    "description": "Real-time change events from the Rhombus platform, delivered over a **STOMP 1.2** session framed on a secure WebSocket.\n\nClients open a WebSocket to the Rhombus WebSocket service, complete a STOMP handshake, then `SUBSCRIBE` to their organization's change destination `/topic/change/{orgUuid}`. The server pushes a `MESSAGE` frame for every entity change in the org \u2014 policy alerts, device state changes, sensor readings, door events, and more. Policy alerts are the most common payload and are fully modeled below.\n\n### Connection lifecycle\nSTOMP frames are sent as WebSocket text messages. Each frame is `COMMAND\\n` + `header:value\\n` lines + a blank line + body, terminated by a NULL (`\\u0000`) byte.\n\n1. **Open WebSocket** to the server URL with the `x-auth-apikey` header and `x-auth-scheme` query parameter.\n2. **CONNECT** \u2014 send `accept-version:1.2` and `heart-beat:10000,10000`.\n3. **CONNECTED** \u2014 server confirms the session.\n4. **SUBSCRIBE** \u2014 send `id:sub-0` and `destination:/topic/change/{orgUuid}`.\n5. **MESSAGE** \u2014 server streams change events as STOMP `MESSAGE` frames whose body is the JSON documented here.\n6. **Heartbeats** \u2014 client sends a bare newline (`\\n`) every 10s to keep the connection alive.\n7. **DISCONNECT** \u2014 send on clean shutdown.\n\n> The `x-auth-apikey` must be a **token-based** API key. Certificate (mTLS) keys are not supported by the WebSocket service.",
+    "contact": {
+      "name": "Rhombus Developer Support",
+      "email": "developer@rhombussystems.com",
+      "url": "https://www.rhombus.com"
+    },
+    "license": {
+      "name": "Rhombus API Terms",
+      "url": "https://www.rhombus.com"
+    }
+  },
+  "servers": {
+    "production": {
+      "host": "ws.rhombussystems.com:8443",
+      "pathname": "/websocket",
+      "protocol": "wss",
+      "description": "Production STOMP-over-WebSocket endpoint (US region).",
+      "security": [
+        {
+          "$ref": "#/components/securitySchemes/apiKey"
+        }
+      ]
+    },
+    "production-eu": {
+      "host": "ws.eu.rhombussystems.com:8443",
+      "pathname": "/websocket",
+      "protocol": "wss",
+      "description": "Production STOMP-over-WebSocket endpoint (EU region). Used by organizations provisioned in the EU.",
+      "security": [
+        {
+          "$ref": "#/components/securitySchemes/apiKey"
+        }
+      ]
+    },
+    "staging": {
+      "host": "ws.itg.rhombussystems.com:8443",
+      "pathname": "/websocket",
+      "protocol": "wss",
+      "description": "ITG / staging endpoint. Used when the REST endpoint is on an 'itg' host.",
+      "security": [
+        {
+          "$ref": "#/components/securitySchemes/apiKey"
+        }
+      ]
+    }
+  },
+  "channels": {
+    "orgChangeStream": {
+      "address": "/topic/change/{orgUuid}",
+      "title": "Organization Change Stream",
+      "description": "STOMP destination that emits a `MESSAGE` frame for every entity change in the organization. Subscribe with a STOMP `SUBSCRIBE` frame (`destination:/topic/change/{orgUuid}`). Resolve `orgUuid` from `POST /api/org/getOrgV2` (`org.uuid`).",
+      "servers": [
+        {
+          "$ref": "#/servers/production"
+        },
+        {
+          "$ref": "#/servers/production-eu"
+        },
+        {
+          "$ref": "#/servers/staging"
+        }
+      ],
+      "parameters": {
+        "orgUuid": {
+          "$ref": "#/components/parameters/orgUuid"
+        }
+      },
+      "messages": {
+        "policyAlertChange": {
+          "$ref": "#/components/messages/PolicyAlertChangeEvent"
+        },
+        "changeEvent": {
+          "$ref": "#/components/messages/ChangeEvent"
+        }
+      },
+      "bindings": {
+        "ws": {
+          "bindingVersion": "0.1.0",
+          "headers": {
+            "type": "object",
+            "required": [
+              "x-auth-apikey"
+            ],
+            "properties": {
+              "x-auth-apikey": {
+                "type": "string",
+                "description": "Token-based Rhombus API key. Cert/mTLS keys are not accepted."
+              }
+            }
+          },
+          "query": {
+            "type": "object",
+            "required": [
+              "x-auth-scheme"
+            ],
+            "properties": {
+              "x-auth-scheme": {
+                "type": "string",
+                "enum": [
+                  "api-token",
+                  "partner-api-token"
+                ],
+                "description": "Auth scheme the server's security filter matches on. Use 'partner-api-token' for partner accounts."
+              },
+              "x-auth-org": {
+                "type": "string",
+                "description": "Client org name or UUID. Partner accounts only."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "operations": {
+    "receiveOrgChanges": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/orgChangeStream"
+      },
+      "title": "Subscribe to organization change events",
+      "summary": "Stream real-time policy alerts and entity changes for an organization.",
+      "description": "After the STOMP `CONNECT`/`CONNECTED` handshake, send a `SUBSCRIBE` frame for `/topic/change/{orgUuid}`. The server then pushes change events as STOMP `MESSAGE` frames until you `DISCONNECT` or the socket closes. Filter client-side on the `entity` field (e.g. `POLICY_ALERT`).",
+      "messages": [
+        {
+          "$ref": "#/channels/orgChangeStream/messages/policyAlertChange"
+        },
+        {
+          "$ref": "#/channels/orgChangeStream/messages/changeEvent"
+        }
+      ]
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "httpApiKey",
+        "in": "header",
+        "name": "x-auth-apikey",
+        "description": "Token-based Rhombus API key sent as a WebSocket request header. Pair it with the `x-auth-scheme` query parameter on the server URL."
+      }
+    },
+    "parameters": {
+      "orgUuid": {
+        "description": "Organization UUID. Resolve from POST /api/org/getOrgV2 (org.uuid)."
+      }
+    },
+    "messages": {
+      "PolicyAlertChangeEvent": {
+        "name": "PolicyAlertChangeEvent",
+        "title": "Policy Alert Change Event",
+        "summary": "A policy alert was created, updated, or cleared.",
+        "contentType": "application/json",
+        "description": "Emitted when a `POLICY_ALERT` entity changes. A `type` of `DELETE` means the alert was cleared/dismissed. The `update` object carries the alert; for live events it is usually complete, but when sparse you can fetch full detail from POST /api/event/getPolicyAlertDetails.",
+        "payload": {
+          "$ref": "#/components/schemas/PolicyAlertChangePayload"
+        },
+        "examples": [
+          {
+            "name": "humanDetected",
+            "summary": "Human + unidentified face detected at a camera",
+            "payload": {
+              "entity": "POLICY_ALERT",
+              "entityUuid": "a1b2c3d4-e5f6-4789-9abc-def012345678",
+              "type": "UPDATE",
+              "deviceUuid": "cam-9f8e7d6c5b4a39281706",
+              "update": {
+                "uuid": "a1b2c3d4-e5f6-4789-9abc-def012345678",
+                "orgUuid": "11111111-2222-3333-4444-555555555555",
+                "deviceUuid": "cam-9f8e7d6c5b4a39281706",
+                "locationUuid": "66666666-7777-8888-9999-000000000000",
+                "policyUuid": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "type": "POLICY_ALERT_V2",
+                "timestampMs": 1717873200000,
+                "durationSec": 8,
+                "policyAlertTriggers": [
+                  "MOTION_HUMAN",
+                  "FACE_UNIDENTIFIED"
+                ],
+                "textDescription": "Human detected at Front Lobby",
+                "finalized": true,
+                "thumbnailLocationV2": "https://media.rhombussystems.com/.../thumb.jpg"
+              }
+            }
+          },
+          {
+            "name": "alertCleared",
+            "summary": "Alert dismissed / cleared",
+            "payload": {
+              "entity": "POLICY_ALERT",
+              "entityUuid": "a1b2c3d4-e5f6-4789-9abc-def012345678",
+              "type": "DELETE",
+              "deviceUuid": "cam-9f8e7d6c5b4a39281706",
+              "update": {
+                "uuid": "a1b2c3d4-e5f6-4789-9abc-def012345678"
+              }
+            }
+          }
+        ]
+      },
+      "ChangeEvent": {
+        "name": "ChangeEvent",
+        "title": "Generic Change Event",
+        "summary": "Any non-policy-alert entity change (devices, sensors, doors, etc.).",
+        "contentType": "application/json",
+        "description": "The org change stream emits events for many entity types. This generic envelope covers everything that is not a `POLICY_ALERT`. The shape of `update` varies by entity type.",
+        "payload": {
+          "$ref": "#/components/schemas/ChangeEventPayload"
+        },
+        "examples": [
+          {
+            "name": "sensorChange",
+            "summary": "A climate sensor reading update",
+            "payload": {
+              "entity": "CLIMATE_SENSOR",
+              "entityUuid": "sensor-1a2b3c4d5e6f",
+              "type": "UPDATE",
+              "deviceUuid": "sensor-1a2b3c4d5e6f",
+              "update": {
+                "uuid": "sensor-1a2b3c4d5e6f"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "schemas": {
+      "ChangeType": {
+        "type": "string",
+        "title": "Change Type",
+        "description": "The kind of change. DELETE on a POLICY_ALERT means the alert was cleared.",
+        "enum": [
+          "CREATE",
+          "UPDATE",
+          "DELETE"
+        ]
+      },
+      "ChangeEventPayload": {
+        "type": "object",
+        "title": "Change Event Envelope",
+        "description": "Common envelope for all change-stream messages.",
+        "required": [
+          "entity",
+          "type"
+        ],
+        "properties": {
+          "entity": {
+            "type": "string",
+            "description": "Entity type that changed, e.g. POLICY_ALERT, CAMERA, CLIMATE_SENSOR, DOOR. Filter on this client-side.",
+            "examples": [
+              "POLICY_ALERT"
+            ]
+          },
+          "entityUuid": {
+            "type": "string",
+            "description": "UUID of the changed entity. May also appear as update.uuid."
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChangeType"
+          },
+          "deviceUuid": {
+            "type": "string",
+            "description": "UUID of the associated device, when the entity is device-scoped."
+          },
+          "update": {
+            "type": "object",
+            "description": "Entity-specific payload. Shape depends on `entity`.",
+            "additionalProperties": true
+          }
+        }
+      },
+      "PolicyAlertChangePayload": {
+        "type": "object",
+        "title": "Policy Alert Change Envelope",
+        "required": [
+          "entity",
+          "type"
+        ],
+        "properties": {
+          "entity": {
+            "type": "string",
+            "const": "POLICY_ALERT"
+          },
+          "entityUuid": {
+            "type": "string",
+            "description": "Policy alert UUID."
+          },
+          "type": {
+            "$ref": "#/components/schemas/ChangeType"
+          },
+          "deviceUuid": {
+            "type": "string",
+            "description": "UUID of the device that produced the alert."
+          },
+          "update": {
+            "$ref": "#/components/schemas/PolicyAlert"
+          }
+        }
+      },
+      "PolicyAlert": {
+        "type": "object",
+        "title": "Policy Alert",
+        "description": "Alert object carried in update. Mirrors BasePolicyAlertType from the REST API.",
+        "properties": {
+          "uuid": {
+            "type": "string"
+          },
+          "orgUuid": {
+            "type": "string"
+          },
+          "deviceUuid": {
+            "type": "string"
+          },
+          "locationUuid": {
+            "type": "string"
+          },
+          "policyUuid": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PolicyAlertEnumType"
+          },
+          "timestampMs": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Alert start time, epoch milliseconds."
+          },
+          "durationSec": {
+            "type": "integer",
+            "description": "Alert duration in seconds."
+          },
+          "policyAlertTriggers": {
+            "type": "array",
+            "description": "Analytics triggers that fired the alert.",
+            "items": {
+              "$ref": "#/components/schemas/ActivityEnum"
+            }
+          },
+          "textDescription": {
+            "type": "string",
+            "description": "Human-readable summary of the alert."
+          },
+          "thumbnailLocationV2": {
+            "type": "string",
+            "description": "URL to the alert thumbnail."
+          },
+          "finalized": {
+            "type": "boolean"
+          },
+          "saved": {
+            "type": "boolean"
+          },
+          "shared": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "notificationSent": {
+            "type": "boolean"
+          },
+          "alertMonitoringVerified": {
+            "type": "boolean"
+          },
+          "alertMonitoringThreatCaseUuid": {
+            "type": "string"
+          }
+        }
+      },
+      "PolicyAlertEnumType": {
+        "type": "string",
+        "title": "Policy Alert Type",
+        "enum": [
+          "POLICY_ALERT_V2",
+          "ACCESS_CONTROLLED_DOOR_POLICY_ALERT"
+        ]
+      },
+      "ActivityEnum": {
+        "type": "string",
+        "title": "Activity / Trigger",
+        "description": "Analytics activity that can trigger a policy alert.",
+        "enum": [
+          "SOUND_LOUD",
+          "SOUND_GUN_SHOT",
+          "TAMPER",
+          "VISUAL_TAMPER",
+          "MOTION_TAMPER",
+          "MOTION",
+          "MOTION_HUMAN",
+          "MOTION_CAR",
+          "MOTION_ANIMAL",
+          "FACE",
+          "FACE_IDENTIFIED",
+          "FACE_UNIDENTIFIED",
+          "FACE_BLACKLISTED",
+          "FACE_ALERT",
+          "POSE_ANOMALOUS",
+          "POSE_FALL",
+          "LICENSEPLATE",
+          "LICENSEPLATE_IDENTIFIED",
+          "LICENSEPLATE_UNIDENTIFIED",
+          "LICENSEPLATE_ALERT",
+          "LICENSEPLATE_BLACKLISTED",
+          "LICENSEPLATE_TRUSTED",
+          "PEOPLECOUNT_HIGH",
+          "PEOPLECOUNT_HIGH_RESET",
+          "PEOPLECOUNT_LOW",
+          "PEOPLECOUNT_LOW_RESET",
+          "HUMAN_ENTER",
+          "HUMAN_EXIT",
+          "CAR_ENTER",
+          "CAR_EXIT",
+          "TEMPERATURE_EXCEEDED_HIGH",
+          "TEMPERATURE_EXCEEDED_LOW",
+          "HUMIDITY_EXCEEDED_HIGH",
+          "HUMIDITY_EXCEEDED_LOW",
+          "PM25_EXCEEDED_HIGH",
+          "TVOC_EXCEEDED_HIGH",
+          "ETOH_EXCEEDED_HIGH",
+          "IAQ_EXCEEDED_HIGH",
+          "CO2_EXCEEDED_HIGH",
+          "CO2_EXCEEDED_LOW",
+          "PROBE_TEMPERATURE_EXCEEDED_HIGH",
+          "PROBE_TEMPERATURE_EXCEEDED_LOW",
+          "PROBE_DISCONNECTED",
+          "PROBE_CONNECTED",
+          "HEAT_INDEX_EXCEEDED_HIGH",
+          "PRESSURE_EXCEEDED_HIGH",
+          "PRESSURE_EXCEEDED_LOW",
+          "PM10_EXCEEDED_HIGH",
+          "PM40_EXCEEDED_HIGH",
+          "PM100_EXCEEDED_HIGH",
+          "VOC_IDX_EXCEEDED_HIGH",
+          "NOX_IDX_EXCEEDED_HIGH",
+          "FORMALDEHYDE_EXCEEDED_HIGH",
+          "CARBON_MONOXIDE_EXCEEDED_HIGH",
+          "AQI_EXCEEDED_HIGH",
+          "DOOR_AJAR",
+          "DOOR_OPENED",
+          "DOOR_CLOSED",
+          "BUTTON_SINGLE_PRESSED",
+          "BUTTON_DOUBLE_PRESSED",
+          "BUTTON_LONG_PRESSED",
+          "TAG_ARRIVED",
+          "TAG_DEPARTED",
+          "TAG_MOVED",
+          "TAG_POSITIONING_CHANGED",
+          "TAG_BOUNDARY_INGRESS",
+          "TAG_BOUNDARY_EGRESS",
+          "TAG_PANIC",
+          "BADGE_AUTHORIZED",
+          "BADGE_UNAUTHORIZED",
+          "BADGE_UNAUTHORIZED_V2",
+          "BADGE_AJAR",
+          "BADGE_MANUAL",
+          "BADGE_FORCED_OPEN",
+          "BADGE_LOCKDOWN",
+          "BADGE_REQUEST_TO_EXIT",
+          "BADGE_DURESS",
+          "BADGE_SECURITY_BREACH",
+          "BADGE_TAMPER",
+          "BADGE_FACE_MISMATCH",
+          "POS_ORDER",
+          "GUN_DETECT_EVENT",
+          "IOT_SOUND_AGGRESSION",
+          "IOT_SOUND_HELP",
+          "IOT_AIR_CO",
+          "IOT_AIR_CO2",
+          "IOT_AIR_MASKING",
+          "IOT_AIR_THC",
+          "IOT_AIR_VAPE",
+          "IOT_AIR_VOC",
+          "IOT_AIR_TEMP",
+          "IOT_TAMPER",
+          "IOT_GUNSHOT",
+          "IOT_BUTTON_SINGLE_CLICK",
+          "IOT_BUTTON_DOUBLE_CLICK",
+          "IOT_BUTTON_HOLD",
+          "IOT_PANIC_BUTTON_TRIGGERED",
+          "AUDIO_SOUND_SIGNIFICANT",
+          "AUDIO_SOUND_LOUD",
+          "AUDIO_SOUND_ABUSIVE",
+          "AUDIO_SOUND_GREETING",
+          "AUDIO_SOUND_HELP",
+          "AUDIO_SOUND_GUN",
+          "AUDIO_SOUND_GLASS_BREAK",
+          "AUDIO_SOUND_ALARM_SMOKE_FIRE",
+          "AUDIO_SOUND_ALARM_CARBON_MONOXIDE",
+          "AUDIO_SOUND_SIREN",
+          "CLIMATE_VOC",
+          "CLIMATE_VAPE",
+          "CLIMATE_SMOKE",
+          "CLIMATE_THC",
+          "CLIMATE_CO2",
+          "CLIMATE_ETOH",
+          "CLIMATE_PM25",
+          "CLIMATE_IAQ",
+          "CLIMATE_LEAK",
+          "SOUND_AGGRESSION",
+          "SOUND_HELP",
+          "AIR_CO",
+          "AIR_CO2",
+          "AIR_MASKING",
+          "AIR_THC",
+          "AIR_VAPE",
+          "AIR_VOC",
+          "MASK_MISSING",
+          "HELMET_MISSING",
+          "GLOVES_MISSING",
+          "PIR_OCCUPIED",
+          "PIR_MOVEMENT",
+          "PIR_VACANT",
+          "CUSTOM",
+          "VISITOR_ARRIVED",
+          "VISITOR_DEPARTED",
+          "AC_DR_CONNECTED",
+          "AC_DR_DISCONNECTED",
+          "AC_DPI_DOOR_OPEN",
+          "AC_DPI_DOOR_CLOSED",
+          "AC_DPI_DOOR_AJAR",
+          "AC_DPI_DOOR_FORCED_OPEN",
+          "AC_DSR_UNLOCKED",
+          "AC_DSR_LOCKED",
+          "AC_DB_TRIGGERED",
+          "AC_PANIC_BUTTON_TRIGGERED",
+          "AC_REMOTE_UNLOCK",
+          "AC_BADGE_AUTHORIZED",
+          "AC_BADGE_UNAUTHORIZED",
+          "AC_BADGE_FACE_MISMATCH",
+          "AC_LOCKDOWN_ACTIVATED",
+          "AC_LOCKDOWN_DEACTIVATED",
+          "AC_TAMPER_PROX",
+          "AC_TAMPER_ACCEL",
+          "AC_TAMPER_SWITCH",
+          "AC_GR_ACTIVE",
+          "AC_GR_INACTIVE",
+          "AC_GI_ACTIVE",
+          "AC_GI_INACTIVE",
+          "AC_REX_ACTIVE",
+          "AC_REX_INACTIVE",
+          "AC_APERIO_DEVICE_DISCONNECTED",
+          "AC_APERIO_DEVICE_CONNECTED",
+          "AC_APERIO_DEVICE_REBOOT",
+          "AC_APERIO_DEVICE_TAMPER",
+          "AC_APERIO_LOW_BATTERY",
+          "AC_APERIO_FLAT_BATTERY",
+          "AC_APERIO_OK_BATTERY",
+          "POWER_SWITCH_BATTERY",
+          "POWER_SWITCH_PRIMARY",
+          "CUSTOM_LLM_BOOLEAN_TRUE",
+          "CUSTOM_LLM_BOOLEAN_FALSE",
+          "CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW",
+          "CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH",
+          "ALM_AUTHORITIES_CONTACTED",
+          "ALM_MONITORING_ENABLED",
+          "ALM_MONITORING_DISABLED",
+          "ALM_MONITORING_SETTINGS_CHANGE",
+          "ALM_THREAT_CASE_CLOSED",
+          "ALM_THREAT_DETECTED",
+          "ALM_MONITORING_EVENT_DETECTED",
+          "ROBOT_DOG_DETECTED",
+          "UNKNOWN"
+        ]
+      }
+    }
+  }
+}

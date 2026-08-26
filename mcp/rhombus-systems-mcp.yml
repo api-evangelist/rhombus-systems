@@ -1,0 +1,85 @@
+generated: '2026-08-26'
+method: searched
+source: https://www.rhombus.com/.well-known/mcp/server-card.json
+status: published
+deployment:
+  mode: both
+  endpoint: https://api-docs.rhombus.community/mcp
+  install: npx -y rhombus-node-mcp
+  package: https://www.npmjs.com/package/rhombus-node-mcp
+  auth: api-key
+  verified: probed
+  note: >-
+    Rhombus ships TWO distinct MCP servers and they are not interchangeable. The ACTION server
+    (rhombus-node-mcp) is local-stdio only — npm or an OCI image, run on the operator's machine
+    with a RHOMBUS_API_KEY environment variable; there is no hosted endpoint for it. The
+    KNOWLEDGE server (the documentation MCP) IS remote and answered an anonymous tools/list with
+    HTTP 200. `mode: both` records that the provider ships one of each; `endpoint` names the only
+    URL an MCP client can actually POST to today, and `install` names the action server.
+servers:
+- name: Rhombus API MCP server
+  role: action
+  identifier: io.github.rhombussystems/rhombus-node-mcp
+  mode: local-stdio
+  transport: stdio
+  auth: api-key
+  auth_detail: RHOMBUS_API_KEY environment variable; key created at https://console.rhombus.com/settings/api-management
+  repository: https://github.com/RhombusSystems/rhombus-node-mcp
+  documentation: https://api-docs.rhombus.community/rhombus-mcp
+  registry_listing: https://smithery.ai/server/@RhombusSystems/rhombus-node-mcp
+  server_card: https://www.rhombus.com/.well-known/mcp/server-card.json
+  packages:
+  - registry: npm
+    identifier: rhombus-node-mcp
+    version: 0.1.56
+    published: '2026-06-30'
+    install: npx -y rhombus-node-mcp
+  - registry: oci
+    identifier: rhombussystems/mcp-server-rhombus
+    version: null
+    published: null
+    note: Docker image named on the server card; no anonymous tag-metadata endpoint was queried.
+  tools:
+  - name: entity-lookup
+    description: Look up Rhombus entities (cameras, sensors, doors, locations) by name or attribute
+  - name: get-entity
+    description: Fetch full details for a specific Rhombus entity by ID
+  - name: get-org-information
+    description: Retrieve organization-level information for the authenticated Rhombus account
+  - name: time-conversion
+    description: Convert between timezones and timestamp formats for footage and event queries
+  - name: time
+    description: Resolve natural-language times to timestamps for the Rhombus API
+  - name: user
+    description: Look up Rhombus user profile information
+  tools_source: >-
+    https://www.rhombus.com/.well-known/mcp/server-card.json — names and descriptions only.
+    inputSchema is NOT published on the card and the server is stdio-only, so live tools/list
+    introspection requires installing the package with a valid API key. Schemas are therefore
+    unrecorded rather than guessed.
+- name: Rhombus documentation MCP server
+  role: knowledge
+  mode: remote
+  endpoint: https://api-docs.rhombus.community/mcp
+  transport: streamable-http
+  auth: none
+  auth_detail: anonymous — tools/list returned HTTP 200 with no credential
+  documentation: https://api-docs.rhombus.community/documentation-mcp
+  probed: '2026-08-26'
+  probe_result: 200
+  tools_file: rhombus-systems-docs-mcp-tools.json
+  tools:
+  - name: search_rhombus_developer
+    description: Search the Rhombus Developer Documentation knowledge base
+    input_schema_properties: [query, language]
+  - name: query_docs_filesystem_rhombus_developer
+    description: Read-only shell-like query (rg/grep/find/tree/ls/cat/head/jq) over a virtualized in-memory filesystem of the docs pages and OpenAPI specs
+    input_schema_properties: [command]
+  - name: submit_feedback
+    description: Submit feedback on a documentation page
+    input_schema_properties: [path, feedback]
+  tools_source: live tools/list POST, saved verbatim to mcp/rhombus-systems-docs-mcp-tools.json
+discrepancies:
+- >-
+  The published MCP server card declares version 0.1.41 while npm registry metadata reports
+  rhombus-node-mcp@0.1.56 published 2026-06-30. The server card is 15 patch releases stale.

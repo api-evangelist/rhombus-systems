@@ -1,0 +1,101 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.rhombus.community/webhooks
+derived_from: openapi/rhombus-systems-openapi.json
+note: >-
+  Rhombus ships TWO distinct event surfaces and only one of them has an AsyncAPI contract. The
+  STOMP-over-WebSocket change stream is fully modeled in
+  asyncapi/rhombus-systems-console-websocket-asyncapi.json. The outbound HTTP webhook surface
+  documented here has NO AsyncAPI document — it is captured as a webhook catalog from the docs
+  and the OpenAPI management operations.
+delivery:
+  transport: HTTP POST
+  content_type: application/json
+  direction: outbound (Rhombus -> subscriber endpoint)
+  trigger_model: >-
+    Webhooks are rule-driven. A webhook fires when a Rules/Policy rule matches, so the payload is
+    shaped around the rule that triggered rather than around a flat event-type enum.
+management_operations:
+- operationId: createEventListener
+  path: /api/developer/createEventListener
+  purpose: register a webhook listener
+- operationId: getAllEventListeners
+  path: /api/developer/getAllEventListeners
+- operationId: getEventListenersForDevice
+  path: /api/developer/getEventListenersForDevice
+- operationId: deleteEventListener
+  path: /api/developer/deleteEventListener
+  purpose: reversal — deregister a listener
+- operationId: getWebhookIntegration
+  path: /api/integrations/webhooks/getWebhookIntegration
+- operationId: updateWebhookIntegration
+  path: /api/integrations/webhooks/updateWebhookIntegration
+- operationId: updateWebhookIntegrationV2
+  path: /api/integrations/webhooks/updateWebhookIntegrationV2
+- operationId: deleteWebhookIntegration
+  path: /api/integrations/webhooks/deleteWebhookIntegration
+- operationId: deleteWebhookIntegrationV2
+  path: /api/integrations/webhooks/deleteWebhookIntegrationV2
+- operationId: subscribeZapierWebhook
+  path: /api/integrations/webhooks/subscribeZapierWebhook
+- operationId: unsubscribeZapierWebhook
+  path: /api/integrations/webhooks/unsubscribeZapierWebhook
+inbound_webhooks:
+  supported: true
+  note: >-
+    Rhombus also ACCEPTS inbound webhooks to drive its rules engine, gated by a generated token.
+  operations:
+  - generateIncomingWebhookToken
+  - deleteIncomingWebhookToken
+event_categories:
+- name: Camera events
+  description: Motion detection, analytics alerts, video clips saved, AI-powered detections
+  example_activity: MOTION_HUMAN
+- name: Access control events
+  description: Door open/close, forced entry, access granted/denied, credential scans
+- name: Sensor events
+  description: Temperature, humidity, and air quality threshold alerts
+- name: Device events
+  description: Button presses, device online/offline status changes
+payload_envelope:
+  fields:
+  - uuid
+  - orgUuid
+  - ruleUuid
+  - triggeredTimestampMs
+  - deviceEvents
+  - ruleTriggers
+  device_event_fields:
+  - eventUuid
+  - deviceUuid
+  - deviceType
+  - locationUuid
+  - timestampMs
+  - activities
+  rule_trigger_example: DEVICE_ACTIVITY_EVENT
+security:
+  signing: false
+  hmac_header: null
+  note: >-
+    NO signing or verification mechanism is documented for OUTBOUND webhooks — no HMAC header, no
+    shared secret, no timestamp+signature scheme. A receiver cannot cryptographically verify that
+    a delivery came from Rhombus. This is notable given the payload carries physical-security
+    events (forced entry, access denied) that a consumer may act on.
+  contrast: >-
+    The Honeywell OnGuard access-control integration DOES generate a pre-shared HMAC secret
+    alongside its webhook token (createOrUpdateHoneywellOnGuardIntegration), so the capability
+    exists inside the platform but is not offered on the general webhook surface.
+reliability:
+  retry_policy: undocumented
+  delivery_guarantee: undocumented
+  ordering: undocumented
+  dead_letter: undocumented
+firewall_traversal:
+  documented: true
+  url: https://api-docs.rhombus.community/implementations/webhook-listener
+  methods: [reverse SSH tunnel, ngrok, reverse proxy]
+asyncapi_available: false
+asyncapi_gap: >-
+  The webhook surface has no machine-readable contract. Event category names, activity enums
+  (MOTION_HUMAN and siblings) and the payload envelope exist only as prose and one sample on the
+  docs page, so an agent cannot enumerate the event space or validate a delivery against a schema.

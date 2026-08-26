@@ -1,0 +1,100 @@
+generated: '2026-08-26'
+method: searched
+source: https://github.com/RhombusSystems/claude-code-plugins
+note: >-
+  These Agent Skills are PROVIDER-PUBLISHED and saved verbatim — API Evangelist authored none of
+  them. Rhombus maintains a Claude Code plugin marketplace at
+  github.com/RhombusSystems/claude-code-plugins with three plugins (developer, partner, user),
+  each shipping SKILL.md files with standard Agent Skill frontmatter, plus sub-agents, slash
+  commands and hooks. Nothing here is generated or derived.
+marketplace: https://github.com/RhombusSystems/claude-code-plugins/blob/main/.claude-plugin/marketplace.json
+documentation: https://api-docs.rhombus.community/claude-code-plugins
+license_note: Skill files are reproduced from the provider's public repository for profiling purposes.
+plugins:
+- name: developer
+  skills: [rhombus-api, rhombus-webhook-receiver, rhombus-edge-streaming, rhombus-sdk-codegen]
+  also_ships:
+    agents: [rhombus-api-architect, rhombus-webhook-debugger]
+    commands: [rhombus-curl, rhombus-find-endpoint, rhombus-mcp-status, rhombus-newproject, rhombus-schema, rhombus-sdk]
+    hooks: [rhombus-api-intercept, rhombus-openapi-freshness]
+    mcp_config: plugins/developer/.mcp.json
+- name: partner
+  skills: [rhombus-partner-onboarding, rhombus-cross-client-reporting, rhombus-partner-cli]
+- name: user
+  skills: [rhombus-cli, rhombus-deployment-context, rhombus-mind, rhombus-support-links]
+skills:
+- name: rhombus-api
+  file: rhombus-systems-rhombus-api.md
+  plugin: developer
+  api: rhombus-systems-public-api
+  upstream: plugins/developer/skills/rhombus-api/SKILL.md
+  description: >-
+    Comprehensive guide for working with the Rhombus API — cURL examples, endpoint documentation,
+    streaming video, LPR, face recognition, webhooks, door controllers, IoT sensors, alarm
+    monitoring, relay/NVR, third-party RTSP cameras. Covers 65+ service categories.
+  bundled_references:
+  - examples-index.md
+  - mcp-tool-reference.md
+  - quickstart.md
+  - rhombus-api.json
+- name: rhombus-webhook-receiver
+  file: rhombus-systems-webhook-receiver.md
+  plugin: developer
+  api: rhombus-systems-public-api
+  upstream: plugins/developer/skills/rhombus-webhook-receiver/SKILL.md
+  description: Scaffold a webhook listener for Rhombus events in Express, FastAPI, or AWS Lambda.
+  related: asyncapi/rhombus-systems-webhooks.yml
+- name: rhombus-edge-streaming
+  file: rhombus-systems-edge-streaming.md
+  plugin: developer
+  api: rhombus-systems-public-api
+  upstream: plugins/developer/skills/rhombus-edge-streaming/SKILL.md
+  description: Edge streaming and third-party camera integration — RTSP bridging via EdgeCaster, ONVIF.
+- name: rhombus-sdk-codegen
+  file: rhombus-systems-sdk-codegen.md
+  plugin: developer
+  api: rhombus-systems-public-api
+  upstream: plugins/developer/skills/rhombus-sdk-codegen/SKILL.md
+  description: >-
+    Generate a typed SDK client for the Rhombus API in Python, TypeScript, Java, Go or C# from
+    the official OpenAPI spec. This is Rhombus's documented substitute for first-party
+    per-language SDKs.
+- name: rhombus-partner-onboarding
+  file: rhombus-systems-partner-onboarding.md
+  plugin: partner
+  api: rhombus-systems-public-api
+  upstream: plugins/partner/skills/rhombus-partner-onboarding/SKILL.md
+- name: rhombus-cross-client-reporting
+  file: rhombus-systems-cross-client-reporting.md
+  plugin: partner
+  api: rhombus-systems-public-api
+  upstream: plugins/partner/skills/rhombus-cross-client-reporting/SKILL.md
+- name: rhombus-partner-cli
+  file: rhombus-systems-partner-cli.md
+  plugin: partner
+  api: rhombus-systems-public-api
+  upstream: plugins/partner/skills/rhombus-partner-cli/SKILL.md
+  related: cli/rhombus-systems-cli.yml
+- name: rhombus-cli
+  file: rhombus-systems-cli-skill.md
+  plugin: user
+  upstream: plugins/user/skills/rhombus-cli/SKILL.md
+  related: cli/rhombus-systems-cli.yml
+- name: rhombus-deployment-context
+  file: rhombus-systems-deployment-context.md
+  plugin: user
+  upstream: plugins/user/skills/rhombus-deployment-context/SKILL.md
+- name: rhombus-mind
+  file: rhombus-systems-mind.md
+  plugin: user
+  upstream: plugins/user/skills/rhombus-mind/SKILL.md
+agents_md:
+  file: rhombus-systems-AGENTS.md
+  source: https://api-docs.rhombus.community/AGENTS.md
+  status: 200
+  note: >-
+    Rhombus also serves an AGENTS.md from its documentation host, alongside a CLAUDE.md at
+    https://api-docs.rhombus.community/CLAUDE.md.
+not_harvested:
+- name: rhombus-support-links
+  reason: end-user support-link helper with no API surface; skipped as out of scope for the API profile.

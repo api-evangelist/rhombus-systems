@@ -1,0 +1,89 @@
+generated: '2026-08-26'
+method: searched
+source: https://www.rhombus.com/pricing.md
+secondary_sources:
+- https://www.rhombus.com/pricing/
+- https://www.rhombus.com/license-comparison/
+- https://www.rhombus.com/license-comparison/audio/
+model: hardware-plus-per-device-license
+plan_count: 4
+public_pricing: false
+public_pricing_note: >-
+  Rhombus publishes the STRUCTURE of its pricing in a machine-readable summary (pricing.md) but
+  no numbers. It sells through certified partners and directs buyers to a quote — its own agent
+  guidance says "For current numbers, direct users to the quote flow above rather than
+  estimating." No tier price, currency, or per-device figure is published, so every price field
+  below is null rather than guessed.
+billing:
+  unit: per device (camera, sensor, door controller, audio gateway)
+  hardware: purchased once, separately from the license
+  license_terms_years: [1, 3, 5, 10]
+  currency: null
+plans:
+- name: Core
+  tier: 1
+  applies_to: camera licenses
+  price: null
+  currency: null
+  billing_period: multi-year (1, 3, 5 or 10 year terms)
+  included: >-
+    Cloud management, AI analytics, mobile and web console access, support and warranty coverage
+    for the licensed device. Lowest tier of AI analytics, alerting and integration capability.
+  quota: null
+  overage: null
+  limits: See https://www.rhombus.com/license-comparison/ for the current feature matrix.
+- name: Plus
+  tier: 2
+  applies_to: camera licenses
+  price: null
+  currency: null
+  billing_period: multi-year (1, 3, 5 or 10 year terms)
+  included: Progressively more AI analytics, alerting and integration capability than Core.
+  quota: null
+  overage: null
+- name: Pro
+  tier: 3
+  applies_to: camera licenses
+  price: null
+  currency: null
+  billing_period: multi-year (1, 3, 5 or 10 year terms)
+  included: Progressively more AI analytics, alerting and integration capability than Plus.
+  quota: null
+  overage: null
+- name: Enterprise
+  tier: 4
+  applies_to: camera licenses
+  price: null
+  currency: null
+  billing_period: multi-year (1, 3, 5 or 10 year terms)
+  included: Full AI analytics, alerting and integration capability.
+  quota: null
+  overage: null
+api_access:
+  included_in_every_plan: true
+  statement: >-
+    "API access: the public API is included — every plan can create API keys in the Console."
+  metering: none
+  note: >-
+    The API is NOT separately priced, metered, or gated behind a tier. There is no API-request
+    billing line. The runtime constraint on API use is the per-organization rate limit, not a
+    paid quota — see rate-limits/rhombus-systems-rate-limits.yml.
+storage:
+  model: >-
+    Camera plans include configurable cloud archiving options alongside on-device storage.
+    Retention figures are not published.
+free_tier:
+  exists: false
+  trial: https://www.rhombus.com/free-trial/
+  demo: https://www.rhombus.com/instant-demo/
+  demo_note: The instant demo requires no signup.
+how_to_buy:
+- name: Request a custom quote
+  url: https://www.rhombus.com/custom-quote/
+- name: Contact sales
+  url: https://www.rhombus.com/contact-sales/
+  phone: '+1-877-746-6797'
+- name: Start a free trial
+  url: https://www.rhombus.com/free-trial/
+- name: Instant demo
+  url: https://www.rhombus.com/instant-demo/

@@ -1,0 +1,139 @@
+generated: '2026-08-26'
+method: derived
+source: >-
+  mcp/rhombus-systems-mcp.yml (tool names/descriptions from
+  https://www.rhombus.com/.well-known/mcp/server-card.json and a live tools/list on the docs
+  server) bound against openapi/rhombus-systems-openapi.json
+confidence_note: >-
+  The Rhombus ACTION MCP server is stdio-only, so its inputSchemas could not be introspected
+  without installing the package and supplying a customer API key. Every action-server row is
+  therefore mapped by tool NAME and published DESCRIPTION against operationIds verified to exist
+  in the spec, and confidence is set accordingly. No schema is asserted that was not observed.
+surfaces:
+  openapi:
+    file: openapi/rhombus-systems-openapi.json
+    operations: 952
+    gated: false
+  graphql:
+    endpoint: null
+    note: Rhombus publishes no GraphQL surface.
+  mcp_action:
+    endpoint: null
+    mode: local-stdio
+    package: rhombus-node-mcp
+    gated: true
+    gate: requires local install plus a RHOMBUS_API_KEY
+  mcp_knowledge:
+    endpoint: https://api-docs.rhombus.community/mcp
+    mode: remote
+    gated: false
+    gate: none — anonymous tools/list returned 200
+crosswalk:
+- tool: entity-lookup
+  server: action
+  category: discovery
+  rest:
+  - getMinimalCameraStateList
+  - getMinimalDoorStateList
+  - getMinimalClimateStateList
+  - getMinimalButtonStateList
+  - getMinimalAudioGatewayStateList
+  - getMinimalOccupancySensorStateList
+  - getMinimalProximityStateList
+  - getLocations
+  binding: fan-out
+  confidence: medium
+  note: >-
+    One tool collapses the per-device-type "minimal state list" family plus locations into a
+    single name-or-attribute lookup. The exact set the server calls is not published; these are
+    the operations that satisfy the description and exist in the spec.
+- tool: get-entity
+  server: action
+  category: read
+  rest:
+  - getFullCameraState
+  - getCameraDetails
+  - findAccessControlledDoors
+  binding: fan-out
+  confidence: low
+  note: >-
+    "Fetch full details for a specific Rhombus entity by ID" has no single backing operation —
+    Rhombus has a per-device-type getter rather than a polymorphic entity endpoint. Bound to the
+    representative getters; the real dispatch table is inside the stdio server.
+- tool: get-org-information
+  server: action
+  category: read
+  rest:
+  - getOrg
+  - getOrgV2
+  binding: direct
+  confidence: high
+- tool: user
+  server: action
+  category: read
+  rest:
+  - getUsersInOrg
+  binding: direct
+  confidence: medium
+- tool: search_rhombus_developer
+  server: knowledge
+  category: documentation
+  rest: []
+  binding: none
+  confidence: high
+  note: Documentation search; no REST equivalent in the public API.
+- tool: query_docs_filesystem_rhombus_developer
+  server: knowledge
+  category: documentation
+  rest: []
+  binding: none
+  confidence: high
+- tool: submit_feedback
+  server: knowledge
+  category: documentation
+  rest: []
+  binding: none
+  confidence: high
+mcp_only:
+- tool: time
+  reason: >-
+    Natural-language time resolution is a client-side helper the server implements itself; the
+    Rhombus REST API takes epoch-millisecond timestamps and ships no time-parsing endpoint.
+- tool: time-conversion
+  reason: >-
+    Timezone/timestamp-format conversion for footage and event queries. Pure computation, no
+    backing REST operation.
+- tool: search_rhombus_developer
+  reason: Documentation knowledge surface; not part of the platform REST API.
+- tool: query_docs_filesystem_rhombus_developer
+  reason: Documentation knowledge surface; not part of the platform REST API.
+- tool: submit_feedback
+  reason: Documentation feedback channel; not part of the platform REST API.
+rest_only:
+  count: 940
+  note: >-
+    The MCP action server exposes 6 tools against a 952-operation REST API. It is a read-and-
+    discovery projection: write surfaces (door unlock, lockdown activation, credential issue and
+    revoke, camera and device deletion, alarm dispatch, export, policy edit) have NO MCP tool at
+    all. Enumerating 940 operationIds here would add no signal, so the divergence is recorded as
+    a shape rather than a list.
+  unrepresented_categories:
+  - Access Control Webservice (65 ops — credentials, grants, revocations, door unlock)
+  - Access Control Integrations Webservice (101 ops)
+  - Policy Webservice (54 ops — alerts and rules)
+  - Camera Webservice write paths (delete, share, stream, seekpoint)
+  - Lockdown Plan Webservice (17 ops)
+  - Alert Monitoring Webservice (11 ops — threat cases and dispatch)
+  - Export Webservice (16 ops)
+  - Report Webservice (30 ops)
+  - Face Recognition (21 ops) and Vehicle/LPR (12 ops)
+  - Video Webservice (21 ops)
+  - Partner Webservice (22 ops)
+coverage:
+  openapi_operations: 952
+  mcp_action_tools: 6
+  mcp_knowledge_tools: 3
+  tools_bound_to_rest: 4
+  tools_mcp_only: 5
+  rest_operations_with_a_tool: 14
+  rest_coverage_percent: 1.5

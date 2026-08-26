@@ -1,23 +1,177 @@
 aid: rhombus-systems
 name: Rhombus Systems
-description: 'Rhombus Systems is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Rhombus Systems is a Sacramento, California enterprise physical-security platform that unifies
+  AI-powered security cameras, door access control, environmental and IoT sensors, audio gateways
+  and TMA Five Diamond alarm monitoring in a single cloud console. The platform is API-first: every
+  feature in the web console, mobile apps and firmware is backed by the same public REST API, which
+  publishes an OpenAPI 3.0 contract of 952 operations across 64 service groups covering cameras and
+  video streaming, access control credentials and doors, lockdown plans, face recognition, license
+  plate and vehicle recognition, scene query, occupancy and reporting, policy alerts, webhooks,
+  partner/MSP org management, and SAML SSO with SCIM provisioning. Rhombus also ships an AsyncAPI 3.0
+  contract for its STOMP-over-WebSocket change-event stream, an RFC 9727 API catalog, RFC 9728/8414
+  OAuth discovery, an A2A agent card, an llms.txt family, a Model Context Protocol server, a Go CLI,
+  a React SDK, and a published Claude Code skills library.
+image: https://rhombus.com/img/meta-homepage.png
 url: https://raw.githubusercontent.com/api-evangelist/rhombus-systems/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
+- Physical Security
+- Video Surveillance
+- Access Control
+- IoT Sensors
+- Cloud Video Management
+- Alarm Monitoring
+- Computer Vision
+- Building Management
+- Security Cameras
 - Company
-apis: []
+apis:
+- aid: rhombus-systems-public-api
+  name: Rhombus Public REST API
+  description: >-
+    The Rhombus public REST API — 952 JSON-over-HTTPS operations (all POST) across cameras, video,
+    access control, sensors, climate, events, policy alerts, reporting, face and vehicle recognition,
+    scene query, licensing, org and partner management. Authenticated with an API key header pair
+    (x-auth-scheme + x-auth-apikey) or OAuth 2.0 authorization code with PKCE.
+  humanURL: https://api-docs.rhombus.community/
+  baseURL: https://api2.rhombussystems.com/api
+  tags:
+  - Physical Security
+  - Video Surveillance
+  - Access Control
+  - IoT Sensors
+  properties:
+  - type: OpenAPI
+    url: openapi/rhombus-systems-openapi.json
+  - type: Overlay
+    url: overlays/rhombus-systems-openapi-overlay.yaml
+  - type: Documentation
+    url: https://api-docs.rhombus.community/
+  - type: APIReference
+    url: https://api-docs.rhombus.community/_llms/en/api-reference.md
+- aid: rhombus-systems-console-websocket-api
+  name: Rhombus Console WebSocket API
+  description: >-
+    Real-time organization change events delivered over a STOMP 1.2 session framed on a secure
+    WebSocket. Clients subscribe to /topic/change/{orgUuid} and receive a MESSAGE frame for every
+    entity change in the org — policy alerts, device state changes, sensor readings and door events.
+    Published by Rhombus as an AsyncAPI 3.0.0 document.
+  humanURL: https://api-docs.rhombus.community/websocket/overview
+  baseURL: wss://ws.rhombussystems.com:8443/websocket
+  tags:
+  - Events
+  - WebSocket
+  - Streaming
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/rhombus-systems-console-websocket-asyncapi.json
+  - type: Documentation
+    url: https://api-docs.rhombus.community/websocket/overview
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: VulnerabilityDisclosure
+  url: security/rhombus-systems-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/rhombus-systems-domain-security.yml
+- type: Authentication
+  url: authentication/rhombus-systems-authentication.yml
 - type: Website
-  url: https://forgeglobal.com/rhombus-systems_stock/
+  url: https://www.rhombus.com/
+- type: DeveloperPortal
+  url: https://api-docs.rhombus.community/
+- type: Documentation
+  url: https://api-docs.rhombus.community/
+- type: APIReference
+  url: https://api-docs.rhombus.community/_llms/en/api-reference.md
+- type: GettingStarted
+  url: https://api-docs.rhombus.community/index.md
+- type: Support
+  url: https://www.rhombus.community/
+- type: Blog
+  url: https://www.rhombus.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/RhombusSystems
+- type: Pricing
+  url: https://www.rhombus.com/pricing/
+- type: SignUp
+  url: https://console.rhombus.com/
+- type: TermsOfService
+  url: https://www.rhombus.com/terms/
+- type: PrivacyPolicy
+  url: https://www.rhombus.com/privacy/
+- type: StatusPage
+  url: https://status.rhombus.com/
+- type: TrustCenter
+  url: https://www.rhombus.com/trust/
+- type: Security
+  url: security/rhombus-systems-vulnerability-disclosure.yml
+- type: Packages
+  url: packages/rhombus-systems-packages.yml
+- type: SDKs
+  url: packages/rhombus-systems-packages.yml
+- type: CLI
+  url: cli/rhombus-systems-cli.yml
+- type: Components
+  url: components/rhombus-systems-components.yml
+- type: WellKnown
+  url: well-known/rhombus-systems-well-known.yml
+- type: APICatalog
+  url: well-known/rhombus-systems-api-catalog.json
+- type: SecurityTxt
+  url: well-known/rhombus-systems-security.txt
+- type: MCPServer
+  url: mcp/rhombus-systems-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/rhombus-systems-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/rhombus-systems-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/rhombus-systems-llms.txt
+- type: Conformance
+  url: conformance/rhombus-systems-conformance.yml
+- type: Compliance
+  url: conformance/rhombus-systems-conformance.yml
+- type: ErrorCatalog
+  url: errors/rhombus-systems-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/rhombus-systems-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/rhombus-systems-lifecycle.yml
+- type: Conventions
+  url: conventions/rhombus-systems-conventions.yml
+- type: ChangeLog
+  url: changelog/rhombus-systems-changelog.yml
+- type: DataModel
+  url: data-model/rhombus-systems-data-model.yml
+- type: Plans
+  url: plans/rhombus-systems-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/rhombus-systems-rate-limits.yml
+- type: Webhooks
+  url: asyncapi/rhombus-systems-webhooks.yml
+- type: AsyncAPI
+  url: asyncapi/rhombus-systems-console-websocket-asyncapi.json
+x-enrichment:
+  date: '2026-08-26'
+  status: enriched
+  artifacts_added: 44
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    Full contract discovery succeeded — a 952-operation OpenAPI 3.0.1, an AsyncAPI 3.0.0, an
+    RFC 9727 API catalog, an A2A agent card, an MCP server card and a four-document llms.txt
+    family were all fetched anonymously from Rhombus's own hosts.
+  checked: '2026-08-26'

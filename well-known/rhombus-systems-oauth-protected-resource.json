@@ -1,0 +1,1 @@
+{"resource":"https://api2.rhombussystems.com","authorization_servers":["https://auth-web.rhombussystems.com/"],"bearer_methods_supported":["header"],"resource_name":"Rhombus API","resource_documentation":"https://api-docs.rhombus.community/"}

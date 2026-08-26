@@ -1,0 +1,67 @@
+generated: '2026-08-26'
+method: searched
+source: live probes of every apis.yml and OpenAPI servers[] host
+note: >-
+  www.rhombus.com is NOT a catch-all host — /.well-known/openid-configuration and
+  /.well-known/ai-plugin.json both returned a real 404, so the 200s recorded below are
+  genuine served documents. api2.rhombussystems.com requires authentication on every path
+  including /.well-known/*, returning 401 {"authenticationFailed":true}, except for the
+  RFC 9728 protected-resource metadata which is deliberately served anonymously.
+hit_count: 6
+hosts:
+- host: https://www.rhombus.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: rhombus-systems-security.txt
+  - path: /.well-known/api-catalog
+    status: 200
+    file: rhombus-systems-api-catalog.json
+    note: RFC 9727 linkset, served as application/linkset+json with the RFC 9727 profile parameter
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: ../a2a/rhombus-systems-agent-card.json
+    note: A2A 1.0.0 agent card; see a2a/rhombus-systems-a2a.yml
+  - path: /.well-known/agent.json
+    status: 200
+    file: rhombus-systems-agent-legacy.json
+    note: pre-0.3 legacy agent card path, served alongside the canonical one
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: rhombus-systems-mcp-server-card.json
+    note: MCP server.json schema 2025-07-09
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    file: null
+    note: redirects to https://auth.rhombussystems.com/oauth/.well-known/oauth-authorization-server
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+- host: https://api2.rhombussystems.com
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: rhombus-systems-oauth-protected-resource.json
+    note: RFC 9728 protected resource metadata, served anonymously
+  - path: /.well-known/security.txt
+    status: 401
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 401
+    file: null
+- host: https://auth.rhombussystems.com
+  documents:
+  - path: /oauth/.well-known/oauth-authorization-server
+    status: 200
+    file: rhombus-systems-oauth-authorization-server.json
+    note: >-
+      RFC 8414 authorization server metadata. Served at a path-prefixed location rather than
+      the RFC 8414 root; the issuer it declares is https://auth-web.rhombussystems.com/
+- host: https://api-docs.rhombus.community
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null

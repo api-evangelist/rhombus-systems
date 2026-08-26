@@ -1,0 +1,69 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://api-docs.rhombus.community/VERSIONING.md,
+  https://api-docs.rhombus.community/changelog, https://status.rhombus.com/
+versioning:
+  scheme: unversioned
+  current_version: '1.0'
+  selector: none
+  statement: >-
+    "The Rhombus API is currently unversioned — there is a single version of all endpoints
+    (version 1.0 in the OpenAPI spec). All consumers use the same API surface at
+    https://api2.rhombussystems.com. No versioning mechanism is needed at this time."
+  triggers_for_versioning:
+  - breaking change to an existing endpoint's request/response schema
+  - removal of a previously documented endpoint
+  - change to the x-auth-scheme / x-auth-apikey header contract
+  - base URL migration off api2.rhombussystems.com
+  non_breaking: New endpoints and new optional fields explicitly do NOT trigger a version.
+  in_practice: >-
+    Change is absorbed with parallel V2 operationIds rather than a version selector — getOrg /
+    getOrgV2, getSAMLSettings / getSAMLSettingsV2, getOrgIntegrations / getOrgIntegrationsV2,
+    cancelSplice / cancelSpliceV2 — with superseded operations sometimes suffixed Dep
+    (getOrgIntegrationsDep, revokeApiTokenDep).
+  source: https://api-docs.rhombus.community/VERSIONING.md
+deprecation:
+  policy_published: true
+  policy_url: https://api-docs.rhombus.community/VERSIONING.md
+  minimum_notice: 6 months
+  statement: >-
+    "Keep the deprecated version accessible for at least 6 months." Deprecation is announced with
+    a warning banner on the deprecated pages and an entry in the changelog; redirects are added
+    when a version is retired.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  header_note: >-
+    Rhombus signals deprecation in DOCUMENTATION only. The API returns no RFC 8594 Sunset header
+    and no Deprecation header, and the OpenAPI document marks zero operations
+    `deprecated: true` — even the operations whose own operationId ends in "Dep"
+    (getOrgIntegrationsDep, getOrgIntegrationsV2Dep, revokeApiTokenDep). An agent cannot detect
+    deprecation at runtime or from the machine-readable contract.
+  deprecated_operations_in_spec: 0
+  naming_convention_deprecated:
+  - getOrgIntegrationsDep
+  - getOrgIntegrationsV2Dep
+  - revokeApiTokenDep
+status_page:
+  url: https://status.rhombus.com/
+  status: 200
+  first_party: true
+  vendor: self-hosted
+  machine_readable_feed: false
+  note: >-
+    Dedicated first-party status host titled "Rhombus System Status". The page is a JS-rendered
+    single-page app (a 413-byte HTML shell mounting /assets/index-*.js), so it has no static
+    content and exposes no documented status JSON/RSS endpoint an agent could poll.
+changelog:
+  url: https://api-docs.rhombus.community/changelog
+  detail: changelog/rhombus-systems-changelog.yml
+sla:
+  published: false
+  note: No public SLA or uptime commitment was found on the pricing, trust, or docs surfaces.
+support:
+  developer_community: https://www.rhombus.community/
+  support_center: https://support.rhombussystems.com/
+  security_contact: mailto:security@rhombussystems.com
+  api_contact: mailto:developer@rhombussystems.com
+  sales_phone: '+1-877-746-6797'

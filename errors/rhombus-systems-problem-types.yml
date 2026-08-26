@@ -1,0 +1,73 @@
+generated: '2026-08-26'
+method: searched
+source: https://www.rhombus.com/auth.md
+derived_from: openapi/rhombus-systems-openapi.json
+format: vendor-json
+rfc9457: false
+note: >-
+  Rhombus does NOT use RFC 9457 problem+json — the string "problem+json" does not appear anywhere
+  in the 5.3MB OpenAPI document. More importantly the spec itself carries NO error model at all:
+  948 operations declare only a 200 response and 4 declare a `default`, with zero 4xx or 5xx
+  responses. The entire error contract below is harvested from the provider's machine-readable
+  authentication guide (auth.md), which publishes it as a table. A client generated from the
+  OpenAPI alone would have no error handling.
+envelope:
+  uniform: false
+  note: The shape differs by status — 401 is a boolean flag, 403 is a status/error/timestamp/msg object.
+  discovery_header: >-
+    WWW-Authenticate: Bearer resource_metadata="https://api2.rhombussystems.com/.well-known/oauth-protected-resource"
+    is returned on 401, making the whole RFC 9728 -> RFC 8414 auth-discovery chain reachable from
+    a single unauthenticated probe.
+problem_types:
+- status: 401
+  title: Authentication failed
+  body: '{"authenticationFailed": true}'
+  meaning: No credential was supplied, or the request matched no auth scheme.
+  remediation: >-
+    Read the RFC 9728 protected-resource document named in the WWW-Authenticate challenge,
+    obtain a credential (API key or OAuth access token), and retry.
+  retryable: false
+  source: https://www.rhombus.com/auth.md
+  observed: true
+  observed_at: https://api2.rhombussystems.com/openapi.json
+- status: 403
+  title: Forbidden
+  body: '{"status": 403, "error": "Forbidden", "timestamp": ..., "msg": "Access Denied"}'
+  meaning: Credential present but invalid, expired, or lacking permission.
+  remediation: >-
+    Re-check the key or token. If an OAuth access token has expired, claim a new one with
+    grant_type=refresh_token. If it is a permissions problem, the key's owning user needs a
+    broader role — an API key inherits the permissions of the user who created it.
+  retryable: false
+  source: https://www.rhombus.com/auth.md
+- status: 429
+  title: Too Many Requests
+  body: 'Too many api requests. Enhance your calm.'
+  meaning: The organization's token bucket is exhausted.
+  remediation: Back off using the Retry-After header, then retry with exponential delay.
+  retryable: true
+  headers:
+  - Retry-After
+  source: https://api-docs.rhombus.community/rate-limits
+- status: 4xx
+  title: Malformed request
+  body: '{"error": ..., "msg": ...}'
+  meaning: Bad JSON or missing required fields.
+  remediation: Validate the request body against the published OpenAPI spec.
+  retryable: false
+  source: https://www.rhombus.com/auth.md
+spec_coverage:
+  operations: 952
+  operations_with_200: 948
+  operations_with_default: 4
+  operations_with_4xx: 0
+  operations_with_5xx: 0
+gaps:
+- >-
+  No error CODE registry is published — errors carry an HTTP status and a human message, but no
+  stable machine-readable error code an agent can branch on.
+- >-
+  No 4xx/5xx responses are declared in the OpenAPI document, so generated clients and mock
+  servers see a success-only contract.
+- >-
+  No documented error shape for the STOMP WebSocket surface beyond the STOMP ERROR frame.

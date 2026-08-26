@@ -1,0 +1,77 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.rhombus.community/rhombus-cli.md
+name: Rhombus CLI
+binary: rhombus
+repository: https://github.com/RhombusSystems/rhombus-cli
+language: Go
+latest_version: v0.21.2
+released: '2026-08-05'
+official: true
+install:
+- method: homebrew
+  command: brew install RhombusSystems/tap/rhombus
+  tap: https://github.com/RhombusSystems/homebrew-tap
+- method: shell
+  command: curl -fsSL https://raw.githubusercontent.com/RhombusSystems/rhombus-cli/main/install.sh | sh
+- method: powershell
+  command: irm https://raw.githubusercontent.com/RhombusSystems/rhombus-cli/main/install.ps1 | iex
+- method: source
+  command: make install
+  requires: Go 1.26+
+authentication:
+- command: rhombus login
+  mode: oauth2-browser
+- command: rhombus configure
+  mode: stored-api-key
+- env: RHOMBUS_API_KEY
+  mode: environment-override
+global_flags:
+- flag: --profile
+  purpose: 'configuration profile (default: "default")'
+- flag: --output
+  purpose: output format — json, table, text
+- flag: --api-key
+  purpose: per-command API key override
+- flag: --endpoint-url
+  purpose: API region/target override (EU is https://api2.eu.rhombussystems.com)
+- flag: --partner-org
+  purpose: scope a call to a managed client org (partner/MSP multi-tenant use)
+command_surface:
+  generated_resource_commands: 62
+  generation_source: >-
+    auto-generated from the Rhombus OpenAPI spec — the CLI resource surface tracks the
+    952-operation public API rather than being hand-curated
+  shape: rhombus <resource> <operation> [flags]
+  example_resources:
+  - access-control
+  - camera
+  - door-controller
+  - event
+  - location
+  - user
+  - policy
+  - sensor
+composite_commands:
+- name: alert
+  purpose: manage recent alerts — thumbnails, video downloads, playback
+- name: footage
+  purpose: live view and time-specific footage access
+- name: monitor
+  purpose: real-time alert streaming over the STOMP WebSocket, with auto-reconnect
+  related: asyncapi/rhombus-systems-console-websocket-asyncapi.json
+- name: stitch
+  purpose: multi-camera video grid composition to a timestamped MP4 (requires ffmpeg)
+- name: analyze
+  purpose: frame extraction with activity metadata
+- name: context
+  purpose: deployment snapshots
+- name: chat
+  purpose: interactive natural-language interface over deployment state and CLI execution
+- name: voice
+  purpose: voice-driven natural-language interface
+key_flows:
+- name: stream alerts
+  command: rhombus monitor --json
+- name: stitch multi-camera footage
+  command: rhombus stitch --location "HQ" --start "2h ago"

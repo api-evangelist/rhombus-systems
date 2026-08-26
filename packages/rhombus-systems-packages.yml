@@ -1,0 +1,109 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  registry.npmjs.org, api.github.com/orgs/RhombusSystems, and
+  https://api-docs.rhombus.community/resources.md
+registries_probed:
+- npm
+- PyPI
+- Maven Central
+- crates.io
+- RubyGems
+packages:
+- language: javascript
+  registry: npm
+  name: "@rhombussystems/react"
+  url: https://www.npmjs.com/package/@rhombussystems/react
+  install: npm install @rhombussystems/react
+  official: true
+  version: 2.3.1
+  published: '2026-08-12'
+  repository: https://github.com/RhombusSystems/rhombus-react-sdk
+  license: MIT
+  description: React components for Rhombus video, audio playback, and two-way talkback
+- language: javascript
+  registry: npm
+  name: rhombus-node-mcp
+  url: https://www.npmjs.com/package/rhombus-node-mcp
+  install: npx -y rhombus-node-mcp
+  official: true
+  version: 0.1.56
+  published: '2026-06-30'
+  repository: https://github.com/RhombusSystems/rhombus-node-mcp
+  description: MCP server for the Rhombus API (local-stdio)
+- language: go
+  registry: github-releases
+  name: rhombus-cli
+  url: https://github.com/RhombusSystems/rhombus-cli
+  install: brew install RhombusSystems/tap/rhombus
+  official: true
+  version: v0.21.2
+  published: '2026-08-05'
+  repository: https://github.com/RhombusSystems/rhombus-cli
+  note: >-
+    Distributed as GitHub release binaries and a Homebrew tap
+    (github.com/RhombusSystems/homebrew-tap, formula rhombus.rb). Not published to a language
+    package registry, so there is no registry metadata endpoint; version and date are read from
+    the GitHub releases API.
+- language: docker
+  registry: oci
+  name: rhombussystems/mcp-server-rhombus
+  url: https://www.rhombus.com/.well-known/mcp/server-card.json
+  install: docker run -e RHOMBUS_API_KEY rhombussystems/mcp-server-rhombus
+  official: true
+  version: null
+  published: null
+  note: >-
+    Named on the provider's MCP server card. No anonymous tag-metadata endpoint was queried, so
+    version and publish date are recorded as null rather than guessed.
+examples_and_samples:
+- name: api-examples-python
+  url: https://github.com/RhombusSystems/api-examples-python
+  official: true
+  language: python
+  kind: examples
+  last_pushed: '2025-08-13'
+  note: Sample scripts, not a packaged SDK. Not published to PyPI.
+- name: rhombus-api-examples-java
+  url: https://github.com/RhombusSystems/rhombus-api-examples-java
+  official: true
+  language: java
+  kind: examples
+  last_pushed: '2022-01-18'
+- name: rhombus-api-examples-javascript
+  url: https://github.com/RhombusSystems/rhombus-api-examples-javascript
+  official: true
+  language: typescript
+  kind: examples
+  last_pushed: '2022-03-08'
+- name: rhombus-api-examples-codegen
+  url: https://github.com/RhombusSystems/rhombus-api-examples-codegen
+  official: true
+  language: shell
+  kind: codegen
+  last_pushed: '2021-06-21'
+  note: >-
+    OpenAPI-generator scaffolding. Rhombus's documented position is that consumers generate
+    their own client from the published OpenAPI 3.0 spec rather than consume a hand-written
+    per-language SDK; see https://api-docs.rhombus.community/resources.md.
+negative_findings:
+- registry: PyPI
+  query: rhombus
+  result: >-
+    A package named "rhombus" exists (0.1.0rc2, author "Annhilati",
+    github.com/annhilati/rhombus) but is UNRELATED to Rhombus Systems. Not recorded as official.
+- registry: PyPI
+  query: rhombus-api, rhombus-sdk
+  result: 404 — no first-party Python SDK is published.
+- registry: npm
+  query: "rhombus-cli, @rhombus/cli, @rhombus/react-sdk, rhombus-react-sdk"
+  result: 404 — the CLI ships via GitHub releases and Homebrew, not npm.
+summary:
+  official_packages: 4
+  official_sdks: 1
+  languages: [javascript, go, docker]
+  note: >-
+    One true client SDK (@rhombussystems/react, a UI/video embedding library), one CLI, one MCP
+    server, one container image. There is no first-party Python, Java, Go, Ruby, PHP or .NET
+    API client library — the codegen path from the published OpenAPI spec is the documented
+    substitute.

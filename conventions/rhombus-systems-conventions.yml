@@ -1,0 +1,251 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://www.rhombus.com/auth.md, https://www.rhombus.com/api/llms.txt,
+  https://api-docs.rhombus.community/rate-limits, https://api-docs.rhombus.community/VERSIONING.md,
+  derived from openapi/rhombus-systems-openapi.json
+transport:
+  protocol: JSON over HTTPS
+  base_url: https://api2.rhombussystems.com/api
+  regions:
+  - name: US
+    base_url: https://api2.rhombussystems.com
+    websocket: wss://ws.rhombussystems.com:8443/websocket
+  - name: EU
+    base_url: https://api2.eu.rhombussystems.com
+    websocket: wss://ws.eu.rhombussystems.com:8443/websocket
+    note: API keys are region-bound; see https://api-docs.rhombus.community/api-regions
+  http_method: >-
+    EVERY operation is POST, including pure reads. All 952 operations in the published spec use
+    POST with a JSON request body; send {} when an operation needs no parameters. There is no
+    GET/PUT/DELETE verb surface, so HTTP method carries no semantics and safety/idempotency
+    cannot be inferred from the verb — a consequential detail for any agent that assumes GET is
+    safe to retry.
+  content_type: application/json
+auth_style:
+  primary: api-key-header-pair
+  headers:
+  - x-auth-scheme
+  - x-auth-apikey
+  scheme_values:
+  - api-token
+  - partner-api-token
+  - api-oauth-token
+  oauth_headers:
+  - x-auth-scheme
+  - x-auth-access-token
+  partner_scoping_header: x-auth-org
+  detail: authentication/rhombus-systems-authentication.yml
+idempotency:
+  supported: false
+  mechanism: none
+  header: null
+  scope: null
+  retention: null
+  evidence: >-
+    The Rhombus API publishes NO general idempotency mechanism — there is no Idempotency-Key
+    header, no client-supplied request key, and no documented replay window. A full-text search
+    of the 5.3MB OpenAPI document returns exactly three occurrences of "idempotent", all of them
+    prose on a single integration family (createOrUpdateHoneywellOnGuardIntegration and
+    deleteHoneywellOnGuardIntegration), where the endpoint is naturally idempotent by design.
+  naturally_idempotent_operations:
+  - createOrUpdateHoneywellOnGuardIntegration
+  - deleteHoneywellOnGuardIntegration
+  agent_risk: >-
+    Because every operation is POST and no idempotency key exists, a retried write after a
+    network timeout can double-fire. Consequential write paths — unlockAccessControlledDoor,
+    activateLockdownForLocation, credential creation, threat-case dispatch — have no
+    deduplication guarantee from the provider.
+pagination:
+  style: opaque-cursor
+  request_fields:
+  - name: lastEvaluatedKey
+    occurrences: 75
+    note: >-
+      Opaque continuation token echoed from the previous response. DynamoDB-style; treat as
+      opaque and do not construct one.
+  - name: limit
+    occurrences: 29
+  - name: pageToken
+    occurrences: 2
+  - name: pageSize
+    occurrences: 1
+  response_fields:
+  - name: lastEvaluatedKey
+    note: present when more results remain; absent/null indicates the last page
+  - name: totalCount
+    occurrences: 10
+  - name: hasMore
+    occurrences: 1
+  time_window_filters:
+  - createdAfterMs
+  - createdBeforeMs
+  note: >-
+    Pagination is NOT uniform across the API. 75 of 4,038 schemas carry lastEvaluatedKey and only
+    a handful use pageToken/pageSize, so the convention must be read per operation from the spec
+    rather than assumed. Event and component queries additionally page by epoch-millisecond time
+    windows (createdAfterMs / createdBeforeMs) rather than by cursor.
+field_expansion:
+  supported: false
+  note: No sparse-fieldset, expand, or field-selection parameter is published.
+metadata:
+  supported: true
+  note: >-
+    User metadata is a first-class, org-configurable surface — see the User Metadata Webservice
+    (findUserMetadataFieldTemplates, findUserMetadataFields). This is domain metadata on users,
+    not a generic key/value bag attachable to arbitrary objects.
+request_id_tracing:
+  supported: false
+  header: null
+  note: >-
+    No request-id or correlation header is documented on responses. The API does expose a
+    domain-level correlation concept (findComponentEventsByCorrelation) for linking access-control
+    events, but that is data correlation, not request tracing.
+versioning:
+  scheme: unversioned
+  current_version: '1.0'
+  detail: >-
+    Rhombus publishes an explicit position: "The Rhombus API is currently unversioned — there is
+    a single version of all endpoints. No versioning mechanism is needed at this time."
+    Versioning is deferred until a breaking change, endpoint removal, auth-contract change, or
+    base-URL migration occurs.
+  in_practice: >-
+    Breaking changes are instead absorbed by parallel V2 operationIds alongside the originals
+    (getOrg / getOrgV2, getSAMLSettings / getSAMLSettingsV2, getOrgIntegrations /
+    getOrgIntegrationsV2, cancelSplice / cancelSpliceV2), with the superseded one sometimes
+    suffixed Dep. There is no header, path, or query version selector.
+  source: https://api-docs.rhombus.community/VERSIONING.md
+error_envelope:
+  format: vendor-json
+  rfc9457: false
+  note: >-
+    Errors are plain JSON, not application/problem+json. The document contains zero occurrences
+    of "problem+json". The envelope is not uniform — 401 uses a boolean flag shape while 403
+    uses a status/error/timestamp/msg shape.
+  shapes:
+  - status: 401
+    body: '{"authenticationFailed": true}'
+    header: 'WWW-Authenticate: Bearer resource_metadata="https://api2.rhombussystems.com/.well-known/oauth-protected-resource"'
+  - status: 403
+    body: '{"status": 403, "error": "Forbidden", "timestamp": ..., "msg": "Access Denied"}'
+  - status: 4xx
+    body: '{"error": ..., "msg": ...}'
+  detail: errors/rhombus-systems-problem-types.yml
+  spec_gap: >-
+    The published OpenAPI declares 948 x 200 responses and 4 default responses and NO 4xx or 5xx
+    responses at all. The error contract exists only in prose on auth.md, so an agent generating
+    a client from the spec alone gets no error model.
+rate_limit_signaling:
+  algorithm: token-bucket
+  scope: per-organization (shared across all API keys and OAuth tokens in the org)
+  exhaustion_status: 429
+  response_headers:
+  - Retry-After
+  quota_headers: []
+  note: >-
+    Retry-After is the only rate-limit header. Rhombus publishes NO X-RateLimit-* / RateLimit-*
+    quota headers, so an agent cannot see remaining budget before it is exhausted — it can only
+    react after a 429.
+  detail: rate-limits/rhombus-systems-rate-limits.yml
+dry_run_mode:
+  supported: partial
+  note: >-
+    No generic dry-run/preview/validate-only flag exists on write operations. Lockdown is the one
+    subsystem with a rehearsal path: enableLockdownTestModeForLocation /
+    disableLockdownTestModeForLocation let an operator exercise a lockdown plan without
+    triggering the real physical response.
+  operations:
+  - enableLockdownTestModeForLocation
+  - disableLockdownTestModeForLocation
+reversibility:
+  grade: documented
+  applicable: true
+  summary: >-
+    Rhombus exposes a broad and explicit reversal surface — 145 operations whose names encode an
+    undo (delete, revoke, cancel, deactivate, disable) — but publishes NO time window for any of
+    them. Every reversal below is a real, named operation verified in the spec; not one of them
+    has a documented window inside which it works, so this grades `documented` rather than
+    `verified`.
+  window_evidence: >-
+    No reversal window is stated anywhere in the OpenAPI document, auth.md, the rate-limits page,
+    or VERSIONING.md. No window is asserted here.
+  write_surfaces:
+  - surface: Door access
+    action: unlockAccessControlledDoor
+    reversal: null
+    window: null
+    note: >-
+      IRREVERSIBLE. A remote door unlock is a physical-world action with no undo operation. This
+      is the single most consequential write in the API and it has no reversal path at all.
+  - surface: Access control credential
+    action: createWiegandCredential / assignAccessControlCredential
+    reversal: revokeAccessControlCredential
+    reversal_secondary: deleteAccessControlCredential
+    window: null
+  - surface: Location access grant
+    action: createAccessGrant
+    reversal: deleteLocationAccessGrant
+    window: null
+  - surface: Access revocation
+    action: createAccessRevocation
+    reversal: deleteLocationAccessRevocation
+    window: null
+  - surface: Lockdown
+    action: activateLockdownForLocation
+    reversal: deactivateLockdownForLocation
+    reversal_secondary: deleteLocationLockdownState
+    window: null
+    rehearsal: enableLockdownTestModeForLocation
+  - surface: Lockdown plan
+    action: createLocationLockdownPlan
+    reversal: deleteLockdownPlan
+    window: null
+  - surface: Alarm monitoring threat case
+    action: escalateThreatCaseToAlarm
+    reversal: cancelThreatCase
+    reversal_tertiary: dismissThreatCase
+    reversal_secondary: deleteAlertMonitoringThreatCase
+    window: null
+    note: Cancelling a threat case that has already dispatched a responder is not the same as undoing the dispatch.
+  - surface: Monitoring enablement
+    action: enableMonitoringForLocation
+    reversal: disableMonitoringForLocation
+    window: null
+  - surface: Shared live video stream
+    action: createCameraSharedLiveVideoStream
+    reversal: deleteSharedLiveVideoStream
+    window: null
+    note: Revokes the public playback URL. No statement about links already distributed.
+  - surface: Shared video wall
+    action: createSharedVideoWall
+    reversal: deleteSharedVideoWall
+    window: null
+  - surface: Looping audio playback
+    action: (looping audio start, AudioPlayback Webservice)
+    reversal: cancelLoopingAudioPlayback
+    window: null
+  - surface: API token
+    action: (console-issued)
+    reversal: revokeApiToken
+    window: null
+    note: >-
+      auth.md states plainly that revoked or deleted API keys CANNOT be recovered — create a new
+      key. That is an explicit statement of irreversibility, not a window.
+  - surface: SCIM access
+    action: setupSCIMAccessForOrg
+    reversal: revokeSCIMAccessForOrg
+    window: null
+  - surface: Camera / device
+    action: (device claim)
+    reversal: deleteCamera
+    window: null
+    note: No restore/undelete operation exists anywhere in the API — deletion is terminal.
+  no_restore_path: >-
+    The API has zero restore, undelete, unarchive, reinstate, or recover operations. Reversal
+    means "delete/revoke the thing you created", never "bring back the thing you deleted".
+cross_links:
+  authentication: authentication/rhombus-systems-authentication.yml
+  errors: errors/rhombus-systems-problem-types.yml
+  lifecycle: lifecycle/rhombus-systems-lifecycle.yml
+  rate_limits: rate-limits/rhombus-systems-rate-limits.yml
+  events: asyncapi/rhombus-systems-console-websocket-asyncapi.json

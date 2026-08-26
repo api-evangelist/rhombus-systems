@@ -1,0 +1,69 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.json",
+  "name": "io.github.rhombussystems/rhombus-node-mcp",
+  "description": "Model Context Protocol server for the Rhombus physical-security platform. Exposes cameras, access control, sensors, alerts, and AI analytics from the Rhombus public API as tools for AI assistants.",
+  "version": "0.1.41",
+  "repository": {
+    "url": "https://github.com/RhombusSystems/rhombus-node-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://api-docs.rhombus.community/",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "rhombus-node-mcp",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "RHOMBUS_API_KEY",
+          "description": "Rhombus API key, created in the Rhombus Console under Settings > API Management (https://console.rhombus.com/settings/api-management)",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    },
+    {
+      "registryType": "oci",
+      "identifier": "rhombussystems/mcp-server-rhombus",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "RHOMBUS_API_KEY",
+          "description": "Rhombus API key, created in the Rhombus Console under Settings > API Management",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "name": "entity-lookup",
+      "description": "Look up Rhombus entities (cameras, sensors, doors, locations) by name or attribute"
+    },
+    {
+      "name": "get-entity",
+      "description": "Fetch full details for a specific Rhombus entity by ID"
+    },
+    {
+      "name": "get-org-information",
+      "description": "Retrieve organization-level information for the authenticated Rhombus account"
+    },
+    {
+      "name": "time-conversion",
+      "description": "Convert between timezones and timestamp formats for footage and event queries"
+    },
+    {
+      "name": "time",
+      "description": "Resolve natural-language times to timestamps for the Rhombus API"
+    },
+    {
+      "name": "user",
+      "description": "Look up Rhombus user profile information"
+    }
+  ]
+}

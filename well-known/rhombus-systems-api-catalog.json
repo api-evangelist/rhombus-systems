@@ -1,0 +1,40 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api2.rhombussystems.com/api",
+      "item": [
+        {
+          "href": "https://api2.rhombussystems.com/api/openapi/public.json",
+          "type": "application/json",
+          "title": "Rhombus Public API — OpenAPI 3.0 specification"
+        },
+        {
+          "href": "https://www.rhombus.com/auth.md",
+          "type": "text/markdown",
+          "title": "Rhombus API authentication guide for agents"
+        }
+      ],
+      "service-desc": [
+        {
+          "href": "https://api2.rhombussystems.com/api/openapi/public.json",
+          "type": "application/json",
+          "title": "Rhombus Public API — OpenAPI 3.0 specification"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://api-docs.rhombus.community/",
+          "type": "text/html",
+          "title": "Rhombus Developer Documentation"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://api2.rhombussystems.com/.well-known/oauth-protected-resource",
+          "type": "application/json",
+          "title": "OAuth 2.0 Protected Resource Metadata (RFC 9728)"
+        }
+      ]
+    }
+  ]
+}

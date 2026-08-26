@@ -1,0 +1,221 @@
+generated: '2026-08-26'
+method: derived
+source: openapi/rhombus-systems-openapi.json
+scale:
+  component_schemas: 4038
+  entity_shaped_schemas: 328
+  entity_shaped_rule: schemas carrying a self `uuid` property
+identity:
+  primary_key: uuid
+  format: UUID string
+  foreign_key_convention: >-
+    Relationships are expressed as flat `<entity>Uuid` string fields on the owning object rather
+    than as nested $refs or hypermedia links. There are no id PREFIXES (no obj_/cus_ style
+    namespacing), so a bare uuid does not disclose its own type — an agent must know from the
+    field name or the calling operation what an id refers to.
+  tenancy_key: orgUuid
+  tenancy_note: >-
+    orgUuid is the near-universal tenancy discriminator, present on the overwhelming majority of
+    entity schemas. Partner/MSP callers scope a request to a managed client org with the
+    x-auth-org header rather than by passing orgUuid.
+root_entities:
+- name: OrgV2Type
+  role: tenant root
+  properties: 57
+  note: Every other entity hangs off orgUuid.
+- name: LocationType
+  role: site
+  properties: 13
+  belongs_to: [Org]
+  has_one: [policyUuid]
+- name: WrappedRhombusOrgUserType
+  role: user
+  properties: 22
+  belongs_to: [Org]
+  references: [rhombusUserUuid]
+relationships:
+- from: AccessControlCredentialType
+  to: WrappedRhombusOrgUserType
+  type: belongs_to
+  via: userUuid
+- from: AccessControlCredentialType
+  to: AccessControlledDoorType
+  type: belongs_to
+  via: lastUsedAccessControlledDoorUuid
+  note: last-use pointer, not ownership
+- from: AccessControlCredentialType
+  to: LocationType
+  type: belongs_to
+  via: lastUsedLocationUuid
+- from: AccessControlCredentialType
+  to: OrgV2Type
+  type: belongs_to
+  via: orgUuid
+- from: AccessControlledDoorType
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: AccessControlledDoorType
+  to: FullDeviceStateType
+  type: belongs_to
+  via: ownerDeviceUuid
+  note: a logical door is owned by a physical door-controller device
+- from: AccessControlledDoorType
+  to: PolicyType
+  type: has_one
+  via: policyUuid
+- from: AccessControlledElevatorLanding
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: AccessControlledElevator
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: LocationAccessGrantType
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: LocationAccessGrantType
+  to: WeeklyRepeatingScheduleType
+  type: has_one
+  via: scheduleUuid
+- from: LocationAccessRevocationType
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: LocationAccessRevocationType
+  to: WeeklyRepeatingScheduleType
+  type: has_one
+  via: scheduleUuid
+- from: ComponentEventType
+  to: FullDeviceStateType
+  type: belongs_to
+  via: ownerDeviceUuid
+- from: ComponentEventType
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: ComponentSeekPointType
+  to: ComponentEventType
+  type: belongs_to
+  via: componentUuid
+- from: PolicyAlertV2Type
+  to: RuleType
+  type: belongs_to
+  via: ruleUuid
+- from: PolicyAlertV2Type
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: PolicyAlertV2Type
+  to: IncidentReport
+  type: belongs_to
+  via: alertMonitoringThreatCaseUuid
+- from: RuleType
+  to: OrgV2Type
+  type: belongs_to
+  via: orgUuid
+- from: IncidentReport
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: IncidentReportAnnotation
+  to: IncidentReport
+  type: belongs_to
+  via: reportUuid
+- from: IncidentReportNote
+  to: IncidentReport
+  type: belongs_to
+  via: reportUuid
+- from: Facerecognition_faceevent_ExternalFaceEvent
+  to: Person
+  type: belongs_to
+  via: personUuid
+- from: Facerecognition_faceevent_ExternalFaceEvent
+  to: FullDeviceStateType
+  type: belongs_to
+  via: deviceUuid
+- from: VehicleEventIndexType
+  to: FullDeviceStateType
+  type: belongs_to
+  via: deviceUuid
+- from: Guest
+  to: WrappedRhombusOrgUserType
+  type: belongs_to
+  via: hostUserUuid
+- from: GuestInvite
+  to: Guest
+  type: belongs_to
+  via: guestUuid
+- from: LocationAccessControlGuestPass
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: BaseLockdownPlanType
+  to: LocationType
+  type: belongs_to
+  via: scopeUuid
+- from: UserPermissionGroupType
+  to: OrgV2Type
+  type: belongs_to
+  via: orgUuid
+- from: OrgGroupType
+  to: LocationType
+  type: belongs_to
+  via: locationUuid
+- from: BadgeTemplate
+  to: OrgV2Type
+  type: belongs_to
+  via: orgUuid
+- from: AIReport
+  to: WeeklyRepeatingScheduleType
+  type: has_one
+  via: scheduleUuid
+- from: ChatRecord
+  to: AutomatedPrompt
+  type: belongs_to
+  via: automatedPromptUuid
+most_referenced_entities:
+- {name: AccessControlCredentialType, internal_refs: 44}
+- {name: ComponentEventType, internal_refs: 20}
+- {name: WeeklyRepeatingScheduleType, internal_refs: 18}
+- {name: AccessControlledDoorType, internal_refs: 16}
+- {name: LocationAccessGrantType, internal_refs: 13}
+- {name: RuleType, internal_refs: 13}
+- {name: ScheduledIntervalType, internal_refs: 13}
+- {name: LocationAccessControlGuestPass, internal_refs: 11}
+- {name: LocationAccessRevocationType, internal_refs: 11}
+- {name: AccessControlledElevatorLanding, internal_refs: 10}
+domains:
+- name: Organization and tenancy
+  root: OrgV2Type
+  entities: [OrgV2Type, LocationType, OrgGroupType, WrappedRhombusOrgUserType, UserPermissionGroupType, UserMetadataFieldTemplate]
+- name: Access control
+  entities: [AccessControlCredentialType, AccessControlledDoorType, LocationAccessGrantType, LocationAccessRevocationType, AccessControlledElevator, AccessControlledElevatorLanding, DoorScheduleExceptionType, BadgeTemplate]
+- name: Devices and components
+  entities: [FullDeviceStateType, ComponentEventType, ComponentSeekPointType]
+- name: Policy and alerting
+  entities: [RuleType, PolicyAlertV2Type, BasePolicyAlertType, BaseLockdownPlanType]
+- name: Incident and alarm monitoring
+  entities: [IncidentReport, IncidentReportAnnotation, IncidentReportNote, AlertMonitoringPIN, NoonlightScheduleType]
+- name: AI analytics
+  entities: [Person, Facerecognition_faceevent_ExternalFaceEvent, VehicleEventIndexType]
+- name: Guests and visitors
+  entities: [Guest, GuestInvite, LocationAccessControlGuestPass, LocationGuestPassAccessPeriod]
+- name: Scheduling
+  entities: [WeeklyRepeatingScheduleType, ScheduledIntervalType, AbsoluteSecondsScheduleType, RealtimeRelativeSecondsScheduleType, RelativeDateTimeIntervalsScheduleType]
+observations:
+- >-
+  Scheduling is a shared cross-cutting entity, not a per-domain field: access grants,
+  revocations, AI reports, automated prompts and Noonlight monitoring all point at the same
+  schedule types via scheduleUuid. Five distinct schedule shapes exist for different recurrence
+  semantics.
+- >-
+  The schema-to-entity ratio is extreme — 4,038 component schemas for 328 entity-shaped objects.
+  Most schemas are per-operation request/response wrappers rather than domain entities, which is
+  what an auto-generated Java/Spring contract of this size looks like.
+- >-
+  There is no hypermedia. No $ref-based links, no self URLs, no HAL/JSON:API envelope. Traversal
+  is: read a uuid off one object, then call the operation that accepts it.
+render: null

@@ -1,0 +1,61 @@
+generated: '2026-08-26'
+method: searched
+source: https://www.rhombus.com/trust/
+url: https://www.rhombus.com/trust/
+status: 200
+portal: false
+portal_note: >-
+  This is a marketing trust PAGE, not a trust portal. There is no Vanta/Drata/SafeBase-style
+  portal, no downloadable or request-gated report flow, no subprocessor list, and no audit
+  period or Type designation. security.txt names this same URL as its Policy.
+certifications:
+- name: SOC 2
+  type: null
+  claim: Security compliance and adherence to SOC2 standards to ensure data security
+  report_available: false
+  note: No Type I / Type II designation and no audit period published.
+- name: GDPR
+  claim: Stay in full compliance with GDPR data processing agreements
+- name: HIPAA
+  claim: Maintain HIPAA compliance using Rhombus as a tool to ensure the protection of PHI
+- name: PCI
+  claim: Meet PCI standards by protecting cardholder data and sensitive authentication data
+- name: BIPA
+  claim: Comply with BIPA regarding the collection and storage of biometric information
+  note: >-
+    Material for this provider specifically — Rhombus ships face recognition
+    (Face Recognition Matchmaker / Person / Event webservices, 21 operations) and BIPA governs
+    biometric identifiers.
+- name: PIPEDA
+  claim: Meet PIPEDA regulations on how businesses collect, use, and disclose such data
+- name: CMMC
+  claim: Comply with DoD cybersecurity standards for defense industrial base (DIB) contractors
+- name: NIST
+  claim: Comply with the strictest cybersecurity & data privacy standards in the US
+- name: CJIS
+  claim: Adhere to standards set by criminal justice and law enforcement for securing CJI data
+- name: NDAA
+  claim: All hardware procured from white-listed manufacturers for cybersecurity purposes
+  category: hardware supply chain
+- name: TAA
+  claim: Hardware sourced exclusively from white-listed countries for cybersecurity purposes
+  category: hardware supply chain
+security_claims:
+- End-to-end encryption across media, video, and cloud communication
+- Automatic security updates with firmware deployment and health monitoring
+- In-house hardware engineering with up to a 10-year warranty
+vulnerability_disclosure:
+  program: true
+  detail: security/rhombus-systems-vulnerability-disclosure.yml
+  contact: mailto:security@rhombussystems.com
+  policy: https://www.rhombus.com/trust/
+  bug_bounty: false
+  bug_bounty_note: >-
+    No HackerOne, Bugcrowd or Intigriti program was found. Disclosure is via the security.txt
+    contact address only.
+  penetration_testing_statement: false
+gaps:
+- No SOC 2 Type designation, audit period, or auditor named.
+- No report request or NDA flow — a buyer cannot obtain evidence from the public surface.
+- No subprocessor list and no data-residency page, despite the API offering a distinct EU region.
+- No published penetration-testing cadence.
