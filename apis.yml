@@ -12,6 +12,18 @@ description: >-
   contract for its STOMP-over-WebSocket change-event stream, an RFC 9727 API catalog, RFC 9728/8414
   OAuth discovery, an A2A agent card, an llms.txt family, a Model Context Protocol server, a Go CLI,
   a React SDK, and a published Claude Code skills library.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://rhombus.com/img/meta-homepage.png
 url: https://raw.githubusercontent.com/api-evangelist/rhombus-systems/refs/heads/main/apis.yml
 x-type: company
@@ -1006,6 +1018,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/rhombus-systems-capability-edges.yml
+  name: Rhombus Systems Business Capability Map
 - type: Overlay
   url: overlays/rhombus-systems-openapi-overlay.yaml
 - type: VulnerabilityDisclosure
