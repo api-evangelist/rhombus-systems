@@ -1,0 +1,847 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Event Search Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Event Search Webservice
+paths:
+  /api/eventSearch/getCameraOrDoorbellCameraSeekpoints:
+    post:
+      deprecated: true
+      description: Get camera or doorbell camera seekpoints
+      operationId: getCameraOrDoorbellCameraSeekpoints
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Common_devices_GetCameraOrDoorbellCameraSeekpointsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eventsearch_GetCameraOrDoorbellCameraSeekpointsWSResponse'
+          description: OK
+      summary: Get camera or doorbell camera seekpoints
+      tags:
+      - Event Search Webservice
+  /api/eventSearch/getEventSeekpoints:
+    post:
+      deprecated: true
+      description: Get normal seekpoint events and access control seekpoint events
+      operationId: getDeprecatedEventSeekpoints
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Eventsearch_GetEventSeekpointsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eventsearch_GetEventSeekpointsWSResponse'
+          description: OK
+      summary: Get normal seekpoint events and access control seekpoint events
+      tags:
+      - Event Search Webservice
+components:
+  schemas:
+    Component_FindComponentSeekPointsByAccessControlledDoorsWSRequest:
+      type: object
+      description: Component seekpoints search for access controlled doors
+      properties:
+        accessControlledDoorUuidList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sortResponse:
+          type:
+          - boolean
+          - 'null'
+        startTimeSecEpochExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Eventsearch_CombinedSeekPointType:
+      type: object
+      description: Combined seekpoint type containing information from various event sources including timestamps, activities, and metadata.
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        cameraUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        cardholderName:
+          type:
+          - string
+          - 'null'
+          description: Cardholder (badge holder) name for OnGuard integration seekpoints
+          example: Jane Doe
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
+          type:
+          - string
+          - 'null'
+          description: Custom description for the activity
+          example: A person was detected in the camera view
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+          description: Custom display name for the activity
+          example: Person Detected
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the detected person is dwelling/loitering
+        faceName:
+          type:
+          - string
+          - 'null'
+          description: Name of the face detected in this seekpoint
+          example: John Doe
+        licensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate detected in this seekpoint
+          example: ABC123
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Object ID for tracking purposes
+          example: 12345
+        originalEvent:
+          type:
+          - object
+          - 'null'
+          description: Original event object that generated this seekpoint
+        regionMatchTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds of the earliest motion evidence inside the searched region for this seekpoint. Only populated when the request includes searchCells and this seekpoint matched the region. May trail timestampMs, which reflects the start of the underlying motion event rather than when the region was entered.
+          example: 1640995215000
+        seekpointEndTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for the seekpoint duration
+          example: 1640995300000
+        seekpointStartTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the seekpoint duration
+          example: 1640995200000
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Stable track ID for re-identification across track segments
+          example: 42
+        thumbnailUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to the thumbnail image for this seekpoint
+          example: https://example.com/thumbnail.jpg
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds when the seekpoint occurred
+          example: 1640995200000
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+          description: ID for unidentified faces
+          example: face_12345
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    Eventsearch_GetEventSeekpointsWSRequest:
+      type: object
+      description: Request object for retrieving event seekpoints with various search criteria and filtering options.
+      properties:
+        activitySet:
+          type:
+          - array
+          - 'null'
+          description: Set of activity types to filter seekpoints by
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        componentSeekPointsByAccessControlledDoorWSRequest:
+          $ref: '#/components/schemas/Component_FindComponentSeekPointsByAccessControlledDoorWSRequest'
+        componentSeekPointsByAccessControlledDoorsWSRequest:
+          $ref: '#/components/schemas/Component_FindComponentSeekPointsByAccessControlledDoorsWSRequest'
+        componentSeekPointsByOwnerDeviceWSRequest:
+          $ref: '#/components/schemas/Component_FindComponentSeekPointsByOwnerDeviceWSRequest'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the search window
+          example: 3600
+        searchColorAndVehicleByColorWSRequest:
+          $ref: '#/components/schemas/Eventsearch_SearchClothingAndVehicleByColorWSRequest'
+        searchMotionGridWithActivitiesWSRequest:
+          $ref: '#/components/schemas/Event_SearchMotionGridWithActivitiesWSRequest'
+        seekpointsWSRequest:
+          $ref: '#/components/schemas/Common_devices_GetSeekpointsWSRequest'
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the search window
+          example: 1640995200
+        videoFootageWSRequest:
+          $ref: '#/components/schemas/Eventsearch_VideoFootageWSRequest'
+    ColorEnum:
+      type: string
+      description: Set of colors to filter by
+      enum:
+      - BLACK
+      - BLUE
+      - BROWN
+      - GRAYWHITE
+      - GREEN
+      - ORANGE
+      - PINK
+      - PURPLE
+      - RED
+      - YELLOW
+      - UNKNOWN
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    Event_SearchMotionGridWithActivitiesWSRequest:
+      type: object
+      description: Request object for searching motion grid data with activity information.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time as a UNIX timestamp in seconds
+          example: 1641081600
+        searchCells:
+          type:
+          - array
+          - 'null'
+          description: List of motion grid cells to include in the search
+          items:
+            $ref: '#/components/schemas/Event_FrontendCell'
+        startTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time as a UNIX timestamp in seconds
+          example: 1640995200
+      required:
+      - deviceUuid
+      - endTimeUtcSecs
+      - searchCells
+      - startTimeUtcSecs
+    Event_FrontendCell:
+      type: object
+      description: Represents a cell in the motion grid with column and row coordinates.
+      properties:
+        col:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Column coordinate of the cell
+          example: 5
+        row:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Row coordinate of the cell
+          example: 3
+    Eventsearch_SearchClothingAndVehicleByColorWSRequest:
+      type: object
+      description: Request object for searching clothing and vehicle events by color with time and device filtering.
+      properties:
+        clothingColorFilter:
+          type:
+          - array
+          - 'null'
+          description: Set of clothing colors to filter the search by
+          items:
+            $ref: '#/components/schemas/ColorEnum'
+          uniqueItems: true
+        deviceFilter:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to filter the search by
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for the search window
+          example: 1641081600000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the search window
+          example: 1640995200000
+        vehicleColorFilter:
+          type:
+          - array
+          - 'null'
+          description: Set of vehicle colors to filter the search by
+          items:
+            $ref: '#/components/schemas/ColorEnum'
+          uniqueItems: true
+    Common_devices_GetSeekpointsWSRequest:
+      type: object
+      description: General seekpoints search request parameters
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        includeAnyMotion:
+          type:
+          - boolean
+          - 'null'
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Component_FindComponentSeekPointsByOwnerDeviceWSRequest:
+      type: object
+      description: Component seekpoints search for owner device
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ownerDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeSecEpochExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Eventsearch_GetEventSeekpointsWSResponse:
+      type: object
+      description: Response object containing combined seekpoints from various event sources.
+      properties:
+        combinedSeekpoints:
+          type:
+          - array
+          - 'null'
+          description: List of combined seekpoints from various event sources
+          items:
+            $ref: '#/components/schemas/Eventsearch_CombinedSeekPointType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Eventsearch_GetCameraOrDoorbellCameraSeekpointsWSResponse:
+      type: object
+      description: Response object containing seekpoints from camera or doorbell camera events.
+      properties:
+        combinedSeekpoints:
+          type:
+          - array
+          - 'null'
+          description: List of combined seekpoints from camera or doorbell camera events
+          items:
+            $ref: '#/components/schemas/Eventsearch_CombinedSeekPointType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Eventsearch_VideoFootageWSRequest:
+      type: object
+      description: Request object for video footage search with camera selection and multi-camera options.
+      properties:
+        cameraUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        cameraUuids:
+          type:
+          - array
+          - 'null'
+          description: List of camera UUIDs to search for video footage
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds
+          example: 3600
+        includeAnyMotion:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to include any motion events
+          example: true
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds since epoch
+          example: 1640995200
+        useMultiCamera:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to use multi-camera search functionality
+          example: true
+    Common_devices_GetCameraOrDoorbellCameraSeekpointsWSRequest:
+      type: object
+      properties:
+        activitySet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        includeAnyMotion:
+          type:
+          - boolean
+          - 'null'
+        seekpointDurationIntervalSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Component_FindComponentSeekPointsByAccessControlledDoorWSRequest:
+      type: object
+      description: Component seekpoints search for access controlled door
+      properties:
+        accessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        startTimeSecEpochExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

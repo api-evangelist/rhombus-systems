@@ -1,0 +1,858 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Sensor Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Sensor Webservice
+paths:
+  /api/sensors/getFootageSensorSeekpointsForCamera:
+    post:
+      description: Retrieves sensor activity seekpoints for a specific camera within a given time range. Returns footage seekpoints that correspond to sensor events detected by the camera.
+      operationId: getSensorFootageSensorSeekpointsForCamera
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sensor_GetFootageSensorSeekpointsForCameraWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sensor_GetFootageSensorSeekpointsForCameraWSResponse'
+          description: OK
+      summary: Get sensor activity seekpoints for camera
+      tags:
+      - Sensor Webservice
+  /api/sensors/getFootageSensorSeekpointsForLocation:
+    post:
+      description: Retrieves sensor activity seekpoints for a specific location within a given time range. Returns footage seekpoints that correspond to sensor events detected at the specified location.
+      operationId: getFootageSensorSeekpointsForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sensor_GetFootageSensorSeekpointsForLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sensor_GetFootageSensorSeekpointsForLocationWSResponse'
+          description: OK
+      summary: Get sensor activity seekpoints for location
+      tags:
+      - Sensor Webservice
+  /api/sensors/getFootageSensorSeekpointsForSensor:
+    post:
+      description: Retrieves sensor activity seekpoints for a specific sensor within a given time range. Returns footage seekpoints that correspond to events detected by the specified sensor device.
+      operationId: getFootageSensorSeekpointsForSensor
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sensor_GetFootageSensorSeekpointsForSensorWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sensor_GetFootageSensorSeekpointsForSensorWSResponse'
+          description: OK
+      summary: Get sensor activity seekpoints for sensor
+      tags:
+      - Sensor Webservice
+components:
+  schemas:
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    Sensor_GetFootageSensorSeekpointsForLocationWSRequest:
+      type: object
+      description: Request object for getting sensor seekpoints for a location.
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the query period
+          example: 3600
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the query period
+          example: 1640995200
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    Sensor_GetFootageSensorSeekpointsForCameraWSRequest:
+      type: object
+      description: Request object for getting sensor seekpoints for a camera.
+      properties:
+        cameraUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the query period
+          example: 3600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the query period
+          example: 1640995200
+    Sensor_GetFootageSensorSeekpointsForSensorWSResponse:
+      type: object
+      description: Response object for getting sensor seekpoints for a specific sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        footageSeekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of footage seekpoints for the sensor
+          items:
+            $ref: '#/components/schemas/FootageSeekPointV2Type'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of sensor seekpoints for the sensor
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Sensor_GetFootageSensorSeekpointsForSensorWSRequest:
+      type: object
+      description: Request object for getting sensor seekpoints for a specific sensor.
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the query period
+          example: 3600
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the query period
+          example: 1640995200
+    Sensor_GetFootageSensorSeekpointsForLocationWSResponse:
+      type: object
+      description: Response object for getting sensor seekpoints for a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of sensor seekpoints for the location
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ToastCheckInfo:
+      type: object
+      properties:
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+    Sensor_GetFootageSensorSeekpointsForCameraWSResponse:
+      type: object
+      description: Response object for getting sensor seekpoints for a camera.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of sensor seekpoints for the camera
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Sensor_FootageSensorSeekPointDisplayType:
+      type: object
+      description: Display type for sensor seekpoints with sensor name information.
+      properties:
+        a:
+          $ref: '#/components/schemas/ActivityEnum'
+        al:
+          type:
+          - boolean
+          - 'null'
+          description: alerted on this?
+        cd:
+          type:
+          - string
+          - 'null'
+          description: Custom activity display description, maximum 100 characters
+        cdn:
+          type:
+          - string
+          - 'null'
+          description: custom activity display name
+        co2:
+          type:
+          - number
+          - 'null'
+          format: float
+        cu:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        ethanol:
+          type:
+          - number
+          - 'null'
+          format: float
+        h:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: humidity
+        heatIndexDegF:
+          type:
+          - number
+          - 'null'
+          format: double
+        hp:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: humidity percent in 16.16 fixed point
+        iaq:
+          type:
+          - number
+          - 'null'
+          format: float
+        lu:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pm25:
+          type:
+          - number
+          - 'null'
+          format: float
+        probeTempC:
+          type:
+          - number
+          - 'null'
+          format: float
+        sn:
+          type:
+          - string
+          - 'null'
+          description: Name of the sensor
+          example: Motion Sensor 1
+        su:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        t:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: temperature
+        tc:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: temperature in Celsius in 16.16 fixed point
+        thcPercent:
+          type:
+          - number
+          - 'null'
+          format: float
+        ts:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: timestamp in milliseconds since epoch
+        tvoc:
+          type:
+          - number
+          - 'null'
+          format: float
+        vapeSmokePercent:
+          type:
+          - number
+          - 'null'
+          format: float
+      required:
+      - a
+      - ts
+    FootageSeekPointV2Type:
+      type: object
+      description: List of shared footage seekpoints (deprecated)
+      properties:
+        a:
+          $ref: '#/components/schemas/ActivityEnum'
+        ae:
+          type:
+          - string
+          - 'null'
+          description: area being entered
+        al:
+          type:
+          - boolean
+          - 'null'
+          description: alerted on this?
+        ax:
+          type:
+          - string
+          - 'null'
+          description: area being exited
+        bs:
+          type:
+          - string
+          - 'null'
+          description: badge status (e.g. Active, Lost)
+        bt:
+          type:
+          - string
+          - 'null'
+          description: badge type
+        cc:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        cd:
+          type:
+          - string
+          - 'null'
+          description: Custom activity display description, maximum 100 characters
+        cdn:
+          type:
+          - string
+          - 'null'
+          description: Custom activity display name, maximum 32 characters
+        ch:
+          type:
+          - string
+          - 'null'
+          description: badge holder's name
+        dcao:
+          type:
+          - boolean
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        em:
+          type:
+          - boolean
+          - 'null'
+          description: access granted and entry made (false = no entry / possible tailgating)
+        fn:
+          type:
+          - string
+          - 'null'
+          description: face names
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lp:
+          type:
+          - string
+          - 'null'
+          description: license plate
+        m:
+          type:
+          - boolean
+          - 'null'
+          description: object in motion?
+        p:
+          type:
+          - string
+          - 'null'
+          description: pose
+        ro:
+          type:
+          - array
+          - 'null'
+          description: recognized objects
+          items:
+            type:
+            - string
+            - 'null'
+            description: recognized objects
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toi:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        ts:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: timestamp
+        tu:
+          type:
+          - string
+          - 'null'
+        uf:
+          type:
+          - string
+          - 'null'
+          description: FaceId for an unidentified face
+        vn:
+          type:
+          - string
+          - 'null'
+          description: vehicle name
+      required:
+      - a
+      - ts
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

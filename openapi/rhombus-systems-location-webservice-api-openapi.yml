@@ -1,0 +1,1082 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Location Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Location Webservice
+paths:
+  /api/location/addLocationLabel:
+    post:
+      description: Add a label to a location
+      operationId: addLocationLabel
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_AddLocationLabelWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_AddLocationLabelWSResponse'
+          description: OK
+      summary: Add location label
+      tags:
+      - Location Webservice
+  /api/location/createLocation:
+    post:
+      description: Create a location
+      operationId: createlocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_CreateLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_CreateLocationWSResponse'
+          description: OK
+      summary: Create location
+      tags:
+      - Location Webservice
+  /api/location/deleteLocation:
+    post:
+      description: Remove a location
+      operationId: deleteLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_DeleteLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_DeleteLocationWSResponse'
+          description: OK
+      summary: Delete location
+      tags:
+      - Location Webservice
+  /api/location/geoCode:
+    post:
+      description: Get the latitude and longitude of an address
+      operationId: geoCode
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_GeoCodeWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_GeoCodeWSResponse'
+          description: OK
+      summary: Geocode address
+      tags:
+      - Location Webservice
+  /api/location/getLocation:
+    post:
+      description: Get location by id
+      operationId: getLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_GetLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_GetLocationWSResponse'
+          description: OK
+      summary: Get location
+      tags:
+      - Location Webservice
+  /api/location/getLocationLabelsForOrg:
+    post:
+      description: Get all location labels for an organization
+      operationId: getLocationLabelsForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_GetLocationLabelsForOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_GetLocationLabelsForOrgWSResponse'
+          description: OK
+      summary: Get location labels for org
+      tags:
+      - Location Webservice
+  /api/location/getLocations:
+    post:
+      description: Get list of locations in organization
+      operationId: getLocations
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_GetLocationsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_GetLocationsWSResponse'
+          description: OK
+      summary: Get locations
+      tags:
+      - Location Webservice
+  /api/location/getLocationsAssociatedToLocationLabelsByOrg:
+    post:
+      description: Get all locations associated to location labels for an organization
+      operationId: getLocationsAssociatedToLocationLabelsByOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_GetLocationLabelsForOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_GetLocationLabelsForOrgWSResponse'
+          description: OK
+      summary: Get locations by labels
+      tags:
+      - Location Webservice
+  /api/location/getLocationsByGeo:
+    post:
+      description: Get list of locations given latitude and longitude
+      operationId: getLocationsByGeo
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_GetLocationsByGeoRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_GetLocationsByGeoResponse'
+          description: OK
+      summary: Get locations by geo
+      tags:
+      - Location Webservice
+  /api/location/getLocationsBySubLocationsHierarchyKey:
+    post:
+      description: Get nested locations by subLocationHierarchyKey
+      operationId: getLocationsBySubLocationsHierarchyKey
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_GetLocationsBySubLocationsHierarchyKeyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_GetLocationsBySubLocationsHierarchyKeyWSResponse'
+          description: OK
+      summary: Get locations by hierarchy key
+      tags:
+      - Location Webservice
+  /api/location/removeLocationLabel:
+    post:
+      description: Remove a label from a location
+      operationId: removeLocationLabel
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_RemoveLocationLabelWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_RemoveLocationLabelWSResponse'
+          description: OK
+      summary: Remove location label
+      tags:
+      - Location Webservice
+  /api/location/selectiveUpdateLocation:
+    post:
+      description: Selectively update a location
+      operationId: selectiveUpdateLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_SelectiveUpdateLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_SelectiveUpdateLocationWSResponse'
+          description: OK
+      summary: Selective update location
+      tags:
+      - Location Webservice
+  /api/location/updateLocation:
+    post:
+      description: 'Update a location **NOTE: This will replace old settings meaning if you leave a field blank it will be overrode to blank. For selective field updates use the endpoint /selectiveUpdateLocation'
+      operationId: updateLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location_UpdateLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location_UpdateLocationWSResponse'
+          description: OK
+      summary: Update location
+      tags:
+      - Location Webservice
+components:
+  schemas:
+    Location_GetLocationWSResponse:
+      type: object
+      description: Response object containing location information.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        location:
+          $ref: '#/components/schemas/LocationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_CreateLocationWSResponse:
+      type: object
+      description: Response object for creating a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationsWSRequest:
+      type: object
+      description: Request object for getting list of locations in organization.
+      properties:
+        subLocationsIncluded:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to include sub-locations in the response
+          example: false
+    Location_UpdateLocationWSRequest:
+      type: object
+      description: 'Request object for updating a location. NOTE: This will replace old settings meaning if you leave a field blank it will be overrode to blank. For selective field updates use the endpoint /selectiveUpdateLocation.'
+      properties:
+        location:
+          $ref: '#/components/schemas/LocationType'
+    Location_SelectiveUpdateLocationWSResponse:
+      type:
+      - object
+      - 'null'
+      description: Response object for selectively updating a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationWSRequest:
+      type: object
+      description: Request object for getting location by ID.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsRequired:
+          type:
+          - boolean
+          - 'null'
+          description: Whether sub-locations are required in the response
+          example: false
+      required:
+      - locationUuid
+    Location_SelectiveUpdateLocationWSRequest:
+      type: object
+      description: Request object for selectively updating a location.
+      properties:
+        address1:
+          type:
+          - string
+          - 'null'
+          description: First line of the address
+        address2:
+          type:
+          - string
+          - 'null'
+          description: Second line of the address
+        countryCode:
+          type:
+          - string
+          - 'null'
+          description: Country code of the location
+        floorPlans:
+          type:
+          - array
+          - 'null'
+          description: Floor plans for the location
+          items:
+            $ref: '#/components/schemas/FloorPlanType'
+        labels:
+          type:
+          - array
+          - 'null'
+          description: Labels offer a way to perform operations across multiple locations if they have the same label
+          items:
+            type:
+            - string
+            - 'null'
+            description: Labels offer a way to perform operations across multiple locations if they have the same label
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the location
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the location
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of this location
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: Postal code of the location
+        timezoneId:
+          type:
+          - string
+          - 'null'
+          description: Timezone identifier, e.g. America/Los_Angeles, EST, GMT+0, etc.
+        tz:
+          type:
+          - object
+          - 'null'
+          description: Use timezoneId field instead
+          properties:
+            displayName:
+              type:
+              - string
+              - 'null'
+            dstsavings:
+              type:
+              - integer
+              - 'null'
+              format: int32
+            id:
+              type:
+              - string
+              - 'null'
+            rawOffset:
+              type:
+              - integer
+              - 'null'
+              format: int32
+      required:
+      - locationUuid
+    Location_GetLocationsByGeoRequest:
+      type: object
+      description: Request object for getting list of locations given latitude and longitude.
+      properties:
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate
+          example: 37.7749
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate
+          example: -122.4194
+    Location_UpdateLocationWSResponse:
+      type: object
+      description: Response object for updating a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_CreateLocationWSRequest:
+      type: object
+      description: Request object for creating a location.
+      properties:
+        location:
+          $ref: '#/components/schemas/LocationType'
+        parentLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Location_GetLocationsBySubLocationsHierarchyKeyWSRequest:
+      type: object
+      description: Request object for getting nested locations by subLocationHierarchyKey.
+      properties:
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Location_AddLocationLabelWSResponse:
+      type: object
+      description: Response object for adding a label to a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationLabelsForOrgWSRequest:
+      type: object
+      description: Request object for getting all location labels for an organization.
+    FloorPlanType:
+      type: object
+      properties:
+        eastEdge:
+          type:
+          - number
+          - 'null'
+          format: double
+        floorLabel:
+          type:
+          - string
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          format: url
+        mediaUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        northEdge:
+          type:
+          - number
+          - 'null'
+          format: double
+        rotation:
+          type:
+          - number
+          - 'null'
+          format: double
+        southEdge:
+          type:
+          - number
+          - 'null'
+          format: double
+        westEdge:
+          type:
+          - number
+          - 'null'
+          format: double
+    Location_RemoveLocationLabelWSRequest:
+      type: object
+      description: Request object for removing a label from a location.
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: Label to remove from the location
+        locationIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Location identifier (name or ID)
+    Location_AddLocationLabelWSRequest:
+      type: object
+      description: Request object for adding a label to a location.
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: Label to add to the location
+        locationIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Location identifier (name or ID)
+    Location_GetLocationLabelsForOrgWSResponse:
+      type: object
+      description: Response object containing all location labels for an organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locationLabels:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location name or location id to label set
+            items:
+              type:
+              - string
+              - 'null'
+              description: Map of location name or location id to label set
+            uniqueItems: true
+          description: Map of location name or location id to label set
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    LocationType:
+      type: object
+      description: Location information to update
+      properties:
+        address1:
+          type:
+          - string
+          - 'null'
+        address2:
+          type:
+          - string
+          - 'null'
+        countryCode:
+          type:
+          - string
+          - 'null'
+        floorPlans:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FloorPlanType'
+        labels:
+          type:
+          - array
+          - 'null'
+          description: Labels offer a way to perform operations across multiple locations if they have the same label
+          items:
+            type:
+            - string
+            - 'null'
+            description: Labels offer a way to perform operations across multiple locations if they have the same label
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of this location
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        postalCode:
+          type:
+          - string
+          - 'null'
+        subLocations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LocationType'
+          uniqueItems: true
+        tz:
+          type:
+          - string
+          - 'null'
+          description: Timezone for this location
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Location_DeleteLocationWSRequest:
+      type: object
+      description: Request object for removing a location.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Location_GetLocationsByGeoResponse:
+      type: object
+      description: Response object containing list of locations given latitude and longitude.
+      properties:
+        locations:
+          type:
+          - array
+          - 'null'
+          description: Collection of locations found at the specified coordinates
+          items:
+            $ref: '#/components/schemas/LocationType'
+    Location_RemoveLocationLabelWSResponse:
+      type: object
+      description: Response object for removing a label from a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GeoCodeWSResponse:
+      type: object
+      description: Response object containing the latitude and longitude of an address.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the address
+          example: 38.8977
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the address
+          example: -77.0365
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GeoCodeWSRequest:
+      type: object
+      description: Request object for getting the latitude and longitude of an address.
+      properties:
+        address:
+          type:
+          - string
+          - 'null'
+          description: Address to geocode
+          example: 1600 Pennsylvania Avenue NW, Washington, DC
+    Location_DeleteLocationWSResponse:
+      type: object
+      description: Response object for removing a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationsWSResponse:
+      type: object
+      description: Response object containing list of locations in organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locations:
+          type:
+          - array
+          - 'null'
+          description: List of locations in the organization
+          items:
+            $ref: '#/components/schemas/LocationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationsBySubLocationsHierarchyKeyWSResponse:
+      type: object
+      description: Response object containing nested locations by subLocationHierarchyKey.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        location:
+          $ref: '#/components/schemas/LocationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

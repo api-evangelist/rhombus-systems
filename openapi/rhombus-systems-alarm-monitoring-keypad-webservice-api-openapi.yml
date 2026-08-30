@@ -1,0 +1,660 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Alarm Monitoring Keypad Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Alarm Monitoring Keypad Webservice
+paths:
+  /api/keypad/claimKeypadActivationToken:
+    post:
+      description: Connects a keypad to Rhombus services
+      operationId: claimKeypadActivationToken
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keypad_ClaimKeypadActivationTokenRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypad_ClaimKeypadActivationTokenResponse'
+          description: OK
+      summary: Claim keypad activation token
+      tags:
+      - Alarm Monitoring Keypad Webservice
+  /api/keypad/getKeypadsForLocation:
+    post:
+      description: Get a list of all registered keypads for a location
+      operationId: getKeypadsForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keypad_GetKeypadsForLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypad_GetKeypadsForLocationWSResponse'
+          description: OK
+      summary: Get keypads for location
+      tags:
+      - Alarm Monitoring Keypad Webservice
+  /api/keypad/getKeypadsForOrg:
+    post:
+      description: Get a list of all registered keypads for an org
+      operationId: getKeypadsForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keypad_GetKeypadsForOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypad_GetKeypadsForOrgWSResponse'
+          description: OK
+      summary: Get keypads for organization
+      tags:
+      - Alarm Monitoring Keypad Webservice
+  /api/keypad/unregisterKeypad:
+    post:
+      description: Unregister a keypad
+      operationId: unregisterKeypad
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keypad_UnregisterKeypadRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypad_UnregisterKeypadResponse'
+          description: OK
+      summary: Unregister keypad
+      tags:
+      - Alarm Monitoring Keypad Webservice
+  /api/keypad/updateKeypad:
+    post:
+      description: Update keypad settings
+      operationId: updateKeypad
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keypad_UpdateKeypadRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypad_UpdateKeypadResponse'
+          description: OK
+      summary: Update keypad
+      tags:
+      - Alarm Monitoring Keypad Webservice
+components:
+  schemas:
+    Keypad_UnregisterKeypadRequest:
+      type: object
+      description: Request object for unregistering a keypad.
+      properties:
+        keypadUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    QualifiedAddressType:
+      type: object
+      description: Qualified address information for the keypad location
+      properties:
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: apt, suite, or unit
+        addressline1:
+          type:
+          - string
+          - 'null'
+          description: street address
+        administrativeArea:
+          type:
+          - string
+          - 'null'
+          description: state
+        locality:
+          type:
+          - string
+          - 'null'
+          description: city
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: zip code
+        regionCode:
+          type:
+          - string
+          - 'null'
+          description: country
+    Keypad_ClaimKeypadActivationTokenResponse:
+      type: object
+      description: Response object for claiming a keypad activation token.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    KeypadPlatformEnum:
+      type: string
+      description: The keypad platform (IOS or ANDROID)
+      enum:
+      - ANDROID
+      - IOS
+    Keypad_GetKeypadsForOrgWSResponse:
+      type: object
+      description: Response object containing all registered keypads for an organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        keypads:
+          type:
+          - array
+          - 'null'
+          description: List of all registered keypads for the organization
+          items:
+            $ref: '#/components/schemas/KeypadConfigType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Keypad_GetKeypadsForLocationWSRequest:
+      type: object
+      description: Request object for getting all registered keypads for a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Keypad_ClaimKeypadActivationTokenRequest:
+      type: object
+      description: Request object for claiming a keypad activation token to connect a keypad to Rhombus services.
+      properties:
+        activationToken:
+          type:
+          - string
+          - 'null'
+          description: Activation token for claiming the keypad
+          example: act_token_12345
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the keypad
+          example: Main Entrance Keypad
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Keypad_UpdateKeypadResponse:
+      type: object
+      description: Response object for updating keypad settings.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Keypad_UnregisterKeypadResponse:
+      type: object
+      description: Response object for unregistering a keypad.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    KeypadConfigType:
+      type: object
+      description: List of all registered keypads for the organization
+      properties:
+        additionalFeaturesDisabled:
+          type:
+          - boolean
+          - 'null'
+        appVersionCode:
+          type:
+          - string
+          - 'null'
+        appVersionName:
+          type:
+          - string
+          - 'null'
+        armCountdownSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        buildingAdminPhoneNumber:
+          type:
+          - string
+          - 'null'
+        connectionState:
+          $ref: '#/components/schemas/KeypadConnectionStateEnum'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ipAddress:
+          type:
+          - string
+          - 'null'
+        lastModified:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        locationName:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        logoUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        platform:
+          $ref: '#/components/schemas/KeypadPlatformEnum'
+        qualifiedAddress:
+          $ref: '#/components/schemas/QualifiedAddressType'
+        showCallBuildingAdmin:
+          type:
+          - boolean
+          - 'null'
+        signalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        tz:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        videoWallUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    KeypadConnectionStateEnum:
+      type: string
+      enum:
+      - ONLINE
+      - OFFLINE
+    Keypad_UpdateKeypadRequest:
+      type: object
+      description: Request object for updating keypad settings and configuration.
+      properties:
+        additionalFeaturesDisabled:
+          type:
+          - boolean
+          - 'null'
+        armCountdownSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Arm countdown seconds for the keypad
+          example: 30
+        buildingAdminPhoneNumber:
+          type:
+          - string
+          - 'null'
+          description: Phone number of the building administrator
+          example: +1-555-123-4567
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the keypad is located
+          example: 1
+        keypadUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the keypad location
+          example: 37.7749
+        locationName:
+          type:
+          - string
+          - 'null'
+          description: Name of the location where the keypad is installed
+          example: Main Building
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        logoUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the keypad location
+          example: -122.4194
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the keypad
+          example: Main Entrance Keypad
+        qualifiedAddress:
+          $ref: '#/components/schemas/QualifiedAddressType'
+        showCallBuildingAdmin:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to show the call building admin option
+          example: true
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the sub-locations hierarchy key has been updated
+          example: false
+        timeZoneId:
+          type:
+          - string
+          - 'null'
+          description: Time zone ID for the keypad location
+          example: America/Los_Angeles
+        videoWallUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        videoWallUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the video wall UUID has been updated
+          example: false
+    Keypad_GetKeypadsForLocationWSResponse:
+      type: object
+      description: Response object containing all registered keypads for a specific location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        keypads:
+          type:
+          - array
+          - 'null'
+          description: List of all registered keypads for the specified location
+          items:
+            $ref: '#/components/schemas/KeypadConfigType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Keypad_GetKeypadsForOrgWSRequest:
+      type: object
+      description: Request object for getting all registered keypads for an organization.
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

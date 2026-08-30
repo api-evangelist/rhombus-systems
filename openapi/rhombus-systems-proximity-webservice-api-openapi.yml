@@ -1,0 +1,758 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Proximity Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Proximity Webservice
+paths:
+  /api/proximity/getLocomotionEventsForTag:
+    post:
+      description: Get locomotion events for specified proximity tag
+      operationId: getLocomotionEventsForTag
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proximity_GetLocomotionEventsForTagWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proximity_GetLocomotionEventsForTagWSResponse'
+          description: OK
+      summary: Get locomotion events for tag
+      tags:
+      - Proximity Webservice
+  /api/proximity/getMinimalProximityStateList:
+    post:
+      description: Get basic state information about all proximity tags in organization
+      operationId: getMinimalProximityStateList
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proximity_GetMinimalProximityStatesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proximity_GetMinimalProximityStatesWSResponse'
+          description: OK
+      summary: Get minimal proximity state list
+      tags:
+      - Proximity Webservice
+  /api/proximity/getProximityEventsForTag:
+    post:
+      description: Get recent events for specified proximity tag
+      operationId: getProximityEventsForTags
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proximity_GetProximityEventsForTagWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proximity_GetProximityEventsForTagWSResponse'
+          description: OK
+      summary: Get proximity events for tag
+      tags:
+      - Proximity Webservice
+  /api/proximity/updateDetails:
+    post:
+      description: Update details for a proximity tag
+      operationId: updateProximitySensorDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proximity_UpdateProximitySensorDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proximity_UpdateProximitySensorDetailsWSResponse'
+          description: OK
+      summary: Update proximity sensor details
+      tags:
+      - Proximity Webservice
+components:
+  schemas:
+    Proximity_GetProximityEventsForTagWSResponse:
+      type: object
+      description: Response object containing recent events for a specified proximity tag.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        proximityEvents:
+          type:
+          - array
+          - 'null'
+          description: List of proximity events for the specified tag
+          items:
+            $ref: '#/components/schemas/ProximityEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ProximityStatusEnum:
+      type: string
+      description: Filter events by proximity status
+      enum:
+      - ACTIVE
+      - STATIONARY
+      - OFFLINE
+    Proximity_ProximityHealthDetailsEnum:
+      type: string
+      description: Detailed health information for the proximity tag
+      enum:
+      - FIRMWARE_BEHIND
+      - NONE
+    Proximity_UpdateProximitySensorDetailsWSResponse:
+      type: object
+      description: Response object for updating details for a proximity tag.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ProximityEventType:
+      type: object
+      description: List of proximity events for the specified tag
+      properties:
+        baseStationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        batteryPercentage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        bleDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        bleRssi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        closeBaseStations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        gpsLocation:
+          $ref: '#/components/schemas/GeodeticCoordinates'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        status:
+          $ref: '#/components/schemas/ProximityStatusEnum'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Proximity_UpdateProximitySensorDetailsWSRequest:
+      type: object
+      description: Request object for updating details for a proximity tag.
+      properties:
+        deletedUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the deleted status has been updated
+          example: false
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the proximity tag
+          example: John Doe's employee badge
+        descriptionUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the description has been updated
+          example: true
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: URL of the image for the proximity tag
+          example: https://example.com/badge-image.jpg
+        imageUrlUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the image URL has been updated
+          example: false
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the proximity tag
+          example: Employee Badge 001
+        nameUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the name has been updated
+          example: true
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the policy UUID has been updated
+          example: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    GpsError:
+      type: object
+      properties:
+        majorAxis:
+          type:
+          - number
+          - 'null'
+          format: double
+        minorAxis:
+          type:
+          - number
+          - 'null'
+          format: double
+        rotation:
+          type:
+          - number
+          - 'null'
+          format: double
+    LocomotionMovementEnum:
+      type: string
+      description: Filter events by locomotion movement type
+      enum:
+      - ARRIVAL
+      - DEPARTURE
+      - MOVED_SIGNIFICANTLY
+      - UNKNOWN
+    Proximity_GetMinimalProximityStatesWSResponse:
+      type: object
+      description: Response object containing basic state information about all proximity tags in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        proximityStates:
+          type:
+          - array
+          - 'null'
+          description: List of minimal proximity state information for all tags in the organization
+          items:
+            $ref: '#/components/schemas/Proximity_MinimalProximityStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Proximity_GetLocomotionEventsForTagWSRequest:
+      type: object
+      description: Request object for getting locomotion events for a specified proximity tag with filtering options.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created after this timestamp in milliseconds
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created before this timestamp in milliseconds
+          example: 1640995200000
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of events to return
+          example: 100
+        movementFilter:
+          $ref: '#/components/schemas/LocomotionMovementEnum'
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    Proximity_ProximityHealthEnum:
+      type: string
+      description: Health status of the proximity tag
+      enum:
+      - GREEN
+    GeodeticCoordinates:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/GpsError'
+        floor:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lat:
+          type:
+          - number
+          - 'null'
+          format: double
+        lon:
+          type:
+          - number
+          - 'null'
+          format: double
+    ProximityTagLocomotionEventType:
+      type: object
+      description: List of locomotion events for the specified tag
+      properties:
+        baseStationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        gpsLocation:
+          $ref: '#/components/schemas/GeodeticCoordinates'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        movement:
+          $ref: '#/components/schemas/LocomotionMovementEnum'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Proximity_GetMinimalProximityStatesWSRequest:
+      type: object
+      description: Request object for getting basic state information about all proximity tags in the organization.
+    Proximity_GetProximityEventsForTagWSRequest:
+      type: object
+      description: Request object for getting recent events for a specified proximity tag with filtering options.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created after this timestamp in milliseconds
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created before this timestamp in milliseconds
+          example: 1640995200000
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of events to return
+          example: 100
+        statusFilter:
+          $ref: '#/components/schemas/ProximityStatusEnum'
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Proximity_GetLocomotionEventsForTagWSResponse:
+      type: object
+      description: Response object containing locomotion events for a specified proximity tag.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locomotionEvents:
+          type:
+          - array
+          - 'null'
+          description: List of locomotion events for the specified tag
+          items:
+            $ref: '#/components/schemas/ProximityTagLocomotionEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Proximity_MinimalProximityStateType:
+      type: object
+      description: Minimal proximity state information for a proximity tag.
+      properties:
+        batteryPercent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Battery percentage of the proximity tag
+          example: 75
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp when the proximity tag was created in milliseconds
+          example: 1640995200000
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+          description: Firmware version of the proximity tag
+          example: 1.2.3
+        gpsLocation:
+          $ref: '#/components/schemas/GeodeticCoordinates'
+        health:
+          $ref: '#/components/schemas/Proximity_ProximityHealthEnum'
+        healthDetails:
+          $ref: '#/components/schemas/Proximity_ProximityHealthDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: URL of the image for the proximity tag
+          example: https://example.com/badge-image.jpg
+        lastSeenSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp when the proximity tag was last seen in seconds
+          example: 1640995200
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the proximity tag
+          example: Employee Badge 001
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the proximity tag
+          example: PROX-001-ABC123
+        signalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Signal strength of the proximity tag
+          example: 85
+        status:
+          $ref: '#/components/schemas/ProximityStatusEnum'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

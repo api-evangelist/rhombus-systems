@@ -1,0 +1,409 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus ClaimKey Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: ClaimKey Webservice
+paths:
+  /api/license/claimkey/findClaimKeysByClientOrg:
+    post:
+      description: 'Find the claim keys claimed by the specified client organization, optionally filtered by state. The caller must be a partner with license administration access to the client organization. Each claim key carries the term of one purchase: `startDate` and `endDate` are the term boundaries and `gracePeriodEndDate` is 30 days past `endDate`. Note that `claimStartDate` and `claimEndDate` are when the key was redeemed, not term boundaries, and that only claim keys of `type` `NEW` carry a `startDate` - a `RENEWAL` key extends the terms it renews and carries only an `endDate`. When filtering by state, note that a key past its `endDate` but inside its grace period has state `EXPIRED`, and a renewed key moves to `RENEWED` while its successor `RENEWAL` key carries the extended term - filtering to `CLAIMED` alone hides such coverage. To assess coverage, prefer `excludeUnclaimed: true` and compare `endDate`/`gracePeriodEndDate` per key. Client organizations that have not been migrated to the current licensing model hold no claim keys and get an empty list.'
+      operationId: findClaimKeysByClientOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_claimkey_FindClaimKeysByClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_claimkey_FindClaimKeysByClientOrgWSResponse'
+          description: OK
+      summary: Find claim keys by client org
+      tags:
+      - ClaimKey Webservice
+  /api/license/claimkey/findClaimKeysByOrg:
+    post:
+      description: 'Find the claim keys belonging to the authenticated organization, optionally filtered by state. Each claim key carries the term of one purchase, so this is how license term start/end dates are read programmatically. See `getClaimKey` for how to read the term fields. When filtering by state, note that a key past its `endDate` but inside its grace period has state `EXPIRED`, and a renewed key moves to `RENEWED` while its successor `RENEWAL` key carries the extended term - filtering to `CLAIMED` alone hides such coverage. To assess coverage, prefer `excludeUnclaimed: true` and compare `endDate`/`gracePeriodEndDate` per key. Organizations that have not been migrated to the current licensing model hold no claim keys and get an empty list.'
+      operationId: findClaimKeysByOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_claimkey_FindClaimKeysByOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_claimkey_FindClaimKeysByOrgWSResponse'
+          description: OK
+      summary: Find claim keys by org
+      tags:
+      - ClaimKey Webservice
+  /api/license/claimkey/getClaimKey:
+    post:
+      description: 'Get the claim key with the specified uuid. A claim key represents one purchased term: `startDate` and `endDate` are the term boundaries and `gracePeriodEndDate` is 30 days past `endDate`. Note that `claimStartDate` and `claimEndDate` are when the key was redeemed, not term boundaries, and that only claim keys of `type` `NEW` carry a `startDate` - a `RENEWAL` key extends the terms it renews and carries only an `endDate`.'
+      operationId: getClaimKey
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_claimkey_GetClaimKeyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_claimkey_GetClaimKeyWSResponse'
+          description: OK
+      summary: Get claim key
+      tags:
+      - ClaimKey Webservice
+components:
+  schemas:
+    License_claimkey_GetClaimKeyWSResponse:
+      type: object
+      properties:
+        claimKey:
+          $ref: '#/components/schemas/BaseClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_claimkey_FindClaimKeysByOrgWSResponse:
+      type: object
+      properties:
+        claimKeys:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BaseClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_claimkey_GetClaimKeyWSRequest:
+      type: object
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_claimkey_FindClaimKeysByClientOrgWSResponse:
+      type: object
+      properties:
+        claimKeys:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BaseClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_claimkey_FindClaimKeysByClientOrgWSRequest:
+      type: object
+      properties:
+        claimKeySearchFilter:
+          $ref: '#/components/schemas/ClaimKeySearchFilter'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClaimKeyReturnEvent:
+      type: object
+      properties:
+        returnedProductQuantities:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int32
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    ClaimKeyExpirationEmailStateEnum:
+      type: string
+      enum:
+      - NINETY_DAY_EMAIL_SUCCEEDED
+      - NINETY_DAY_EMAIL_FAILED
+      - SIXTY_DAY_EMAIL_SUCCEEDED
+      - SIXTY_DAY_EMAIL_FAILED
+      - FOURTY_FIVE_DAY_EMAIL_SUCCEEDED
+      - FOURTY_FIVE_DAY_EMAIL_FAILED
+      - THIRTY_DAY_EMAIL_SUCCEEDED
+      - THIRTY_DAY_EMAIL_FAILED
+      - TWENTY_ONE_DAY_EMAIL_SUCCEEDED
+      - TWENTY_ONE_DAY_EMAIL_FAILED
+      - FOURTEEN_DAY_EMAIL_SUCCEEDED
+      - FOURTEEN_DAY_EMAIL_FAILED
+      - TEN_DAY_EMAIL_SUCCEEDED
+      - TEN_DAY_EMAIL_FAILED
+      - FIVE_DAY_EMAIL_SUCCEEDED
+      - FIVE_DAY_EMAIL_FAILED
+      - FOUR_DAY_EMAIL_SUCCEEDED
+      - FOUR_DAY_EMAIL_FAILED
+      - THREE_DAY_EMAIL_SUCCEEDED
+      - THREE_DAY_EMAIL_FAILED
+      - TWO_DAY_EMAIL_SUCCEEDED
+      - TWO_DAY_EMAIL_FAILED
+      - ONE_DAY_EMAIL_SUCCEEDED
+      - ONE_DAY_EMAIL_FAILED
+      - ZERO_DAY_EMAIL_SUCCEEDED
+      - ZERO_DAY_EMAIL_FAILED
+      - GRACE_PERIOD_EMAILS_IN_PROGRESS
+      - GRACE_PERIOD_EMAILS_COMPLETED
+      - UNKNOWN
+    BaseClaimKey:
+      type: object
+      discriminator:
+        propertyName: type
+      properties:
+        claimEndDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date/time when claiming of licenses represented by this claim key ended successfully.
+        claimStartDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date/time when claiming of licenses represented by this claim key started.
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        expirationEmailState:
+          $ref: '#/components/schemas/ClaimKeyExpirationEmailStateEnum'
+        gracePeriodEndDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        maskedClaimCode:
+          type:
+          - string
+          - 'null'
+          description: Masked claim code for redeemed claim keys. This field can be used for reference purposes.
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        renewedByClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        requestId:
+          type:
+          - string
+          - 'null'
+          description: Externally supplied request id to prevent creation of unnecessary claim keys due to reprocessing or bugs. Unnecessary claim keys are claim keys that are not tied to anything in the external system.  This property is unique for all claim keys.
+        returnHistory:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimKeyReturnEvent'
+        state:
+          $ref: '#/components/schemas/ClaimKeyStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        type:
+          $ref: '#/components/schemas/ClaimKeyTypeEnum'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClaimKeySearchFilter:
+      type: object
+      properties:
+        excludeUnclaimed:
+          type:
+          - boolean
+          - 'null'
+        excludedStates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimKeyStateEnum'
+          uniqueItems: true
+        includedStates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimKeyStateEnum'
+          uniqueItems: true
+    ClaimKeyStateEnum:
+      type: string
+      enum:
+      - CREATED
+      - CLAIMING_PENDING
+      - CLAIMING_IN_PROGRESS
+      - CLAIMING_FAILED
+      - CLAIMED
+      - EXPIRED_UNCLAIMED
+      - EXPIRED
+      - RETURNED
+      - RENEWED
+    License_claimkey_FindClaimKeysByOrgWSRequest:
+      type: object
+      properties:
+        claimKeySearchFilter:
+          $ref: '#/components/schemas/ClaimKeySearchFilter'
+    ClaimKeyTypeEnum:
+      type: string
+      enum:
+      - NEW
+      - RENEWAL
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

@@ -1,0 +1,2187 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus User Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: User Webservice
+paths:
+  /api/customer/updateCurrentUserNotificationSettings:
+    post:
+      description: Update notification settings for user
+      operationId: updateCurrentUserNotificationSettings
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_UpdateUserNotificationSettingsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_UpdateUserNotificationSettingsWSResponse'
+          description: OK
+      summary: Update notification settings for user
+      tags:
+      - User Webservice
+  /api/user/assignEmailToUser:
+    post:
+      description: Assign a user to an email as long as the user is not currently assigned to one, with validation to prevent duplicate email associations.
+      operationId: assignEmailToUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_AssignEmailToUserWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_AssignEmailToUserWSResponse'
+          description: OK
+      summary: Assign email to user
+      tags:
+      - User Webservice
+  /api/user/createUser:
+    post:
+      description: Create a user for organization with specified name, email, and role permissions, supporting both client and partner user types with proper validation and audit logging.
+      operationId: createUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_CreateUserWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_CreateUserWSResponse'
+          description: OK
+      summary: Create user for organization
+      tags:
+      - User Webservice
+  /api/user/deleteUser:
+    post:
+      description: Delete a user from the organization with proper validation to prevent deletion of the last super admin and current user.
+      operationId: deleteUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_DeleteUserWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_DeleteUserWSResponse'
+          description: OK
+      summary: Delete user
+      tags:
+      - User Webservice
+  /api/user/getPartnerUsersInOrg:
+    post:
+      description: Get list of all partners in organization with partner-specific user details and permissions.
+      operationId: getPartnerUsersInOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetPartnerUsersInOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetPartnerUsersInOrgWSResponse'
+          description: OK
+      summary: Get partner users in organization
+      tags:
+      - User Webservice
+  /api/user/getUsersInOrg:
+    post:
+      description: Get list of all users in organization with complete user details, permissions, notification settings, and partner information.
+      operationId: getUsersInOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_GetUsersInOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_GetUsersInOrgWSResponse'
+          description: OK
+      summary: Get users in organization
+      tags:
+      - User Webservice
+  /api/user/updatePartnerUser:
+    post:
+      description: Update a partner's details with partner-specific validation and audit logging.
+      operationId: updatePartnerUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_UpdatePartnerWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_UpdatePartnerWSResponse'
+          description: OK
+      summary: Update partner user details
+      tags:
+      - User Webservice
+  /api/user/updatePartnerUserNotificationSettings:
+    post:
+      description: Update notification settings for partner user with partner-specific notification configurations.
+      operationId: updatePartnerUserNotificationSettings
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_UpdatePartnerUserNotificationSettingsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_UpdatePartnerUserNotificationSettingsWSResponse'
+          description: OK
+      summary: Update partner user notification settings
+      tags:
+      - User Webservice
+  /api/user/updateRhombusKeySettingsForUser:
+    post:
+      description: Update the RhombusKey mobile app settings for the user, including access permissions and app configuration.
+      operationId: updateRhombusKeySettingsForUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_UpdateRhombusKeySettingsForUserWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_UpdateRhombusKeySettingsForUserWSResponse'
+          description: OK
+      summary: Update Rhombus key settings for user
+      tags:
+      - User Webservice
+  /api/user/updateUser:
+    post:
+      deprecated: true
+      description: 'Update a user''s details, DEPRECATED[4/28/2025]: use updateUserSelective for better field-level control.'
+      operationId: updateUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_UpdateUserWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_UpdateUserWSResponse'
+          description: OK
+      summary: Update user details
+      tags:
+      - User Webservice
+  /api/user/updateUserNotificationSettings:
+    post:
+      description: Update notification settings for user with various notification channels and preferences.
+      operationId: updateUserNotificationSettings
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_UpdateUserNotificationSettingsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_UpdateUserNotificationSettingsWSResponse'
+          description: OK
+      summary: Update user notification settings
+      tags:
+      - User Webservice
+  /api/user/updateUserSelective:
+    post:
+      description: Selectively updates a user's details. Omitted fields are ignored but fields with null will unset a value, providing granular control over user updates.
+      operationId: updateUserSelective
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_UpdateUserSelectiveWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_UpdateUserSelectiveWSResponse'
+          description: OK
+      summary: Update user details selectively
+      tags:
+      - User Webservice
+components:
+  schemas:
+    RhombusSecureMobileCredentialProvisioningRulesType:
+      type: object
+      properties:
+        endDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+        maxMobileCredsAllowed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        startDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+    MinuteOfDayIntervalType:
+      type: object
+      properties:
+        dayOfWeek:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfDayStartInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfDayStopExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    RhombusDayOfWeekEnum:
+      type: string
+      enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
+    EpochSecondsProvisioner:
+      type: object
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/StaticEpochSecondsProvisioner'
+      properties:
+        type:
+          type: string
+      required:
+      - type
+    StaticEpochSecondsProvisioner:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          value:
+            type:
+            - integer
+            - 'null'
+            format: int64
+      properties:
+        type:
+          type: string
+    WrappedRhombusOrgUserType:
+      type: object
+      description: List of users in the organization
+      properties:
+        accessibleRhombusApps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusAppEnum'
+          uniqueItems: true
+        accountOwner:
+          type:
+          - boolean
+          - 'null'
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        changePasswordOnLogin:
+          type:
+          - boolean
+          - 'null'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        emailCaseSensitive:
+          type:
+          - string
+          - 'null'
+        emailVerified:
+          type:
+          - boolean
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+        mfaTokenType:
+          $ref: '#/components/schemas/MfaTokenTypeEnum'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUserCustomizationFlags:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        passwordSet:
+          type:
+          - boolean
+          - 'null'
+        restrictToAllowedLoginIps:
+          type:
+          - boolean
+          - 'null'
+        rhombusUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/UserStatusEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_AssignEmailToUserWSRequest:
+      type: object
+      description: Request object for assigning an email to a user.
+      properties:
+        emailToAssign:
+          type:
+          - string
+          - 'null'
+          description: Email address to assign to the user
+          example: user@example.com
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PartnerPermissionType:
+      type: object
+      description: List of partner permissions
+      properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_CreateUserWSRequest:
+      type: object
+      description: CreateUserWSRequest
+      properties:
+        accessibleRhombusApps:
+          type:
+          - array
+          - 'null'
+          description: The set of accessible Rhombus apps
+          items:
+            $ref: '#/components/schemas/RhombusAppEnum'
+          uniqueItems: true
+        email:
+          type:
+          - string
+          - 'null'
+          description: The email of the user
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the user
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombusKeySettings:
+          $ref: '#/components/schemas/RhombusKeyAppSettingsType'
+        suppressRhombusKeyWelcomeEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Suppress the welcome email for the Rhombus Key mobile app if the user is provided access
+        suppressWelcomeEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Suppress the welcome email
+    User_UpdateUserSelectiveWSRequest:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        notificationIntervalsV2:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationIntervalV2Type'
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        restrictToAllowedLoginIps:
+          type:
+          - boolean
+          - 'null'
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_UpdateUserNotificationSettingsWSRequest:
+      type: object
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        receiveHealthNotifications:
+          type:
+          - boolean
+          - 'null'
+        smsNotificationIncludesLinks:
+          type:
+          - boolean
+          - 'null'
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        timeFrames:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationTimeFrame'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_UpdatePartnerUserNotificationSettingsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    User_GetUsersInOrgWSResponse:
+      type: object
+      description: Response object containing all users in the organization with their settings and permissions.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        notificationSettings:
+          type:
+          - array
+          - 'null'
+          description: List of user notification settings (V3)
+          items:
+            $ref: '#/components/schemas/UserNotificationSettingsV3Type'
+        notificationSettingsV2:
+          type:
+          - array
+          - 'null'
+          description: List of user notification settings (V4)
+          items:
+            $ref: '#/components/schemas/UserNotificationSettingsV4Type'
+        partners:
+          type:
+          - array
+          - 'null'
+          description: List of partner users in the organization
+          items:
+            $ref: '#/components/schemas/WrappedRhombusOrgUserType'
+        rhombusKeyAppConfigs:
+          type:
+          - array
+          - 'null'
+          description: List of Rhombus Key app configurations
+          items:
+            $ref: '#/components/schemas/RhombusKeyAppConfigType'
+        snoozeSettings:
+          type:
+          - array
+          - 'null'
+          description: List of user snooze notification settings
+          items:
+            $ref: '#/components/schemas/User_UserSnoozeNotificationSettingsType'
+        userPermissions:
+          type:
+          - array
+          - 'null'
+          description: List of user permissions
+          items:
+            $ref: '#/components/schemas/UserPermissionType'
+        users:
+          type:
+          - array
+          - 'null'
+          description: List of users in the organization
+          items:
+            $ref: '#/components/schemas/WrappedRhombusOrgUserType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    User_UpdateUserSelectiveWSResponse:
+      type: object
+      description: Response object for selective user updates.
+    PartnerNotificationClientSectionRow:
+      type: object
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        days:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
+          uniqueItems: true
+        diagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        interval:
+          $ref: '#/components/schemas/MinuteOfDayIntervalType'
+        mediums:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationEnumType'
+          uniqueItems: true
+    User_DeleteUserWSResponse:
+      type: object
+      description: Response object for deleting a user.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    NotificationEnumType:
+      type: string
+      enum:
+      - SMS
+      - EMAIL
+      - APP
+      - SLACK
+      - MICROSOFT_TEAMS
+      - BROWSER
+      - UNKNOWN
+    User_UpdatePartnerUserNotificationSettingsWSRequest:
+      type: object
+      properties:
+        allClientsSelected:
+          type:
+          - boolean
+          - 'null'
+        clientNotificationIntervalsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PartnerNotificationClientSection'
+        notificationIntervalsForAllClients:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PartnerNotificationClientSection'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        smsNotificationIncludesLinks:
+          type:
+          - boolean
+          - 'null'
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ScheduledIntervalType:
+      type: object
+      description: Map of location UUIDs to snooze intervals
+      properties:
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    RhombusAppEnum:
+      type: string
+      enum:
+      - PARTNER
+      - CONSOLE
+      - RHOMBUS_KEY
+      - UNKNOWN
+    DiagnosticActivityEnum:
+      type: string
+      enum:
+      - CAMERA_CONNECTED
+      - CAMERA_DISCONNECTED
+      - STARTUP
+      - GATEWAY_CONNECTED
+      - GATEWAY_DISCONNECTED
+      - UPDATE_STARTED
+      - UPDATE_FIRMWARE_DOWNLOADED
+      - UPDATE_FIRMWARE_APPLIED
+      - UPDATE_STARTING_REBOOT
+      - UPDATE_FAILED_MD5_MISMATCH
+      - UPDATE_FAILED_ACCESS_DENIED
+      - UPDATE_FAILED_MITM
+      - UPDATE_FAILED_CONNNECTION_REFUSED
+      - UPDATE_FAILED_CONNNECTION_TIMEOUT
+      - UPDATE_FAILED_CONNECTION_REFUSED
+      - UPDATE_FAILED_CONNECTION_TIMEOUT
+      - UPDATE_FAILED_DNS_FAILURE
+      - UPDATE_RUNNING
+      - UPDATE_HALTED_FOR_INVESTIGATION
+      - UPDATE_HALT_CLEARED
+      - UPDATE_HALT_STATE_ACTIVE
+      - UPDATE_REFUSED_HALTED
+      - BLE_CONNECTED
+      - BLE_CONNECTION_FAILED
+      - BLE_DISCONNECTED
+      - BLE_OP_SUCCESS
+      - BLE_OP_FAILURE
+      - UPLOAD_CLIP_SUCCESS
+      - UPLOAD_CLIP_FAILURE
+      - NOTIFICATION_FAILURE
+      - USB_FAILURE_REBOOT
+      - PERSISTENT_STORAGE_FAILURE
+      - PING
+      - FORCED_REBOOT
+      - AUTO_REBOOT
+      - AUDIO_HARDWARE_NOT_DETECTED
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - VIDEO_HARDWARE_FAILURE
+      - WIFI_NETWORK_CHANGED
+      - AI_ENGINE_DOWNLOADED
+      - AI_ENGINE_DOWNLOAD_FAILED_MD5_MISMATCH
+      - AI_ENGINE_CONFIGURED
+      - AI_ENGINE_CONFIGURATION_FAILED
+      - MITM_FAILURE
+      - SERVER_RECONNECT
+      - AP_CHANGED
+      - WATCHDOG_KILLED_AGENT
+      - WATCHDOG_DID_RESET
+      - CLIMATE_OFFLINE
+      - CLIMATE_ONLINE
+      - CLIMATE_LOW_BATTERY
+      - CLIMATE_PROBE_CONNECTED
+      - CLIMATE_PROBE_DISCONNECTED
+      - DOOR_OFFLINE
+      - DOOR_ONLINE
+      - DOOR_LOW_BATTERY
+      - OCCUPANCY_SENSOR_ONLINE
+      - OCCUPANCY_SENSOR_OFFLINE
+      - OCCUPANCY_SENSOR_LOW_BATTERY
+      - BUTTON_OFFLINE
+      - BUTTON_ONLINE
+      - BUTTON_LOW_BATTERY
+      - PROXIMITY_LOW_BATTERY
+      - ROBOT_LOW_BATTERY
+      - DOOR_CONTROLLER_CONNECTED
+      - DOOR_CONTROLLER_DISCONNECTED
+      - APERIO_LOW_BATTERY
+      - APERIO_FLAT_BATTERY
+      - APERIO_OK_BATTERY
+      - APERIO_GW_CONNECTED
+      - APERIO_GW_DISCONNECTED
+      - BADGE_READER_CONNECTED
+      - BADGE_READER_DISCONNECTED
+      - REBOOT
+      - NETWORK_INTERRUPTION
+      - OPENPATH_WEBHOOK_FAILURE
+      - TOAST_WEBHOOK_FAILURE
+      - KISI_WEBHOOK_FAILURE
+      - BRIVO_WEBHOOK_FAILURE
+      - HALO_WEBHOOK_FAILURE
+      - SALTO_WEBHOOK_FAILURE
+      - SQUARE_WEBHOOK_FAILURE
+      - BUTTERFLYMX_WEBHOOK_FAILURE
+      - ENVOY_WEBHOOK_FAILURE
+      - GENEA_WEBHOOK_FAILURE
+      - PRODATAKEY_WEBHOOK_FAILURE
+      - AMT_WEBHOOK_FAILURE
+      - PLACEOS_WEBHOOK_FAILURE
+      - OMNIALERT_WEBHOOK_FAILURE
+      - FLIC_WEBHOOK_FAILURE
+      - SHELLY_WEBHOOK_FAILURE
+      - PIMLOC_WEBHOOK_FAILURE
+      - NINEONEONECELLULAR_WEBHOOK_FAILURE
+      - HONEYWELL_ELEMENTS_WEBHOOK_FAILURE
+      - HONEYWELL_ONGUARD_WEBHOOK_FAILURE
+      - TRITON_WEBHOOK_FAILURE
+      - EXTERNAL_WEBHOOK_FAILURE
+      - CV_FAILURE
+      - NFC_HW_FAILURE
+      - CONFIG_ERROR
+      - HW_FAILURE
+      - KEYPAD_ONLINE
+      - KEYPAD_OFFLINE
+      - ALM_OVERAGE_APPROACHING
+      - ALM_OVERAGE_REACHED
+      - ALM_OVERAGE_EXCEEDED
+      - ALM_EXCESSIVE_VERIFICATIONS
+      - KIOSK_OFFLINE
+      - KIOSK_ONLINE
+      - TUNNELED_DEVICE_CONNECTED
+      - TUNNELED_DEVICE_DISCONNECTED
+      - SD_CARD_CHANGED
+      - SD_CARD_NOT_FOUND
+      - SUPERVISION_CUT_DETECTED
+      - SUPERVISION_SHORT_DETECTED
+      - SUPERVISION_INVALID_SETUP
+      - THIRD_PARTY_DEVICE_CONNECTED
+      - THIRD_PARTY_DEVICE_DISCONNECTED
+      - NVR_STREAMING_STATUS
+      - STORAGE_SM
+      - DEVICE_OFFLINE_EXTENDED
+      - DEVICE_OFFLINE_RECOVERED
+      - DEVICES_OFFLINE_THRESHOLD
+      - CLOUD_ARCHIVE_LAGGING
+      - CLOUD_ARCHIVE_RECOVERED
+      - LOCAL_RECORDING_INTERRUPTED
+      - LOCAL_RECORDING_RECOVERED
+      - UNKNOWN
+    User_DeleteUserWSRequest:
+      type: object
+      description: Request object for deleting a user.
+      properties:
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Partner_GetPartnerUsersInOrgWSRequest:
+      type: object
+      description: Request object for getting partner users in organization.
+    User_GetUsersInOrgWSRequest:
+      type: object
+      description: Request object for getting all users in the organization.
+    PartnerNotificationSettingsV2:
+      type: object
+      properties:
+        allClientsSelected:
+          type:
+          - boolean
+          - 'null'
+        clientNotificationIntervalsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PartnerNotificationClientSection'
+        notificationIntervalsForAllClients:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PartnerNotificationClientSection'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        smsNotificationIncludesLinks:
+          type:
+          - boolean
+          - 'null'
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_UserSnoozeNotificationSettingsType:
+      type: object
+      description: User snooze notification settings with location and device-specific snooze intervals.
+      properties:
+        snoozedForAllNotificationsIntervals:
+          type:
+          - array
+          - 'null'
+          description: List of snooze intervals for all notifications
+          items:
+            $ref: '#/components/schemas/ScheduledIntervalType'
+        snoozedForDevicesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to snooze intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of device UUIDs to snooze intervals
+        snoozedForLocationsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location UUIDs to snooze intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of location UUIDs to snooze intervals
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WebResponseStatusEnum:
+      type: string
+      description: Status of the unregister operation
+      enum:
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - SAME_PASSWORD
+      - USER_EXISTS
+      - USER_NOT_FOUND
+      - DEVICE_NOT_FOUND
+      - POLICY_NOT_FOUND
+      - LOCATION_NOT_FOUND
+      - ORG_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
+    NotificationTimeFrame:
+      type: object
+      properties:
+        days:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
+          uniqueItems: true
+        interval:
+          $ref: '#/components/schemas/MinuteOfDayIntervalType'
+        mediums:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationEnumType'
+          uniqueItems: true
+        rows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationTimeFrameRow'
+    User_UpdateRhombusKeySettingsForUserWSResponse:
+      type: object
+      properties:
+        userRhombusKeyConfig:
+          $ref: '#/components/schemas/RhombusKeyAppConfigType'
+    RhombusKeyAppSettingsType:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        credentialProvisioningRules:
+          $ref: '#/components/schemas/RhombusSecureMobileCredentialProvisioningRulesType'
+        remoteUnlockEnabled:
+          type:
+          - boolean
+          - 'null'
+        rhombusKeyAccessEnabled:
+          type:
+          - boolean
+          - 'null'
+    User_UpdateUserWSRequest:
+      type: object
+      description: Request object for updating user information and settings.
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+          description: Whether SAML bypass is enabled for the user
+          example: false
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether MFA is enabled for the user
+          example: true
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the user
+          example: John Doe
+        notificationIntervalsV2:
+          type:
+          - array
+          - 'null'
+          description: List of notification intervals (V2) for the user
+          items:
+            $ref: '#/components/schemas/NotificationIntervalV2Type'
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        restrictToAllowedLoginIps:
+          type:
+          - boolean
+          - 'null'
+          description: When true the user's web console sessions are restricted to the org-wide login IP allowlist.
+          example: true
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          description: List of SMS phone numbers for the user
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of SMS phone numbers for the user
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether summary emails are enabled for the user
+          example: true
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    UserNotificationSettingsV3Type:
+      type: object
+      description: List of user notification settings (V3)
+      properties:
+        notificationIntervalsV2:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationIntervalV2Type'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    MfaTokenTypeEnum:
+      type: string
+      enum:
+      - EMAIL
+      - SMS
+      - VIRTUAL_MFA
+      - FIDO
+    User_UpdateUserWSResponse:
+      type: object
+      description: Response object for updating a user.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_GetPartnerUsersInOrgWSResponse:
+      type: object
+      description: Response object containing partner users in organization with notification settings and permissions.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        notificationSettingsV2:
+          type:
+          - array
+          - 'null'
+          description: List of partner notification settings V2
+          items:
+            $ref: '#/components/schemas/PartnerNotificationSettingsV2'
+        partnerPermissions:
+          type:
+          - array
+          - 'null'
+          description: List of partner permissions
+          items:
+            $ref: '#/components/schemas/PartnerPermissionType'
+        partnerUsers:
+          type:
+          - array
+          - 'null'
+          description: List of partner users in the organization
+          items:
+            $ref: '#/components/schemas/WrappedRhombusOrgUserType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    UserStatusEnumType:
+      type: string
+      enum:
+      - JOINED
+      - PENDING
+      - INACTIVE
+      - UNKNOWN
+    User_UpdatePartnerWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    UserPermissionType:
+      type: object
+      description: List of user permissions
+      properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_UpdatePartnerWSRequest:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        notificationSettingsV2:
+          $ref: '#/components/schemas/PartnerNotificationSettingsV2'
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    NotificationTimeFrameRow:
+      type: object
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        devices:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          uniqueItems: true
+        diagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        locationOnly:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        locationOnlyActivities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        locationOnlyDiagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        promptUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+    User_UpdateUserNotificationSettingsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RhombusKeyAppConfigType:
+      type: object
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        preferences:
+          $ref: '#/components/schemas/RhombusKeyAppPreferencesType'
+        rhombusOrgUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        settings:
+          $ref: '#/components/schemas/RhombusKeyAppSettingsType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    PartnerNotificationClientSection:
+      type: object
+      properties:
+        clientUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        rows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PartnerNotificationClientSectionRow'
+    NotificationIntervalV2Type:
+      type: object
+      properties:
+        activityTriggerMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/NotificationEnumType'
+            uniqueItems: true
+        deviceFilterSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        diagnosticTriggerMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/NotificationEnumType'
+            uniqueItems: true
+        locationActivityTriggerMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/NotificationEnumType'
+            uniqueItems: true
+        locationDiagnosticTriggerMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/NotificationEnumType'
+            uniqueItems: true
+        locationFilterSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        locationOnlyFilterSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    User_AssignEmailToUserWSResponse:
+      type: object
+      description: Response object for assigning an email to a user.
+    UserNotificationSettingsV4Type:
+      type: object
+      description: List of user notification settings (V4)
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        receiveHealthNotifications:
+          type:
+          - boolean
+          - 'null'
+        smsNotificationIncludesLinks:
+          type:
+          - boolean
+          - 'null'
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        timeFrames:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationTimeFrame'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_CreateUserWSResponse:
+      type: object
+      description: Response object for creating a user.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        responseStatus:
+          $ref: '#/components/schemas/WebResponseStatusEnum'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    User_UpdateRhombusKeySettingsForUserWSRequest:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        endDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+        maxMobileCredsAllowed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        remoteUnlockEnabled:
+          type:
+          - boolean
+          - 'null'
+        rhombusKeyAccessEnabled:
+          type:
+          - boolean
+          - 'null'
+        startDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    RhombusKeyAppPreferencesType:
+      type: object
+      properties:
+        favoriteAccessControlledDoorUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        favoriteAccessControlledElevatorUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

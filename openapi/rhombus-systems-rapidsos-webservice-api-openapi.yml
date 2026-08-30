@@ -1,0 +1,137 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus RapidSOS Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: RapidSOS Webservice
+paths:
+  /api/rapidsos/getNearbyFeeds:
+    post:
+      description: Get closest 10 feeds by lat and long
+      operationId: getNearbyFeeds
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rapidsos_GetNearbyFeedsRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rapidsos_GetNearbyFeedsResponse'
+          description: OK
+      summary: Get nearby feeds
+      tags:
+      - RapidSOS Webservice
+components:
+  schemas:
+    Rapidsos_GetNearbyFeedsRequest:
+      type: object
+      description: Request object for getting the closest 10 feeds by latitude and longitude.
+      properties:
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate for finding nearby feeds
+          example: 40.7128
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate for finding nearby feeds
+          example: -74.006
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Width parameter for the search area
+          example: 1000
+    Rapidsos_GetNearbyFeedsResponse:
+      type: object
+      description: Response object containing the closest 10 feed stream URLs by latitude and longitude.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        streamUrls:
+          type:
+          - array
+          - 'null'
+          description: List of stream URLs for the closest 10 feeds
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of stream URLs for the closest 10 feeds
+        warningMsg:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

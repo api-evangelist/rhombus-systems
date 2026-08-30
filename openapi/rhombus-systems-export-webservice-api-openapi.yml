@@ -1,0 +1,1671 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Export Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Export Webservice
+paths:
+  /api/export/audit:
+    post:
+      description: Download audit log
+      operationId: exportAudit
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportAuditEventsWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download audit log
+      tags:
+      - Export Webservice
+  /api/export/climateEvents:
+    post:
+      description: Download climate event log
+      operationId: exportClimateEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportClimateEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download climate event log
+      tags:
+      - Export Webservice
+  /api/export/countReports:
+    post:
+      description: Download count report
+      operationId: exportCountReports
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportCountReportsWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download count report
+      tags:
+      - Export Webservice
+  /api/export/diagnostic:
+    post:
+      description: Download diagnostic log
+      operationId: exportDiagnostic
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportDiagnosticEventsWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download diagnostic log
+      tags:
+      - Export Webservice
+  /api/export/doorEvents:
+    post:
+      description: Download door event log
+      operationId: exportDoorEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportDoorEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download door event log
+      tags:
+      - Export Webservice
+  /api/export/environmentalGatewayEvents:
+    post:
+      description: Download environmental gateway event log
+      operationId: exportEnvironmentalGatewayEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportEnvironmentalGatewayEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download environmental gateway event log
+      tags:
+      - Export Webservice
+  /api/export/inventory:
+    post:
+      description: Download device inventory
+      operationId: exportInventory
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportInventoryWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download device inventory
+      tags:
+      - Export Webservice
+  /api/export/motionEvents:
+    post:
+      description: Download motion event log for motion sensors
+      operationId: exportMotionEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportMotionEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download motion event log for motion sensors
+      tags:
+      - Export Webservice
+  /api/export/peopleCountEvents:
+    post:
+      description: Download people count report
+      operationId: exportPeopleCountEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportPeopleCountEventsWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download people count report
+      tags:
+      - Export Webservice
+  /api/export/peopleEvents:
+    post:
+      description: Download people event log
+      operationId: exportPeopleEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportPeopleEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download people event log
+      tags:
+      - Export Webservice
+  /api/export/proximityEvents:
+    post:
+      description: Download proximity tag event log
+      operationId: exportProximityEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportProximityEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download proximity tag event log
+      tags:
+      - Export Webservice
+  /api/export/proximityLocomotionEvents:
+    post:
+      description: Download proximity tag event log
+      operationId: exportProximityLocomotionEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportProximityLocomotionEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download proximity tag event log
+      tags:
+      - Export Webservice
+  /api/export/uptime:
+    post:
+      description: Download device uptime reports
+      operationId: exportUptime
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportUptimeWSRequest'
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download device uptime reports
+      tags:
+      - Export Webservice
+  /api/export/users:
+    post:
+      description: Download org users
+      operationId: exportUsers
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportUsersWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download org users
+      tags:
+      - Export Webservice
+  /api/export/vehicleEvents:
+    post:
+      deprecated: true
+      description: Download vehicle event log.  Use /export/vehicleEventsV2 instead for more functionality
+      operationId: exportVehicleEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Export_ExportVehicleEventsWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download vehicle event log
+      tags:
+      - Export Webservice
+  /api/export/vehicleEventsV2:
+    post:
+      description: Download vehicle event log
+      operationId: exportVehicleEventsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_GetVehicleEventsWSRequest'
+      responses:
+        '200':
+          content:
+            text/csv; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/StreamingOutput'
+          description: OK
+      summary: Download vehicle event log
+      tags:
+      - Export Webservice
+components:
+  schemas:
+    Export_ExportEnvironmentalGatewayEventsWSRequest:
+      type: object
+      description: Request object for exporting environmental gateway events with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering environmental gateway events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering environmental gateway events
+          example: 1641081600000
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ReportTypeEnum:
+      type: string
+      description: Type of report to receive
+      enum:
+      - CROWD
+      - PEOPLE
+      - FACES
+      - MOTION
+      - BANDWIDTH
+      - VEHICLES
+      - LICENSEPLATES
+      - ALERTS
+      - DWELL
+    Export_ExportProximityEventsWSRequest:
+      type: object
+      description: Request object for exporting proximity events with time filtering and tag selection.
+      properties:
+        createBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          writeOnly: true
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering proximity events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering proximity events
+          example: 1641081600000
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ReportIntervalEnum:
+      type: string
+      description: Report interval for filtering face events
+      enum:
+      - MINUTELY
+      - QUARTERHOURLY
+      - HOURLY
+      - DAILY
+      - WEEKLY
+      - MONTHLY
+    Export_ExportVehicleEventsWSRequest:
+      type: object
+      description: Request object for exporting vehicle events with filtering by time, devices, labels, and plate numbers.
+      properties:
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to filter vehicle events by
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        fuzzy:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to use fuzzy search on the provided plate numbers
+          example: true
+        interval:
+          $ref: '#/components/schemas/TimeInterval'
+        labels:
+          type:
+          - array
+          - 'null'
+          description: List of vehicle labels to filter by
+          example:
+          - car
+          - truck
+          - motorcycle
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of vehicle labels to filter by
+            example: '["car","truck","motorcycle"]'
+        plateNumbers:
+          type:
+          - array
+          - 'null'
+          description: List of license plate numbers to filter by
+          example:
+          - ABC123
+          - XYZ789
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of license plate numbers to filter by
+            example: '["ABC123","XYZ789"]'
+    TimeInterval:
+      type: object
+      properties:
+        endMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Export_ExportClimateEventsWSRequest:
+      type: object
+      description: Request object for exporting climate sensor events with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering climate events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering climate events
+          example: 1641081600000
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportMotionEventsWSRequest:
+      type: object
+      description: Request object for exporting motion events from motion sensors with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: After datetime provided as a UNIX timestamp in milliseconds
+          example: 1640995200000
+          minimum: 0
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Before datetime provided as a UNIX timestamp in milliseconds
+          example: 1641081600000
+          minimum: 0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - deviceUuid
+    Export_ExportProximityLocomotionEventsWSRequest:
+      type: object
+      description: Request object for exporting proximity locomotion events with time filtering and tag selection.
+      properties:
+        createBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          writeOnly: true
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering proximity locomotion events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering proximity locomotion events
+          example: 1641081600000
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportUsersWSRequest:
+      type: object
+      description: Request object for exporting user information to CSV format.
+      properties:
+        userUuids:
+          type:
+          - array
+          - 'null'
+          description: List of user UUIDs to export information for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportDoorEventsWSRequest:
+      type: object
+      description: Request object for exporting door sensor events with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering door events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering door events
+          example: 1641081600000
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Vehicle_GetVehicleEventsWSRequest:
+      type: object
+      description: Request object for getting vehicle events with filters and additive queries.
+      properties:
+        deviceUuidFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter events by specific reporting device uuids
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Time window filter end (newest) time in Epoch milliseconds
+        licensePlateExactQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        licensePlateFuzzyQuery:
+          type:
+          - string
+          - 'null'
+          description: Query events by partial or complete license plate with fuzzy character matching. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        locationUuidFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter events by specific reporting location uuids
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        nameQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Time window filter start (oldest) time in Epoch milliseconds
+        unnamedQuery:
+          type:
+          - boolean
+          - 'null'
+          description: Query events by name presence.  If false, returns events with a name.  If true, returns events without names.  Omit if not needed.  Query fields are additive queries (returned events satisfy at least one of the query fields)
+        vehicleLabelQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
+    StreamingOutput:
+      type:
+      - object
+      - 'null'
+    Export_ExportDiagnosticEventsWSRequest:
+      type: object
+      description: Request object for exporting diagnostic events with time interval filtering.
+      properties:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering diagnostic events
+          example: 1641081600000
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering diagnostic events
+          example: 1640995200000
+    Export_ExportInventoryWSRequest:
+      type: object
+      description: Request object for exporting device inventory information to CSV format.
+      properties:
+        cameraUuids:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          description: List of camera UUIDs to export (deprecated, use deviceUuids instead)
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            deprecated: true
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to export inventory for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    AuditActionEnum:
+      type: string
+      enum:
+      - THREAT_CASE_ESCALATED
+      - THREAT_CASE_CANCELLED
+      - THREAT_CASE_DISMISSED
+      - THREAT_CASE_DELETED
+      - THREAT_CASE_DELETE_BY_STATUS
+      - PIN_CREATED
+      - PIN_DELETED
+      - ALM_PIN_CREATE
+      - ALM_PIN_BULK_CREATE
+      - ALM_PIN_UPDATE
+      - ALM_PIN_ROTATE
+      - ALM_PIN_BULK_ROTATE
+      - ALM_PIN_DELETE
+      - ALM_PIN_KEY_IN
+      - ALM_PIN_KEY_IN_FAILED
+      - BASIC_AUTH_SUCCESS
+      - BASIC_AUTH_FAILURE
+      - SAML_LOGIN_WEB
+      - LOGIN_WEB
+      - PASSWORDLESS_LOGIN_WEB
+      - PARTNER_LOGIN_WEB
+      - PARTNER_PASSWORDLESS_LOGIN_WEB
+      - SAML_LOGIN_FAILURE_WEB
+      - LOGIN_FAILURE_WEB
+      - RHOMBUS_KEY_LOGIN
+      - RHOMBUS_KEY_PASSWORDLESS_LOGIN
+      - RHOMBUS_KEY_SAML_LOGIN
+      - LOGOUT_WEB
+      - PARTNER_LOGOUT_WEB
+      - WEB_CONSOLE_ACCESS
+      - MOBILE_CONSOLE_ACCESS
+      - SAML_LOGIN_MOBILE
+      - PARTNER_LOGIN_MOBILE
+      - PARTNER_PASSWORDLESS_LOGIN_MOBILE
+      - LOGIN_MOBILE
+      - PASSWORDLESS_LOGIN_MOBILE
+      - SAML_LOGIN_FAILURE_MOBILE
+      - LOGIN_FAILURE_MOBILE
+      - LOGOUT_MOBILE
+      - PARTNER_LOGOUT_MOBILE
+      - MOBILE_ACCESS
+      - PARTNER_LOGIN_MOBIlE_REFRESH
+      - LOGIN_MOBIlE_REFRESH
+      - RHOMBUS_KEY_LOGIN_REFRESH
+      - CAMERA_WIFI_NETWORK_CHANGED
+      - CAMERA_FORCED_REBOOT
+      - AUDIO_GATEWAY_FORCED_REBOOT
+      - ENVIRONMENTAL_GATEWAY_FORCED_REBOOT
+      - DOORBELL_CAMERA_FORCED_REBOOT
+      - BADGE_READER_FORCED_REBOOT
+      - NVR_FORCED_REBOOT
+      - FIRMWARE_UPDATE_CAMERA
+      - DELETE_CAMERA
+      - DELETE_USER
+      - DELETE_LOCATION
+      - LOCATION_CREATE
+      - LOCATION_UPDATED
+      - DELETE_ROLE
+      - ERASE_CAMERA
+      - POLICY_UPDATE
+      - POLICY_DELETE
+      - POLICY_PAUSED_LOCATION
+      - POLICY_PAUSED_DEVICE
+      - POLICY_PAUSED_COMPONENT_COMPOSITE
+      - CREATE_POLICY_ADDENDUM
+      - DEVICE_REGISTERED
+      - PENDING_REGISTRATION_CREATE
+      - PENDING_REGISTRATION_REMOVED
+      - PENDING_REGISTRATION_UPDATED
+      - DEVICE_UPDATE
+      - DEVICE_SETTINGS_UPDATE
+      - REVERT_TO_DEFAULTS
+      - DEVICE_FEATURE_UPDATE
+      - DEVICE_ORG_REASSIGN
+      - CLAIMKEY_RENEWAL_CREATED
+      - LICENSES_CLAIMED
+      - LICENSES_RETURNED
+      - LICENSE_ASSIGNED
+      - LICENSE_CREATED
+      - LICENSE_UPDATED
+      - USER_UPDATE
+      - USER_CREATE
+      - USER_IMPORT
+      - BULK_PROVISION_CREDENTIALS
+      - ROLE_CREATE
+      - POLICY_CREATE
+      - PARTNER_CLIENT_CREATE
+      - PARTNER_CLIENT_DELETE
+      - PARTNER_CUSTOMIZE_CLIENT
+      - PARTNER_CUSTOMIZE_CLIENT_DEVICE
+      - ORG_UPDATE
+      - DELETE_ORG
+      - DISABLE_ORG
+      - CREATE_ORG
+      - ROLE_UPDATE
+      - USER_ROLE_UPDATE
+      - USER_EMAIL_UPDATE
+      - TIMELAPSE_CREATE
+      - TIMELAPSE_DELETE
+      - ALERT_DISMISS
+      - ALL_ALERT_DISMISS
+      - SAVED_CLIP_CREATE
+      - SAVED_CLIP_DELETE
+      - CLIP_GROUP_CREATED
+      - CLIP_GROUP_DELETE
+      - SHARED_CLIP_DELETE
+      - SHARED_CLIP_CREATE
+      - SHARED_LINK_SENT
+      - SHARED_LIVE_VIDEO_STREAM_WITH_PASSWORD_CREATE
+      - SHARED_LIVE_VIDEO_STREAM_WITHOUT_PASSWORD_CREATE
+      - SHARED_LIVE_VIDEO_STREAM_DELETE
+      - SHARED_VIDEOWALL_WITH_PASSWORD_CREATE
+      - SHARED_VIDEOWALL_WITHOUT_PASSWORD_CREATE
+      - SHARED_VIDEOWALL_DELETE
+      - RAW_HTTP_STREAM_CREATED
+      - RAW_HTTP_STREAM_DELETED
+      - SETUP_VIRTUAL_MFA_DEVICE
+      - DELETE_VIRTUAL_MFA_DEVICE
+      - SETUP_SCIM_API_ACCESS
+      - REVOKE_SCIM_API_ACCESS
+      - AUDIT_EXPORT
+      - COUNT_EXPORT
+      - DIAGNOSTIC_EXPORT
+      - INVENTORY_EXPORT
+      - USERS_EXPORT
+      - UPTIME_EXPORT
+      - ALM_EVENT_EXPORT
+      - SUPPORT_TICKET_OPEN
+      - RMA_OPEN
+      - FEEDBACK_CREATE
+      - SUPPORT_ACCESS_GRANT
+      - SUPPORT_ACCESS_REVOKE
+      - SUPPORT_PARTNER_ADD
+      - SUPPORT_PARTNER_REMOVE
+      - SUPPORT_PARTNER_LOGIN_ACCESS_EXPIRED
+      - SUPPORT_SEARCH_TICKETS
+      - ACCEPT_UAP
+      - ACCEPT_RHOMBUS_UAP
+      - ACCEPT_ALERTMONITORING_UAP
+      - CREATE_SEEKPOINT
+      - DELETE_CUSTOM_SEEKPOINT
+      - UPDATE_INTEGRATION_SAML
+      - UPDATE_INTEGRATION_SLACK
+      - UPDATE_INTEGRATION_SLACK_V2
+      - DELETE_INTEGRATION_SLACK_V2
+      - UPDATE_INTEGRATION_BOX
+      - DELETE_INTEGRATION_BOX
+      - UPDATE_INTEGRATION_GOOGLE
+      - DELETE_INTEGRATION_GOOGLE
+      - UPDATE_INTEGRATION_GOOGLE_V2
+      - DELETE_INTEGRATION_GOOGLE_V2
+      - UPDATE_INTEGRATION_PAGERDUTY
+      - DELETE_INTEGRATION_PAGERDUTY
+      - UPDATE_INTEGRATION_SERVICENOW
+      - DELETE_INTEGRATION_SERVICENOW
+      - UPDATE_INTEGRATION_OFFICE365
+      - DELETE_INTEGRATION_OFFICE365
+      - UPDATE_INTEGRATION_DROPBOX
+      - DELETE_INTEGRATION_DROPBOX
+      - UPDATE_INTEGRATION_SQUARE
+      - DELETE_INTEGRATION_SQUARE
+      - UPDATE_INTEGRATION_AWS
+      - DELETE_INTEGRATION_AWS
+      - UPDATE_INTEGRATION_HALO
+      - DELETE_INTEGRATION_HALO
+      - UPDATE_INTEGRATION_TRITON
+      - DELETE_INTEGRATION_TRITON
+      - UPDATE_INTEGRATION_WEBHOOK
+      - DELETE_INTEGRATION_WEBHOOK
+      - UPDATE_INTEGRATION_EMAIL
+      - DELETE_INTEGRATION_EMAIL
+      - UPDATE_INTEGRATION_MATTERMOST
+      - DELETE_INTEGRATION_MATTERMOST
+      - UPDATE_INTEGRATION_OPENPATH
+      - DELETE_INTEGRATION_OPENPATH
+      - UPDATE_INTEGRATION_AVIGILON_ALTA
+      - DELETE_INTEGRATION_AVIGILON_ALTA
+      - UPDATE_INTEGRATION_DICE
+      - DELETE_INTEGRATION_DICE
+      - UPDATE_INTEGRATION_LUMEO
+      - DELETE_INTEGRATION_LUMEO
+      - UPDATE_INTEGRATION_DEVICE
+      - DELETE_INTEGRATION_DEVICE
+      - UPDATE_INTEGRATION_GUESTMANAGEMENT
+      - DELETE_INTEGRATION_GUESTMANAGEMENT
+      - UPDATE_GUESTMANAGEMENT_SETTINGS
+      - DELETE_GUESTMANAGEMENT_SETTINGS
+      - INVITE_GUEST
+      - CREATE_GUEST
+      - CHECKIN_GUEST
+      - CHECKOUT_GUEST
+      - UPDATE_GUEST
+      - DELETE_GUEST
+      - ACTIVATE_KIOSK
+      - UPDATE_INTEGRATION_OMNIALERT
+      - DELETE_INTEGRATION_OMNIALERT
+      - UPDATE_INTEGRATION_OPENTECHALLIANCE
+      - DELETE_INTEGRATION_OPENTECHALLIANCE
+      - UPDATE_INTEGRATION_TOAST
+      - DELETE_INTEGRATION_TOAST
+      - UPDATE_INTEGRATION_KISI
+      - DELETE_INTEGRATION_KISI
+      - UPDATE_INTEGRATION_BRIVO
+      - DELETE_INTEGRATION_BRIVO
+      - UPDATE_INTEGRATION_BUTTERFLYMX
+      - DELETE_INTEGRATION_BUTTERFLYMX
+      - UPDATE_INTEGRATION_ENVOY
+      - DELETE_INTEGRATION_ENVOY
+      - CREATE_ENVOY_INVITE
+      - UPDATE_INTEGRATION_SALTO
+      - UPDATE_INTEGRATION_PDK
+      - DELETE_INTEGRATION_PDK
+      - UPDATE_INTEGRATION_GENEA
+      - DELETE_INTEGRATION_GENEA
+      - UPDATE_INTEGRATION_MICROSOFTTEAMS
+      - DELETE_INTEGRATION_MICROSOFTTEAMS
+      - UPDATE_INTEGRATION_AMT
+      - DELETE_INTEGRATION_AMT
+      - UPDATE_INTEGRATION_PLACEOS
+      - DELETE_INTEGRATION_PLACEOS
+      - UPDATE_INTEGRATION_INTUIFACE
+      - DELETE_INTEGRATION_INTUIFACE
+      - UPDATE_INTEGRATION_INFORMACAST
+      - DELETE_INTEGRATION_INFORMACAST
+      - UPDATE_INTEGRATION_BOULEVARD
+      - DELETE_INTEGRATION_BOULEVARD
+      - UPDATE_INTEGRATION_INNERRANGE
+      - DELETE_INTEGRATION_INNERRANGE
+      - UPDATE_INTEGRATION_HONEYWELL_ELEMENTS
+      - DELETE_INTEGRATION_HONEYWELL_ELEMENTS
+      - UPDATE_INTEGRATION_HONEYWELL_ONGUARD
+      - DELETE_INTEGRATION_HONEYWELL_ONGUARD
+      - UPDATE_INTEGRATION_SHELLY
+      - DELETE_INTEGRATION_SHELLY
+      - UPDATE_INTEGRATION_FLIC
+      - DELETE_INTEGRATION_FLIC
+      - UPDATE_INTEGRATION_NINEONEONECELLULAR
+      - DELETE_INTEGRATION_NINEONEONECELLULAR
+      - UPDATE_INTEGRATION_PIMLOC
+      - DELETE_INTEGRATION_PIMLOC
+      - UPDATE_INTEGRATION_RAPTOR
+      - DELETE_INTEGRATION_RAPTOR
+      - UPDATE_INTEGRATION_LLM
+      - DELETE_INTEGRATION_LLM
+      - UPDATE_INTEGRATION_NOONLIGHT
+      - UPDATE_INTEGRATION_ALARM_MONITORING
+      - ENABLE_LIVE_ALARM_MONITORING
+      - ENABLE_LIVE_ALARM_MONITORING_LOCATION
+      - CREATE_ALARM_MONITORING_SETTINGS
+      - UPDATE_ALARM_MONITORING_SETTINGS
+      - DELETE_ALARM_MONITORING_SETTINGS
+      - ENABLE_ALARM_MONITORING_SETTINGS
+      - DISABLE_ALARM_MONITORING_SETTINGS
+      - ALM_CANCEL_MANUAL_ARM
+      - ALM_CANCEL_MANUAL_DISARM
+      - ALM_THREAT_QUALIFICATION_CREATE
+      - ALM_THREAT_QUALIFICATION_UPDATE
+      - ALM_THREAT_QUALIFICATION_DELETE
+      - REPORT_VEHICLE_EVENT
+      - API_TOKEN_REQUEST
+      - API_TOKEN_REVOKE
+      - API_INVOCATION
+      - API_OAUTH_TOKEN_REQUEST
+      - API_OAUTH_TOKEN_REFRESH
+      - API_OAUTH_TOKEN_REVOKE
+      - API_OAUTH_INVOCATION
+      - API_OAUTH_SUBMIT_APPLICATION
+      - API_OAUTH_UPDATE_APPLICATION
+      - API_OAUTH_DELETE_APPLICATION
+      - API_OAUTH_AUTHORIZE
+      - VIDEO_WALL_CREATE
+      - VIDEO_WALL_UPDATE
+      - VIDEO_WALL_DELETE
+      - VIEW_SHARE_TIMELAPSE
+      - VIEW_SHARE_CLIP
+      - VIEW_SHARE_STREAM
+      - VIEW_SHARE_VIDEOWALL
+      - VIEW_CAMERA_VOD
+      - CAMERA_POLICY_UPDATE
+      - CAMERA_POLICY_CREATE
+      - CAMERA_POLICY_DELETE
+      - TAG_POLICY_UPDATE
+      - TAG_POLICY_CREATE
+      - TAG_POLICY_DELETE
+      - CLIMATE_POLICY_UPDATE
+      - CLIMATE_POLICY_CREATE
+      - CLIMATE_POLICY_DELETE
+      - DOOR_POLICY_UPDATE
+      - DOOR_POLICY_CREATE
+      - DOOR_POLICY_DELETE
+      - DOOR_SCHEDULE_EXCEPTION_UPDATE
+      - DOOR_SCHEDULE_EXCEPTION_CREATE
+      - DOOR_SCHEDULE_EXCEPTION_DELETE
+      - ACCESS_CONTROLLED_DOOR_POLICY_UPDATE
+      - ACCESS_CONTROLLED_DOOR_POLICY_CREATE
+      - ACCESS_CONTROLLED_DOOR_POLICY_DELETE
+      - VIDEO_INTERCOM_POLICY_UPDATE
+      - VIDEO_INTERCOM_POLICY_CREATE
+      - VIDEO_INTERCOM_POLICY_DELETE
+      - OCCUPANCY_POLICY_UPDATE
+      - OCCUPANCY_POLICY_CREATE
+      - OCCUPANCY_POLICY_DELETE
+      - AUDIO_POLICY_UPDATE
+      - AUDIO_POLICY_CREATE
+      - AUDIO_POLICY_DELETE
+      - SCHEDULE_CREATE
+      - SCHEDULE_DELETE
+      - SCHEDULE_UPDATE
+      - CUSTOM_EVENT_CREATE
+      - CUSTOM_EVENT_DELETE
+      - CUSTOM_EVENT_UPDATE
+      - CUSTOM_EVENT_TOS_ACCEPTED
+      - CUSTOM_EVENT_TOS_REVOKED
+      - SUBSCRIPTION_SETUP_INTENT_CREATE
+      - SUBSCRIPTION_CREATE
+      - SUBSCRIPTION_DELETE
+      - SUBSCRIPTION_PAYMENT_METHOD_DELETE
+      - SUBSCRIPTION_PAYMENT_METHOD_UPDATE
+      - SUBSCRIPTION_MAX_SPEND_UPDATE
+      - SUBSCRIPTION_CHECKOUT_SESSION_CREATE
+      - UPLOAD_FLOORPLAN
+      - ORG_AUDIO_RECORD_UPDATE
+      - ORG_AUDIO_ANALYSIS_UPDATE
+      - ORG_LLM_USAGE_UPDATE
+      - ORG_LLM_USAGE_ENABLED
+      - ORG_LLM_USAGE_DISABLED
+      - DOOR_ACCESS_UNLOCK
+      - RHOMBUS_KEY_DOOR_UNLOCK
+      - ELEVATOR_ACCESS_UNLOCK
+      - RHOMBUS_KEY_ELEVATOR_UNLOCK
+      - VIDEO_INTERCOM_TALK
+      - RHOMBUS_KEY_UPDATE_APP_SETTINGS
+      - UPLOAD_ACCESS_CONTROLLED_DOOR
+      - UPLOAD_ACCESS_CONTROLLED_ELEVATOR
+      - UPLOAD_ACCESS_CONTROLLED_ELEVATOR_LANDING
+      - UPLOAD_USER_PROFILE_PICTURE
+      - ACCESS_GRANT_CREATE
+      - ACCESS_GRANT_UPDATE
+      - ACCESS_GRANT_DELETE
+      - ACCESS_REVOCATION_CREATE
+      - ACCESS_REVOCATION_UPDATE
+      - ACCESS_REVOCATION_DELETE
+      - ACCESS_CONTROLLED_DOOR_CREATE
+      - ACCESS_CONTROLLED_DOOR_UPDATE
+      - ACCESS_CONTROLLED_DOOR_DELETE
+      - ACCESS_CONTROLLED_ELEVATOR_CREATE
+      - ACCESS_CONTROLLED_ELEVATOR_UPDATE
+      - ACCESS_CONTROLLED_ELEVATOR_DELETE
+      - ACCESS_CONTROLLED_ELEVATOR_LANDING_CREATE
+      - ACCESS_CONTROLLED_ELEVATOR_LANDING_UPDATE
+      - ACCESS_CONTROLLED_ELEVATOR_LANDING_DELETE
+      - AC_CRED_RHOMBUS_SECURE_CSN_CREATE
+      - AC_CRED_RHOMBUS_SECURE_CSN_UPDATE
+      - AC_CRED_RHOMBUS_SECURE_CSN_DELETE
+      - AC_CRED_RHOMBUS_SECURE_CSN_REVOKED
+      - AC_CRED_RHOMBUS_SECURE_CSN_ASSIGN
+      - AC_CRED_RHOMBUS_SECURE_CSN_UNASSIGN
+      - AC_CRED_RHOMBUS_SECURE_CSN_SUSPEND
+      - AC_CRED_RHOMBUS_SECURE_CSN_UNSUSPEND
+      - AC_CRED_STANDARD_CSN_CREATE
+      - AC_CRED_STANDARD_CSN_UPDATE
+      - AC_CRED_STANDARD_CSN_DELETE
+      - AC_CRED_STANDARD_CSN_REVOKED
+      - AC_CRED_STANDARD_CSN_ASSIGN
+      - AC_CRED_STANDARD_CSN_UNASSIGN
+      - AC_CRED_STANDARD_CSN_SUSPEND
+      - AC_CRED_STANDARD_CSN_UNSUSPEND
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_CREATE
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_UPDATE
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_DELETE
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_REVOKED
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_ASSIGN
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_UNASSIGN
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_SUSPEND
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_UNSUSPEND
+      - AC_CRED_PIN_CREATE
+      - AC_CRED_PIN_BULK_CREATE
+      - AC_CRED_PIN_UPDATE
+      - AC_CRED_PIN_ROTATE
+      - AC_CRED_PIN_BULK_ROTATE
+      - AC_CRED_PIN_DELETE
+      - AC_CRED_PIN_REVOKED
+      - AC_CRED_PIN_ASSIGN
+      - AC_CRED_PIN_UNASSIGN
+      - AC_CRED_PIN_SUSPEND
+      - AC_CRED_PIN_UNSUSPEND
+      - AC_CRED_QR_CREATE
+      - AC_CRED_QR_REVOKED
+      - AC_CRED_QR_DELETE
+      - AC_CRED_QR_SUSPEND
+      - AC_CRED_QR_UNSUSPEND
+      - AC_CRED_WIEGAND_CREATE
+      - AC_CRED_WIEGAND_UPDATE
+      - AC_CRED_WIEGAND_DELETE
+      - AC_CRED_WIEGAND_REVOKED
+      - AC_CRED_WIEGAND_ASSIGN
+      - AC_CRED_WIEGAND_UNASSIGN
+      - AC_CRED_WIEGAND_SUSPEND
+      - AC_CRED_WIEGAND_UNSUSPEND
+      - AC_CRED_NOTE_UPDATE
+      - AC_LOCKDOWN_PLAN_CREATED
+      - AC_LOCKDOWN_PLAN_UPDATED
+      - AC_LOCKDOWN_PLAN_DELETED
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_COMPONENT_POWER_CYCLE
+      - AC_DOOR_STATE_OVERRIDE_APPLIED
+      - AC_DOOR_STATE_OVERRIDE_CANCELLED
+      - AC_ELEVATOR_LANDING_ACCESS_STATE_OVERRIDE_APPLIED
+      - AC_ELEVATOR_LANDING_ACCESS_STATE_OVERRIDE_CANCELLED
+      - AC_GUEST_PASS_CREATE
+      - AC_GUEST_PASS_UPDATE
+      - AC_GUEST_PASS_SUSPEND
+      - AC_GUEST_PASS_UNSUSPEND
+      - AC_GUEST_PASS_EXPIRE
+      - AC_GUEST_PASS_DELETE
+      - SCIM_GET_ALL_USERS
+      - SCIM_POST_CREATE_USER
+      - SCIM_PUT_UPDATE_USER
+      - SCIM_PATCH_UPDATE_USER
+      - SCIM_GET_USER_BY_ID
+      - SCIM_DELETE_USER_BY_ID
+      - SCIM_GET_ALL_GROUPS
+      - SCIM_POST_CREATE_GROUP
+      - SCIM_PUT_UPDATE_GROUP
+      - SCIM_PATCH_UPDATE_GROUP
+      - SCIM_GET_GROUP_BY_ID
+      - SCIM_DELETE_GROUP_BY_ID
+      - CREATE_ACCESS_CONTROL_GROUP
+      - UPDATE_ACCESS_CONTROL_GROUP
+      - DELETE_ACCESS_CONTROL_GROUP
+      - RULE_CREATE
+      - RULE_DELETE
+      - RULE_UPDATE
+      - RULE_PAUSE
+      - UPLOAD_FACES
+      - UPDATE_FACE
+      - REPORT_FACE_EVENT
+      - FACE_EVENT_UPDATED
+      - FACE_EVENT_DELETED
+      - FACE_PERSON_CREATED
+      - FACE_PERSON_UPDATED
+      - FACE_PERSON_DELETED
+      - FACE_MATCHMAKER_CREATED
+      - FACE_MATCHMAKER_DELETED
+      - FACE_MATCHMAKER_UPLOADED
+      - FACE_MATCHING_CONFIG_UPDATED
+      - EXPUNGE_FACES_ORG
+      - EXPUNGE_VEHICLES_ORG
+      - DEVICE_NETWORK_CONFIGURATION_CHANGE
+      - KIOSK_UPDATED
+      - KIOSK_DELETED
+      - KIOSK_CREATED
+      - GUEST_DELETED
+      - UPDATE_APERIO_FIRMWARE
+      - UPDATE_INTEGRATION_APERIO
+      - DELETE_INTEGRATION_APERIO
+      - APERIO_GATEWAY_CREATE
+      - APERIO_DOORS_CREATE
+      - APERIO_GATEWAY_REBOOT
+      - APERIO_DTC_CLEAR
+      - THIRD_PARTY_CAMERA_CREATE
+      - THIRD_PARTY_CAMERA_DELETE
+      - THIRD_PARTY_CAMERA_UPDATED
+      - THIRD_PARTY_CAMERA_ASSIGNED_TO_CORE
+      - THIRD_PARTY_CAMERA_ASSIGNED_TO_LITE
+      - THIRD_PARTY_CAMERA_UNASSIGNED
+      - THIRD_PARTY_CAMERA_PASSWORD_CREATE
+      - THIRD_PARTY_CAMERA_PASSWORD_DELTE
+      - THIRD_PARTY_CAMERA_PASSWORD_DELETE
+      - CREATE_CHATBOT_CONFIG
+      - UPDATE_CHATBOT_CONFIG
+      - DELETE_CHATBOT_CONFIG
+      - SUPPORT_AUTHORITY_UPDATE
+      - SUPPORT_AUTHORITY_LOGOUT_ALL
+      - DELETE_DOOR_CONTROLLER
+      - DELETE_DOORBELL_CAMERA
+      - DELETE_BADGE_READER
+      - DELETE_ENVIRONMENTAL_GATEWAY
+      - AC_LOCKDOWN_TEST_MODE_ENABLED
+      - AC_LOCKDOWN_TEST_MODE_DISABLED
+      - CLOUD_ARCHIVING_CONFIG_UPDATE
+      - CLOUD_ARCHIVING_CONFIG_DELETE
+      - SCIM_UPDATE_SETTINGS
+      - INCIDENT_REPORT_CREATE
+      - INCIDENT_REPORT_DELETE
+      - INCIDENT_REPORT_UPDATED
+      - UNKNOWN
+    JavaTimeUnitEnum:
+      type: string
+      description: Time granularity for the uptime report
+      enum:
+      - NANOSECONDS
+      - MICROSECONDS
+      - MILLISECONDS
+      - SECONDS
+      - MINUTES
+      - HOURS
+      - DAYS
+    Export_ExportPeopleCountEventsWSRequest:
+      type: object
+      description: Request object for exporting people count events with time interval filtering.
+      properties:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering people count events
+          example: 1641081600000
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering people count events
+          example: 1640995200000
+    Export_ExportPeopleEventsWSRequest:
+      type: object
+      description: Request object for exporting people detection events with time interval filtering.
+      properties:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering people events
+          example: 1641081600000
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering people events
+          example: 1640995200000
+    ReportScopeEnum:
+      type: string
+      description: Scope of the report to reset
+      enum:
+      - REGION
+      - DEVICE
+      - LOCATION
+      - ORG
+    Export_ExportAuditEventsWSRequest:
+      type: object
+      description: Request object for exporting audit events to CSV format with filtering options.
+      properties:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering audit events
+          example: 1641081600000
+        excludeActions:
+          type:
+          - array
+          - 'null'
+          description: If not empty, events with actions specified in the list are filtered out. If both include and exclude actions are specified, exclude actions are ignored.
+          items:
+            $ref: '#/components/schemas/AuditActionEnum'
+        includeActions:
+          type:
+          - array
+          - 'null'
+          description: If not empty, only events with actions specified in the list are included. If both include and exclude actions are specified, exclude actions are ignored.
+          items:
+            $ref: '#/components/schemas/AuditActionEnum'
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering audit events
+          example: 1640995200000
+    Export_ExportCountReportsWSRequest:
+      type: object
+      description: Request object for exporting count reports with configurable intervals, scopes, and time ranges.
+      properties:
+        endDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Enter the ending date in in ISO 8601 format
+          example: '2024-07-17T00:00:00Z'
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End datetime as a UNIX timestamp in milliseconds
+          example: 1721416242907
+          minimum: 0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        startDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Enter the starting date in ISO 8601 format
+          example: '2024-07-17T00:00:00Z'
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start datetime as a UNIX timestamp in milliseconds
+          example: 1719861042000
+          minimum: 0
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+        type:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        uuidList:
+          type:
+          - array
+          - 'null'
+          description: Enter the UUID of device(s) or location(s)
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+      required:
+      - endTimeMs
+      - interval
+      - scope
+      - startTimeMs
+      - type
+    Export_ExportUptimeWSRequest:
+      type: object
+      description: Request object for exporting device uptime reports with configurable time ranges and granularity.
+      properties:
+        cameraUuids:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          description: Use deviceUuids instead
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            deprecated: true
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to export uptime reports for
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endDateTime:
+          type:
+          - string
+          - 'null'
+          description: End date and time for the uptime report
+          example: '2024-01-31T23:59:59Z'
+        granularity:
+          $ref: '#/components/schemas/JavaTimeUnitEnum'
+        startDateTime:
+          type:
+          - string
+          - 'null'
+          description: Start date and time for the uptime report
+          example: '2024-01-01T00:00:00Z'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

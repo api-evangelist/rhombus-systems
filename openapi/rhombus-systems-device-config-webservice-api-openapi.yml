@@ -1,0 +1,2914 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Device Config Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Device Config Webservice
+paths:
+  /api/deviceconfig/getFacetedConfig:
+    post:
+      description: Get a device's config
+      operationId: getFacetedConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device_config_GetConfigWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device_config_GetFacetedUserConfigWSResponse'
+          description: OK
+      summary: Get a device's config
+      tags:
+      - Device Config Webservice
+  /api/deviceconfig/updateFacetedConfig:
+    post:
+      description: Update a device's config
+      operationId: updateFacetedConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device_config_UpdateFacetedUserConfigWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Common_devices_UpdateConfigWSResponse'
+          description: OK
+      summary: Update a device's config
+      tags:
+      - Device Config Webservice
+components:
+  schemas:
+    Device_config_settings_ExternalAudioSettingsSelectiveUpdate:
+      type: object
+      description: Update Audio settings
+      properties:
+        audio_aec_via_software:
+          type:
+          - boolean
+          - 'null'
+        audio_ai_disabled:
+          type:
+          - boolean
+          - 'null'
+        audio_external_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_aec_enabled:
+          type:
+          - boolean
+          - 'null'
+        audio_internal_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_min_echo_amplitude:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_playback_gain_percent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_record:
+          type:
+          - boolean
+          - 'null'
+        audio_supported:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_mic:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_speaker:
+          type:
+          - boolean
+          - 'null'
+        audio_use_internal_speaker:
+          type:
+          - boolean
+          - 'null'
+        device_mic_enabled:
+          type:
+          - boolean
+          - 'null'
+        device_near_audio_silenced:
+          type:
+          - boolean
+          - 'null'
+        device_speaker_enabled:
+          type:
+          - boolean
+          - 'null'
+        frontendEqualizerHighShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerLowShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking1:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking2:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking3:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendNoiseSuppression:
+          type:
+          - boolean
+          - 'null'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    Device_config_userconfig_ExternalReadableFacetedUserConfig:
+      type: object
+      description: Device's faceted user configuration
+      properties:
+        audioFacetSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Device_config_settings_ExternalReadableAudioSettings'
+        buttonSettings:
+          $ref: '#/components/schemas/Device_config_settings_ExternalReadableButtonSettings'
+        climateSettings:
+          $ref: '#/components/schemas/ClimateSettings'
+        deviceSettings:
+          $ref: '#/components/schemas/Device_config_settings_ExternalReadableDeviceSettings'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceVideoSettings:
+          $ref: '#/components/schemas/Device_config_settings_ExternalReadableDeviceVideoSettings'
+        doorControllerSettings:
+          $ref: '#/components/schemas/Device_config_settings_ExternalReadableDoorControllerSettings'
+        doorReaderSettings:
+          $ref: '#/components/schemas/DoorReaderSettings'
+        doorSensorSettings:
+          $ref: '#/components/schemas/DoorSensorSettings'
+        environmentalGatewaySettings:
+          $ref: '#/components/schemas/EnvironmentalGatewaySettings'
+        lastModified:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        metricsAgentSettings:
+          $ref: '#/components/schemas/MetricsAgentSettings'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        robotSettings:
+          $ref: '#/components/schemas/RobotSettings'
+        tamperSettings:
+          $ref: '#/components/schemas/TamperSettings'
+        thirdPartyCameraSettings:
+          $ref: '#/components/schemas/ThirdPartyCameraSettings'
+        videoDoorbellSettings:
+          $ref: '#/components/schemas/VideoDoorbellSettings'
+        videoFacetSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Device_config_settings_ExternalReadableVideoSettings'
+    Device_config_GetConfigWSRequest:
+      type: object
+      description: Request object for retrieving a device's configuration.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    RegionOfInterestGroup:
+      type: object
+      properties:
+        inclusive:
+          type:
+          - boolean
+          - 'null'
+          description: If true, regions in this group include specified activities. If false, regions in this group exclude specified activities.
+        regionsOfInterest:
+          type:
+          - array
+          - 'null'
+          description: Regions of interest that belong to the group. Group must have at least one region specified.
+          items:
+            $ref: '#/components/schemas/RegionOfInterest'
+        type:
+          $ref: '#/components/schemas/RegionOfInterestGroupTypeEnum'
+    LEDModeEnum:
+      type: string
+      enum:
+      - LED_OFF
+      - LED_RED_SOLID
+      - LED_GREEN_SOLID
+      - LED_ORANGE_SOLID
+      - LED_RED_BLINK
+      - LED_GREEN_BLINK
+      - LED_ORANGE_BLINK
+      - LED_NORMAL
+    RobotSettingsSelectiveUpdate:
+      type: object
+      properties:
+        battery_recovered_threshold_pct:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        home_latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        home_longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        low_battery_threshold_pct:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        map_assigned_at_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        map_assignment_id:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        map_id:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pose:
+          $ref: '#/components/schemas/Pose'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    CameraVisualTamperConfigType:
+      type: object
+      properties:
+        analyze_fps:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        analyze_res:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        canny_thresh:
+          type:
+          - number
+          - 'null'
+          format: float
+        edge_cov_diff_thresh:
+          type:
+          - number
+          - 'null'
+          format: float
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        long_buf_size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        short_buf_size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    BurstyRateLimit:
+      type: object
+      properties:
+        base_interval_ms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        burst_token_generation_ms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        burst_token_initial_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        burst_token_max_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Device_config_settings_ExternalReadableDoorControllerSettings:
+      type: object
+      properties:
+        autocomponentize_readers:
+          type:
+          - boolean
+          - 'null'
+        autoregister_readers:
+          type:
+          - boolean
+          - 'null'
+        flip_display_orientation:
+          type:
+          - boolean
+          - 'null'
+        pressure_switch_tamper_normally_open:
+          type:
+          - boolean
+          - 'null'
+        proximity_sensor_tamper_disabled:
+          type:
+          - boolean
+          - 'null'
+        proximity_sensor_tamper_distance_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    CameraHumanLoiteringSettingsType:
+      type: object
+      properties:
+        roi:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+    InactivityObjectTypeEnum:
+      type: string
+      enum:
+      - HUMAN
+      - VEHICLE
+    Device_config_GetFacetedUserConfigWSResponse:
+      type: object
+      description: Response object containing a device's faceted user configuration.
+      properties:
+        config:
+          $ref: '#/components/schemas/Device_config_userconfig_ExternalReadableFacetedUserConfig'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Device_config_settings_ExternalReadableDeviceVideoSettings:
+      type: object
+      properties:
+        alert_rate_limit_human_only:
+          $ref: '#/components/schemas/BurstyRateLimit'
+        alert_rate_limit_motion_only:
+          $ref: '#/components/schemas/BurstyRateLimit'
+        alert_rate_limit_vehicle_only:
+          $ref: '#/components/schemas/BurstyRateLimit'
+        ir_double_tap:
+          type:
+          - boolean
+          - 'null'
+        ir_filter_mode:
+          $ref: '#/components/schemas/IRModesEnum'
+        ir_leds_mode:
+          $ref: '#/components/schemas/IRModesEnum'
+    ThirdPartyCameraSettings:
+      type: object
+      properties:
+        lens_role:
+          $ref: '#/components/schemas/LensRoleEnum'
+        onvif_ip:
+          type:
+          - string
+          - 'null'
+        onvif_password:
+          type:
+          - string
+          - 'null'
+        onvif_profiletoken:
+          type:
+          - string
+          - 'null'
+        onvif_ptz_servicepath:
+          type:
+          - string
+          - 'null'
+        onvif_username:
+          type:
+          - string
+          - 'null'
+        ptz_engine:
+          $ref: '#/components/schemas/CameraPTZEngineEnum'
+        ptz_movement:
+          $ref: '#/components/schemas/CameraPTZMovementEnum'
+        ptz_translation_space:
+          $ref: '#/components/schemas/CameraPTZTranslationSpaceEnum'
+        zoom_max:
+          type:
+          - number
+          - 'null'
+          format: double
+        zoom_min:
+          type:
+          - number
+          - 'null'
+          format: double
+    Device_config_settings_ExternalDeviceSettingsSelectiveUpdate:
+      type: object
+      properties:
+        ai_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        bandwidth_reports_disabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_ai_smart_crop_enabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_ai_stream_enabled:
+          type:
+          - boolean
+          - 'null'
+        firmware_dev_settings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        led_mode_blink_period_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        led_mode_when_active:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_mode_when_inactive:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_stealth_mode:
+          type:
+          - boolean
+          - 'null'
+        lightweight_detection_disabled:
+          type:
+          - boolean
+          - 'null'
+        live_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        media_ttl_minutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        on_demand_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        scanner_agent_disabled:
+          type:
+          - boolean
+          - 'null'
+        snapshot_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        storage_target_free_megabytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        storage_target_free_space_permyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        thumbstrip_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    ButtonSettingsSelectiveUpdate:
+      type: object
+      description: Update Button settings
+      properties:
+        button_emergency_onsite_contact:
+          $ref: '#/components/schemas/EmergencyContact'
+        button_test_mode_enabled:
+          type:
+          - boolean
+          - 'null'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    MetricsAgentSettingsSelectiveUpdate:
+      type: object
+      properties:
+        batch_on:
+          type:
+          - boolean
+          - 'null'
+          default: true
+        batch_size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 100000
+          maximum: 1000000
+          minimum: 10000
+        count_flush_interval:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 1
+          minimum: 1
+        level:
+          $ref: '#/components/schemas/MetricsLevelEnum'
+        log_update_interval:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 1800
+          minimum: 1
+        server_flush_interval:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 15
+          minimum: 1
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    CameraPTZConfigType:
+      type: object
+      properties:
+        offset_x_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+        offset_y_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        size_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+    CameraAiDewarpConfigType:
+      type: object
+      properties:
+        dewarp_tile_height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        dewarp_tile_width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        orientation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    DoorReaderSettings:
+      type: object
+      properties:
+        dr_enable_audio_feedback:
+          type:
+          - boolean
+          - 'null'
+        tof_max_distance:
+          type:
+          - number
+          - 'null'
+          format: float
+        tof_min_distance:
+          type:
+          - number
+          - 'null'
+          format: float
+        tof_min_signal_over_noise:
+          type:
+          - number
+          - 'null'
+          format: float
+    DoorSensorSettingsSelectiveUpdate:
+      type: object
+      properties:
+        ajar_threshold_enabled:
+          type:
+          - boolean
+          - 'null'
+          description: Option to Enabled or Disable the Ajar Threshold. Defaults to Disabled (False).
+        ajar_threshold_sec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Threshold value for Door Sensor Ajar state. Defaults to 30s.
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    CrossingDirectionEnum:
+      type: string
+      enum:
+      - INGRESS
+      - EGRESS
+    CrossingObjectEnum:
+      type: string
+      enum:
+      - HUMAN
+      - VEHICLE
+      - FACE
+      - LPR
+      - POSE
+      - CLIP_EMBED
+      - UNKNOWN
+    Device_config_settings_ExternalReadableAudioSettings:
+      type: object
+      properties:
+        audio_aec_via_software:
+          type:
+          - boolean
+          - 'null'
+        audio_ai_disabled:
+          type:
+          - boolean
+          - 'null'
+        audio_analysis_enabled:
+          type:
+          - boolean
+          - 'null'
+        audio_external_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_aec_enabled:
+          type:
+          - boolean
+          - 'null'
+        audio_internal_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_min_echo_amplitude:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_playback_gain_percent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_record:
+          type:
+          - boolean
+          - 'null'
+        audio_supported:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_mic:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_speaker:
+          type:
+          - boolean
+          - 'null'
+        audio_use_internal_speaker:
+          type:
+          - boolean
+          - 'null'
+        device_mic_enabled:
+          type:
+          - boolean
+          - 'null'
+        device_near_audio_silenced:
+          type:
+          - boolean
+          - 'null'
+        device_speaker_enabled:
+          type:
+          - boolean
+          - 'null'
+        frontendEqualizerHighShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerLowShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking1:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking2:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking3:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendNoiseSuppression:
+          type:
+          - boolean
+          - 'null'
+    MetricsAgentSettings:
+      type: object
+      properties:
+        batch_on:
+          type:
+          - boolean
+          - 'null'
+          default: true
+        batch_size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 100000
+          maximum: 1000000
+          minimum: 10000
+        count_flush_interval:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 1
+          minimum: 1
+        level:
+          $ref: '#/components/schemas/MetricsLevelEnum'
+        log_update_interval:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 1800
+          minimum: 1
+        server_flush_interval:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 15
+          minimum: 1
+    CameraDewarpModeEnum:
+      type: string
+      enum:
+      - NO_TRANSFORM
+      - NORMAL
+      - PANORAMA
+      - SUB_REGION
+      - VERTICAL_PANORAMA
+      - TRANSVERSE_MERCATOR
+      - MERCATOR
+      - EQUIRECTANGULAR
+    AspectRatio:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Device_config_settings_ExternalDoorControllerSettingsSelectiveUpdate:
+      type: object
+      description: Update Door Controller settings
+      properties:
+        autocomponentize_readers:
+          type:
+          - boolean
+          - 'null'
+        autoregister_readers:
+          type:
+          - boolean
+          - 'null'
+        flip_display_orientation:
+          type:
+          - boolean
+          - 'null'
+        pressure_switch_tamper_normally_open:
+          type:
+          - boolean
+          - 'null'
+        proximity_sensor_tamper_disabled:
+          type:
+          - boolean
+          - 'null'
+        proximity_sensor_tamper_distance_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    Pose:
+      type: object
+      properties:
+        orientation:
+          type:
+          - array
+          - 'null'
+          items:
+            type: number
+            format: double
+            description: Serialized as [x, y, z, w]
+          maxItems: 4
+          minItems: 4
+        position:
+          type:
+          - array
+          - 'null'
+          items:
+            type: number
+            format: double
+            description: Serialized as [x, y, z]
+          maxItems: 3
+          minItems: 3
+    CameraPTZEngineEnum:
+      type: string
+      enum:
+      - DIGITAL
+      - MECHANICAL
+      - NONE
+      - UNKNOWN
+    EnvironmentalGatewaySettings:
+      type: object
+      properties:
+        data_measurement_interval_sec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        data_upload_interval_sec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        false_positive_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        leak_detection_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        leak_detector_present:
+          type:
+          - boolean
+          - 'null'
+        moist_detection_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        smoke_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        smoke_thc_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        smoke_tobacco_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        vape_alert_backoff_sec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        vape_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        vape_thc_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    LensRoleEnum:
+      type: string
+      enum:
+      - VISIBLE
+      - THERMAL
+    WeeklyMinuteIntervalType:
+      type: object
+      properties:
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    EnvironmentalGatewaySettingsSelectiveUpdate:
+      type: object
+      description: Update Environmental Sensor settings
+      properties:
+        data_measurement_interval_sec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        data_upload_interval_sec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        false_positive_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        leak_detection_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        leak_detector_present:
+          type:
+          - boolean
+          - 'null'
+        moist_detection_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        smoke_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        smoke_thc_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        smoke_tobacco_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        vape_alert_backoff_sec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        vape_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        vape_thc_confidence_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    VideoDoorbellSettingsSelectiveUpdate:
+      type: object
+      description: Update Video Doorbell settings
+      properties:
+        standalone_doorbell_mode:
+          type:
+          - boolean
+          - 'null'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    DewarpedView:
+      type: object
+      properties:
+        aspectRatio:
+          $ref: '#/components/schemas/AspectRatio'
+        pitchDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        rollDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        verticalFieldOfViewDegrees:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        yawDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+    ClimateSettingsSelectiveUpdate:
+      type: object
+      description: Update Sensor Climate settings
+      properties:
+        alert_window_minutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        smoke_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        thc_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        vape_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    MetricsLevelEnum:
+      type: string
+      default: ESSENTIAL
+      enum:
+      - 'OFF'
+      - FILE
+      - ESSENTIAL
+      - BASIC
+      - FULL
+    CameraPTZTranslationSpaceEnum:
+      type: string
+      enum:
+      - FOV
+      - DIGITAL
+      - NONE
+      - UNKNOWN
+    CameraPTZMovementEnum:
+      type: string
+      enum:
+      - RELATIVE
+      - ABSOLUTE
+    EmergencyContact:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the emergency contact.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for this emergency contact.
+      required:
+      - name
+      - phoneNumber
+    CameraCrossCountingSettingsType:
+      type: object
+      properties:
+        directions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CrossingDirectionEnum'
+          uniqueItems: true
+        in_roi:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+        object_type:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        object_type_id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        out_roi:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+    FisheyeDisplayModeEnum:
+      type: string
+      enum:
+      - RAW
+      - IMMERSIVE
+      - TILES
+      - RAW_PANO
+    VideoDoorbellSettings:
+      type: object
+      properties:
+        standalone_doorbell_mode:
+          type:
+          - boolean
+          - 'null'
+    Device_config_settings_ExternalVideoResolution:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    RegionConfigType:
+      type:
+      - object
+      - 'null'
+      properties:
+        inverted:
+          type:
+          - boolean
+          - 'null'
+        polygons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+    TamperSettingsSelectiveUpdate:
+      type: object
+      description: Update Tamper detection settings
+      properties:
+        accelerometer_change_tamper_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        accelerometer_disabled:
+          type:
+          - boolean
+          - 'null'
+        pressure_switch_tamper_disabled:
+          type:
+          - boolean
+          - 'null'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    CameraMountingDirectionEnum:
+      type: string
+      enum:
+      - DOWN
+      - UP
+      - SIDEWAYS
+      - UNKNOWN
+    CameraMeteringConfigType:
+      type: object
+      properties:
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        table:
+          type:
+          - string
+          - 'null'
+    TamperSettings:
+      type: object
+      properties:
+        accelerometer_change_tamper_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        accelerometer_disabled:
+          type:
+          - boolean
+          - 'null'
+        pressure_switch_tamper_disabled:
+          type:
+          - boolean
+          - 'null'
+    DeviceVideoSettingsSelectiveUpdate:
+      type: object
+      description: Update selective video settings
+      properties:
+        alert_rate_limit_human_only:
+          $ref: '#/components/schemas/BurstyRateLimit'
+        alert_rate_limit_motion_only:
+          $ref: '#/components/schemas/BurstyRateLimit'
+        alert_rate_limit_vehicle_only:
+          $ref: '#/components/schemas/BurstyRateLimit'
+        ir_double_tap:
+          type:
+          - boolean
+          - 'null'
+        ir_filter_mode:
+          $ref: '#/components/schemas/IRModesEnum'
+        ir_leds_mode:
+          $ref: '#/components/schemas/IRModesEnum'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    Device_config_userconfig_ExternalUpdateableFacetedUserConfig:
+      type: object
+      description: Configuration updates to apply to the device
+      properties:
+        audioFacetSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Device_config_settings_ExternalAudioSettingsSelectiveUpdate'
+          description: Update Audio settings
+        buttonSettings:
+          $ref: '#/components/schemas/ButtonSettingsSelectiveUpdate'
+        climateSettings:
+          $ref: '#/components/schemas/ClimateSettingsSelectiveUpdate'
+        deviceSettings:
+          $ref: '#/components/schemas/Device_config_settings_ExternalDeviceSettingsSelectiveUpdate'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceVideoSettings:
+          $ref: '#/components/schemas/DeviceVideoSettingsSelectiveUpdate'
+        doorControllerSettings:
+          $ref: '#/components/schemas/Device_config_settings_ExternalDoorControllerSettingsSelectiveUpdate'
+        doorReaderSettings:
+          $ref: '#/components/schemas/DoorReaderSettingsSelectiveUpdate'
+        doorSensorSettings:
+          $ref: '#/components/schemas/DoorSensorSettingsSelectiveUpdate'
+        environmentalGatewaySettings:
+          $ref: '#/components/schemas/EnvironmentalGatewaySettingsSelectiveUpdate'
+        metricsAgentSettings:
+          $ref: '#/components/schemas/MetricsAgentSettingsSelectiveUpdate'
+        robotSettings:
+          $ref: '#/components/schemas/RobotSettingsSelectiveUpdate'
+        tamperSettings:
+          $ref: '#/components/schemas/TamperSettingsSelectiveUpdate'
+        videoDoorbellSettings:
+          $ref: '#/components/schemas/VideoDoorbellSettingsSelectiveUpdate'
+        videoFacetSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Device_config_settings_ExternalVideoSettingsSelectiveUpdate'
+          description: Update Video Settings
+    RegionCoordinateType:
+      type: object
+      properties:
+        x:
+          type:
+          - number
+          - 'null'
+          format: float
+        y:
+          type:
+          - number
+          - 'null'
+          format: float
+    Device_config_settings_ExternalReadableDeviceSettings:
+      type: object
+      properties:
+        ai_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        bandwidth_reports_disabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_ai_smart_crop_enabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_ai_stream_enabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_archive_days:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cloud_archive_upload_schedule:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+        cloud_archive_upload_schedule_inverted:
+          type:
+          - boolean
+          - 'null'
+        cloud_archive_upload_schedule_uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firmware_dev_settings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        led_mode_blink_period_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        led_mode_when_active:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_mode_when_inactive:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_stealth_mode:
+          type:
+          - boolean
+          - 'null'
+        lightweight_detection_disabled:
+          type:
+          - boolean
+          - 'null'
+        live_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        max_event_duration_ms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        media_ttl_minutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        on_demand_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        scanner_agent_disabled:
+          type:
+          - boolean
+          - 'null'
+        snapshot_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        storage_target_free_megabytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        storage_target_free_space_permyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        thumbstrip_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    DoorSensorSettings:
+      type: object
+      properties:
+        ajar_threshold_enabled:
+          type:
+          - boolean
+          - 'null'
+          description: Option to Enabled or Disable the Ajar Threshold. Defaults to Disabled (False).
+        ajar_threshold_sec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Threshold value for Door Sensor Ajar state. Defaults to 30s.
+    Common_devices_UpdateConfigWSResponse:
+      type: object
+      description: Response indicating the result of updating device configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    IRModesEnum:
+      type: string
+      enum:
+      - 'ON'
+      - 'OFF'
+      - AUTO
+    RegionOfInterest:
+      type: object
+      description: Regions of interest that belong to the group. Group must have at least one region specified.
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          description: Region of allowed or disallowed activities. Activities are allowed if region group is inclusive. Activities are disallowed if region group is exclusive. Region must have at least one activity specified.
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        name:
+          type:
+          - string
+          - 'null'
+        polygon:
+          $ref: '#/components/schemas/RegionPolygonType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DoorReaderSettingsSelectiveUpdate:
+      type: object
+      description: Update Door Reader settings
+      properties:
+        dr_enable_audio_feedback:
+          type:
+          - boolean
+          - 'null'
+        tof_max_distance:
+          type:
+          - number
+          - 'null'
+          format: float
+        tof_min_distance:
+          type:
+          - number
+          - 'null'
+          format: float
+        tof_min_signal_over_noise:
+          type:
+          - number
+          - 'null'
+          format: float
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    ClimateSettings:
+      type: object
+      properties:
+        alert_window_minutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        smoke_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        thc_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        vape_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    CameraMotorConfigType:
+      type: object
+      properties:
+        af_enabled:
+          type:
+          - boolean
+          - 'null'
+        af_region:
+          $ref: '#/components/schemas/PermyriadRect'
+        focus:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pan_degrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        piris:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pt_speed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        tilt_degrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        zoom:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    FrontendEqualizerSettings:
+      type: object
+      properties:
+        frequency:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        gain:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        q:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    RobotSettings:
+      type: object
+      properties:
+        battery_recovered_threshold_pct:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        home_latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        home_longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        low_battery_threshold_pct:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        map_assigned_at_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        map_assignment_id:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        map_id:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pose:
+          $ref: '#/components/schemas/Pose'
+    Device_config_UpdateFacetedUserConfigWSRequest:
+      type: object
+      description: Request object for updating a device's faceted user configuration.
+      properties:
+        configUpdate:
+          $ref: '#/components/schemas/Device_config_userconfig_ExternalUpdateableFacetedUserConfig'
+    Device_config_settings_ExternalVideoSettingsSelectiveUpdate:
+      type: object
+      description: Update Video Settings
+      properties:
+        blocked_debounce_time_ms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        blocked_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        char_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        custom_events:
+          type:
+          - boolean
+          - 'null'
+        dewarpMode:
+          $ref: '#/components/schemas/CameraDewarpModeEnum'
+        disabled_schedule:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+        disabled_schedule_inverted:
+          type:
+          - boolean
+          - 'null'
+        disabled_schedule_uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        dwell_reset_ttl_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        dwell_time_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        exposure_level:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        fisheye_display_mode:
+          $ref: '#/components/schemas/FisheyeDisplayModeEnum'
+        floorplan_homography:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - number
+              - 'null'
+              format: double
+        h265_realtime_encoding_enabled:
+          type:
+          - boolean
+          - 'null'
+        h265_vod_encoding_enabled:
+          type:
+          - boolean
+          - 'null'
+        hdr_enabled:
+          type:
+          - boolean
+          - 'null'
+        high_res_detection:
+          type:
+          - boolean
+          - 'null'
+        human_detection:
+          type:
+          - boolean
+          - 'null'
+        human_loitering:
+          type:
+          - boolean
+          - 'null'
+        human_loitering_settings:
+          $ref: '#/components/schemas/CameraHumanLoiteringSettingsType'
+        img_brightness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_contrast:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_saturation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_sharpness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inactivity_settings:
+          $ref: '#/components/schemas/CameraInactivitySettingsType'
+        max_detections_per_frame:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        metering_config:
+          $ref: '#/components/schemas/CameraMeteringConfigType'
+        motor_config:
+          $ref: '#/components/schemas/CameraMotorConfigType'
+        mounting_direction:
+          $ref: '#/components/schemas/CameraMountingDirectionEnum'
+        night_exposure_level:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_brightness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_contrast:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_saturation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_sharpness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_metering_config:
+          $ref: '#/components/schemas/CameraMeteringConfigType'
+        night_sensor_gain_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_shutter_time_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_shutter_time_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        object_search:
+          type:
+          - boolean
+          - 'null'
+        occupancy_counting:
+          type:
+          - boolean
+          - 'null'
+        people_tracking:
+          type:
+          - boolean
+          - 'null'
+        person_reidentification:
+          type:
+          - boolean
+          - 'null'
+        privacy_window_polygons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+        privacy_windows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PermyriadRect'
+        ptz_config:
+          $ref: '#/components/schemas/CameraPTZConfigType'
+        record_on_motion:
+          type:
+          - boolean
+          - 'null'
+        region_for_occupancy:
+          $ref: '#/components/schemas/RegionConfigType'
+        region_of_interest:
+          $ref: '#/components/schemas/RegionConfigType'
+        region_of_interest_groups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionOfInterestGroup'
+        resolution:
+          $ref: '#/components/schemas/Device_config_settings_ExternalVideoResolution'
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        rtsp_encoder:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        segment_max_bytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sensor_gain_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        shared_fov:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        shutter_time_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        shutter_time_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        snapshot_height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        snapshot_interval_secs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        tile_views:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DewarpedView'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        upload_all_detections:
+          type:
+          - boolean
+          - 'null'
+        use_onboard_lpr:
+          type:
+          - boolean
+          - 'null'
+        vehicle_detection:
+          type:
+          - boolean
+          - 'null'
+        video_ai_disabled:
+          type:
+          - boolean
+          - 'null'
+        video_persist_disabled:
+          type:
+          - boolean
+          - 'null'
+        wdr_enabled:
+          type:
+          - boolean
+          - 'null'
+        wdr_strength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        zero_motion_video_bitrate_percent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    RegionOfInterestGroupTypeEnum:
+      type: string
+      description: Represents type of activity regions in the group. Defaults to 'Activity'.
+      enum:
+      - ACTIVITY
+      - REPORTING
+      - CROSSING
+    Device_config_settings_ExternalReadableButtonSettings:
+      type: object
+      properties:
+        button_emergency_onsite_contact:
+          $ref: '#/components/schemas/EmergencyContact'
+        button_test_mode_enabled:
+          type:
+          - boolean
+          - 'null'
+    CameraInactivitySettingsType:
+      type: object
+      properties:
+        object_type:
+          $ref: '#/components/schemas/InactivityObjectTypeEnum'
+        roi:
+          $ref: '#/components/schemas/RegionPolygonType'
+        threshold_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    UploadTargetEnum:
+      type: string
+      enum:
+      - '0'
+      - '1'
+      - '2'
+    RegionPolygonType:
+      type: object
+      properties:
+        coordinates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionCoordinateType'
+    Device_config_settings_ExternalReadableVideoSettings:
+      type: object
+      properties:
+        ai_dewarp_config:
+          $ref: '#/components/schemas/CameraAiDewarpConfigType'
+        behavior_detection:
+          type:
+          - boolean
+          - 'null'
+        blocked_debounce_time_ms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        blocked_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        char_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        color_detection:
+          type:
+          - boolean
+          - 'null'
+        con_human_filter:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        con_vehicle_filter:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cross_counting:
+          type:
+          - boolean
+          - 'null'
+        cross_counting_settings:
+          $ref: '#/components/schemas/CameraCrossCountingSettingsType'
+        custom_events:
+          type:
+          - boolean
+          - 'null'
+        dewarpMode:
+          $ref: '#/components/schemas/CameraDewarpModeEnum'
+        disabled_schedule:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+        disabled_schedule_inverted:
+          type:
+          - boolean
+          - 'null'
+        disabled_schedule_uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        dwell_reset_ttl_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        dwell_time_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        engagement_counting:
+          type:
+          - boolean
+          - 'null'
+        exposure_level:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        face_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        face_counting:
+          type:
+          - boolean
+          - 'null'
+        face_counting_nonunique:
+          type:
+          - boolean
+          - 'null'
+        face_id_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        face_match_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        face_recognition:
+          type:
+          - boolean
+          - 'null'
+        fisheye_display_mode:
+          $ref: '#/components/schemas/FisheyeDisplayModeEnum'
+        floorplan_homography:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - number
+              - 'null'
+              format: double
+        h265_realtime_encoding_enabled:
+          type:
+          - boolean
+          - 'null'
+        h265_vod_encoding_enabled:
+          type:
+          - boolean
+          - 'null'
+        hdr_enabled:
+          type:
+          - boolean
+          - 'null'
+        high_res_detection:
+          type:
+          - boolean
+          - 'null'
+        human_detection:
+          type:
+          - boolean
+          - 'null'
+        human_loitering:
+          type:
+          - boolean
+          - 'null'
+        human_loitering_settings:
+          $ref: '#/components/schemas/CameraHumanLoiteringSettingsType'
+        img_brightness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_contrast:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_saturation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_sharpness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inactivity_settings:
+          $ref: '#/components/schemas/CameraInactivitySettingsType'
+        licenseplate_detection:
+          type:
+          - boolean
+          - 'null'
+        lpr_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        max_detections_per_frame:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        metering_config:
+          $ref: '#/components/schemas/CameraMeteringConfigType'
+        motion_grid_disabled:
+          type:
+          - boolean
+          - 'null'
+        motion_grid_window_sec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        motion_lightweight_disabled:
+          type:
+          - boolean
+          - 'null'
+        motion_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        motor_config:
+          $ref: '#/components/schemas/CameraMotorConfigType'
+        mounting_direction:
+          $ref: '#/components/schemas/CameraMountingDirectionEnum'
+        new_motion_feature_flag:
+          type:
+          - boolean
+          - 'null'
+        night_exposure_level:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_brightness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_contrast:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_saturation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_sharpness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_metering_config:
+          $ref: '#/components/schemas/CameraMeteringConfigType'
+        night_sensor_gain_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_shutter_time_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_shutter_time_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        obj_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        object_search:
+          type:
+          - boolean
+          - 'null'
+        occupancy_counting:
+          type:
+          - boolean
+          - 'null'
+        people_counting:
+          type:
+          - boolean
+          - 'null'
+        people_tracking:
+          type:
+          - boolean
+          - 'null'
+        person_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        person_reidentification:
+          type:
+          - boolean
+          - 'null'
+        pose_detection:
+          type:
+          - boolean
+          - 'null'
+        ppe_detection:
+          type:
+          - boolean
+          - 'null'
+        privacy_window_polygons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+        privacy_windows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PermyriadRect'
+        ptz_config:
+          $ref: '#/components/schemas/CameraPTZConfigType'
+        record_on_motion:
+          type:
+          - boolean
+          - 'null'
+        region_for_occupancy:
+          $ref: '#/components/schemas/RegionConfigType'
+        region_of_interest:
+          $ref: '#/components/schemas/RegionConfigType'
+        region_of_interest_groups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionOfInterestGroup'
+        resolution:
+          $ref: '#/components/schemas/Device_config_settings_ExternalVideoResolution'
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        rtsp_encoder:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        segment_max_bytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sensor_gain_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        shared_fov:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        shutter_time_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        shutter_time_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        snapshot_height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        snapshot_interval_secs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        target_ai_fps:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        thumbstrip_disabled:
+          type:
+          - boolean
+          - 'null'
+        tile_views:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DewarpedView'
+        timelapse:
+          type:
+          - boolean
+          - 'null'
+        upload_all_detections:
+          type:
+          - boolean
+          - 'null'
+        use_onboard_ai:
+          type:
+          - boolean
+          - 'null'
+        use_onboard_lpr:
+          type:
+          - boolean
+          - 'null'
+        use_pilot_face_id:
+          type:
+          - boolean
+          - 'null'
+        vehicle_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        vehicle_counting:
+          type:
+          - boolean
+          - 'null'
+        vehicle_detection:
+          type:
+          - boolean
+          - 'null'
+        video_ai_disabled:
+          type:
+          - boolean
+          - 'null'
+        video_persist_disabled:
+          type:
+          - boolean
+          - 'null'
+        visual_tamper_config:
+          $ref: '#/components/schemas/CameraVisualTamperConfigType'
+        wdr_enabled:
+          type:
+          - boolean
+          - 'null'
+        wdr_strength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        zero_motion_video_bitrate_percent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        zero_motion_video_quality:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    PermyriadRect:
+      type: object
+      properties:
+        h:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        w:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

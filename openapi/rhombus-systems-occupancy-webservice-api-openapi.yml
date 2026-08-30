@@ -1,0 +1,797 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Occupancy Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Occupancy Webservice
+paths:
+  /api/occupancy/getMinimalOccupancySensorStateList:
+    post:
+      description: Get basic state information about all proximity tags in organization
+      operationId: getMinimalOccupancySensorStateList
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Occupancysensor_GetMinimalOccupancySensorStatesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occupancysensor_GetMinimalOccupancySensorStatesWSResponse'
+          description: OK
+      summary: Get minimal occupancy sensor state list
+      tags:
+      - Occupancy Webservice
+  /api/occupancy/getOccupancyEventsForSensor:
+    post:
+      description: Get recent events for specified proximity tag
+      operationId: getOccupancyEventsForSensor
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Occupancysensor_GetOccupancyEventsForSensorWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occupancysensor_GetOccupancyEventsForSensorWSResponse'
+          description: OK
+      summary: Get occupancy events for sensor
+      tags:
+      - Occupancy Webservice
+  /api/occupancy/getOccupancyPresenceWindows:
+    post:
+      description: Get stored video information for sensor
+      operationId: getOccupancyPresenceWindows
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sensor_GetSensorPresenceWindowsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sensor_GetSensorPresenceWindowsWSResponse'
+          description: OK
+      summary: Get occupancy presence windows
+      tags:
+      - Occupancy Webservice
+  /api/occupancy/updateDetails:
+    post:
+      description: Update the details of an occupancy sensor
+      operationId: updateOccupancySensorDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Occupancysensor_UpdateOccupancySensorDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occupancysensor_UpdateOccupancySensorDetailsWSResponse'
+          description: OK
+      summary: Update occupancy sensor details
+      tags:
+      - Occupancy Webservice
+components:
+  schemas:
+    Sensor_GetSensorPresenceWindowsWSResponse:
+      type: object
+      description: Response object containing stored video information for a sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        presenceWindows:
+          type:
+          - array
+          - 'null'
+          description: List of presence windows for the sensor
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    OccupancyStatusEnum:
+      type: string
+      description: Current occupancy status of the sensor
+      enum:
+      - VACANT
+      - MOVEMENT
+      - OCCUPIED
+    Occupancysensor_MotionSensorHealthEnum:
+      type: string
+      description: Motion sensor health status.
+      enum:
+      - RED
+      - GREEN
+    OccupancyEventType:
+      type: object
+      description: List of occupancy events for the sensor
+      properties:
+        baseStationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        batteryPercentage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        bleDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        bleRssi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        closeBaseStations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lux:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        state:
+          $ref: '#/components/schemas/OccupancyStateEnum'
+        stateChanged:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        tampered:
+          type:
+          - boolean
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Occupancysensor_MinimalOccupancySensorStateType:
+      type: object
+      description: Minimal state information for occupancy sensors including health, location, and sensor data.
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device facet UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        batteryPercent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Battery percentage of the sensor
+          example: 85
+        closestBaseStation:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+          description: Firmware version of the sensor
+          example: 1.2.3
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the sensor is located
+          example: 2
+        health:
+          $ref: '#/components/schemas/Occupancysensor_MotionSensorHealthEnum'
+        healthDetails:
+          $ref: '#/components/schemas/Occupancysensor_MotionSensorHealthDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lastSeenSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp when the sensor was last seen (seconds since epoch)
+          example: 1640995200
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the sensor location
+          example: 37.7749
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the sensor location
+          example: -122.4194
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the occupancy sensor
+          example: Conference Room Sensor
+        normalizedLux:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Normalized lux value (0-1) matching human perception of lighting transitions
+          example: 0.75
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rawLux:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Raw lux value from the sensor
+          example: 500
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the occupancy sensor
+          example: RH123456789
+        signalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Signal strength of the sensor
+          example: -45
+        status:
+          $ref: '#/components/schemas/OccupancyStatusEnum'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Occupancysensor_UpdateOccupancySensorDetailsWSResponse:
+      type: object
+      description: Response object for updating occupancy sensor details.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Occupancysensor_GetOccupancyEventsForSensorWSResponse:
+      type: object
+      description: Response object containing occupancy events for a specific sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of occupancy events for the sensor
+          items:
+            $ref: '#/components/schemas/OccupancyEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Occupancysensor_UpdateOccupancySensorDetailsWSRequest:
+      type: object
+      description: Request object for updating occupancy sensor details with selective update flags.
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device facet UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        associatedCamerasUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the associated cameras should be updated
+          example: false
+        deleted:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the sensor is marked as deleted
+          example: false
+        deletedUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the deleted status should be updated
+          example: false
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the occupancy sensor
+          example: Motion sensor for conference room A
+        descriptionUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the description should be updated
+          example: false
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the sensor is located
+          example: 2
+        floorNumberUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the floor number should be updated
+          example: false
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the sensor location
+          example: 37.7749
+        latitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the latitude should be updated
+          example: false
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the location UUID should be updated
+          example: false
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the sensor location
+          example: -122.4194
+        longitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the longitude should be updated
+          example: false
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the occupancy sensor
+          example: Conference Room Sensor
+        nameUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the name should be updated
+          example: false
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the policy UUID should be updated
+          example: false
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the sub-locations hierarchy key should be updated
+          example: false
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OccupancyStateEnum:
+      type: string
+      enum:
+      - VACANT
+      - MOVEMENT
+      - OCCUPIED
+    Occupancysensor_GetMinimalOccupancySensorStatesWSRequest:
+      type: object
+      description: Request object for getting minimal occupancy sensor states for all sensors in organization.
+    TimeWindowSeconds:
+      type: object
+      description: List of uptime windows for the device
+      properties:
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Sensor_GetSensorPresenceWindowsWSRequest:
+      type: object
+      description: Request object for retrieving stored video information for a sensor.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds for the presence window query
+          example: 3600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the presence window query
+          example: 1640995200
+    Occupancysensor_GetOccupancyEventsForSensorWSRequest:
+      type: object
+      description: Request object for getting occupancy events for a specific sensor.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created after this timestamp (milliseconds since epoch)
+          example: 1640908800000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created before this timestamp (milliseconds since epoch)
+          example: 1640995200000
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of events to return
+          example: 100
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    Occupancysensor_MotionSensorHealthDetailsEnum:
+      type: string
+      description: Detailed motion sensor health status.
+      enum:
+      - NO_HEARTBEAT
+      - FIRMWARE_BEHIND
+      - NONE
+    Occupancysensor_GetMinimalOccupancySensorStatesWSResponse:
+      type: object
+      description: Response object containing minimal occupancy sensor states for all sensors in organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        occupancySensorStates:
+          type:
+          - array
+          - 'null'
+          description: List of minimal occupancy sensor states
+          items:
+            $ref: '#/components/schemas/Occupancysensor_MinimalOccupancySensorStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

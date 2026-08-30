@@ -1,0 +1,3674 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Partner Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Partner Webservice
+paths:
+  /api/partner/createPartnerClient:
+    post:
+      description: Create a client account
+      operationId: createPartnerClient
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_CreatePartnerClientWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_CreatePartnerClientWSResponse'
+          description: OK
+      summary: Create partner client
+      tags:
+      - Partner Webservice
+  /api/partner/customizeClient:
+    post:
+      description: Customize a client account
+      operationId: customizeClient
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_CustomizeClientWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_CustomizeClientWSResponse'
+          description: OK
+      summary: Customize client
+      tags:
+      - Partner Webservice
+  /api/partner/customizeClientDevice:
+    post:
+      description: Customize a client device
+      operationId: customizeClientDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_CustomizeClientDeviceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_CustomizeClientDeviceWSResponse'
+          description: OK
+      summary: Customize client device
+      tags:
+      - Partner Webservice
+  /api/partner/deleteClient:
+    post:
+      description: Delete a client account
+      operationId: deletePartnerClient
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_DeleteClientWebRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_DeleteClientWebResponse'
+          description: OK
+      summary: Delete partner client
+      tags:
+      - Partner Webservice
+  /api/partner/getApiTokenApplications:
+    post:
+      deprecated: true
+      description: Get details of all open api token requests for organization
+      operationId: partner_getApiTokenApplications
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetApiTokenApplicationsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetApiTokenApplicationsWSResponse'
+          description: OK
+      summary: Get API token applications
+      tags:
+      - Partner Webservice
+  /api/partner/getApiTokens:
+    post:
+      description: Get list of all api tokens for a partner
+      operationId: partner_getApiTokens
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetPartnerApiTokensWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetApiTokensWSResponse'
+          description: OK
+      summary: Get API tokens
+      tags:
+      - Partner Webservice
+  /api/partner/getClaimKeysForPartnerOrg:
+    post:
+      description: Get the claim keys associated with the authenticated partner organization
+      operationId: getClaimKeysForPartnerOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_claimkey_GetClaimKeysForPartnerOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_claimkey_GetClaimKeysForPartnerOrgWSResponse'
+          description: OK
+      summary: Get claim keys for partner organization
+      tags:
+      - Partner Webservice
+  /api/partner/getClientDevices:
+    post:
+      description: Retrieve a list of devices for a specific client.
+      operationId: getClientDevices
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetClientDevicesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetClientDevicesWSResponse'
+          description: OK
+      summary: Get client devices
+      tags:
+      - Partner Webservice
+  /api/partner/getClientStatusMap:
+    post:
+      description: Get a map of all client accounts to device and location info
+      operationId: getPartnerClientsStatusMap
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetPartnerClientsStatusMapWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetPartnerClientsStatusMapWSResponse'
+          description: OK
+      summary: Get client status map
+      tags:
+      - Partner Webservice
+  /api/partner/getClientSummaryInfo:
+    post:
+      description: Get information about a client
+      operationId: getClientSummaryInfo
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetClientSummaryInfoWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetClientSummaryInfoWSResponse'
+          description: OK
+      summary: Get client summary info
+      tags:
+      - Partner Webservice
+  /api/partner/getClients:
+    post:
+      description: Get a list of all client accounts
+      operationId: getPartnerClients
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetPartnerClientsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetPartnerClientsWSResponse'
+          description: OK
+      summary: Get partner clients
+      tags:
+      - Partner Webservice
+  /api/partner/getClientsV2:
+    post:
+      description: 'Get a list of all client accounts. NOTICE: This is the same as getPartnerClients, but only returns the basic info so partners can login to clients quickly. The other info will be returned by getPartnerClientsStatusMap.'
+      operationId: getPartnerClientsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetPartnerClientsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetPartnerClientsWSResponse'
+          description: OK
+      summary: Get partner clients V2
+      tags:
+      - Partner Webservice
+  /api/partner/getDeviceLicensesForOrg:
+    post:
+      deprecated: true
+      description: Get a list of licenses available for a client organization
+      operationId: getDeviceLicensesForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetDeviceLicensesForClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetDeviceLicensesForClientOrgWSResponse'
+          description: OK
+      summary: Get device licenses for organization
+      tags:
+      - Partner Webservice
+  /api/partner/getLicensesForOrg:
+    post:
+      deprecated: true
+      description: Get a list of licenses available for a client organization
+      operationId: getLicensesForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetLicensesForClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetLicensesForClientOrgWSResponse'
+          description: OK
+      summary: Get licenses for organization
+      tags:
+      - Partner Webservice
+  /api/partner/getListOfAllClientDevices:
+    post:
+      description: Retrieve list of all devices registered across all clients
+      operationId: getListOfAllClientDevices
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetListOfAllClientDevicesRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetListOfAllClientDevicesResponse'
+          description: OK
+      summary: Get list of all client devices
+      tags:
+      - Partner Webservice
+  /api/partner/getListOfAvailableHardware:
+    post:
+      description: Retrieve a list of hardware available for remote registration. Any hardware originally registered by a Partner is available for re-registration after being removed from an active client account.
+      operationId: getListOfControlledHardware
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetListOfControlledHardwareRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetListOfControlledHardwareResponse'
+          description: OK
+      summary: Get list of available hardware
+      tags:
+      - Partner Webservice
+  /api/partner/getShipments:
+    post:
+      description: Get client shipments
+      operationId: PartnerGetShipments
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_GetShipmentsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_GetShipmentsWSResponse'
+          description: OK
+      summary: Get client shipments
+      tags:
+      - Partner Webservice
+  /api/partner/reassignDeviceOrg:
+    post:
+      description: Reassign device(s) to a different organization. Only devices which hardware is controlled by the partner can be reassigned
+      operationId: reassignDeviceOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_ReassignDeviceOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_ReassignDeviceOrgWSResponse'
+          description: OK
+      summary: Reassign device organization
+      tags:
+      - Partner Webservice
+  /api/partner/registerCameraToClient:
+    post:
+      description: Register a controlled camera to a client
+      operationId: registerCameraToClient
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Org_CreatePendingRegistrationRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Org_CreatePendingRegistrationResponse'
+          description: OK
+      summary: Register camera to client
+      tags:
+      - Partner Webservice
+  /api/partner/registerDeal:
+    post:
+      description: Register a deal
+      operationId: registerDeal
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_RegisterDealWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_RegisterDealWSResponse'
+          description: OK
+      summary: Register deal
+      tags:
+      - Partner Webservice
+  /api/partner/revokeApiToken:
+    post:
+      description: 'Remove an api token from organization. Note: this is irreversible'
+      operationId: partner_revokeApiToken
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_RevokeApiTokenWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_RevokeApiTokenWSResponse'
+          description: OK
+      summary: Revoke API token
+      tags:
+      - Partner Webservice
+  /api/partner/updateSendLicenseExpirationEmail:
+    post:
+      description: Update send license expiration email feature flag by org
+      operationId: updateManuallySendLicenseExpirationEmail
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partner_UpdateManuallySendLicenseExpirationEmailWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner_UpdateManuallySendLicenseExpirationEmailWSResponse'
+          description: OK
+      summary: Update send license expiration email
+      tags:
+      - Partner Webservice
+components:
+  schemas:
+    LEDModeEnum:
+      type: string
+      enum:
+      - LED_OFF
+      - LED_RED_SOLID
+      - LED_GREEN_SOLID
+      - LED_ORANGE_SOLID
+      - LED_RED_BLINK
+      - LED_GREEN_BLINK
+      - LED_ORANGE_BLINK
+      - LED_NORMAL
+    Partner_CustomizeClientDeviceWSResponse:
+      type: object
+      description: Response object containing the applied client device customization settings.
+      properties:
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_GetClientSummaryInfoWSResponse:
+      type: object
+      description: Response object containing client summary information including account owner, device status, and settings.
+      properties:
+        accountOwner:
+          $ref: '#/components/schemas/WrappedRhombusOrgUserType'
+        clientDeviceStatusMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Partner_ConnectionCountType'
+          description: Map of device types to their connection status counts
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        licenseV2Enabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether license V2 is enabled for the client
+          example: true
+        locationCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of locations for the client
+          example: 3
+        manuallySendLicenseExpirationEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether manual license expiration email sending is enabled
+          example: false
+        recentPolicyAlertCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of recent policy alerts
+          example: 5
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    WrappedRhombusOrgUserType:
+      type: object
+      description: List of users in the organization
+      properties:
+        accessibleRhombusApps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusAppEnum'
+          uniqueItems: true
+        accountOwner:
+          type:
+          - boolean
+          - 'null'
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        changePasswordOnLogin:
+          type:
+          - boolean
+          - 'null'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        emailCaseSensitive:
+          type:
+          - string
+          - 'null'
+        emailVerified:
+          type:
+          - boolean
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+        mfaTokenType:
+          $ref: '#/components/schemas/MfaTokenTypeEnum'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUserCustomizationFlags:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        passwordSet:
+          type:
+          - boolean
+          - 'null'
+        restrictToAllowedLoginIps:
+          type:
+          - boolean
+          - 'null'
+        rhombusUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/UserStatusEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_RevokeApiTokenWSResponse:
+      type: object
+      description: Response object for revoking an API token.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_CustomizeClientWSRequest:
+      type: object
+      description: Request object for customizing client settings and configurations.
+      properties:
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
+    DeviceTypeV2:
+      type: object
+      description: List of all client devices
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        customData:
+          type:
+          - string
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        hardwareId:
+          type:
+          - string
+          - 'null'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pending:
+          type:
+          - boolean
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        unregisteredEmailSent:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetPartnerApiTokensWSRequest:
+      type: object
+    LicenseEnum:
+      type: string
+      enum:
+      - STARTER
+      - STANDARD
+      - ENTERPRISE
+      - LEGACY
+    Partner_DeviceWithPartnerDetailsType:
+      type: object
+      description: Device information with partner-specific details including control and reassignment status.
+      properties:
+        device:
+          $ref: '#/components/schemas/DeviceTypeV2'
+        partnerControlledHardware:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the hardware is controlled by the partner
+          example: true
+        reassignable:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the device can be reassigned to another organization
+          example: true
+    ApiClientTypeEnum:
+      type: string
+      enum:
+      - PARTNER_DEVELOPER
+      - DEVELOPER
+      - INTERNAL_SALESFORCE
+      - TVOS
+      - WINDOWS
+      - LINUX
+      - KIOSK
+      - KEYPAD
+      - SQUARE
+      - KISI
+      - OPENPATH
+      - TOAST
+      - BOULEVARD
+      - BRIVO
+      - EXECUTABLE
+      - HALO
+      - SALTO
+      - BUTTERFLYMX
+      - GENEA
+      - PRODATAKEY
+      - ENVOY
+      - AMT
+      - PIMLOC
+      - PLACEOS
+      - OMNIALERT
+      - FLIC
+      - SHELLY_DEVICE_EVENT
+      - NINEONEONECELLULAR
+      - HONEYWELL_ELEMENTS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - TRITON
+      - CHATBOT
+      - SIGNATURE_API
+      - INCOMING_WEBHOOK
+      - UNKNOWN
+    Partner_GetClientDevicesWSResponse:
+      type: object
+      description: Response object containing devices for a specific client organization.
+      properties:
+        devices:
+          type:
+          - array
+          - 'null'
+          description: List of devices with partner-specific details
+          items:
+            $ref: '#/components/schemas/Partner_DeviceWithPartnerDetailsType'
+    MfaTokenTypeEnum:
+      type: string
+      enum:
+      - EMAIL
+      - SMS
+      - VIRTUAL_MFA
+      - FIDO
+    RegionConfigType:
+      type:
+      - object
+      - 'null'
+      properties:
+        inverted:
+          type:
+          - boolean
+          - 'null'
+        polygons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+    Partner_GetShipmentsWSRequest:
+      type: object
+      description: Request object for getting client shipments within a time range.
+      properties:
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        endTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time for shipment search (seconds since epoch)
+          example: 1640995200
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time for shipment search (seconds since epoch)
+          example: 1640908800
+    CameraMountingDirectionEnum:
+      type: string
+      enum:
+      - DOWN
+      - UP
+      - SIDEWAYS
+      - UNKNOWN
+    Partner_GetPartnerClientsWSResponse:
+      type: object
+      description: Response object containing list of partner clients.
+      properties:
+        clients:
+          type:
+          - array
+          - 'null'
+          description: List of partner clients
+          items:
+            $ref: '#/components/schemas/Partner_PartnerClientWebType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CustomerShipmentStateEnum:
+      type: string
+      enum:
+      - CREATED
+      - SHIPPED
+      - DELIVERED
+      - RETURN_REGISTERED
+      - RETURN_SENT
+      - RETURN_DELIVERED
+      - COMPLETE
+      - UNKNOWN
+    Partner_CustomizeClientDeviceWSRequest:
+      type: object
+      description: Request object for customizing client device settings and configurations.
+      properties:
+        clientDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        configUpdate:
+          $ref: '#/components/schemas/Device_config_userconfig_IExternalUpdateableAudioVideoUserConfig'
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientDeviceCustomizationsType'
+    License_claimkey_GetClaimKeysForPartnerOrgWSRequest:
+      type: object
+      description: Request object for getting the claim keys belonging to the authenticated partner organization.
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    StatusTypeEnum:
+      type: string
+      enum:
+      - SUCCESS
+      - FAILURE
+    CameraMotorConfigType:
+      type: object
+      properties:
+        af_enabled:
+          type:
+          - boolean
+          - 'null'
+        af_region:
+          $ref: '#/components/schemas/PermyriadRect'
+        focus:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pan_degrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        piris:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pt_speed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        tilt_degrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        zoom:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    CustomerShipmentEmailStateEnum:
+      type: string
+      enum:
+      - SHIPPING_CONFIRMATION_SUCCESS
+      - SHIPPING_CONFIRMATION_FAILURE
+      - SHIPPING_SHIPPED_SUCCESS
+      - SHIPPING_SHIPPED_FAILURE
+      - UNKNOWN
+    Partner_PartnerWebResponseStatusEnum:
+      type: string
+      description: Status responses for partner web operations.
+      enum:
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - USER_EXISTS
+      - CLIENT_EXISTS
+      - USER_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
+    LicenseStateEnum:
+      type: string
+      enum:
+      - CLAIMED
+      - RENEWED
+      - PENDING_RETURN
+      - NOT_RENEWED
+      - EXPIRED
+      - PERMANENTLY_EXPIRED
+    Partner_GetPartnerClientsWSRequest:
+      type: object
+      description: Request object for getting all partner clients.
+    RegionOfInterestGroup:
+      type: object
+      properties:
+        inclusive:
+          type:
+          - boolean
+          - 'null'
+          description: If true, regions in this group include specified activities. If false, regions in this group exclude specified activities.
+        regionsOfInterest:
+          type:
+          - array
+          - 'null'
+          description: Regions of interest that belong to the group. Group must have at least one region specified.
+          items:
+            $ref: '#/components/schemas/RegionOfInterest'
+        type:
+          $ref: '#/components/schemas/RegionOfInterestGroupTypeEnum'
+    Integration_GetApiTokenApplicationsWSResponse:
+      type: object
+      properties:
+        applications:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApiTokenApplicationType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_GetClientDevicesWSRequest:
+      type: object
+      description: Request object for getting devices for a specific client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Partner_GetClientSummaryInfoWSRequest:
+      type: object
+      description: Request object for getting client summary information.
+      properties:
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LicenseFeature:
+      type: object
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    License_GetDeviceLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of device licenses available for a client organization.
+      properties:
+        deviceLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of device licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/DeviceLicenseType'
+    AspectRatio:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    License_claimkey_GetClaimKeysForPartnerOrgWSResponse:
+      type: object
+      description: Response object containing the claim keys belonging to the authenticated partner organization.
+      properties:
+        claimKeys:
+          type:
+          - array
+          - 'null'
+          description: List of claim keys belonging to the partner organization
+          items:
+            $ref: '#/components/schemas/PartnerOrgClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RhombusAppEnum:
+      type: string
+      enum:
+      - PARTNER
+      - CONSOLE
+      - RHOMBUS_KEY
+      - UNKNOWN
+    WeeklyMinuteIntervalType:
+      type: object
+      properties:
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    DewarpedView:
+      type: object
+      properties:
+        aspectRatio:
+          $ref: '#/components/schemas/AspectRatio'
+        pitchDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        rollDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        verticalFieldOfViewDegrees:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        yawDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+    DeviceLicenseType:
+      type: object
+      description: List of device licenses available for the client organization
+      properties:
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        features:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+          uniqueItems: true
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        licenseType:
+          $ref: '#/components/schemas/LicenseEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    ProductTypeEnum:
+      type: string
+      enum:
+      - DEVICE
+      - ALERT_MONITORING
+      - ACCESS_CONTROL
+      - GUEST_MANAGEMENT
+      - LICENSE_USAGE
+      - UNKNOWN
+    Partner_ClientDeviceCustomizationsType:
+      type: object
+      description: Client device-specific customization settings for partner management.
+      properties:
+        forceLowBandwidthOnAllCameras:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to force low bandwidth on all cameras
+          example: false
+        inactivityTimeout:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Inactivity timeout in minutes
+          example: 30
+    Partner_ClientCustomizationsType:
+      type: object
+      description: Client-specific customization settings for partner management.
+      properties:
+        forceLowBandwidthOnAllCameras:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to force low bandwidth on all cameras
+          example: false
+        inactivityTimeout:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Inactivity timeout in minutes
+          example: 30
+    Partner_GetListOfControlledHardwareRequest:
+      type: object
+      description: Request object for getting list of controlled hardware.
+    PerceptionTypeEnum:
+      type: string
+      enum:
+      - PEOPLE_COUNTING
+      - FACE_COUNTING_UNIQUE
+      - FACE_COUNTING_NONUNIQUE
+      - ENGAGMENT_COUNTING
+      - FACE_RECOGNITION
+      - LICENSEPLATE_RECOGNITION
+      - VEHICLE_COUNTING
+      - OCCUPANCY_COUNTING
+      - UNKNOWN
+    Partner_DeleteClientWebRequest:
+      type: object
+      description: Request object for deleting a partner client account.
+      properties:
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    CameraMeteringConfigType:
+      type: object
+      properties:
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        table:
+          type:
+          - string
+          - 'null'
+    Integration_RevokeApiTokenWSRequest:
+      type: object
+      description: Request object for revoking an API token.
+      properties:
+        tokenUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DeviceLicenseFamilyEnum:
+      type: string
+      enum:
+      - CAMERA
+      - CAMERA_MS
+      - VIDEO_INTERCOM
+      - AUDIO_GATEWAY
+      - ENVIRONMENTAL_SENSOR
+      - ENVIRONMENTAL_GATEWAY
+    CameraInactivitySettingsType:
+      type: object
+      properties:
+        object_type:
+          $ref: '#/components/schemas/InactivityObjectTypeEnum'
+        roi:
+          $ref: '#/components/schemas/RegionPolygonType'
+        threshold_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Partner_CreatePartnerClientWSResponse:
+      type: object
+      description: Response object containing the result of creating a partner client account.
+      properties:
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        responseStatus:
+          $ref: '#/components/schemas/Partner_PartnerWebResponseStatusEnum'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    UploadTargetEnum:
+      type: string
+      enum:
+      - '0'
+      - '1'
+      - '2'
+    Partner_ReassignDeviceOrgWSResponse:
+      type: object
+      description: Response object containing the status of device reassignment operations.
+      properties:
+        statuses:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/OperationStatus'
+          description: Map of device serial numbers to their reassignment operation status
+    CameraHumanLoiteringSettingsType:
+      type: object
+      properties:
+        roi:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+    Partner_UpdateManuallySendLicenseExpirationEmailWSResponse:
+      type: object
+      description: Response object for updating manual license expiration email settings.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Org_CreatePendingRegistrationRequest:
+      type: object
+      description: Request object for creating pending hardware registration.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the hardware device
+          example: RH123456789
+        wifiPsk:
+          type:
+          - array
+          - 'null'
+          description: WiFi pre-shared key for the device
+          items:
+            type:
+            - string
+            - 'null'
+            format: byte
+            description: WiFi pre-shared key for the device
+        wifiSsid:
+          type:
+          - string
+          - 'null'
+          description: WiFi SSID for the device
+          example: Office_WiFi
+    CameraPTZConfigType:
+      type: object
+      properties:
+        offset_x_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+        offset_y_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        size_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+    LicenseToUnassignEmailStateEnum:
+      type: string
+      enum:
+      - INITIAL_EMAIL_SUCCEEDED
+      - INITIAL_EMAIL_FAILED
+      - FIFTEEN_DAY_WARNING_EMAIL_SUCCEEDED
+      - FIFTEEN_DAY_WARNING_EMAIL_FAILED
+      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_SUCCEEDED
+      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_FAILED
+      - UNKNOWN
+    LicenseUsageType:
+      type: object
+      description: List of licenses available for the client organization
+      properties:
+        addOnLicenseType:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        additionalPerceptionFeatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        cloudArchiveDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        license:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        perceptionTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    CameraDewarpModeEnum:
+      type: string
+      enum:
+      - NO_TRANSFORM
+      - NORMAL
+      - PANORAMA
+      - SUB_REGION
+      - VERTICAL_PANORAMA
+      - TRANSVERSE_MERCATOR
+      - MERCATOR
+      - EQUIRECTANGULAR
+    ShippedItemType:
+      type:
+      - object
+      - 'null'
+      properties:
+        partNumber:
+          type:
+          - string
+          - 'null'
+        quantityShipped:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        serialNumber:
+          type:
+          - string
+          - 'null'
+    FisheyeDisplayModeEnum:
+      type: string
+      enum:
+      - RAW
+      - IMMERSIVE
+      - TILES
+      - RAW_PANO
+    Partner_GetListOfAllClientDevicesRequest:
+      type: object
+      description: Request object for getting list of all client devices.
+    Partner_UnregisteredControlledHardwareType:
+      type: object
+      description: Information about unregistered controlled hardware available for partner registration.
+      properties:
+        deviceModel:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        macAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the hardware device
+          example: 00:11:22:33:44:55
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the hardware device
+          example: RH123456789
+    Partner_PartnerClientWebType:
+      type: object
+      description: Partner client information including organization details and device counts.
+      properties:
+        authorityUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clientAccessAllowed:
+          type:
+          - boolean
+          - 'null'
+          description: Whether client access is allowed (duplicate getter)
+          example: true
+        clientAccountAccessUrl:
+          type:
+          - string
+          - 'null'
+          description: URL for accessing the client account
+          example: https://console.rhombussystems.com/client/access
+        clientOrgName:
+          type:
+          - string
+          - 'null'
+          description: Name of the client organization
+          example: Acme Corporation
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp when the client was created (milliseconds since epoch)
+          example: 1640995200000
+        totalAudioGateways:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of audio gateways
+          example: 4
+        totalBadgeReaders:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of badge readers
+          example: 12
+        totalCameras:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of cameras
+          example: 25
+        totalClimateSensors:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of climate sensors
+          example: 10
+        totalDoorSensors:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of door sensors
+          example: 8
+        totalLocations:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of locations
+          example: 3
+        totalOccupancySensors:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of occupancy sensors
+          example: 6
+        totalProximitySensors:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of proximity sensors
+          example: 5
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    RegionCoordinateType:
+      type: object
+      properties:
+        x:
+          type:
+          - number
+          - 'null'
+          format: float
+        y:
+          type:
+          - number
+          - 'null'
+          format: float
+    Partner_UpdateManuallySendLicenseExpirationEmailWSRequest:
+      type: object
+      description: Request object for updating manual license expiration email settings for an organization.
+      properties:
+        manuallySendLicenseExpirationEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to manually send license expiration emails
+          example: true
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Org_CreatePendingRegistrationResponse:
+      type: object
+      description: Response object for creating pending hardware registration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_CreatePartnerClientWSRequest:
+      type: object
+      description: Request object for creating a new partner client account.
+      properties:
+        clientContactEmail:
+          type:
+          - string
+          - 'null'
+          description: Email address of the client contact person
+          example: john.smith@acme.com
+        clientContactName:
+          type:
+          - string
+          - 'null'
+          description: Name of the client contact person
+          example: John Smith
+        clientOrgName:
+          type:
+          - string
+          - 'null'
+          description: Name of the client organization
+          example: Acme Corporation
+        suppressWelcomeEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to suppress sending welcome email to the client
+          example: false
+    Device_config_settings_ExternalVideoResolution:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Partner_GetListOfAllClientDevicesResponse:
+      type: object
+      description: Response object containing list of all client devices.
+      properties:
+        listOfAllClientDevices:
+          type:
+          - array
+          - 'null'
+          description: List of all client devices
+          items:
+            $ref: '#/components/schemas/DeviceTypeV2'
+    ApiTokenAuthTypeEnum:
+      type: string
+      description: Authentication type for the API token
+      enum:
+      - API_TOKEN
+      - CERT
+    PermyriadRect:
+      type: object
+      properties:
+        h:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        w:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Partner_GetPartnerClientsStatusMapWSRequest:
+      type: object
+      description: Request object for getting partner clients status map.
+    ApiTokenType:
+      type: object
+      description: List of API tokens
+      properties:
+        allowedRequetsPerSecond:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        authType:
+          $ref: '#/components/schemas/ApiTokenAuthTypeEnum'
+        authenticationTokenHash:
+          type:
+          - string
+          - 'null'
+        cert:
+          type:
+          - string
+          - 'null'
+        certFingerprint:
+          type:
+          - string
+          - 'null'
+        clientDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        clientType:
+          $ref: '#/components/schemas/ApiClientTypeEnum'
+        csr:
+          type:
+          - string
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        hashed:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        restrictToAllowedIps:
+          type:
+          - boolean
+          - 'null'
+        tokenUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetApiTokensWSResponse:
+      type: object
+      description: Response object containing API tokens.
+      properties:
+        apiTokens:
+          type:
+          - array
+          - 'null'
+          description: List of API tokens
+          items:
+            $ref: '#/components/schemas/ApiTokenType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ApiTokenApplicationType:
+      type: object
+      properties:
+        authType:
+          $ref: '#/components/schemas/ApiTokenAuthTypeEnum'
+        authenticationTokenHash:
+          type:
+          - string
+          - 'null'
+        clientDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        clientType:
+          $ref: '#/components/schemas/ApiClientTypeEnum'
+        csr:
+          type:
+          - string
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        tokenUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    InactivityObjectTypeEnum:
+      type: string
+      enum:
+      - HUMAN
+      - VEHICLE
+    AddOnLicenseEnum:
+      type: string
+      enum:
+      - CLOUD_ARCHIVING
+      - PERCEPTION
+      - POSE
+      - BEHAVIOR
+      - VEHICLE
+      - PEOPLE
+      - PPE
+      - PEOPLE_ANALYTICS
+      - UNKNOWN
+    Partner_CustomizeClientWSResponse:
+      type: object
+      description: Response object containing the applied client customization settings.
+      properties:
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CustomerShipmentType:
+      type: object
+      description: List of customer shipments
+      properties:
+        ait-aitTrackingNumber:
+          type:
+          - string
+          - 'null'
+        ait-carrierTrackingNumber:
+          type:
+          - string
+          - 'null'
+        ait-depositorOrderNumber:
+          type:
+          - string
+          - 'null'
+        ait-destinationAddress:
+          type:
+          - string
+          - 'null'
+        ait-isIngramDistributorShipment:
+          type:
+          - boolean
+          - 'null'
+        ait-shipmentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ait-shippedItems:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShippedItemType'
+        interchangeControlNumber:
+          type:
+          - string
+          - 'null'
+        lastStateUpdateSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        rhombus-additionalEmails:
+          type:
+          - string
+          - 'null'
+        rhombus-chosenCarrierName:
+          type:
+          - string
+          - 'null'
+        rhombus-claimKeyToLicenseMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+            uniqueItems: true
+        rhombus-claimKeyToLicenseMapV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/SalesforceLicenseStartDateTimeAndEndDateTime'
+        rhombus-customerEmails:
+          type:
+          - string
+          - 'null'
+        rhombus-customerName:
+          type:
+          - string
+          - 'null'
+        rhombus-orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-partnerOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-purchaseOrderNumber:
+          type:
+          - string
+          - 'null'
+        rhombus-rmaReturnTrackingNumber:
+          type:
+          - string
+          - 'null'
+        rhombus-rmaUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-rmaUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-salesForceOpportunityId:
+          type:
+          - string
+          - 'null'
+        rhombus-zendeskTicketNumber:
+          type:
+          - string
+          - 'null'
+        shipmentCategory:
+          $ref: '#/components/schemas/CustomerShipmentCategoryEnum'
+        shipmentEmailState:
+          $ref: '#/components/schemas/CustomerShipmentEmailStateEnum'
+        shipmentState:
+          $ref: '#/components/schemas/CustomerShipmentStateEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Partner_ReassignDeviceOrgWSRequest:
+      type: object
+      description: Request object for reassigning devices from one organization to another.
+      properties:
+        serialNumbers:
+          type:
+          - array
+          - 'null'
+          description: Serial numbers of the devices that should be reassigned to target organization
+          items:
+            type:
+            - string
+            - 'null'
+            description: Serial numbers of the devices that should be reassigned to target organization
+        sourceOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        targetOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - sourceOrgUuid
+      - targetOrgUuid
+    Partner_ConnectionCountType:
+      type: object
+      description: Device connection count information for partner clients.
+      properties:
+        connectedCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of connected devices
+          example: 45
+        operationalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of operational devices
+          example: 42
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of devices
+          example: 50
+    Partner_DeleteClientWebResponse:
+      type: object
+      description: Response object for deleting a partner client account.
+    SalesforceLicenseStartDateTimeAndEndDateTime:
+      type:
+      - object
+      - 'null'
+      properties:
+        contractEndDateTime:
+          type:
+          - string
+          - 'null'
+        contractStartDateTime:
+          type:
+          - string
+          - 'null'
+    Partner_GetShipmentsWSResponse:
+      type: object
+      description: Response object containing client shipments within the specified time range.
+      properties:
+        customerShipmentList:
+          type:
+          - array
+          - 'null'
+          description: List of customer shipments
+          items:
+            $ref: '#/components/schemas/CustomerShipmentType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CustomerShipmentCategoryEnum:
+      type: string
+      enum:
+      - RMA
+      - PURCHASE_ORDER
+      - TRIAL
+      - UNKNOWN
+    Partner_RegisterDealWSResponse:
+      type: object
+      description: Response object containing the result of registering a deal.
+      properties:
+        clients:
+          type:
+          - array
+          - 'null'
+          description: List of partner clients associated with the registered deal
+          items:
+            $ref: '#/components/schemas/Partner_PartnerClientWebType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of licenses available for a client organization.
+      properties:
+        licenses:
+          type:
+          - array
+          - 'null'
+          description: List of licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/LicenseUsageType'
+    Partner_GetPartnerClientsStatusMapWSResponse:
+      type: object
+      description: Response object containing partner clients status map with device connection counts.
+      properties:
+        clientDeviceStatusMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/Partner_ConnectionCountType'
+            description: Map of client UUIDs to device type connection counts
+          description: Map of client UUIDs to device type connection counts
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    OperationStatus:
+      type: object
+      description: Map of device serial numbers to their reassignment operation status
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/StatusTypeEnum'
+    Integration_GetApiTokenApplicationsWSRequest:
+      type: object
+    UserStatusEnumType:
+      type: string
+      enum:
+      - JOINED
+      - PENDING
+      - INACTIVE
+      - UNKNOWN
+    RegionOfInterest:
+      type: object
+      description: Regions of interest that belong to the group. Group must have at least one region specified.
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          description: Region of allowed or disallowed activities. Activities are allowed if region group is inclusive. Activities are disallowed if region group is exclusive. Region must have at least one activity specified.
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        name:
+          type:
+          - string
+          - 'null'
+        polygon:
+          $ref: '#/components/schemas/RegionPolygonType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PartnerOrgClaimKey:
+      type: object
+      description: List of claim keys belonging to the partner organization
+      properties:
+        accountAdminId:
+          type:
+          - string
+          - 'null'
+        accountName:
+          type:
+          - string
+          - 'null'
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+        contractEndDate:
+          type:
+          - string
+          - 'null'
+        contractStartDate:
+          type:
+          - string
+          - 'null'
+        createdDate:
+          type:
+          - string
+          - 'null'
+        externalUuid:
+          type:
+          - string
+          - 'null'
+        poNumber:
+          type:
+          - string
+          - 'null'
+    Device_config_userconfig_IExternalUpdateableAudioVideoUserConfig:
+      type: object
+      description: Audio/video user configuration update
+      properties:
+        ai_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        audio_aec_via_software:
+          type:
+          - boolean
+          - 'null'
+        audio_ai_disabled:
+          type:
+          - boolean
+          - 'null'
+        audio_external_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_aec_enabled:
+          type:
+          - boolean
+          - 'null'
+        audio_internal_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_min_echo_amplitude:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_playback_gain_percent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_record:
+          type:
+          - boolean
+          - 'null'
+        audio_supported:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_mic:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_speaker:
+          type:
+          - boolean
+          - 'null'
+        audio_use_internal_speaker:
+          type:
+          - boolean
+          - 'null'
+        bandwidth_reports_disabled:
+          type:
+          - boolean
+          - 'null'
+        blocked_debounce_time_ms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        blocked_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        char_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        cloud_ai_smart_crop_enabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_ai_stream_enabled:
+          type:
+          - boolean
+          - 'null'
+        custom_events:
+          type:
+          - boolean
+          - 'null'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        device_mic_enabled:
+          type:
+          - boolean
+          - 'null'
+        device_near_audio_silenced:
+          type:
+          - boolean
+          - 'null'
+        device_speaker_enabled:
+          type:
+          - boolean
+          - 'null'
+        dewarpMode:
+          $ref: '#/components/schemas/CameraDewarpModeEnum'
+        disabled_schedule:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+        disabled_schedule_inverted:
+          type:
+          - boolean
+          - 'null'
+        disabled_schedule_uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        dwell_reset_ttl_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        dwell_time_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        exposure_level:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        firmware_dev_settings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        fisheye_display_mode:
+          $ref: '#/components/schemas/FisheyeDisplayModeEnum'
+        floorplan_homography:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - number
+              - 'null'
+              format: double
+        frontendEqualizerHighShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerLowShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking1:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking2:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking3:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendNoiseSuppression:
+          type:
+          - boolean
+          - 'null'
+        h265_realtime_encoding_enabled:
+          type:
+          - boolean
+          - 'null'
+        h265_vod_encoding_enabled:
+          type:
+          - boolean
+          - 'null'
+        hdr_enabled:
+          type:
+          - boolean
+          - 'null'
+        high_res_detection:
+          type:
+          - boolean
+          - 'null'
+        human_detection:
+          type:
+          - boolean
+          - 'null'
+        human_loitering:
+          type:
+          - boolean
+          - 'null'
+        human_loitering_settings:
+          $ref: '#/components/schemas/CameraHumanLoiteringSettingsType'
+        img_brightness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_contrast:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_saturation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        img_sharpness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inactivity_settings:
+          $ref: '#/components/schemas/CameraInactivitySettingsType'
+        lastModified:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        led_mode_blink_period_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        led_mode_when_active:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_mode_when_inactive:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_stealth_mode:
+          type:
+          - boolean
+          - 'null'
+        lightweight_detection_disabled:
+          type:
+          - boolean
+          - 'null'
+        live_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        max_detections_per_frame:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        media_ttl_minutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        metering_config:
+          $ref: '#/components/schemas/CameraMeteringConfigType'
+        motor_config:
+          $ref: '#/components/schemas/CameraMotorConfigType'
+        mounting_direction:
+          $ref: '#/components/schemas/CameraMountingDirectionEnum'
+        night_exposure_level:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_brightness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_contrast:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_saturation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_img_sharpness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_metering_config:
+          $ref: '#/components/schemas/CameraMeteringConfigType'
+        night_sensor_gain_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_shutter_time_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        night_shutter_time_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        object_search:
+          type:
+          - boolean
+          - 'null'
+        occupancy_counting:
+          type:
+          - boolean
+          - 'null'
+        on_demand_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        people_tracking:
+          type:
+          - boolean
+          - 'null'
+        person_reidentification:
+          type:
+          - boolean
+          - 'null'
+        privacy_window_polygons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+        privacy_windows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PermyriadRect'
+        ptz_config:
+          $ref: '#/components/schemas/CameraPTZConfigType'
+        record_on_motion:
+          type:
+          - boolean
+          - 'null'
+        region_for_occupancy:
+          $ref: '#/components/schemas/RegionConfigType'
+        region_of_interest:
+          $ref: '#/components/schemas/RegionConfigType'
+        region_of_interest_groups:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionOfInterestGroup'
+        resolution:
+          $ref: '#/components/schemas/Device_config_settings_ExternalVideoResolution'
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        rtsp_encoder:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        segment_max_bytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sensor_gain_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        shared_fov:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        shutter_time_max:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        shutter_time_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        snapshot_height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        snapshot_interval_secs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        snapshot_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        storage_target_free_megabytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        storage_target_free_space_permyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        thumbstrip_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        tile_views:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DewarpedView'
+        upload_all_detections:
+          type:
+          - boolean
+          - 'null'
+        use_onboard_lpr:
+          type:
+          - boolean
+          - 'null'
+        vehicle_detection:
+          type:
+          - boolean
+          - 'null'
+        video_ai_disabled:
+          type:
+          - boolean
+          - 'null'
+        video_persist_disabled:
+          type:
+          - boolean
+          - 'null'
+        wdr_enabled:
+          type:
+          - boolean
+          - 'null'
+        wdr_strength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        zero_motion_video_bitrate_percent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Partner_RegisterDealWSRequest:
+      type: object
+      description: Request object for registering a deal with partner details.
+      properties:
+        details:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+            description: Map of deal details with key-value pairs
+          description: Map of deal details with key-value pairs
+    FrontendEqualizerSettings:
+      type: object
+      properties:
+        frequency:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        gain:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        q:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Partner_GetListOfControlledHardwareResponse:
+      type: object
+      description: Response object containing list of controlled hardware.
+      properties:
+        controlledHardwareList:
+          type:
+          - array
+          - 'null'
+          description: List of controlled hardware
+          items:
+            $ref: '#/components/schemas/Partner_UnregisteredControlledHardwareType'
+    RegionOfInterestGroupTypeEnum:
+      type: string
+      description: Represents type of activity regions in the group. Defaults to 'Activity'.
+      enum:
+      - ACTIVITY
+      - REPORTING
+      - CROSSING
+    RegionPolygonType:
+      type: object
+      properties:
+        coordinates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionCoordinateType'
+    License_GetDeviceLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of device licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

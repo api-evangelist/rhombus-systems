@@ -1,0 +1,1047 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Face Recognition Matchmaker Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Face Recognition Matchmaker Webservice
+paths:
+  /api/faceRecognition/matchmaker/createFaceMatchmakerFromSighting:
+    post:
+      description: Create face matchmaker from face sighting.
+      operationId: createFaceMatchmakerFromSighting
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_CreateFaceMatchmakerFromSightingWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_CreateFaceMatchmakerFromSightingWSResponse'
+          description: OK
+      summary: Create face matchmaker from sighting
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/deleteFaceMatchmaker:
+    post:
+      description: Delete face matchmaker.
+      operationId: deleteFaceMatchmaker
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_DeleteFaceMatchmakerWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_DeleteFaceMatchmakerWSResponse'
+          description: OK
+      summary: Delete face matchmaker
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/findFaceMatchmakersByOrg:
+    post:
+      description: Find face matchmakers by org.
+      operationId: findFaceMatchmakersByOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_FindFaceMatchmakersByOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_FindFaceMatchmakersByOrgWSResponse'
+          description: OK
+      summary: Find face matchmakers by org
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/findFaceMatchmakersByPerson:
+    post:
+      description: Find face matchmakers by person.
+      operationId: findFaceMatchmakersByPerson
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_FindFaceMatchmakersByPersonWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_FindFaceMatchmakersByPersonWSResponse'
+          description: OK
+      summary: Find face matchmakers by person
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/findFaceUploadMetadataByTransaction:
+    post:
+      description: Find face upload metadata by transaction.
+      operationId: findFaceUploadMetadataByTransaction
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_FindFaceUploadMetadataByTransactionWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_FindFaceUploadMetadataByTransactionWSResponse'
+          description: OK
+      summary: Find face upload metadata by transaction
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/getFaceMatchingConfig:
+    post:
+      description: Get face matching configuration.
+      operationId: getFaceMatchingConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_GetFaceMatchingConfigWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_GetFaceMatchingConfigWSResponse'
+          description: OK
+      summary: Get face matching configuration
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/getFaceMatchmaker:
+    post:
+      description: Get face matchmaker.
+      operationId: getFaceMatchmaker
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_GetFaceMatchmakerWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_GetFaceMatchmakerWSResponse'
+          description: OK
+      summary: Get face matchmaker
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/updateFaceMatchingConfig:
+    post:
+      description: Update face matching configuration.
+      operationId: updateFaceMatchingConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_matchmaker_UpdateFaceMatchingConfigWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_UpdateFaceMatchingConfigWSResponse'
+          description: OK
+      summary: Update face matching configuration
+      tags:
+      - Face Recognition Matchmaker Webservice
+  /api/faceRecognition/matchmaker/uploadFaceMatchmakers:
+    post:
+      description: 'Upload face matchmaker images for one or more people. The uploaded file name is matched to a person''s name. If a person is not found and createPersonIfNotFound is set to true, a new person is created. '
+      operationId: uploadFaceMatchmakers
+      parameters:
+      - description: Unique transaction id to track the face matchmakers upload progress. If not specified, the system will generate it.
+        in: query
+        name: transaction
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: If a person is not found and createPersonIfNotFound is set to true, a new person is created
+        in: query
+        name: createPersonIfNotFound
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+        description: 'Multipart form-data containing a .jpg or .png file. Maximum file size: 5MB.'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_matchmaker_UploadFaceMatchmakersWSResponse'
+          description: OK
+      summary: Upload face matchmakers
+      tags:
+      - Face Recognition Matchmaker Webservice
+components:
+  schemas:
+    Facerecognition_matchmaker_FindFaceUploadMetadataByTransactionWSResponse:
+      type: object
+      description: Response object containing face upload metadata for a transaction.
+      properties:
+        faceUploadMetadata:
+          type:
+          - array
+          - 'null'
+          description: List of face upload metadata for the transaction
+          items:
+            $ref: '#/components/schemas/FaceUploadMetadata'
+    Facerecognition_matchmaker_FindFaceUploadMetadataByTransactionWSRequest:
+      type: object
+      description: Request object for finding face upload metadata by transaction ID.
+      properties:
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: Transaction ID to find face upload metadata for
+          example: txn_12345
+    Facerecognition_matchmaker_ExternalFaceMatchmaker:
+      type: object
+      description: External face matchmaker object containing face recognition matchmaker data and metadata.
+      properties:
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the face matchmaker was created
+          example: '2024-01-01T00:00:00Z'
+        id:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier for the face matchmaker
+          example: face_12345
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uploaded:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the face matchmaker has been uploaded
+          example: true
+    Facerecognition_matchmaker_UpdateFaceMatchingConfigWSResponse:
+      type: object
+      description: Response object for updating face matching configuration settings.
+      properties:
+        faceMatchConfidenceThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Updated face match confidence threshold value
+          example: 0.7
+    BodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    Facerecognition_matchmaker_CreateFaceMatchmakerFromSightingWSRequest:
+      type: object
+      description: Request object for creating a face matchmaker from a face event sighting.
+      properties:
+        faceEventUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_matchmaker_DeleteFaceMatchmakerWSRequest:
+      type: object
+      description: Request object for deleting a face matchmaker.
+      properties:
+        faceId:
+          type:
+          - string
+          - 'null'
+          description: Face ID of the matchmaker to delete
+          example: face_12345
+    FormDataMultiPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        bodyParts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fields:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/FormDataBodyPart'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    Facerecognition_matchmaker_DeleteFaceMatchmakerWSResponse:
+      type: object
+      description: Response object for deleting a face matchmaker.
+    Facerecognition_matchmaker_FindFaceMatchmakersByOrgWSRequest:
+      type: object
+      description: Request object for finding face matchmakers by organization.
+    Providers:
+      type:
+      - object
+      - 'null'
+    Facerecognition_matchmaker_FileUploadResult:
+      type: object
+      description: Result of a file upload process for face matchmaker creation, including success status and error messages.
+      properties:
+        fileName:
+          type:
+          - string
+          - 'null'
+          description: The name of the uploaded file.
+        message:
+          type:
+          - string
+          - 'null'
+          description: Error message that occurred during upload.
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the file upload was successful. Note, that even if upload was successful, subsequent operations, such as adding the uploaded file as a matchmaker, may fail.
+    ContentDisposition:
+      type: object
+      properties:
+        attachment:
+          type:
+          - boolean
+          - 'null'
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        filename:
+          type:
+          - string
+          - 'null'
+        formData:
+          type:
+          - boolean
+          - 'null'
+        inline:
+          type:
+          - boolean
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    FormDataContentDisposition:
+      type: object
+      properties:
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        fileName:
+          type:
+          - string
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    Facerecognition_matchmaker_GetFaceMatchmakerWSResponse:
+      type: object
+      description: Response object containing a face matchmaker.
+      properties:
+        faceMatchmaker:
+          $ref: '#/components/schemas/Facerecognition_matchmaker_ExternalFaceMatchmaker'
+    MediaType:
+      type: object
+      properties:
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        concrete:
+          type:
+          - boolean
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        qualityValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        subtype:
+          type:
+          - string
+          - 'null'
+        subtypeSuffix:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        wildcardSubtype:
+          type:
+          - boolean
+          - 'null'
+        wildcardType:
+          type:
+          - boolean
+          - 'null'
+    FaceUploadMetadata:
+      type: object
+      description: List of face upload metadata for the transaction
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        faceId:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        origS3Key:
+          type:
+          - string
+          - 'null'
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        success:
+          type:
+          - boolean
+          - 'null'
+        transactionId:
+          type:
+          - string
+          - 'null'
+    Facerecognition_matchmaker_GetFaceMatchingConfigWSRequest:
+      type: object
+      description: Request object for retrieving face matching configuration.
+    ParameterizedHeader:
+      type:
+      - object
+      - 'null'
+      properties:
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    Facerecognition_matchmaker_GetFaceMatchmakerWSRequest:
+      type: object
+      description: Request object for retrieving a face matchmaker by face ID.
+      properties:
+        faceId:
+          type:
+          - string
+          - 'null'
+          description: Face ID to retrieve the matchmaker for
+          example: face_12345
+    Facerecognition_matchmaker_UploadFaceMatchmakersWSResponse:
+      type: object
+      description: Response object for uploading face matchmakers with transaction tracking and upload results.
+      properties:
+        fileUploadResults:
+          type:
+          - array
+          - 'null'
+          description: List of file upload results for each uploaded face matchmaker
+          items:
+            $ref: '#/components/schemas/Facerecognition_matchmaker_FileUploadResult'
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: Transaction ID to track face matchmakers upload progress
+          example: txn_12345
+    Facerecognition_matchmaker_FindFaceMatchmakersByPersonWSResponse:
+      type: object
+      description: Response object containing face matchmakers for a specific person.
+      properties:
+        faceMatchmakers:
+          type:
+          - array
+          - 'null'
+          description: List of face matchmakers for the specified person
+          items:
+            $ref: '#/components/schemas/Facerecognition_matchmaker_ExternalFaceMatchmaker'
+    MessageBodyWorkers:
+      type:
+      - object
+      - 'null'
+    Facerecognition_matchmaker_FindFaceMatchmakersByPersonWSRequest:
+      type: object
+      description: Request object for finding face matchmakers by person UUID.
+      properties:
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_matchmaker_GetFaceMatchingConfigWSResponse:
+      type: object
+      description: Response object containing face matching configuration settings.
+      properties:
+        faceMatchConfidenceThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Face match confidence threshold value
+          example: 0.7
+    MultiPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        bodyParts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    Facerecognition_matchmaker_UpdateFaceMatchingConfigWSRequest:
+      type: object
+      description: Request object for updating face matching configuration settings.
+      properties:
+        faceMatchConfidenceThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Minimum confidence level required for the system to automatically assign a match. If null, the system uses the built-in default.
+          maximum: 1.0
+          minimum: 0.0
+    Facerecognition_matchmaker_FindFaceMatchmakersByOrgWSResponse:
+      type: object
+      description: Response object containing face matchmakers for an organization.
+      properties:
+        faceMatchmakers:
+          type:
+          - array
+          - 'null'
+          description: List of face matchmakers for the organization
+          items:
+            $ref: '#/components/schemas/Facerecognition_matchmaker_ExternalFaceMatchmaker'
+    Facerecognition_matchmaker_CreateFaceMatchmakerFromSightingWSResponse:
+      type: object
+      description: Response object for creating a face matchmaker from a face event sighting.
+      properties:
+        faceMatchmaker:
+          $ref: '#/components/schemas/Facerecognition_matchmaker_ExternalFaceMatchmaker'
+    FormDataBodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        content:
+          type:
+          - object
+          - 'null'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fileName:
+          type:
+          - string
+          - 'null'
+        formDataContentDisposition:
+          $ref: '#/components/schemas/FormDataContentDisposition'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        name:
+          type:
+          - string
+          - 'null'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+        simple:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

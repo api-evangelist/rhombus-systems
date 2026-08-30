@@ -1,0 +1,2566 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Video Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Video Webservice
+paths:
+  /api/video/cancelSplice:
+    post:
+      deprecated: true
+      description: Use /cancelSpliceV2 instead
+      operationId: cancelSplice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_CancelSpliceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_CancelSpliceWSResponse'
+          description: OK
+      summary: Cancel splice
+      tags:
+      - Video Webservice
+  /api/video/cancelSpliceV2:
+    post:
+      description: Cancel a spliced clip request
+      operationId: cancelSpliceV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_CancelSpliceV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_CancelSpliceV2WSResponse'
+          description: OK
+      summary: Cancel splice V2
+      tags:
+      - Video Webservice
+  /api/video/createSharedTimelapseGroup:
+    post:
+      description: Share multiple timelapses in one link
+      operationId: createSharedTimelapseGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_CreateSharedTimelapseGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_CreateSharedTimelapseGroupWSResponse'
+          description: OK
+      summary: Create shared timelapse group
+      tags:
+      - Video Webservice
+  /api/video/deleteSharedTimelapseGroup:
+    post:
+      description: Delete a shared timelapse link
+      operationId: deleteSharedTimelapseGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_DeleteSharedTimelapseGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_DeleteSharedTimelapseGroupWSResponse'
+          description: OK
+      summary: Delete shared timelapse group
+      tags:
+      - Video Webservice
+  /api/video/deleteTimelapseClips:
+    post:
+      description: Delete a timelapse
+      operationId: deleteTimelapseClips
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_DeleteTimelapseClipsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_DeleteTimelapseClipsWSResponse'
+          description: OK
+      summary: Delete timelapse clips
+      tags:
+      - Video Webservice
+  /api/video/generateRangedTimelapseClip:
+    post:
+      description: Generate a timelapse where each device facet contributes footage only during its own time ranges.
+      operationId: generateRangedTimelapseClip
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GenerateRangedTimelapseClipWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GenerateRangedTimelapseClipWSResponse'
+          description: OK
+      summary: Generate ranged timelapse clip
+      tags:
+      - Video Webservice
+  /api/video/generateTimelapseClip:
+    post:
+      description: Generate a timelapse
+      operationId: generateTimelapseClip
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GenerateTimelapseClipWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GenerateTimelapseClipWSResponse'
+          description: OK
+      summary: Generate timelapse clip
+      tags:
+      - Video Webservice
+  /api/video/getExactFrameData:
+    post:
+      description: Fetches and return bytes in base64 format of an the frame at the given timestamp for a device. Use this instead of getExactFrameUri if, for whatever reason, either the URI is not useful or the client is unable to hit the media servers
+      operationId: getExactFrameData
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GetExactFrameDataWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GetExactFrameDataWSResponse'
+          description: OK
+      summary: Get exact frame data
+      tags:
+      - Video Webservice
+  /api/video/getExactFrameUri:
+    post:
+      description: Generate URL to get an exact frame with optional crop from a camera
+      operationId: getExactFrameUri
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GetExactFrameUriWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GetExactFrameUriWSResponse'
+          description: OK
+      summary: Get exact frame URI
+      tags:
+      - Video Webservice
+  /api/video/getMaxSpliceDuration:
+    post:
+      description: Get the max splice duration an organization can set
+      operationId: getMaxSpliceDuration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GetMaxSpliceDurationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GetMaxSpliceDurationWSResponse'
+          description: OK
+      summary: Get max splice duration
+      tags:
+      - Video Webservice
+  /api/video/getSharedTimelapseGroups:
+    post:
+      description: Get details of all shared timelapse links for organization
+      operationId: getSharedTimelapseGroups
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GetSharedTimelapseGroupsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GetSharedTimelapseGroupsWSResponse'
+          description: OK
+      summary: Get shared timelapse groups
+      tags:
+      - Video Webservice
+  /api/video/getSplicedClipsInProgress:
+    post:
+      description: Get all spliced clips in progress
+      operationId: getSplicedClipsInProgress
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GetSplicedClipsInProgressWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GetSplicedClipsInProgressWSResponse'
+          description: OK
+      summary: Get spliced clips in progress
+      tags:
+      - Video Webservice
+  /api/video/getTimelapseClips:
+    post:
+      description: Get all timelapse clips for organization
+      operationId: getTimelapseClips
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GetTimelapseClipsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GetTimelapseClipsWSResponse'
+          description: OK
+      summary: Get timelapse clips
+      tags:
+      - Video Webservice
+  /api/video/getTimelapseMetadata:
+    post:
+      description: Get information about earliest available timelapse images for cameras
+      operationId: getTimelapseMetadata
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_GetTimelapseMetadataWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_GetTimelapseMetadataWSResponse'
+          description: OK
+      summary: Get timelapse metadata
+      tags:
+      - Video Webservice
+  /api/video/retrySplice:
+    post:
+      description: Send a request to retry splicing a clip
+      operationId: retrySplice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_RetrySpliceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_RetrySpliceWSResponse'
+          description: OK
+      summary: Retry splice
+      tags:
+      - Video Webservice
+  /api/video/shareTimelapseClips:
+    post:
+      deprecated: true
+      description: Use /CreateSharedTimelapseGroup instead
+      operationId: shareTimelapseClips
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_ShareTimelapseClipsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_ShareTimelapseClipsWSResponse'
+          description: OK
+      summary: Share timelapse clips
+      tags:
+      - Video Webservice
+  /api/video/splice:
+    post:
+      deprecated: true
+      description: Use /spliceV3 instead
+      operationId: splice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_SpliceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_SpliceWSResponse'
+          description: OK
+      summary: Splice
+      tags:
+      - Video Webservice
+  /api/video/spliceFrame:
+    post:
+      description: Send a request to create a single image from a point in time
+      operationId: spliceFrame
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_SpliceFrameWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_SpliceFrameWSResponse'
+          description: OK
+      summary: Splice frame
+      tags:
+      - Video Webservice
+  /api/video/spliceV2:
+    post:
+      deprecated: true
+      description: Use /spliceV3 instead
+      operationId: spliceV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_SpliceV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_SpliceV2WSResponse'
+          description: OK
+      summary: Splice V2
+      tags:
+      - Video Webservice
+  /api/video/spliceV3:
+    post:
+      description: Send a request to create an arbitrary clip for multiple cameras
+      operationId: spliceV3
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_SpliceV3WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_SpliceV3WSResponse'
+          description: OK
+      summary: Splice V3
+      tags:
+      - Video Webservice
+  /api/video/updateSharedTimelapseGroup:
+    post:
+      description: Update title, description, or expiration on a shared timelapse link
+      operationId: updateSharedTimelapseGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video_UpdateSharedTimelapseGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Video_UpdateSharedTimelapseGroupWSResponse'
+          description: OK
+      summary: Update shared timelapse group
+      tags:
+      - Video Webservice
+components:
+  schemas:
+    Video_GenerateRangedTimelapseClipWSRequest:
+      type: object
+      description: Request for generating a timelapse where each facet contributes footage only during its own time ranges.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description for the timelapse
+        drawCameraDetails:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to draw camera details on the video
+          example: true
+        drawTimestamp:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to draw timestamps on the video
+          example: true
+        sources:
+          type:
+          - array
+          - 'null'
+          description: One entry per device facet. Each carries its own list of time ranges.
+          items:
+            $ref: '#/components/schemas/Video_RangedTimelapseSource'
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title for the timelapse
+          example: Subject Tour 2026-04-21
+        videoDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the output video
+          example: 60
+      required:
+      - sources
+      - videoDuration
+    SplicedClipType:
+      type: object
+      description: List of spliced clips currently in progress
+      properties:
+        accessSettings:
+          $ref: '#/components/schemas/ClipAccessSettings'
+        analyzeClip:
+          type:
+          - boolean
+          - 'null'
+        clipTargetLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        completedSubClipCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        consoleDelete:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        deviceIntervalMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/TimeInterval'
+        deviceMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SplicedClipProgress'
+        devicePresentationOrder:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuidMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SplicedClipProgress'
+        deviceUuidToAlteredViewMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AlteredView'
+        deviceUuidToFisheyePresentationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DewarpedView'
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        expectedSubClipCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        integrationUploadList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationEnum'
+        isPolicyEvent:
+          type:
+          - boolean
+          - 'null'
+        metadataBucketRegion:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        parentClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pendingConsumers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        policyEventPipeline:
+          $ref: '#/components/schemas/PolicyEventPipelineEnum'
+        saveClip:
+          type:
+          - boolean
+          - 'null'
+        saveFrame:
+          type:
+          - boolean
+          - 'null'
+        segmentsUploaded:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sendToSharedStorage:
+          type:
+          - boolean
+          - 'null'
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        status:
+          $ref: '#/components/schemas/ClipStatusEnum'
+        statusUpdatedAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        thumbnailRelativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        title:
+          type:
+          - string
+          - 'null'
+        totalSegments:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        transactionUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Video_CancelSpliceWSRequest:
+      type: object
+      description: Request object for canceling a spliced clip (deprecated).
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Video_CancelSpliceWSResponse:
+      type: object
+      description: Response object for canceling a spliced clip (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GetSharedTimelapseGroupsWSRequest:
+      type: object
+      description: Request object for getting all shared timelapse groups for the organization.
+    Video_GetExactFrameUriWSRequest:
+      type: object
+      description: Request object for generating URL to get an exact frame with optional crop from a camera.
+      properties:
+        cameraUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        downscaleFactor:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Ratio to shrink the image pixels by
+          minimum: 1
+        jpgQuality:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Adjust quality of image compression
+          maximum: 100
+          minimum: 0
+        permyriadCropHeight:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Precise ratio to crop the height by. Capped at 10000, which is 100.00% of the image
+          maximum: 10000
+          minimum: 0
+        permyriadCropWidth:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Precise ratio to crop the width by. Capped at 10000, which is 100.00% of the image
+          maximum: 10000
+          minimum: 0
+        permyriadCropX:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Proportional location to start horizontal crop at. Where 10000 is 100.00% of, or the end of the image
+          maximum: 10000
+          minimum: 0
+        permyriadCropY:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Proportional location to start vertical crop at. Where 10000 is 100.00% of, or the end of the image
+          maximum: 10000
+          minimum: 0
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in epoch milliseconds
+      required:
+      - cameraUuid
+      - timestampMs
+    Video_RetrySpliceWSRequest:
+      type: object
+      description: Request object for retrying a spliced clip.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Video_GetTimelapseMetadataWSResponse:
+      type: object
+      description: Response object containing timelapse metadata for cameras.
+      properties:
+        earliestTimestampMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+            description: Map of device facet UUIDs to their earliest available timelapse timestamps
+          description: Map of device facet UUIDs to their earliest available timelapse timestamps
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_SpliceFrameWSResponse:
+      type: object
+      description: Response object for creating a single image from a point in time.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        region:
+          type:
+          - string
+          - 'null'
+          description: Region where the frame clip is stored
+          example: us-west-2
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GetExactFrameUriWSResponse:
+      type: object
+      description: Response object containing the exact frame URI.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        frameUri:
+          type:
+          - string
+          - 'null'
+          description: URI to access the exact frame
+          example: https://example.com/frame/12345.jpg
+        responseMessage:
+          type:
+          - string
+          - 'null'
+          description: Response message from the frame generation
+          example: Frame generated successfully
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GetExactFrameDataWSResponse:
+      type: object
+      description: Response object containing the bytes of the requested frame data in base64 format
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        frameData:
+          type:
+          - string
+          - 'null'
+          description: Base64-encoded image bytes for the requested frame. Null if no frame could be retrieved.
+        mimeType:
+          type:
+          - string
+          - 'null'
+          description: MIME type of the encoded frame data
+          example: image/jpeg
+        responseMessage:
+          type:
+          - string
+          - 'null'
+          description: Human-readable message describing the result
+          example: Frame retrieved successfully
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GenerateTimelapseClipWSResponse:
+      type: object
+      description: Response object for generating a timelapse clip.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_CancelSpliceV2WSRequest:
+      type: object
+      description: Request object for canceling a spliced clip V2.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clipUuidList:
+          type:
+          - array
+          - 'null'
+          description: List of clip UUIDs to cancel
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device facet UUIDs associated with the clips
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    TimeInterval:
+      type: object
+      properties:
+        endMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Video_GetSplicedClipsInProgressWSRequest:
+      type: object
+      description: Request object for getting all spliced clips in progress.
+    Video_UpdateSharedTimelapseGroupWSResponse:
+      type: object
+      description: Response object for updating a shared timelapse group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        shareUrl:
+          type:
+          - string
+          - 'null'
+          description: Updated share URL for the timelapse group
+          example: https://example.com/share/timelapse/12345
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    TimelapseSource:
+      type: object
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        ranges:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TimeInterval'
+    AspectRatio:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Video_SpliceV2WSRequest:
+      type: object
+      description: Request object for splicing video clips V2 (deprecated).
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description for the spliced clip
+          example: Review of security incident from main entrance
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to splice video from
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the splice
+          example: 60
+        fisheyePresentationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to dewarped view configurations for fisheye cameras
+            items:
+              $ref: '#/components/schemas/DewarpedView'
+          description: Map of device UUIDs to dewarped view configurations for fisheye cameras
+        startTimeMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the splice
+          example: 1640995200000
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title for the spliced clip
+          example: Security Incident Review
+    Video_RangedTimelapseSource:
+      type: object
+      description: A single device-facet input to a ranged timelapse, with one or more time ranges during which this facet should contribute footage.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        ranges:
+          type:
+          - array
+          - 'null'
+          description: List of time ranges (milliseconds) during which this facet should appear in the timelapse. Must be non-empty.
+          items:
+            $ref: '#/components/schemas/TimeInterval'
+      required:
+      - deviceUuid
+      - ranges
+    Video_CreateSharedTimelapseGroupWSRequest:
+      type: object
+      description: Request object for creating a shared timelapse group.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description for the shared timelapse group
+          example: Shared timelapse for security review
+        expirationTimeSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Expiration time in seconds for the shared group
+          example: 86400
+        plaintextPassword:
+          type:
+          - string
+          - 'null'
+          description: Plaintext password for the shared timelapse group
+          example: securePassword123
+        timelapseUuids:
+          type:
+          - array
+          - 'null'
+          description: List of timelapse UUIDs to include in the shared group
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title for the shared timelapse group
+          example: Security Review
+    TimelapseClipType:
+      type: object
+      description: Updated timelapse clip information
+      properties:
+        clipCreationTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        clipDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        clipFormat:
+          $ref: '#/components/schemas/TimelapseClipFormatEnum'
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        description:
+          type:
+          - string
+          - 'null'
+        drawCameraDetails:
+          type:
+          - boolean
+          - 'null'
+        drawTimestamp:
+          type:
+          - boolean
+          - 'null'
+        drawWatermark:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        passwordDigest:
+          type:
+          - string
+          - 'null'
+        shared:
+          type:
+          - boolean
+          - 'null'
+        skipNights:
+          type:
+          - boolean
+          - 'null'
+        skipNonBusinessHours:
+          type:
+          - boolean
+          - 'null'
+        skipWeekends:
+          type:
+          - boolean
+          - 'null'
+        sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TimelapseSource'
+        status:
+          $ref: '#/components/schemas/TimelapseStatus'
+        title:
+          type:
+          - string
+          - 'null'
+        videoStartTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        videoStopTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Video_DeleteTimelapseClipsWSRequest:
+      type: object
+      description: Request object for deleting timelapse clips.
+      properties:
+        clipUuids:
+          type:
+          - array
+          - 'null'
+          description: List of timelapse clip UUIDs to delete
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    SharedTimelapseClipType:
+      type: object
+      properties:
+        clipDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        clipFormat:
+          $ref: '#/components/schemas/TimelapseClipFormatEnum'
+        sources:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TimelapseSource'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        videoStartTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        videoStopTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Video_SpliceWSResponse:
+      type: object
+      description: Response object for splicing video clips (deprecated).
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_ShareTimelapseClipsWSResponse:
+      type: object
+      description: Response object for sharing timelapse clips (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        shareUrlMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+            description: Map of clip UUIDs to their share URLs
+          description: Map of clip UUIDs to their share URLs
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    MetaDataLocationType:
+      type: object
+      properties:
+        region:
+          type:
+          - string
+          - 'null'
+    Video_GetTimelapseClipsWSResponse:
+      type: object
+      description: Response object containing all timelapse clips for the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timelapseClips:
+          type:
+          - array
+          - 'null'
+          description: List of timelapse clips for the organization
+          items:
+            $ref: '#/components/schemas/TimelapseClipType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_SpliceWSRequest:
+      type: object
+      description: Request object for splicing video clips (deprecated).
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the splice
+          example: 60
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the splice
+          example: 1640995200000
+    Video_CreateSharedTimelapseGroupWSResponse:
+      type: object
+      description: Response object for creating a shared timelapse group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        shareUrl:
+          type:
+          - string
+          - 'null'
+          description: Share URL for the timelapse group
+          example: https://example.com/share/timelapse/12345
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    TimelapseStatusStateEnum:
+      type: string
+      enum:
+      - INITIATED
+      - INPROGRESS
+      - COMPLETE
+      - FAILED
+    Video_GetExactFrameDataWSRequest:
+      type: object
+      description: Request object for fetching the bytes of an exact frame from a camera.
+      properties:
+        cameraUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        downscaleFactor:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Ratio to shrink the image pixels by. Defaults to 1 (full resolution).
+          minimum: 1
+        permyriadCropHeight:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Precise ratio to crop the height by. Capped at 10000, which is 100.00% of the image
+          maximum: 10000
+          minimum: 0
+        permyriadCropWidth:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Precise ratio to crop the width by. Capped at 10000, which is 100.00% of the image
+          maximum: 10000
+          minimum: 0
+        permyriadCropX:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Proportional location to start horizontal crop at. Where 10000 is 100.00% of, or the end of the image
+          maximum: 10000
+          minimum: 0
+        permyriadCropY:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Proportional location to start vertical crop at. Where 10000 is 100.00% of, or the end of the image
+          maximum: 10000
+          minimum: 0
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in epoch milliseconds
+      required:
+      - cameraUuid
+      - timestampMs
+    DewarpedView:
+      type: object
+      properties:
+        aspectRatio:
+          $ref: '#/components/schemas/AspectRatio'
+        pitchDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        rollDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        verticalFieldOfViewDegrees:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        yawDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+    Video_CancelSpliceV2WSResponse:
+      type: object
+      description: Response object for canceling a spliced clip V2.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CroppedPermyriadRect:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Video_ShareTimelapseClipsWSRequest:
+      type: object
+      description: Request object for sharing timelapse clips (deprecated).
+      properties:
+        clipUuids:
+          type:
+          - array
+          - 'null'
+          description: List of timelapse clip UUIDs to share
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Video_RetrySpliceWSResponse:
+      type: object
+      description: Response object for retrying a spliced clip.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_DeleteSharedTimelapseGroupWSResponse:
+      type: object
+      description: Response object for deleting a shared timelapse group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GetTimelapseClipsWSRequest:
+      type: object
+      description: Request object for getting all timelapse clips for the organization.
+    SplicedClipProgress:
+      type: object
+      properties:
+        region:
+          type:
+          - string
+          - 'null'
+        segmentsUploaded:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalSegments:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Video_GenerateRangedTimelapseClipWSResponse:
+      type: object
+      description: Response from generating a ranged timelapse clip.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GetTimelapseMetadataWSRequest:
+      type: object
+      description: Request object for getting timelapse metadata for cameras.
+      properties:
+        deviceUuidList:
+          type:
+          - array
+          - 'null'
+          description: List of device facet UUIDs to get timelapse metadata for
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    PolicyEventPipelineEnum:
+      type: string
+      enum:
+      - DEFAULT
+      - POLICY_ALERT_PUBLISHER
+    Video_GetSharedTimelapseGroupsWSResponse:
+      type: object
+      description: Response object containing all shared timelapse groups for the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        sharedTimelapses:
+          type:
+          - array
+          - 'null'
+          description: List of shared timelapse groups for the organization
+          items:
+            $ref: '#/components/schemas/SharedTimelapseGroupWrapperType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GetMaxSpliceDurationWSResponse:
+      type: object
+      description: Response object containing the max splice duration for the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        maxDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum duration in seconds that can be set for a splice
+          example: 3600
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_GetMaxSpliceDurationWSRequest:
+      type: object
+      description: Request object for getting the max splice duration an organization can set.
+    Video_DeleteTimelapseClipsWSResponse:
+      type: object
+      description: Response object for deleting timelapse clips.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_UpdateSharedTimelapseGroupWSRequest:
+      type: object
+      description: Request object for updating a shared timelapse group.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: New description for the shared timelapse group
+          example: Updated shared timelapse for security review
+        descriptionUpdate:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to update the description
+          example: true
+        expirationTimeSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: New expiration time in seconds for the shared group
+          example: 172800
+        expirationTimeUpdate:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to update the expiration time
+          example: false
+        passwordUpdate:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to update the password
+          example: false
+        plaintextPassword:
+          type:
+          - string
+          - 'null'
+          description: New plaintext password for the shared timelapse group
+          example: newSecurePassword123
+        title:
+          type:
+          - string
+          - 'null'
+          description: New title for the shared timelapse group
+          example: Updated Security Review
+        titleUpdate:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to update the title
+          example: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClipVisibilityEnum:
+      type: string
+      description: Use accessSettings instead
+      enum:
+      - PRIVATE
+      - ROLE_RESTRICTED
+      - ORG_WIDE
+    Video_SpliceV2WSResponse:
+      type: object
+      description: Response object for splicing video clips V2 (deprecated).
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ClipStatusEnum:
+      type: string
+      enum:
+      - INITIATING
+      - UPLOADING
+      - RENDERING
+      - FAILED
+      - COMPLETE
+      - OFFLINE
+      - DELETED
+      - UNKNOWN
+    Video_GenerateTimelapseClipWSRequest:
+      type: object
+      description: Request object for generating a timelapse clip.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description for the timelapse
+          example: Daily timelapse of security events
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device facet UUIDs to include in the timelapse. UUIDs without a facet defined will default to facet v0
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        drawCameraDetails:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to draw camera details on the video
+          example: true
+        drawTimestamp:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to draw timestamps on the video
+          example: true
+        skipNights:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to skip night time periods
+          example: true
+        skipWeekends:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to skip weekend periods
+          example: false
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the timelapse
+          example: 1640995200000
+        stopTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Stop time in milliseconds for the timelapse
+          example: 1640998800000
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title for the timelapse
+          example: Daily Security Review
+        videoDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the output video
+          example: 60
+        videoFormat:
+          type:
+          - string
+          - 'null'
+          description: Format for the output video
+          example: mp4
+    Video_SpliceFrameWSRequest:
+      type: object
+      description: Request object for creating a single image from a point in time.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds for the frame
+          example: 1640995200000
+    Video_SpliceV3WSResponse:
+      type: object
+      description: Response object for splicing video clips V3.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clipUuidList:
+          type:
+          - array
+          - 'null'
+          description: List of UUIDs for created spliced clips
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Video_DeleteSharedTimelapseGroupWSRequest:
+      type: object
+      description: Request object for deleting a shared timelapse group.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Video_SpliceV3WSRequest:
+      type: object
+      description: Request object for splicing video clips V3 with multiple cameras and advanced options.
+      properties:
+        accessSettings:
+          $ref: '#/components/schemas/ClipAccessSettings'
+        alteredViewMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device facet UUIDs to altered view configurations
+            items:
+              $ref: '#/components/schemas/AlteredView'
+          description: Map of device facet UUIDs to altered view configurations
+        audioIncluded:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to include audio in the clip
+          example: true
+        clipVisibility:
+          $ref: '#/components/schemas/ClipVisibilityEnum'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description for the spliced clip
+          example: Review of security incident from main entrance
+        deviceIntervalMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Optional map of device facet UUIDs to a list of time intervals (start/end millis) for multi-interval splicing. When provided and non-empty, the request is treated as multi-interval and the top-level startTimeMillis/durationSec are ignored. The sum of all interval durations across all devices is capped at 60 minutes, and each interval must be at least 1 second long.
+            items:
+              $ref: '#/components/schemas/TimeInterval'
+          description: Optional map of device facet UUIDs to a list of time intervals (start/end millis) for multi-interval splicing. When provided and non-empty, the request is treated as multi-interval and the top-level startTimeMillis/durationSec are ignored. The sum of all interval durations across all devices is capped at 60 minutes, and each interval must be at least 1 second long.
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device facet UUIDs to splice video from
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the splice
+          example: 60
+        integrationUploadMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+            description: Map of integration names to upload flags
+          description: Map of integration names to upload flags
+        saveToConsole:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to save the clip to console
+          example: true
+        sendToSharedStorage:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to send to shared storage
+          example: false
+        sendToUserStorage:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to send to user storage
+          example: false
+        startTimeMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the splice
+          example: 1640995200000
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title for the spliced clip
+          example: Security Incident Review
+    Video_GetSplicedClipsInProgressWSResponse:
+      type: object
+      description: Response object containing all spliced clips in progress.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        splicedClips:
+          type:
+          - array
+          - 'null'
+          description: List of spliced clips currently in progress
+          items:
+            $ref: '#/components/schemas/SplicedClipType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    TimelapseStatus:
+      type: object
+      properties:
+        percentComplete:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        state:
+          $ref: '#/components/schemas/TimelapseStatusStateEnum'
+    TimelapseClipFormatEnum:
+      type: string
+      enum:
+      - MPEG
+      - GIF
+    SharedTimelapseGroupWrapperType:
+      type: object
+      description: List of shared timelapse groups for the organization
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        expirationTimeSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        isSecured:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sharedTimelapses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SharedTimelapseClipType'
+        title:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AlteredView:
+      type: object
+      description: Map of device facet UUIDs to altered view configurations
+      properties:
+        crop:
+          $ref: '#/components/schemas/CroppedPermyriadRect'
+        dewarp:
+          $ref: '#/components/schemas/DewarpedView'
+    ClipAccessSettings:
+      type: object
+      description: Visibility setting for the clip
+      properties:
+        allowedRoles:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        allowedUsers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        visibility:
+          $ref: '#/components/schemas/ClipVisibilityEnum'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

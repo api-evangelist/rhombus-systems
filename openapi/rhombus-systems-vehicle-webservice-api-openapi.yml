@@ -1,0 +1,1108 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Vehicle Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Vehicle Webservice
+paths:
+  /api/vehicle/addVehicleLabel:
+    post:
+      description: Add a label to a vehicle
+      operationId: addVehicleLabel
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_AddVehicleLabelWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_AddVehicleLabelWSResponse'
+          description: OK
+      summary: Add vehicle label
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/associateEventsToVehicle:
+    post:
+      description: Associate vehicle events to a saved vehicle
+      operationId: associateEventsToVehicle
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_AssociateEventsToVehicleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_AssociateEventsToVehicleWSResponse'
+          description: OK
+      summary: Associate events to vehicle
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/deleteVehicle:
+    post:
+      description: Delete a saved vehicle
+      operationId: deleteVehicle
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_DeleteVehicleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_DeleteVehicleWSResponse'
+          description: OK
+      summary: Delete vehicle
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/getRecentVehicleEvents:
+    post:
+      deprecated: true
+      description: Get recent vehicle events for organization. Use /vehicle/getVehicleEvents instead.
+      operationId: getRecentVehicleEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_GetRecentVehicleEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_GetRecentVehicleEventsWSResponse'
+          description: OK
+      summary: Get recent vehicle events
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/getRecentVehicleEventsByLocation:
+    post:
+      deprecated: true
+      description: Get recent vehicle events for a location. Use /vehicle/getVehicleEvents instead.
+      operationId: getRecentVehicleEventsByLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_GetRecentVehicleEventsByLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_GetRecentVehicleEventsByLocationWSResponse'
+          description: OK
+      summary: Get recent vehicle events by location
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/getRecentVehicleEventsForVehicle:
+    post:
+      deprecated: true
+      description: Get recent vehicle events for specified vehicle. Use /vehicle/getVehicleEvents instead.
+      operationId: getRecentVehicleEventsForVehicle
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_GetRecentVehicleEventsForVehicleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_GetRecentVehicleEventsForVehicleWSResponse'
+          description: OK
+      summary: Get recent vehicle events for vehicle
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/getVehicleEvents:
+    post:
+      description: Get vehicle events with filters and additive queries
+      operationId: getVehicleEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_GetVehicleEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_GetVehicleEventsWSResponse'
+          description: OK
+      summary: Get vehicle events
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/getVehicleLabelsForOrg:
+    post:
+      description: Get all vehicle labels for organization
+      operationId: getVehicleLabelsForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_GetVehicleLabelsForOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_GetVehicleLabelsForOrgWSResponse'
+          description: OK
+      summary: Get vehicle labels for organization
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/getVehicles:
+    post:
+      description: Get details of all saved vehicles in organization
+      operationId: getVehicles
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_GetVehiclesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_GetVehiclesWSResponse'
+          description: OK
+      summary: Get vehicles
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/removeVehicleLabel:
+    post:
+      description: Remove a label to a vehicle
+      operationId: removeVehicleLabel
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_RemoveVehicleLabelWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_RemoveVehicleLabelWSResponse'
+          description: OK
+      summary: Remove vehicle label
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/reportVehicleEvent:
+    post:
+      description: Report a mis-detected license plate event.  This sends the image/clip to Rhombus to better train AI models and removes the event
+      operationId: reportVehicleEvent
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_ReportVehicleEventRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_ReportVehicleEventResponse'
+          description: OK
+      summary: Report vehicle event
+      tags:
+      - Vehicle Webservice
+  /api/vehicle/saveVehicle:
+    post:
+      description: Name and save a vehicle based on license plate number
+      operationId: saveVehicle
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle_SaveVehicleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle_SaveVehicleWSResponse'
+          description: OK
+      summary: Save vehicle
+      tags:
+      - Vehicle Webservice
+components:
+  schemas:
+    Vehicle_GetRecentVehicleEventsWSRequest:
+      type: object
+      description: Request object for getting recent vehicle events (deprecated).
+      properties:
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to filter events by
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for the query period
+          example: 1640998800000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the query period
+          example: 1640995200000
+    Vehicle_AssociateEventsToVehicleWSRequest:
+      type: object
+      description: Request object for associating vehicle events to a saved vehicle.
+      properties:
+        eventUuids:
+          type:
+          - array
+          - 'null'
+          description: List of event UUIDs to associate with the vehicle
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        vehicleLicensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate number of the vehicle to associate events with
+          example: ABC123
+    Vehicle_SaveVehicleWSRequest:
+      type: object
+      description: Request object for saving a vehicle with license plate information.
+      properties:
+        alert:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to alert when this vehicle is detected
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Creation timestamp in milliseconds
+          example: 1640995200000
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the vehicle
+          example: Blue Honda Civic
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the vehicle
+          example: John's Car
+        thumbnailS3Key:
+          type:
+          - string
+          - 'null'
+          description: S3 key for the vehicle thumbnail image
+        trust:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this vehicle is trusted
+        vehicleLicensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate number of the vehicle
+          example: ABC123
+    Vehicle_DeleteVehicleWSResponse:
+      type: object
+      description: Response object for deleting a vehicle.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_GetRecentVehicleEventsWSResponse:
+      type: object
+      description: Response object containing recent vehicle events (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of recent vehicle events
+          items:
+            $ref: '#/components/schemas/VehicleEventIndexType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_AddVehicleLabelWSResponse:
+      type: object
+      description: Response object for adding a label to a vehicle.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_ReportVehicleEventRequest:
+      type: object
+      description: Request object for reporting a mis-detected license plate event.
+      properties:
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Vehicle_RemoveVehicleLabelWSRequest:
+      type: object
+      description: Request object for removing a label from a vehicle.
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: Label to remove from the vehicle
+          example: Company Car
+        vehicleLicensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate number of the vehicle to remove label from
+          example: ABC123
+    Vehicle_DeleteVehicleWSRequest:
+      type: object
+      description: Request object for deleting a vehicle.
+      properties:
+        vehicleLicensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate number of the vehicle to delete
+          example: ABC123
+    Vehicle_ReportVehicleEventResponse:
+      type: object
+      description: Response object for reporting a mis-detected license plate event.
+      properties:
+        collectedMediaForTraining:
+          type:
+          - boolean
+          - 'null'
+          description: Whether media was collected for AI training
+          example: true
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_GetRecentVehicleEventsForVehicleWSRequest:
+      type: object
+      description: Request object for getting recent vehicle events for a specific vehicle (deprecated).
+      properties:
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for the query period
+          example: 1640998800000
+        licensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate number of the vehicle to get events for
+          example: ABC123
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the query period
+          example: 1640995200000
+    VehicleEventIndexType:
+      type: object
+      description: List of vehicle events matching the query criteria
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        eventTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        imageS3Key:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        matchingLicensePlates:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        partialLicensePlates:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        thumbnailS3Key:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        vehicleLicensePlate:
+          type:
+          - string
+          - 'null'
+    Vehicle_GetVehiclesWSRequest:
+      type: object
+      description: Request object for getting all vehicles in the organization.
+    Vehicle_GetVehicleLabelsForOrgWSResponse:
+      type: object
+      description: Response object containing all vehicle labels for the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        vehicleLabels:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of license plate to label set
+            items:
+              type:
+              - string
+              - 'null'
+              description: Map of license plate to label set
+            uniqueItems: true
+          description: Map of license plate to label set
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    VehicleV2Type:
+      type: object
+      description: List of vehicles in the organization
+      properties:
+        alert:
+          type:
+          - boolean
+          - 'null'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        thumbnailS3Key:
+          type:
+          - string
+          - 'null'
+        trust:
+          type:
+          - boolean
+          - 'null'
+    Vehicle_GetRecentVehicleEventsForVehicleWSResponse:
+      type: object
+      description: Response object containing recent vehicle events for a specific vehicle (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of recent vehicle events for the specific vehicle
+          items:
+            $ref: '#/components/schemas/VehicleEventIndexType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_GetRecentVehicleEventsByLocationWSResponse:
+      type: object
+      description: Response object containing recent vehicle events by location (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of recent vehicle events for the location
+          items:
+            $ref: '#/components/schemas/VehicleEventIndexType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_SaveVehicleWSResponse:
+      type: object
+      description: Response object for saving a vehicle.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_RemoveVehicleLabelWSResponse:
+      type: object
+      description: Response object for removing a label from a vehicle.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_GetVehicleEventsWSRequest:
+      type: object
+      description: Request object for getting vehicle events with filters and additive queries.
+      properties:
+        deviceUuidFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter events by specific reporting device uuids
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Time window filter end (newest) time in Epoch milliseconds
+        licensePlateExactQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        licensePlateFuzzyQuery:
+          type:
+          - string
+          - 'null'
+          description: Query events by partial or complete license plate with fuzzy character matching. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        locationUuidFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter events by specific reporting location uuids
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        nameQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Time window filter start (oldest) time in Epoch milliseconds
+        unnamedQuery:
+          type:
+          - boolean
+          - 'null'
+          description: Query events by name presence.  If false, returns events with a name.  If true, returns events without names.  Omit if not needed.  Query fields are additive queries (returned events satisfy at least one of the query fields)
+        vehicleLabelQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
+    Vehicle_GetVehiclesWSResponse:
+      type: object
+      description: Response object containing all vehicles in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        vehicles:
+          type:
+          - array
+          - 'null'
+          description: List of vehicles in the organization
+          items:
+            $ref: '#/components/schemas/VehicleV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_AssociateEventsToVehicleWSResponse:
+      type: object
+      description: Response object for associating events to a vehicle.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_GetVehicleEventsWSResponse:
+      type: object
+      description: Response object containing vehicle events with filters and additive queries.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of vehicle events matching the query criteria
+          items:
+            $ref: '#/components/schemas/VehicleEventIndexType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Vehicle_AddVehicleLabelWSRequest:
+      type: object
+      description: Request object for adding a label to a vehicle.
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: Label to add to the vehicle
+          example: Company Car
+        vehicleLicensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate number of the vehicle to add label to
+          example: ABC123
+    Vehicle_GetVehicleLabelsForOrgWSRequest:
+      type: object
+      description: Request object for getting all vehicle labels for the organization.
+    Vehicle_GetRecentVehicleEventsByLocationWSRequest:
+      type: object
+      description: Request object for getting recent vehicle events by location (deprecated).
+      properties:
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for the query period
+          example: 1640998800000
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the query period
+          example: 1640995200000
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

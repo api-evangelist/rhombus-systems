@@ -1,0 +1,580 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus User Metadata Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: User Metadata Webservice
+paths:
+  /api/user/metadata/createUserMetadataFieldTemplate:
+    post:
+      description: Create a new template user metadata field that will be applicable to all users in the organization, allowing custom field definitions for user data.
+      operationId: createUserMetadataFieldTemplate
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_CreateUserMetadataFieldTemplateWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_CreateUserMetadataFieldTemplateWSResponse'
+          description: OK
+      summary: Create user metadata field template
+      tags:
+      - User Metadata Webservice
+  /api/user/metadata/deleteUserMetadataField:
+    post:
+      description: Deletes the specified user's value stored for the specified template, removing the custom field value while preserving the template definition.
+      operationId: deleteUserMetadataField
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_DeleteUserMetadataFieldWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_DeleteUserMetadataFieldWSResponse'
+          description: OK
+      summary: Delete user metadata field
+      tags:
+      - User Metadata Webservice
+  /api/user/metadata/deleteUserMetadataFieldTemplate:
+    post:
+      description: Delete a template user metadata field. THIS WILL DELETE THE CUSTOM FIELD AND USER DATA FOR THIS FIELD, permanently removing the field definition and all associated user values.
+      operationId: deleteUserMetadataFieldTemplate
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_DeleteUserMetadataFieldTemplateWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_DeleteUserMetadataFieldTemplateWSResponse'
+          description: OK
+      summary: Delete user metadata field template
+      tags:
+      - User Metadata Webservice
+  /api/user/metadata/findAllUserMetadataFieldsByOrg:
+    post:
+      description: Returns the org template metadata fields and every user's stored values for those fields, keyed by user uuid and then by template uuid. For callers that need the whole org at once, such as a user report, rather than one user at a time.
+      operationId: findAllUserMetadataFieldsByOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_FindAllUserMetadataFieldsByOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_FindAllUserMetadataFieldsByOrgWSResponse'
+          description: OK
+      summary: Find all user metadata fields in the org
+      tags:
+      - User Metadata Webservice
+  /api/user/metadata/findUserMetadataFieldTemplates:
+    post:
+      description: Find all template user metadata fields for the organization, returning the complete list of custom field definitions available for users.
+      operationId: findUserMetadataFieldTemplates
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_FindUserMetadataFieldTemplatesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_FindUserMetadataFieldTemplatesWSResponse'
+          description: OK
+      summary: Find user metadata field templates
+      tags:
+      - User Metadata Webservice
+  /api/user/metadata/findUserMetadataFields:
+    post:
+      description: Returns the org template metadata fields and the queried users stored values for those fields if they've been set, providing complete metadata information for a specific user.
+      operationId: findUserMetadataFields
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_FindUserMetadataFieldsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_FindUserMetadataFieldsWSResponse'
+          description: OK
+      summary: Find user metadata fields
+      tags:
+      - User Metadata Webservice
+  /api/user/metadata/saveUserMetadataFields:
+    post:
+      description: Saves custom metadata values for the user specified. Template IDs that do not map to an actual org metadata template are ignored and values for omitted Template IDs are left as-is.
+      operationId: saveUserMetadataFields
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_SaveUserMetadataFieldsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_SaveUserMetadataFieldsWSResponse'
+          description: OK
+      summary: Save user metadata fields
+      tags:
+      - User Metadata Webservice
+  /api/user/metadata/updateUserMetadataFieldTemplate:
+    post:
+      description: Update a template user metadata field that will be applicable to all users, allowing modification of existing custom field definitions.
+      operationId: updateUserMetadataFieldTemplate
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_metadata_UpdateUserMetadataFieldTemplateWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_metadata_UpdateUserMetadataFieldTemplateWSResponse'
+          description: OK
+      summary: Update user metadata field template
+      tags:
+      - User Metadata Webservice
+components:
+  schemas:
+    User_metadata_DeleteUserMetadataFieldWSRequest:
+      type: object
+      properties:
+        templateUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_metadata_DeleteUserMetadataFieldWSResponse:
+      type: object
+      properties:
+        field:
+          $ref: '#/components/schemas/UserMetadataField'
+    User_metadata_FindAllUserMetadataFieldsByOrgWSResponse:
+      type: object
+      properties:
+        templateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataFieldTemplate'
+        userFieldValueMapByUser:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/UserMetadataField'
+    User_metadata_FindUserMetadataFieldsWSRequest:
+      type: object
+      properties:
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    UserMetadataFieldTemplateSelectiveUpdate:
+      type: object
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        fieldName:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scimFieldName:
+          type:
+          - string
+          - 'null'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_metadata_CreateUserMetadataFieldTemplateWSResponse:
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/UserMetadataFieldTemplate'
+    User_metadata_FindUserMetadataFieldTemplatesWSRequest:
+      type: object
+    User_metadata_FindUserMetadataFieldTemplatesWSResponse:
+      type: object
+      properties:
+        templateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataFieldTemplate'
+    User_metadata_DeleteUserMetadataFieldTemplateWSResponse:
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/UserMetadataFieldTemplate'
+    User_metadata_CreateUserMetadataFieldTemplateWSRequest:
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/UserMetadataFieldTemplate'
+    User_metadata_FindUserMetadataFieldsWSResponse:
+      type: object
+      properties:
+        templateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataFieldTemplate'
+        userFieldValueMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataField'
+    UserMetadataField:
+      type: object
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        fieldValue:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        templateUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_metadata_FindAllUserMetadataFieldsByOrgWSRequest:
+      type: object
+    User_metadata_SaveUserMetadataFieldsWSResponse:
+      type: object
+      properties:
+        templateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataFieldTemplate'
+        userFieldValueMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataField'
+    User_metadata_SaveUserMetadataFieldsWSRequest:
+      type: object
+      properties:
+        fieldValueMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_metadata_UpdateUserMetadataFieldTemplateWSResponse:
+      type: object
+      properties:
+        template:
+          $ref: '#/components/schemas/UserMetadataFieldTemplate'
+    UserMetadataFieldTemplate:
+      type: object
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        fieldName:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scimFieldName:
+          type:
+          - string
+          - 'null'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_metadata_DeleteUserMetadataFieldTemplateWSRequest:
+      type: object
+      properties:
+        templateUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_metadata_UpdateUserMetadataFieldTemplateWSRequest:
+      type: object
+      properties:
+        selectiveUpdate:
+          $ref: '#/components/schemas/UserMetadataFieldTemplateSelectiveUpdate'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

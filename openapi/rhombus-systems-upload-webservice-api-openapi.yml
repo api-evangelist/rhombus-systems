@@ -1,0 +1,1034 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Upload Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Upload Webservice
+paths:
+  /api/upload/badgeTemplate/images:
+    post:
+      description: Uploads images for badge templates with associated metadata, supporting JPEG and PNG formats with size validation and automatic S3 storage.
+      operationId: uploadBadgeTemplateImages
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Upload badge template images
+      tags:
+      - Upload Webservice
+  /api/upload/bulkUploadUserProfilePhotos:
+    post:
+      description: Uploads multiple user profile pictures in a single request, supporting up to 100 photos with automatic user matching based on filename or metadata. Each photo must be <= 5MB.
+      operationId: bulkUploadUserProfilePhotos
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Bulk upload user profile pictures
+      tags:
+      - Upload Webservice
+  /api/upload/companyLogo:
+    post:
+      description: Uploads a company logo image, supporting various formats including JPEG, PNG, BMP, GIF, WebP, and PSD, and updates the organization's logo URL.
+      operationId: uploadCompanyLogo
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Upload company logo
+      tags:
+      - Upload Webservice
+  /api/upload/floorplan:
+    post:
+      description: Uploads a new floorplan image for a location, supporting multiple formats including JPEG, PNG, PDF, WebP, and SVG with automatic conversion to JPEG for SVG files.
+      operationId: uploadNewFloorPlan
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Upload new floorplan for location
+      tags:
+      - Upload Webservice
+  /api/upload/guestManagement/document:
+    post:
+      description: Uploads a PDF or DOCX document for guest management (e.g. for e-signature via SignatureAPI), storing it in S3 and recording it on the org's guest management settings.
+      operationId: uploadGuestManagementDocument
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Upload guest management document
+      tags:
+      - Upload Webservice
+  /api/upload/keypadLogo:
+    post:
+      description: Uploads a logo image for keypad devices, generating a unique UUID and storing the image with proper metadata and organization association.
+      operationId: uploadKeypadLogo
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Upload keypad logo
+      tags:
+      - Upload Webservice
+  /api/upload/rhombusKeyLogo:
+    post:
+      description: Uploads a logo image for Rhombus key devices, generating a unique UUID and storing the image with proper metadata and organization association.
+      operationId: uploadRhombusKeyLogo
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Upload Rhombus key logo
+      tags:
+      - Upload Webservice
+components:
+  schemas:
+    MessageBodyWorkers:
+      type:
+      - object
+      - 'null'
+    FormDataContentDisposition:
+      type: object
+      properties:
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        fileName:
+          type:
+          - string
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    ParameterizedHeader:
+      type:
+      - object
+      - 'null'
+      properties:
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    MultiPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        bodyParts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    StatusType:
+      type:
+      - object
+      - 'null'
+      properties:
+        family:
+          $ref: '#/components/schemas/JakartaFamilyEnum'
+        reasonPhrase:
+          type:
+          - string
+          - 'null'
+        statusCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    JakartaFamilyEnum:
+      type: string
+      enum:
+      - INFORMATIONAL
+      - SUCCESSFUL
+      - REDIRECTION
+      - CLIENT_ERROR
+      - SERVER_ERROR
+      - OTHER
+    Link:
+      type:
+      - object
+      - 'null'
+      properties:
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        rel:
+          type:
+          - string
+          - 'null'
+        rels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+          format: uri
+        uriBuilder:
+          $ref: '#/components/schemas/UriBuilder'
+    Providers:
+      type:
+      - object
+      - 'null'
+    MediaType:
+      type: object
+      properties:
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        concrete:
+          type:
+          - boolean
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        qualityValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        subtype:
+          type:
+          - string
+          - 'null'
+        subtypeSuffix:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        wildcardSubtype:
+          type:
+          - boolean
+          - 'null'
+        wildcardType:
+          type:
+          - boolean
+          - 'null'
+    BodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    NewCookie:
+      type:
+      - object
+      - 'null'
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        domain:
+          type:
+          - string
+          - 'null'
+        expiry:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        httpOnly:
+          type:
+          - boolean
+          - 'null'
+        maxAge:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+        sameSite:
+          $ref: '#/components/schemas/JakartaSameSiteEnum'
+        secure:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    JakartaSameSiteEnum:
+      type: string
+      enum:
+      - NONE
+      - LAX
+      - STRICT
+    ContentDisposition:
+      type: object
+      properties:
+        attachment:
+          type:
+          - boolean
+          - 'null'
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        filename:
+          type:
+          - string
+          - 'null'
+        formData:
+          type:
+          - boolean
+          - 'null'
+        inline:
+          type:
+          - boolean
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    Response:
+      type:
+      - object
+      - 'null'
+      properties:
+        allowedMethods:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        closed:
+          type:
+          - boolean
+          - 'null'
+        cookies:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/NewCookie'
+        date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        entity:
+          type:
+          - object
+          - 'null'
+        entityTag:
+          $ref: '#/components/schemas/EntityTag'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - object
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        language:
+          type:
+          - object
+          - 'null'
+          properties:
+            country:
+              type:
+              - string
+              - 'null'
+            displayCountry:
+              type:
+              - string
+              - 'null'
+            displayLanguage:
+              type:
+              - string
+              - 'null'
+            displayName:
+              type:
+              - string
+              - 'null'
+            displayScript:
+              type:
+              - string
+              - 'null'
+            displayVariant:
+              type:
+              - string
+              - 'null'
+            extensionKeys:
+              type:
+              - array
+              - 'null'
+              items:
+                type:
+                - string
+                - 'null'
+              uniqueItems: true
+            iso3Country:
+              type:
+              - string
+              - 'null'
+            iso3Language:
+              type:
+              - string
+              - 'null'
+            language:
+              type:
+              - string
+              - 'null'
+            script:
+              type:
+              - string
+              - 'null'
+            unicodeLocaleAttributes:
+              type:
+              - array
+              - 'null'
+              items:
+                type:
+                - string
+                - 'null'
+              uniqueItems: true
+            unicodeLocaleKeys:
+              type:
+              - array
+              - 'null'
+              items:
+                type:
+                - string
+                - 'null'
+              uniqueItems: true
+            variant:
+              type:
+              - string
+              - 'null'
+        lastModified:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        length:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        links:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Link'
+          uniqueItems: true
+        location:
+          type:
+          - string
+          - 'null'
+          format: uri
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - object
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        statusInfo:
+          $ref: '#/components/schemas/StatusType'
+        stringHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+    UriBuilder:
+      type:
+      - object
+      - 'null'
+    EntityTag:
+      type:
+      - object
+      - 'null'
+      properties:
+        value:
+          type:
+          - string
+          - 'null'
+        weak:
+          type:
+          - boolean
+          - 'null'
+    FormDataBodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        content:
+          type:
+          - object
+          - 'null'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fileName:
+          type:
+          - string
+          - 'null'
+        formDataContentDisposition:
+          $ref: '#/components/schemas/FormDataContentDisposition'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        name:
+          type:
+          - string
+          - 'null'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+        simple:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    FormDataMultiPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        bodyParts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fields:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/FormDataBodyPart'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

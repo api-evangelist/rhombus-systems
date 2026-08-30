@@ -1,0 +1,4896 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Policy Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Policy Webservice
+paths:
+  /api/policy/createAccessControlledDoorPolicy:
+    post:
+      description: Create a policy to be assigned to a access controlled door
+      operationId: createAccessControlledDoorPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateAccessControlledDoorPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateAccessControlledDoorPolicyWSResponse'
+          description: OK
+      summary: Create access controlled door policy
+      tags:
+      - Policy Webservice
+  /api/policy/createAudioPolicy:
+    post:
+      description: Create a policy to be assigned to audio gateways
+      operationId: createAudioPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateAudioPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateAudioPolicyWSResponse'
+          description: OK
+      summary: Create audio policy
+      tags:
+      - Policy Webservice
+  /api/policy/createCameraPolicy:
+    post:
+      description: Create a policy to be assigned to cameras
+      operationId: createCameraPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateCameraPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateCameraPolicyWSResponse'
+          description: OK
+      summary: Create camera policy
+      tags:
+      - Policy Webservice
+  /api/policy/createClimatePolicy:
+    post:
+      description: Create a policy to be assigned to a climate sensor
+      operationId: createClimatePolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateClimatePolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateClimatePolicyWSResponse'
+          description: OK
+      summary: Create climate policy
+      tags:
+      - Policy Webservice
+  /api/policy/createDoorPolicy:
+    post:
+      description: Create a policy to be assigned to a door sensor
+      operationId: createDoorPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateDoorPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateDoorPolicyWSResponse'
+          description: OK
+      summary: Create door policy
+      tags:
+      - Policy Webservice
+  /api/policy/createOccupancyPolicy:
+    post:
+      description: Create a policy to be assigned to a occupancy sensor
+      operationId: createOccupancyPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateOccupancyPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateOccupancyPolicyWSResponse'
+          description: OK
+      summary: Create occupancy policy
+      tags:
+      - Policy Webservice
+  /api/policy/createPolicyAddendumForLocation:
+    post:
+      description: Create policy addendum for location
+      operationId: createPolicyAddendumForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreatePolicyAddendumForLocationRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreatePolicyAddendumForLocationResponse'
+          description: OK
+      summary: Create policy addendum for location
+      tags:
+      - Policy Webservice
+  /api/policy/createPolicyAddendumsForDevices:
+    post:
+      description: Create policy addendums for devices
+      operationId: createPolicyAddendumsForDevices
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreatePolicyAddendumsForDevicesRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreatePolicyAddendumsForDevicesResponse'
+          description: OK
+      summary: Create policy addendums for devices
+      tags:
+      - Policy Webservice
+  /api/policy/createProximityPolicy:
+    post:
+      description: Create a policy to be assigned to an asset tag
+      operationId: createProximityPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateProximityPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateProximityPolicyWSResponse'
+          description: OK
+      summary: Create proximity policy
+      tags:
+      - Policy Webservice
+  /api/policy/createSchedule:
+    post:
+      description: Create a schedule to be used for policy creation
+      operationId: createSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateScheduleWSResponse'
+          description: OK
+      summary: Create schedule
+      tags:
+      - Policy Webservice
+  /api/policy/createVideoIntercomPolicy:
+    post:
+      description: Create a video intercom policy
+      operationId: createVideoIntercomPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_CreateVideoIntercomPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_CreateVideoIntercomPolicyWSResponse'
+          description: OK
+      summary: Create video intercom policy
+      tags:
+      - Policy Webservice
+  /api/policy/deleteAccessControlledDoorPolicy:
+    post:
+      description: Delete an access controlled door policy
+      operationId: deleteAccessControlledDoorPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteAccessControlledDoorPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteAccessControlledDoorPolicyWSResponse'
+          description: OK
+      summary: Delete access controlled door policy
+      tags:
+      - Policy Webservice
+  /api/policy/deleteAudioPolicy:
+    post:
+      description: Delete a audio gateway policy
+      operationId: deleteAudioPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteAudioPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteAudioPolicyWSResponse'
+          description: OK
+      summary: Delete audio policy
+      tags:
+      - Policy Webservice
+  /api/policy/deleteCameraPolicy:
+    post:
+      description: Delete a camera policy
+      operationId: deleteCameraPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteCameraPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteCameraPolicyWSResponse'
+          description: OK
+      summary: Delete camera policy
+      tags:
+      - Policy Webservice
+  /api/policy/deleteClimatePolicy:
+    post:
+      description: Delete a climate policy
+      operationId: deleteClimatePolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteClimatePolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteClimatePolicyWSResponse'
+          description: OK
+      summary: Delete climate policy
+      tags:
+      - Policy Webservice
+  /api/policy/deleteDevicePolicyAddendums:
+    post:
+      description: Delete a policy addendums
+      operationId: deleteDevicePolicyAddendums
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteDevicePolicyAddendumsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteDevicePolicyAddendumsWSResponse'
+          description: OK
+      summary: Delete device policy addendums
+      tags:
+      - Policy Webservice
+  /api/policy/deleteDoorPolicy:
+    post:
+      description: Delete a door sensor policy
+      operationId: deleteDoorPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteDoorPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteDoorPolicyWSResponse'
+          description: OK
+      summary: Delete door policy
+      tags:
+      - Policy Webservice
+  /api/policy/deleteLocationPolicyAddendum:
+    post:
+      description: Delete a policy addendums
+      operationId: deleteLocationPolicyAddendum
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteLocationPolicyAddendumWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteLocationPolicyAddendumWSResponse'
+          description: OK
+      summary: Delete location policy addendum
+      tags:
+      - Policy Webservice
+  /api/policy/deleteOccupancyPolicy:
+    post:
+      description: Delete an Occupancy policy
+      operationId: deleteOccupancyPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteOccupancyPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteOccupancyPolicyWSResponse'
+          description: OK
+      summary: Delete occupancy policy
+      tags:
+      - Policy Webservice
+  /api/policy/deletePolicyPauseSettingForComponentComposite:
+    post:
+      description: Delete a policy pause setting for a component composite
+      operationId: deletePolicyPauseSettingForComponentComposite
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeletePolicyPauseSettingWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeletePolicyPauseSettingWSResponse'
+          description: OK
+      summary: Delete policy pause setting for component composite
+      tags:
+      - Policy Webservice
+  /api/policy/deletePolicyPauseSettingForDevice:
+    post:
+      description: Delete a policy pause setting for a device
+      operationId: deletePolicyPauseSettingForDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeletePolicyPauseSettingWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeletePolicyPauseSettingWSResponse'
+          description: OK
+      summary: Delete policy pause setting for device
+      tags:
+      - Policy Webservice
+  /api/policy/deletePolicyPauseSettingForLocation:
+    post:
+      description: Delete a policy pause setting for a location
+      operationId: deletePolicyPauseSettingForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeletePolicyPauseSettingWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeletePolicyPauseSettingWSResponse'
+          description: OK
+      summary: Delete policy pause setting for location
+      tags:
+      - Policy Webservice
+  /api/policy/deleteProximityPolicy:
+    post:
+      description: Delete an asset tag policy
+      operationId: deleteProximityPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteProximityPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteProximityPolicyWSResponse'
+          description: OK
+      summary: Delete proximity policy
+      tags:
+      - Policy Webservice
+  /api/policy/deleteSchedule:
+    post:
+      description: Delete a schedule used for policy creation
+      operationId: deleteSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteScheduleWSResponse'
+          description: OK
+      summary: Delete schedule
+      tags:
+      - Policy Webservice
+  /api/policy/deleteVideoIntercomPolicy:
+    post:
+      description: Delete a video intercom policy
+      operationId: deleteVideoIntercomPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteVideoIntercomPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteVideoIntercomPolicyWSResponse'
+          description: OK
+      summary: Delete video intercom policy
+      tags:
+      - Policy Webservice
+  /api/policy/findSchedules:
+    post:
+      description: Find all schedules in organization
+      operationId: findSchedules
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_FindSchedulesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_FindSchedulesWSResponse'
+          description: OK
+      summary: Find schedules
+      tags:
+      - Policy Webservice
+  /api/policy/getAccessControlledDoorPolicies:
+    post:
+      description: Get details about all access controlled door policies in organization
+      operationId: getAccessControlledDoorPolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetAccessControlledDoorPoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetAccessControlledDoorPoliciesWSResponse'
+          description: OK
+      summary: Get access controlled door policies
+      tags:
+      - Policy Webservice
+  /api/policy/getAudioPolicies:
+    post:
+      description: Get details about all audio gateway policies in organization
+      operationId: getAudioPolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetAudioPoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetAudioPoliciesWSResponse'
+          description: OK
+      summary: Get audio policies
+      tags:
+      - Policy Webservice
+  /api/policy/getCameraPolicies:
+    post:
+      description: Get details about all camera policies in organization
+      operationId: getCameraPolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetCameraPoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetCameraPoliciesWSResponse'
+          description: OK
+      summary: Get camera policies
+      tags:
+      - Policy Webservice
+  /api/policy/getClimatePolicies:
+    post:
+      description: Get details about all climate policies in organization
+      operationId: getClimatePolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetClimatePoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetClimatePoliciesWSResponse'
+          description: OK
+      summary: Get climate policies
+      tags:
+      - Policy Webservice
+  /api/policy/getDoorPolicies:
+    post:
+      description: Get details about all door sensor policies in organization
+      operationId: getDoorPolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetDoorPoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetDoorPoliciesWSResponse'
+          description: OK
+      summary: Get door policies
+      tags:
+      - Policy Webservice
+  /api/policy/getOccupancyPolicies:
+    post:
+      description: Get details about all occupancy policies in organization
+      operationId: getOccupancyPolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetOccupancyPoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetOccupancyPoliciesWSResponse'
+          description: OK
+      summary: Get occupancy policies
+      tags:
+      - Policy Webservice
+  /api/policy/getPoliciesUsingSchedule:
+    post:
+      description: Get details about all climate policies in organization
+      operationId: getPoliciesUsingSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetPoliciesUsingScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetPoliciesUsingScheduleWSResponse'
+          description: OK
+      summary: Get policies using schedule
+      tags:
+      - Policy Webservice
+  /api/policy/getPolicyAddendums:
+    post:
+      description: Get the current and planned policy alert addendums
+      operationId: getPolicyAddendums
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetPolicyAddendumsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetPolicyAddendumsWSResponse'
+          description: OK
+      summary: Get policy addendums
+      tags:
+      - Policy Webservice
+  /api/policy/getPolicyPauseSettings:
+    post:
+      description: Get the current and planned policy alert pause details
+      operationId: getPolicyPauseSettings
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetPolicyPauseSettingsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetPolicyPauseSettingsWSResponse'
+          description: OK
+      summary: Get policy pause settings
+      tags:
+      - Policy Webservice
+  /api/policy/getProximityPolicies:
+    post:
+      description: Get details about all asset tag policies in organization
+      operationId: getProximityPolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetProximityPoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetProximityPoliciesWSResponse'
+          description: OK
+      summary: Get proximity policies
+      tags:
+      - Policy Webservice
+  /api/policy/getTrackPauseSettings:
+    post:
+      description: List active and scheduled per-track alert snoozes across devices and locations
+      operationId: getTrackPauseSettings
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetTrackPauseSettingsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetTrackPauseSettingsWSResponse'
+          description: OK
+      summary: Get track pause settings
+      tags:
+      - Policy Webservice
+  /api/policy/getVideoIntercomPolicies:
+    post:
+      description: Get details about all video intercom policies in organization
+      operationId: getVideoIntercomPolicies
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_GetVideoIntercomPoliciesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_GetVideoIntercomPoliciesWSResponse'
+          description: OK
+      summary: Get video intercom policies
+      tags:
+      - Policy Webservice
+  /api/policy/pauseAlertPolicyForComponentComposite:
+    post:
+      description: Pause alert policy for component composite
+      operationId: pauseAlertPolicyForComponentComposite
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_PauseAlertPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_PauseAlertPolicyWSResponse'
+          description: OK
+      summary: Pause alert policy for component composite
+      tags:
+      - Policy Webservice
+  /api/policy/pauseAlertPolicyForDevice:
+    post:
+      description: Pause alert policy for device
+      operationId: pauseAlertPolicyForDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_PauseAlertPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_PauseAlertPolicyWSResponse'
+          description: OK
+      summary: Pause alert policy for device
+      tags:
+      - Policy Webservice
+  /api/policy/pauseAlertPolicyForLocation:
+    post:
+      description: Pause alert policy for location
+      operationId: pauseAlertPolicyForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_PauseAlertPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_PauseAlertPolicyWSResponse'
+          description: OK
+      summary: Pause alert policy for location
+      tags:
+      - Policy Webservice
+  /api/policy/pauseTrackAlerts:
+    post:
+      description: Pause track alerts for a single reID stableTrackId on a device until duration elapses
+      operationId: pauseTrackAlerts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_PauseTrackAlertsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_PauseAlertPolicyWSResponse'
+          description: OK
+      summary: Pause track alerts for a stable track id
+      tags:
+      - Policy Webservice
+  /api/policy/pauseTrackAlertsForLocation:
+    post:
+      description: Pause track alerts for a single reID stableTrackId across a whole location until duration elapses
+      operationId: pauseTrackAlertsForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_PauseTrackAlertsForLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_PauseAlertPolicyWSResponse'
+          description: OK
+      summary: Pause track alerts for a stable track id across a location
+      tags:
+      - Policy Webservice
+  /api/policy/resumeTrackAlerts:
+    post:
+      description: Cancel a previously set per-track alert pause
+      operationId: resumeTrackAlerts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_PauseTrackAlertsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_PauseAlertPolicyWSResponse'
+          description: OK
+      summary: Resume track alerts for a stable track id
+      tags:
+      - Policy Webservice
+  /api/policy/resumeTrackAlertsForLocation:
+    post:
+      description: Cancel a previously set per-track location alert pause
+      operationId: resumeTrackAlertsForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_PauseTrackAlertsForLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_PauseAlertPolicyWSResponse'
+          description: OK
+      summary: Resume track alerts for a stable track id across a location
+      tags:
+      - Policy Webservice
+  /api/policy/updateAccessControlledDoorPolicy:
+    post:
+      description: Update an access controlled door policy
+      operationId: updateAccessControlledDoorPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateAccessControlledDoorPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateAccessControlledDoorPolicyWSResponse'
+          description: OK
+      summary: Update access controlled door policy
+      tags:
+      - Policy Webservice
+  /api/policy/updateAudioPolicy:
+    post:
+      description: Update a audio gateway policy
+      operationId: updateAudioPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateAudioPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateAudioPolicyWSResponse'
+          description: OK
+      summary: Update audio policy
+      tags:
+      - Policy Webservice
+  /api/policy/updateCameraPolicy:
+    post:
+      description: Update a camera policy
+      operationId: updateCameraPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateCameraPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateCameraPolicyWSResponse'
+          description: OK
+      summary: Update camera policy
+      tags:
+      - Policy Webservice
+  /api/policy/updateClimatePolicy:
+    post:
+      description: Update a climate policy
+      operationId: updateClimatePolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateClimatePolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateClimatePolicyWSResponse'
+          description: OK
+      summary: Update climate policy
+      tags:
+      - Policy Webservice
+  /api/policy/updateDoorPolicy:
+    post:
+      description: Update a door sensor policy
+      operationId: updateDoorPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateDoorPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateDoorPolicyWSResponse'
+          description: OK
+      summary: Update door policy
+      tags:
+      - Policy Webservice
+  /api/policy/updateOccupancyPolicy:
+    post:
+      description: Update an occupancy policy
+      operationId: updateOccupancyPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateOccupancyPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateOccupancyPolicyWSResponse'
+          description: OK
+      summary: Update occupancy policy
+      tags:
+      - Policy Webservice
+  /api/policy/updateProximityPolicy:
+    post:
+      description: Update an asset tag policy
+      operationId: updateProximityPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateProximityPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateProximityPolicyWSResponse'
+          description: OK
+      summary: Update proximity policy
+      tags:
+      - Policy Webservice
+  /api/policy/updateSchedule:
+    post:
+      description: Update a schedule to be used for policy creation
+      operationId: updateSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateScheduleWSResponse'
+          description: OK
+      summary: Update schedule
+      tags:
+      - Policy Webservice
+  /api/policy/updateVideoIntercomPolicy:
+    post:
+      description: Update video intercom policy
+      operationId: updateVideoIntercomPolicy
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_UpdateVideoIntercomPolicyWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_UpdateVideoIntercomPolicyWSResponse'
+          description: OK
+      summary: Update video intercom policy
+      tags:
+      - Policy Webservice
+components:
+  schemas:
+    Policy_GetOccupancyPoliciesWSResponse:
+      type: object
+      description: Response object containing all occupancy policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of occupancy policies in the organization
+          items:
+            $ref: '#/components/schemas/OccupancyPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetPolicyPauseSettingsWSRequest:
+      type: object
+      description: Request object for getting policy pause settings.
+    TrackPauseScopeEnum:
+      type: string
+      description: Whether the snooze targets a single device or a whole location
+      enum:
+      - DEVICE
+      - LOCATION
+    Policy_DeleteDevicePolicyAddendumsWSRequest:
+      type: object
+      description: Request object for deleting device policy addendums.
+      properties:
+        uuids:
+          type:
+          - array
+          - 'null'
+          description: List of device policy addendum UUIDs to delete
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteProximityPolicyWSResponse:
+      type: object
+      description: Response object for deleting a proximity policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteDevicePolicyAddendumsWSResponse:
+      type: object
+      description: Response object for deleting device policy addendums.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeletePolicyPauseSettingWSRequest:
+      type: object
+      description: Request object for deleting a policy pause setting.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_FindSchedulesWSRequest:
+      type: object
+      description: Request object for finding all schedules in the organization.
+    Policy_MinimalProximityScheduledTriggerType:
+      type: object
+      properties:
+        departureThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProximityTriggerType'
+          uniqueItems: true
+    Policy_GetProximityPoliciesWSRequest:
+      type: object
+      description: Request object for getting all proximity policies in the organization.
+    AudioTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Policy_GetVideoIntercomPoliciesWSRequest:
+      type: object
+      description: Request object for getting all video intercom policies in the organization.
+    ScheduledIntervalType:
+      type: object
+      description: Map of location UUIDs to snooze intervals
+      properties:
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateAudioPolicyWSResponse:
+      type: object
+      description: Response object containing the UUID of the created audio policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CameraPolicyV2Type:
+      type: object
+      description: List of camera policies using the schedule
+      properties:
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CameraTriggerType'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CameraScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetPolicyPauseSettingsWSResponse:
+      type: object
+      description: Response object containing policy pause settings for locations, devices, and component composites.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policiesPausedForComponentCompositesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of component composite UUIDs to their paused policy scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of component composite UUIDs to their paused policy scheduled intervals
+        policiesPausedForDevicesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to their paused policy scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of device UUIDs to their paused policy scheduled intervals
+        policiesPausedForLocationsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location UUIDs to their paused policy scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of location UUIDs to their paused policy scheduled intervals
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateScheduleWSRequest:
+      type: object
+      description: Request object for updating a schedule used for policy creation.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+    Policy_UpdateCameraPolicyWSResponse:
+      type: object
+      description: Response object for updating a camera policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_MinimalDoorScheduledTriggerType:
+      type: object
+      properties:
+        ajarThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+    Policy_GetProximityPoliciesWSResponse:
+      type: object
+      description: Response object containing all proximity policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of proximity policies in the organization
+          items:
+            $ref: '#/components/schemas/ProximityPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_MinimalVideoIntercomPolicyType:
+      type: object
+      description: Updated video intercom policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalVideoIntercomScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClimateScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateTriggerType'
+          uniqueItems: true
+    Policy_GetCameraPoliciesWSResponse:
+      type: object
+      description: Response object containing all camera policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of camera policies in the organization
+          items:
+            $ref: '#/components/schemas/CameraPolicyV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    WeeklyRepeatingScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          intervalList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_ExternalAudioTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    Policy_CreateVideoIntercomPolicyWSRequest:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalVideoIntercomPolicyType'
+    Policy_MinimalClimatePolicyType:
+      type: object
+      description: Updated climate policy configuration
+      properties:
+        backoffAlertSecs:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalClimateScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_ExternalAudioPolicyType:
+      type: object
+      description: List of audio policies in the organization
+      properties:
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AccessControlledDoorScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+    Policy_UpdateProximityPolicyWSResponse:
+      type: object
+      description: Response object for updating a proximity policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    VideoIntercomPolicyType:
+      type: object
+      description: List of video intercom policies using the schedule
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VideoIntercomScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    VideoIntercomScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VideoIntercomTriggerType'
+          uniqueItems: true
+    Policy_UpdateProximityPolicyWSRequest:
+      type: object
+      description: Request object for updating a proximity policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalProximityPolicyType'
+    CameraTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        customDetectionUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        dwellTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        dwellTimeResetMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        faceAlertLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        faceAlertUnidentified:
+          type:
+          - boolean
+          - 'null'
+        faceAllowedLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        vehicleAlertLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        vehicleAlertUnidentified:
+          type:
+          - boolean
+          - 'null'
+        vehicleAllowedLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+    Policy_DeleteClimatePolicyWSRequest:
+      type: object
+      description: Request object for deleting a climate policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteAudioPolicyWSResponse:
+      type: object
+      description: Response object for deleting an audio policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DoorPolicyType:
+      type: object
+      description: List of door sensor policies using the schedule
+      properties:
+        defaultAjarThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateDoorPolicyWSResponse:
+      type: object
+      description: Response object containing the UUID of the created door sensor policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateDoorPolicyWSResponse:
+      type: object
+      description: Response object for updating a door sensor policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateVideoIntercomPolicyWSRequest:
+      type: object
+      description: Request object for updating a video intercom policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalVideoIntercomPolicyType'
+    AudioScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioTriggerType'
+          uniqueItems: true
+    Policy_CreateVideoIntercomPolicyWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateAccessControlledDoorPolicyWSRequest:
+      type: object
+      description: Request object for updating an access controlled door policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorPolicyType'
+    Policy_GetPolicyAddendumsWSRequest:
+      type: object
+      description: Request object for getting policy addendums.
+    Policy_PauseTrackAlertsForLocationWSRequest:
+      type: object
+      description: Request object for pausing/resuming track alerts for a single reID stableTrackId across a location.
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds to pause track alerts
+          example: 3600
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for when to begin the pause
+          example: 1640995200
+        trackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: reID stableTrackId to pause track alerts for
+    OccupancyScheduledTriggerType:
+      type: object
+      properties:
+        occupancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        vacancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    WeeklyMinuteIntervalType:
+      type: object
+      properties:
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Policy_MinimalAccessControlledDoorScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+    Policy_GetAudioPoliciesWSResponse:
+      type: object
+      description: Response object containing all audio policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of audio policies in the organization
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    OccupancyPolicyType:
+      type: object
+      description: List of occupancy policies using the schedule
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/OccupancyScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteVideoIntercomPolicyWSRequest:
+      type: object
+      description: Request object for deleting a video intercom policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetOccupancyPoliciesWSRequest:
+      type: object
+      description: Request object for getting all occupancy policies in the organization.
+    Policy_CreateClimatePolicyWSRequest:
+      type: object
+      description: Request object for creating a climate policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalClimatePolicyType'
+    Policy_GetDoorPoliciesWSRequest:
+      type: object
+      description: Request object for getting all door sensor policies in the organization.
+    Policy_ExternalVideoIntercomScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomTriggerType'
+          uniqueItems: true
+    Policy_UpdateAccessControlledDoorPolicyWSResponse:
+      type: object
+      description: Response object for updating an access controlled door policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteCameraPolicyWSRequest:
+      type: object
+      description: Request object for deleting a camera policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_MinimalProximityPolicyType:
+      type: object
+      description: Updated proximity policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalProximityScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ProximityTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        locationUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    CameraScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CameraTriggerType'
+          uniqueItems: true
+    Policy_CreateAudioPolicyWSRequest:
+      type: object
+      description: Request object for creating an audio policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalAudioPolicyType'
+    Policy_CreateAccessControlledDoorPolicyWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ClimateTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    Policy_MinimalCameraPolicyV2Type:
+      type: object
+      description: Updated camera policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalCameraScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateScheduleWSRequest:
+      type: object
+      description: Request object for creating a schedule to be used for policy creation.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+    Policy_CreateCameraPolicyWSResponse:
+      type: object
+      description: Response object containing the UUID of the created camera policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetTrackPauseSettingsWSRequest:
+      type: object
+      description: Request object for listing active per-track alert snoozes. Org is resolved from the principal.
+    Policy_FindSchedulesWSResponse:
+      type: object
+      description: Response object containing all schedules in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedules:
+          type:
+          - array
+          - 'null'
+          description: List of schedules in the organization
+          items:
+            $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_MinimalOccupancyScheduledTriggerType:
+      type: object
+      properties:
+        occupancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        vacancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Policy_MinimalAccessControlledDoorPolicyType:
+      type: object
+      description: Updated access controlled door policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ProximityScheduledTriggerType:
+      type: object
+      properties:
+        departureThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        egressThresholdMetersMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: double
+        ingressThresholdMetersMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: double
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProximityTriggerType'
+          uniqueItems: true
+    Policy_DeleteAccessControlledDoorPolicyWSRequest:
+      type: object
+      description: Request object for deleting an access controlled door policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateOccupancyPolicyWSResponse:
+      type: object
+      description: Response object for updating an occupancy policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteScheduleWSResponse:
+      type: object
+      description: Response object for deleting a schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_MinimalAudioPolicyType:
+      type: object
+      description: Updated audio policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalAudioScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_ExternalAudioScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
+          uniqueItems: true
+    Policy_UpdateAudioPolicyWSResponse:
+      type: object
+      description: Response object for updating an audio policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreatePolicyAddendumForLocationResponse:
+      type: object
+      description: Response object for creating a policy addendum for a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_TrackPauseEntry:
+      type: object
+      description: A single active or scheduled per-track alert snooze.
+      properties:
+        activeAfterTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Epoch seconds after which the snooze is active
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds the snooze remains active
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scope:
+          $ref: '#/components/schemas/TrackPauseScopeEnum'
+        targetUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        thumbnailLocation:
+          type:
+          - string
+          - 'null'
+          description: Thumbnail crop locator, copied from the policy alert this snooze was created from; null if no source alert was supplied or its thumbnail could not be resolved
+        trackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: reID stableTrackId that is snoozed
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateAudioPolicyWSRequest:
+      type: object
+      description: Request object for updating an audio policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalAudioPolicyType'
+    Policy_CreatePolicyAddendumForLocationRequest:
+      type: object
+      description: Request object for creating a policy addendum for a location.
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          description: Set of activities to include in the policy addendum
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds for the policy addendum
+          example: 3600
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for the policy addendum
+          example: 1640995200
+    Policy_CreateClimatePolicyWSResponse:
+      type: object
+      description: Response object containing the UUID of the created climate policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetClimatePoliciesWSRequest:
+      type: object
+      description: Request object for getting all climate policies in the organization.
+    Policy_GetPoliciesUsingScheduleWSRequest:
+      type: object
+      description: Request object for getting all policies that use a specific schedule.
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteVideoIntercomPolicyWSResponse:
+      type: object
+      description: Response object for deleting a video intercom policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    AudioPolicyType:
+      type: object
+      description: List of audio policies using the schedule
+      properties:
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioTriggerType'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateClimatePolicyWSRequest:
+      type: object
+      description: Request object for updating a climate policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalClimatePolicyType'
+    Policy_UpdateVideoIntercomPolicyWSResponse:
+      type: object
+      description: Response object for updating a video intercom policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetAudioPoliciesWSRequest:
+      type: object
+      description: Request object for getting all audio policies in the organization.
+    Policy_CreateProximityPolicyWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteDoorPolicyWSRequest:
+      type: object
+      description: Request object for deleting a door sensor policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteCameraPolicyWSResponse:
+      type: object
+      description: Response object for deleting a camera policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetAccessControlledDoorPoliciesWSResponse:
+      type: object
+      description: Response object containing all access controlled door policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of access controlled door policies in the organization
+          items:
+            $ref: '#/components/schemas/AccessControlledDoorPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreateDoorPolicyWSRequest:
+      type: object
+      description: Request object for creating a door sensor policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalDoorPolicyType'
+    Policy_UpdateScheduleWSResponse:
+      type: object
+      description: Response object for updating a schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetCameraPoliciesWSRequest:
+      type: object
+      description: Request object for getting all camera policies in the organization.
+    DoorScheduledTriggerType:
+      type: object
+      properties:
+        ajarThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+    Policy_DeleteOccupancyPolicyWSResponse:
+      type: object
+      description: Response object for deleting an occupancy policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ProximityPolicyType:
+      type: object
+      description: List of proximity policies in the organization
+      properties:
+        defaultDepartureThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProximityTriggerType'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        egressThresholdMetersMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: double
+        ingressThresholdMetersMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: double
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProximityScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteLocationPolicyAddendumWSResponse:
+      type: object
+      description: Response object for deleting a location policy addendum.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteAccessControlledDoorPolicyWSResponse:
+      type: object
+      description: Response object for deleting an access controlled door policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_PauseTrackAlertsWSRequest:
+      type: object
+      description: Request object for pausing/resuming track alerts for a single reID stableTrackId on a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds to pause track alerts
+          example: 3600
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for when to begin the pause
+          example: 1640995200
+        trackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: reID stableTrackId to pause track alerts for
+    Policy_GetVideoIntercomPoliciesWSResponse:
+      type: object
+      description: Response object containing all video intercom policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of video intercom policies in the organization
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetPoliciesUsingScheduleWSResponse:
+      type: object
+      description: Response object containing all policies that use a specific schedule, organized by policy type.
+      properties:
+        accessControlledDoorPolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of access controlled door policies using the schedule
+          items:
+            $ref: '#/components/schemas/AccessControlledDoorPolicyType'
+        audioPolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of audio policies using the schedule
+          items:
+            $ref: '#/components/schemas/AudioPolicyType'
+        cameraPolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of camera policies using the schedule
+          items:
+            $ref: '#/components/schemas/CameraPolicyV2Type'
+        climatePolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of climate policies using the schedule
+          items:
+            $ref: '#/components/schemas/ClimatePolicyType'
+        doorPolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of door sensor policies using the schedule
+          items:
+            $ref: '#/components/schemas/DoorPolicyType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        occupancyPolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of occupancy policies using the schedule
+          items:
+            $ref: '#/components/schemas/OccupancyPolicyType'
+        proximityPolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of proximity policies using the schedule
+          items:
+            $ref: '#/components/schemas/ProximityPolicyType'
+        videoIntercomPolicyList:
+          type:
+          - array
+          - 'null'
+          description: List of video intercom policies using the schedule
+          items:
+            $ref: '#/components/schemas/VideoIntercomPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteDoorPolicyWSResponse:
+      type: object
+      description: Response object for deleting a door sensor policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_PauseAlertPolicyWSResponse:
+      type: object
+      description: Response object for pausing alert policies.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateCameraPolicyWSRequest:
+      type: object
+      description: Request object for updating a camera policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalCameraPolicyV2Type'
+    Policy_MinimalOccupancyPolicyType:
+      type: object
+      description: Updated occupancy policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalOccupancyScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreatePolicyAddendumsForDevicesRequest:
+      type: object
+      description: Request object for creating policy addendums for multiple devices.
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          description: Set of activities to include in the policy addendums
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to create policy addendums for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds for the policy addendums
+          example: 3600
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for the policy addendums
+          example: 1640995200
+    Policy_DeleteClimatePolicyWSResponse:
+      type: object
+      description: Response object for deleting a climate policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreateAccessControlledDoorPolicyWSRequest:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorPolicyType'
+    Policy_MinimalClimateScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateTriggerType'
+          uniqueItems: true
+    Policy_UpdateClimatePolicyWSResponse:
+      type: object
+      description: Response object for updating a climate policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreatePolicyAddendumsForDevicesResponse:
+      type: object
+      description: Response object for creating policy addendums for multiple devices.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateDoorPolicyWSRequest:
+      type: object
+      description: Request object for updating a door sensor policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalDoorPolicyType'
+    Policy_DeleteLocationPolicyAddendumWSRequest:
+      type: object
+      description: Request object for deleting a location policy addendum.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClimatePolicyType:
+      type: object
+      description: List of climate policies using the schedule
+      properties:
+        backoffAlertSecs:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateTriggerType'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateCameraPolicyWSRequest:
+      type: object
+      description: Request object for creating a camera policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalCameraPolicyV2Type'
+    Policy_DeleteAudioPolicyWSRequest:
+      type: object
+      description: Request object for deleting an audio policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateProximityPolicyWSRequest:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalProximityPolicyType'
+    Policy_DeletePolicyPauseSettingWSResponse:
+      type: object
+      description: Response object for deleting a policy pause setting.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_MinimalCameraScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CameraTriggerType'
+          uniqueItems: true
+    Policy_MinimalVideoIntercomScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomTriggerType'
+          uniqueItems: true
+    Policy_CreateScheduleWSResponse:
+      type: object
+      description: Response object containing the UUID of the created schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateOccupancyPolicyWSRequest:
+      type: object
+      description: Request object for updating an occupancy policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalOccupancyPolicyType'
+    Policy_ExternalVideoIntercomPolicyType:
+      type: object
+      description: List of video intercom policies in the organization
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_MinimalDoorPolicyType:
+      type: object
+      description: Updated door sensor policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalDoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_PauseAlertPolicyWSRequest:
+      type: object
+      description: Request object for pausing alert policies for specified locations, devices, and components.
+      properties:
+        componentCompositeUuids:
+          type:
+          - array
+          - 'null'
+          description: List of component composite UUIDs to pause alert policies for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to pause alert policies for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds to pause alert policies
+          example: 3600
+        locationUuids:
+          type:
+          - array
+          - 'null'
+          description: List of location UUIDs to pause alert policies for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for when to pause alert policies
+          example: 1640995200
+    Policy_CreateOccupancyPolicyWSRequest:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalOccupancyPolicyType'
+    ScheduleStrategyEnum:
+      type: string
+      enum:
+      - WEEKLY_REPEATING_MINUTES
+      - ABSOLUTE_SECONDS
+      - REALTIME_RELATIVE_SECONDS
+      - RELATIVE_DATETIME_INTERVALS
+    AccessControlledDoorPolicyType:
+      type: object
+      description: List of access controlled door policies using the schedule
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AccessControlledDoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_ExternalVideoIntercomTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        faceAlertLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        faceAlertUnidentified:
+          type:
+          - boolean
+          - 'null'
+        faceAllowedLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        lufsThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        peopleCountThreshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        vehicleAlertLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        vehicleAlertUnidentified:
+          type:
+          - boolean
+          - 'null'
+        vehicleAllowedLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+    Policy_DeleteOccupancyPolicyWSRequest:
+      type: object
+      description: Request object for deleting an occupancy policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetClimatePoliciesWSResponse:
+      type: object
+      description: Response object containing all climate policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of climate policies in the organization
+          items:
+            $ref: '#/components/schemas/ClimatePolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetAccessControlledDoorPoliciesWSRequest:
+      type: object
+      description: Request object for getting all access controlled door policies in the organization.
+    Policy_DeleteScheduleWSRequest:
+      type: object
+      description: Request object for deleting a schedule used for policy creation.
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteProximityPolicyWSRequest:
+      type: object
+      description: Request object for deleting a proximity policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateOccupancyPolicyWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    VideoIntercomTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        faceAlertLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        faceAlertUnidentified:
+          type:
+          - boolean
+          - 'null'
+        faceAllowedLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        lufsThreshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        peopleCountThreshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        vehicleAlertLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        vehicleAlertUnidentified:
+          type:
+          - boolean
+          - 'null'
+        vehicleAllowedLabelSet:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+    Policy_MinimalAudioScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
+          uniqueItems: true
+    Policy_GetPolicyAddendumsWSResponse:
+      type: object
+      description: Response object containing policy addendums for devices and locations.
+      properties:
+        deviceAddendumsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to their policy addendum scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of device UUIDs to their policy addendum scheduled intervals
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locationAddendumsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location UUIDs to their policy addendum scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of location UUIDs to their policy addendum scheduled intervals
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetDoorPoliciesWSResponse:
+      type: object
+      description: Response object containing all door sensor policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of door sensor policies in the organization
+          items:
+            $ref: '#/components/schemas/DoorPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetTrackPauseSettingsWSResponse:
+      type: object
+      description: Response object listing active and scheduled per-track alert snoozes across devices and locations.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        trackPauses:
+          type:
+          - array
+          - 'null'
+          description: All active or scheduled per-track snoozes for the org, across device and location scope
+          items:
+            $ref: '#/components/schemas/Policy_TrackPauseEntry'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

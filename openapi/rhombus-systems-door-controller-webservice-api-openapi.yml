@@ -1,0 +1,247 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Door Controller Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Door Controller Webservice
+paths:
+  /api/doorcontroller/registerDiscoveredRhombusReader:
+    post:
+      description: Register a Rhombus reader that a Door Controller has discovered
+      operationId: registerDiscoveredRhombusReader
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Doorcontroller_RegisterDiscoveredRhombusReaderWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doorcontroller_RegisterDiscoveredRhombusReaderWSResponse'
+          description: OK
+      summary: Register a Rhombus reader that a Door Controller has discovered
+      tags:
+      - Door Controller Webservice
+  /api/doorcontroller/updateDetails:
+    post:
+      description: 'Update details for door controller. Note: uuid is a required field'
+      operationId: updateDoorControllerDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Doorcontroller_UpdateDoorControllerDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Doorcontroller_UpdateDoorControllerDetailsWSResponse'
+          description: OK
+      summary: Update details for door controller
+      tags:
+      - Door Controller Webservice
+components:
+  schemas:
+    Doorcontroller_RegisterDiscoveredRhombusReaderWSRequest:
+      type: object
+      description: Request object for registering a Rhombus reader discovered by a door controller.
+      properties:
+        boardNum:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Board number for the reader connection
+          example: 1
+        doorControllerUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        portNum:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Port number for the reader connection
+          example: 0
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the discovered Rhombus reader
+          example: RR-12345678
+    Doorcontroller_UpdateDoorControllerDetailsWSResponse:
+      type: object
+      description: Response object for updating details for a door controller.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Doorcontroller_RegisterDiscoveredRhombusReaderWSResponse:
+      type: object
+      description: Response object for registering a Rhombus reader discovered by a door controller.
+    Doorcontroller_UpdateDoorControllerDetailsWSRequest:
+      type: object
+      description: Request object for updating details for a door controller.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the door controller
+          example: Controls access to the main entrance
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Direction in radians for the door controller
+          example: 1.5708
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the door controller is located
+          example: 1
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the door controller
+          example: 34.0522
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the door controller
+          example: -118.2437
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the door controller
+          example: Main Entrance Controller
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the sub-locations hierarchy key has been updated
+          example: false
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - uuid
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

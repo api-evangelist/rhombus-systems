@@ -1,0 +1,570 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus AudioPlayback Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: AudioPlayback Webservice
+paths:
+  /api/audioplayback/cancelLoopingAudioPlayback:
+    post:
+      description: Cancel any currently playing looping audio for an audio device
+      operationId: cancelLoopingAudioPlayback
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audioplayback_CancelLoopingAudioPlaybackWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audioplayback_CancelLoopingAudioPlaybackWSResponse'
+          description: OK
+      summary: Cancel looping audio playback
+      tags:
+      - AudioPlayback Webservice
+  /api/audioplayback/deleteAudioUploadMetadata:
+    post:
+      description: Delete an uploaded audio clip metadata
+      operationId: deleteAudioUploadMetadata
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audioplayback_DeleteAudioUploadMetadataWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audioplayback_DeleteAudioUploadMetadataWSResponse'
+          description: OK
+      summary: Delete audio upload metadata
+      tags:
+      - AudioPlayback Webservice
+  /api/audioplayback/getAudioUploadMetadataForOrg:
+    post:
+      description: Get list of uploaded audio clip metadata
+      operationId: getAudioUploadMetadataForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audioplayback_GetAudioUploadMetadataForOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audioplayback_GetAudioUploadMetadataForOrgWSResponse'
+          description: OK
+      summary: Get audio upload metadata for organization
+      tags:
+      - AudioPlayback Webservice
+  /api/audioplayback/playAudioUpload:
+    post:
+      description: Play an uploaded audio clip through an audio device
+      operationId: playAudioUpload
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audioplayback_PlayAudioUploadWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audioplayback_PlayAudioUploadWSResponse'
+          description: OK
+      summary: Play audio upload
+      tags:
+      - AudioPlayback Webservice
+  /api/audioplayback/updateAudioUploadMetadata:
+    post:
+      description: Update an uploaded audio clip metadata
+      operationId: updateAudioUploadMetadata
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audioplayback_UpdateAudioUploadMetadataWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audioplayback_UpdateAudioUploadMetadataWSResponse'
+          description: OK
+      summary: Update audio upload metadata
+      tags:
+      - AudioPlayback Webservice
+  /api/audioplayback/uploadAudioText:
+    post:
+      description: Upload text to synthesize audio
+      operationId: uploadAudioText
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audioplayback_UploadAudioTextWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audioplayback_UploadAudioTextWSResponse'
+          description: OK
+      summary: Upload text to synthesize audio
+      tags:
+      - AudioPlayback Webservice
+components:
+  schemas:
+    Audioplayback_UpdateAudioUploadMetadataWSResponse:
+      type: object
+      description: Response from updating audio upload metadata.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    AudioUploadMetadataType:
+      type: object
+      description: List of audio upload metadata for the organization
+      properties:
+        audioPlaintext:
+          type:
+          - string
+          - 'null'
+        audioSSML:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        durationMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        s3ObjectKey:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        voiceId:
+          type:
+          - string
+          - 'null'
+    Audioplayback_CancelLoopingAudioPlaybackWSRequest:
+      type: object
+      description: Request to cancel looping audio playback on audio devices.
+      properties:
+        audioDevices:
+          type:
+          - array
+          - 'null'
+          description: List of audio device UUIDs to cancel looping playback on
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    Audioplayback_UploadAudioTextWSRequest:
+      type: object
+      description: Request to upload text for audio synthesis.
+      properties:
+        audioPlaintext:
+          type:
+          - string
+          - 'null'
+          description: Plain text to synthesize into audio
+          example: Welcome to our facility
+        audioSSML:
+          type:
+          - string
+          - 'null'
+          description: SSML markup for audio synthesis
+          example: <speak>Welcome to our facility</speak>
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the audio clip
+          example: A welcome message for visitors
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Display name for the audio clip
+          example: Welcome Message
+        voiceId:
+          type:
+          - string
+          - 'null'
+          description: Voice ID for text-to-speech synthesis
+          example: en-US-Neural2-F
+    Audioplayback_UpdateAudioUploadMetadataWSRequest:
+      type: object
+      description: Request to update audio upload metadata.
+      properties:
+        audioUploadUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        newDescription:
+          type:
+          - string
+          - 'null'
+          description: New description for the audio clip
+          example: Updated welcome message for visitors
+        newDisplayName:
+          type:
+          - string
+          - 'null'
+          description: New display name for the audio clip
+          example: Updated Welcome Message
+    Audioplayback_DeleteAudioUploadMetadataWSResponse:
+      type: object
+      description: Response from deleting audio upload metadata.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audioplayback_CancelLoopingAudioPlaybackWSResponse:
+      type: object
+      description: Response from canceling looping audio playback.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        successMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+            description: Map of audio device UUIDs to success status for canceling playback
+          description: Map of audio device UUIDs to success status for canceling playback
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audioplayback_PlayAudioUploadWSRequest:
+      type: object
+      description: Request to play an uploaded audio clip through audio devices.
+      properties:
+        audioGatewayUuids:
+          type:
+          - array
+          - 'null'
+          description: List of audio gateway device UUIDs to play audio through
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        audioUploadUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds to loop the audio playback
+          example: 30
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of times to play the audio clip
+          example: 1
+    Audioplayback_UploadAudioTextWSResponse:
+      type: object
+      description: Response from uploading text for audio synthesis.
+      properties:
+        encodingFailure:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if audio encoding failed
+          example: false
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        invalidSSML:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if SSML markup is invalid
+          example: false
+        synthesisFailure:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if text-to-speech synthesis failed
+          example: false
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audioplayback_GetAudioUploadMetadataForOrgWSResponse:
+      type: object
+      description: Response containing audio upload metadata for organization.
+      properties:
+        audioUploadMetadata:
+          type:
+          - array
+          - 'null'
+          description: List of audio upload metadata for the organization
+          items:
+            $ref: '#/components/schemas/AudioUploadMetadataType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audioplayback_GetAudioUploadMetadataForOrgWSRequest:
+      type: object
+      description: Request to get audio upload metadata for organization.
+    Audioplayback_PlayAudioUploadWSResponse:
+      type: object
+      description: Response from playing an uploaded audio clip.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if audio playback was successful
+          example: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audioplayback_DeleteAudioUploadMetadataWSRequest:
+      type: object
+      description: Request to delete audio upload metadata.
+      properties:
+        audioUploadUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

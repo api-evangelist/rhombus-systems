@@ -1,0 +1,134 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Internal Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Internal Webservice
+paths:
+  /api/internal/sendShipmentShippedEmail:
+    post:
+      description: Send shipment shipped email notification
+      operationId: sendShipmentShippedEmail
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Internal_SendShipmentShippedEmailWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Internal_ShipmentEmailWSResponse'
+          description: OK
+      summary: Send shipment shipped email
+      tags:
+      - Internal Webservice
+components:
+  schemas:
+    Internal_ShipmentEmailWSResponse:
+      type: object
+      description: Response object for shipment email operations.
+      properties:
+        customerShipmentEmailState:
+          $ref: '#/components/schemas/CustomerShipmentEmailStateEnum'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        legacyMsg:
+          type:
+          - string
+          - 'null'
+          description: Legacy message for the shipment email
+          example: Shipment has been processed
+        trackingIdentifier:
+          type:
+          - string
+          - 'null'
+          description: Tracking identifier for the shipment
+          example: 1Z999AA1234567890
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CustomerShipmentEmailStateEnum:
+      type: string
+      enum:
+      - SHIPPING_CONFIRMATION_SUCCESS
+      - SHIPPING_CONFIRMATION_FAILURE
+      - SHIPPING_SHIPPED_SUCCESS
+      - SHIPPING_SHIPPED_FAILURE
+      - UNKNOWN
+    Internal_SendShipmentShippedEmailWSRequest:
+      type: object
+      description: Request object for sending shipment shipped email notification.
+      properties:
+        salesforceOppId:
+          type:
+          - string
+          - 'null'
+          description: Salesforce opportunity ID for the shipment email
+          example: 0061234567890ABC
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

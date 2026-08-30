@@ -1,0 +1,1558 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Alert Monitoring Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Alert Monitoring Webservice
+paths:
+  /api/alertmonitoring/cancelThreatCase:
+    post:
+      description: Cancel a threat case in alert monitoring.
+      operationId: cancelThreatCase
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_CancelThreatCaseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_CancelThreatCaseWSResponse'
+          description: OK
+      summary: Cancel threat case
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/createCustomPinForLocation:
+    post:
+      description: Create a custom PIN for alert monitoring at a specific location.
+      operationId: createCustomPinForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_CreateCustomPinForNoonlightWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_CreateCustomPinForNoonlightWSResponse'
+          description: OK
+      summary: Create custom PIN for location
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/createPinForLocation:
+    post:
+      description: Create a PIN for alert monitoring at a specific location.
+      operationId: createPinForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_CreatePinForNoonlightWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_CreatePinForNoonlightWSResponse'
+          description: OK
+      summary: Create PIN for location
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/deletePinForLocation:
+    post:
+      description: Delete a PIN for alert monitoring at a specific location.
+      operationId: deletePinForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_DeletePinForNoonlightWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_DeletePinForNoonlightWSResponse'
+          description: OK
+      summary: Delete PIN for location
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/disableMonitoringForLocation:
+    post:
+      description: Disable alert monitoring for a specific location.
+      operationId: disableMonitoringForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_DisableLocationRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_DisableLocationResponse'
+          description: OK
+      summary: Disable monitoring for location
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/dismissThreatCase:
+    post:
+      description: Dismiss a threat case in alert monitoring.
+      operationId: dismissThreatCase
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_DismissThreatCaseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_DismissThreatCaseWSResponse'
+          description: OK
+      summary: Dismiss threat case
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/enableMonitoringForLocation:
+    post:
+      description: Enable alert monitoring for a specific location.
+      operationId: enableMonitoringForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_EnableLocationRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_EnableLocationResponse'
+          description: OK
+      summary: Enable monitoring for location
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/escalateThreatCaseToAlarm:
+    post:
+      description: Escalate a threat case to an alarm for alert monitoring.
+      operationId: escalateThreatCaseToAlarm
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_EscalateThreatCaseToAlarmWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_EscalateThreatCaseToAlarmWSResponse'
+          description: OK
+      summary: Escalate threat case to alarm
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/getAlertMonitoringSettingsForLocation:
+    post:
+      description: Retrieve alert monitoring settings by location.
+      operationId: getAlertMonitoringSettingsForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_GetNoonlightSettingsForLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_GetNoonlightSettingsForLocationWSResponse'
+          description: OK
+      summary: Get alert monitoring settings for location
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/locationStatus:
+    post:
+      description: Retrieve summary of the alarm monitoring status for the specified location
+      operationId: locationStatus
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_LocationStatusWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_LocationStatusWSResponse'
+          description: OK
+      summary: Get location status
+      tags:
+      - Alert Monitoring Webservice
+  /api/alertmonitoring/orgStatus:
+    post:
+      description: Retrieve summary of the alarm monitoring status for all locations
+      operationId: orgStatus
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Alertmonitoring_OrgStatusWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alertmonitoring_OrgStatusWSResponse'
+          description: OK
+      summary: Get organization status
+      tags:
+      - Alert Monitoring Webservice
+components:
+  schemas:
+    Alertmonitoring_LocationStatusWSRequest:
+      type: object
+      description: Request to retrieve alarm monitoring status for a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AlertMonitoringPinType:
+      type: object
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        pin:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_CreatePinForNoonlightWSResponse:
+      type: object
+      description: Response containing the generated PIN for alert monitoring.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        pin:
+          type:
+          - string
+          - 'null'
+          description: The generated PIN code
+          example: '1234'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_DismissThreatCaseWSResponse:
+      type: object
+      description: Response indicating the result of dismissing a threat case.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the threat case dismissal was successful
+          example: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_DisableLocationResponse:
+      type: object
+      description: Response indicating the result of disabling alert monitoring for a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_OrgStatusWSRequest:
+      type: object
+      description: Request to retrieve alarm monitoring status for all locations in an organization.
+      properties:
+        includeDeleted:
+          type:
+          - boolean
+          - 'null'
+          description: If true, includes alert monitoring settings that were soft deleted in the response.
+          example: false
+    Alertmonitoring_GetNoonlightSettingsForLocationWSResponse:
+      type: object
+      description: Response containing alert monitoring settings for a specific location.
+      properties:
+        alertMonitoringSettings:
+          $ref: '#/components/schemas/Alertmonitoring_NoonlightWSSettings'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        previousVersions:
+          type:
+          - array
+          - 'null'
+          description: List of previous versions of the alert monitoring settings
+          items:
+            $ref: '#/components/schemas/NoonlightVersionedSettingsType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_OrgStatusWSResponse:
+      type: object
+      description: Response containing alarm monitoring status for all locations in an organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locationStatuses:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MonitoringEnableStatus'
+          description: Map of location UUIDs to their monitoring enable status
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_CancelThreatCaseWSResponse:
+      type: object
+      description: Response indicating the result of canceling a threat case.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the threat case cancellation was successful
+          example: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_CreatePinForNoonlightWSRequest:
+      type: object
+      description: Request to create a PIN for alert monitoring at a specific location.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the PIN
+          example: PIN for main entrance access
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the PIN
+          example: Main Entrance PIN
+    MonitoringEnableStatus:
+      type: object
+      description: Map of location UUIDs to their monitoring enable status
+      properties:
+        devicesWithActiveSirens:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        disabledOnMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledOnMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        noNextTimestampReason:
+          type:
+          - string
+          - 'null'
+        notEnabledReason:
+          type:
+          - string
+          - 'null'
+        recentlyActivatedSirensTimestampMs:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+    NoonlightScheduleType:
+      type: object
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        escalationDelayMinutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        monitoredDevices:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        promptTheme:
+          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
+        promptTitle:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sirenSettings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/AMSirenSettingsType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        tripwire:
+          $ref: '#/components/schemas/TripwireSettings'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        verifiedThreatSiren:
+          $ref: '#/components/schemas/AMSirenSettingsType'
+    Alertmonitoring_DisableLocationRequest:
+      type: object
+      description: Request to disable alert monitoring for a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pin:
+          type:
+          - string
+          - 'null'
+          description: PIN code required to disable alert monitoring
+          example: '1234'
+    Alertmonitoring_NoonlightWSSettings:
+      type: object
+      description: Web service settings for Noonlight integration with alert monitoring.
+      properties:
+        acceptedTermsOfService:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesMonitoring:
+          type:
+          - boolean
+          - 'null'
+        defaultDelay:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        defaultEmergencyContact:
+          $ref: '#/components/schemas/EmergencyContact'
+        defaultPromptTheme:
+          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        disabledOnMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The timestamp when Noonlight integration was disabled in milliseconds since epoch.
+        emergencyContacts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmergencyResponseContactsScheduleType'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledOnMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The timestamp when Noonlight integration was enabled in milliseconds since epoch.
+        entryInstructions:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        manualEscalationSettings:
+          $ref: '#/components/schemas/NoonlightScheduleType'
+        modifiedByEmail:
+          type:
+          - string
+          - 'null'
+        modifiedByIntegration:
+          type:
+          - boolean
+          - 'null'
+        modifiedByMetadata:
+          type:
+          - string
+          - 'null'
+        modifiedByUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        modifiedTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        monitoringMode:
+          $ref: '#/components/schemas/MonitoringModeEnum'
+        oneTimePauses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        oneTimeSchedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pins:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AlertMonitoringPinType'
+          uniqueItems: true
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        schedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        status:
+          $ref: '#/components/schemas/MonitoringEnableStatus'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        talkdownEnabled:
+          type:
+          - boolean
+          - 'null'
+    AMSirenSettingsType:
+      type: object
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          description: UUIDs of audio gateways used to play this siren.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The duration (in seconds) to loop the clip audio for the siren.
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of times to play the clip audio for the siren.
+      required:
+      - audioGateways
+      - clipUuid
+    Alertmonitoring_CancelThreatCaseWSRequest:
+      type: object
+      description: Request to cancel a threat case in alert monitoring.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - uuid
+    MonitoringModeEnum:
+      type: string
+      enum:
+      - MANUAL
+      - SCHEDULED
+      - UNKNOWN
+    EmergencyContact:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the emergency contact.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for this emergency contact.
+      required:
+      - name
+      - phoneNumber
+    Alertmonitoring_EscalateThreatCaseToAlarmWSRequest:
+      type: object
+      description: Request to escalate a threat case to an alarm for alert monitoring.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - uuid
+    Alertmonitoring_CreateCustomPinForNoonlightWSRequest:
+      type: object
+      description: Request to create a custom PIN for alert monitoring at a specific location.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the PIN
+          example: Custom PIN for main entrance access
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the PIN
+          example: Custom Main Entrance PIN
+        pin:
+          type:
+          - string
+          - 'null'
+          description: Custom PIN code to be created
+          example: '5678'
+    TripwireSettings:
+      type: object
+      properties:
+        intervalSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Window duration in seconds.
+          minimum: 1
+        threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of events needed to trip.
+          minimum: 1
+      required:
+      - intervalSeconds
+      - threshold
+    NoonlightVersionedSettingsType:
+      type: object
+      description: Updated alert monitoring settings configuration for the location
+      properties:
+        acceptedTermsOfService:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesMonitoring:
+          type:
+          - boolean
+          - 'null'
+        defaultDelay:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        defaultEmergencyContact:
+          $ref: '#/components/schemas/EmergencyContact'
+        defaultPromptTheme:
+          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        emergencyContacts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmergencyResponseContactsScheduleType'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        entryInstructions:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        manualEscalationSettings:
+          $ref: '#/components/schemas/NoonlightScheduleType'
+        modifiedByEmail:
+          type:
+          - string
+          - 'null'
+        modifiedByIntegration:
+          type:
+          - boolean
+          - 'null'
+        modifiedByMetadata:
+          type:
+          - string
+          - 'null'
+        modifiedByUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        modifiedTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        monitoringMode:
+          $ref: '#/components/schemas/MonitoringModeEnum'
+        oneTimePauses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        oneTimeSchedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pins:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AlertMonitoringPinType'
+          uniqueItems: true
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        schedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        talkdownEnabled:
+          type:
+          - boolean
+          - 'null'
+    EmergencyResponseContactsScheduleType:
+      type: object
+      properties:
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        emergencyContactList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmergencyContact'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    Alertmonitoring_EnableLocationResponse:
+      type: object
+      description: Response indicating successful enabling of alert monitoring for a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_DeletePinForNoonlightWSRequest:
+      type: object
+      description: Request to delete a PIN for alert monitoring at a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pin:
+          type:
+          - string
+          - 'null'
+          description: PIN code to be deleted
+          example: '1234'
+    Alertmonitoring_LocationStatusWSResponse:
+      type: object
+      description: Response containing alarm monitoring status for a specific location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/MonitoringEnableStatus'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_EnableLocationRequest:
+      type: object
+      description: Request to enable alert monitoring for a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pin:
+          type:
+          - string
+          - 'null'
+          description: The PIN code required to enable alert monitoring.
+    Alertmonitoring_DeletePinForNoonlightWSResponse:
+      type: object
+      description: Response indicating the result of deleting a PIN for alert monitoring.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_DismissThreatCaseWSRequest:
+      type: object
+      description: Request to dismiss a threat case in alert monitoring.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - uuid
+    NoonlightPromptThemeEnum:
+      type: string
+      enum:
+      - THREAT
+      - HUMAN
+    Alertmonitoring_CreateCustomPinForNoonlightWSResponse:
+      type: object
+      description: Response indicating the result of creating a custom PIN for alert monitoring.
+      properties:
+        alreadyExists:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the PIN already exists
+          example: false
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_EscalateThreatCaseToAlarmWSResponse:
+      type: object
+      description: Response indicating the result of escalating a threat case to an alarm.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_GetNoonlightSettingsForLocationWSRequest:
+      type: object
+      description: Request to retrieve alert monitoring settings for a specific location.
+      properties:
+        includePreviousVersions:
+          type:
+          - boolean
+          - 'null'
+          description: If provided and true, response will contain a list of previous versions of the settings. For debugging purposes.
+          example: false
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

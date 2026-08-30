@@ -1,0 +1,258 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus TvOs Config Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: TvOs Config Webservice
+paths:
+  /api/tvos/getTvOsConfig:
+    post:
+      description: Retrieves a specific tvOs configuration by UUID, returning the detailed settings and parameters for a particular Apple TV client.
+      operationId: getTvOsConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tvos_GetTvOsConfigWsRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tvos_GetTvOsConfigWsResponse'
+          description: OK
+      summary: Get specific tvOs config
+      tags:
+      - TvOs Config Webservice
+  /api/tvos/getTvOsConfigsForOrg:
+    post:
+      description: Retrieves all tvOs configurations for the organization, providing a list of all Apple TV client configurations and their settings.
+      operationId: getTvOsConfigsForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tvos_GetTvOsConfigsForOrgWsRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tvos_GetTvOsConfigsForOrgWsResponse'
+          description: OK
+      summary: Get tvOs configs for organization
+      tags:
+      - TvOs Config Webservice
+  /api/tvos/updateTvOsConfig:
+    post:
+      description: Updates the configuration for a tvOs client, allowing modification of settings and parameters for Apple TV applications.
+      operationId: updateTvOsConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tvos_UpdateTvOsConfigWsRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tvos_UpdateTvOsConfigWsResponse'
+          description: OK
+      summary: Update tvOs config
+      tags:
+      - TvOs Config Webservice
+components:
+  schemas:
+    TvOsConfigType:
+      type: object
+      description: tvOs configuration to update
+      properties:
+        limitedVideoWallUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Tvos_UpdateTvOsConfigWsRequest:
+      type: object
+      description: Request object for updating a tvOs configuration.
+      properties:
+        config:
+          $ref: '#/components/schemas/TvOsConfigType'
+    Tvos_GetTvOsConfigWsRequest:
+      type: object
+      description: Request object for getting a specific tvOs configuration.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Tvos_GetTvOsConfigWsResponse:
+      type: object
+      description: Response object containing a specific tvOs configuration.
+      properties:
+        config:
+          $ref: '#/components/schemas/TvOsConfigType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Tvos_GetTvOsConfigsForOrgWsRequest:
+      type: object
+      description: Request object for getting all tvOs configurations for the organization.
+    Tvos_UpdateTvOsConfigWsResponse:
+      type: object
+      description: Response object for updating a tvOs configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Tvos_GetTvOsConfigsForOrgWsResponse:
+      type: object
+      description: Response object containing all tvOs configurations for the organization.
+      properties:
+        configs:
+          type:
+          - array
+          - 'null'
+          description: List of tvOs configurations for the organization
+          items:
+            $ref: '#/components/schemas/TvOsConfigType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

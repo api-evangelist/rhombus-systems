@@ -1,0 +1,6814 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Event Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Event Webservice
+paths:
+  /api/event/createSharedClipGroupV3:
+    post:
+      description: Share multiple clips in a single page
+      operationId: createSharedClipGroupV3
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_CreateSharedClipGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_CreateSharedClipGroupWSResponse'
+          description: OK
+      summary: Share multiple clips in a single page
+      tags:
+      - Event Webservice
+  /api/event/deleteAlertMonitoringThreatCase:
+    post:
+      description: Delete alert monitoring threat case
+      operationId: deleteAlertMonitoringThreatCase
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DeleteAlertMonitoringThreatCaseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DeleteAlertMonitoringThreatCaseWSResponse'
+          description: OK
+      summary: Delete alert monitoring threat case
+      tags:
+      - Event Webservice
+  /api/event/deleteAlertMonitoringThreatCaseByStatus:
+    post:
+      description: Delete alert monitoring threat case by status
+      operationId: deleteAlertMonitoringThreatCaseByStatus
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DeleteAlertMonitoringThreatCaseByStatusWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DeleteAlertMonitoringThreatCaseByStatusWSResponse'
+          description: OK
+      summary: Delete alert monitoring threat case by status
+      tags:
+      - Event Webservice
+  /api/event/deleteSavedClip:
+    post:
+      description: Delete all types of saved clips (splices in progress, completed splices, saved alerts)
+      operationId: deleteSavedClip
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DeleteSavedClipWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DeleteSavedClipWSResponse'
+          description: OK
+      summary: Delete all types of saved clips (splices in progress, completed splices, saved alerts)
+      tags:
+      - Event Webservice
+  /api/event/deleteSharedClipGroupV2:
+    post:
+      description: Delete a shared clip page
+      operationId: deleteSharedClipGroupV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DeleteSharedClipGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DeleteSharedClipGroupWSResponse'
+          description: OK
+      summary: Delete a shared clip page
+      tags:
+      - Event Webservice
+  /api/event/dismissAllPolicyAlertsForDevice:
+    post:
+      description: Dismiss all policy alerts for each specified device(s)
+      operationId: dismissAllPolicyAlertsForDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DismissAllPolicyAlertsForDeviceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DismissAllPolicyAlertsForDeviceWSResponse'
+          description: OK
+      summary: Dismiss all policy alerts for each specified device(s)
+      tags:
+      - Event Webservice
+  /api/event/dismissAllPolicyAlertsV2:
+    post:
+      description: Dismiss all policy alerts in organization
+      operationId: dismissAllPolicyAlertsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DismissAllPolicyAlertsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DismissAllPolicyAlertsWSResponse'
+          description: OK
+      summary: Dismiss all policy alerts in organization
+      tags:
+      - Event Webservice
+  /api/event/dismissPolicyAlertV2:
+    post:
+      description: Dismiss a policy alert
+      operationId: dismissPolicyAlertV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DismissPolicyAlertWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DismissPolicyAlertWSResponse'
+          description: OK
+      summary: Dismiss a policy alert
+      tags:
+      - Event Webservice
+  /api/event/dismissPolicyAlertsV2:
+    post:
+      description: Dismiss multiple policy alerts
+      operationId: dismissPolicyAlertsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_DismissPolicyAlertsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_DismissPolicyAlertsWSResponse'
+          description: OK
+      summary: Dismiss multiple policy alerts
+      tags:
+      - Event Webservice
+  /api/event/getAlertMonitoringThreatCase:
+    post:
+      description: Get alert monitoring threat case
+      operationId: getAlertMonitoringThreatCase
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetAlertMonitoringThreatCaseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetAlertMonitoringThreatCaseWSResponse'
+          description: OK
+      summary: Get alert monitoring threat case
+      tags:
+      - Event Webservice
+  /api/event/getAlertMonitoringThreatCases:
+    post:
+      description: Get alert monitoring threat cases
+      operationId: getAlertMonitoringThreatCases
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetAlertMonitoringThreatCasesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetAlertMonitoringThreatCasesWSResponse'
+          description: OK
+      summary: Get alert monitoring threat cases
+      tags:
+      - Event Webservice
+  /api/event/getClipWithProgress:
+    post:
+      description: Get a specified saved clip with current progress
+      operationId: getClipWithProgress
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetClipWithProgressWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetClipWithProgressWSResponse'
+          description: OK
+      summary: Get a specified saved clip with current progress
+      tags:
+      - Event Webservice
+  /api/event/getClipsWithProgress:
+    post:
+      description: Get list of saved clips in organization, with current progress
+      operationId: getClipsWithProgress
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetClipsWithProgressWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetClipsWithProgressWSResponse'
+          description: OK
+      summary: Get list of saved clips in organization, with current progress
+      tags:
+      - Event Webservice
+  /api/event/getExpiringClipsForOrg:
+    post:
+      description: Get list of expiring saved clips in organization.
+      operationId: getExpiringClipsForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetClipsWithProgressWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetClipsWithProgressWSResponse'
+          description: OK
+      summary: Get list of expiring saved clips in organization
+      tags:
+      - Event Webservice
+  /api/event/getMotionGrid:
+    post:
+      description: Get motion data for specified camera
+      operationId: getMotionGrid
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetMotionGridWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetMotionGridWSResponse'
+          description: OK
+      summary: Get motion data for specified camera
+      tags:
+      - Event Webservice
+  /api/event/getMotionHeatMap:
+    post:
+      description: Get aggregated motion heatmap for specified time period and camera. Divides a camera's resolution into a 36x64 grid and counts the number of motion events that occurred in each cell.
+      operationId: getMotionHeatMap
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetMotionGridWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetMotionGridCountsWSResponse'
+          description: OK
+      summary: Get aggregated motion heatmap for specified time period and camera
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlert:
+    post:
+      description: Get information about a policy alert
+      operationId: getPolicyAlert
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertWSResponse'
+          description: OK
+      summary: Get information about a policy alert
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlertCount:
+    post:
+      description: Get count of policy alerts
+      operationId: getPolicyAlertCount
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertCountWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertCountWSResponse'
+          description: OK
+      summary: Get count of policy alerts
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlertDetails:
+    post:
+      description: Get detailed information about policy alert, including seekpoints and bounding boxes
+      operationId: getPolicyAlertDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertDetailsWSResponse'
+          description: OK
+      summary: Get detailed information about policy alert, including seekpoints and bounding boxes
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlertGroupsForDevice:
+    post:
+      description: Get recent policy alerts for device, grouped by time. Groups are constructed of alerts that occur within 2 minutes of the previous alert, up to a maximum of 50. Results are returned in reverse-chronological order, so all fields are relative to that ordering.
+      operationId: getPolicyAlertGroupsForDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertGroupsForDeviceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertGroupsForDeviceWSResponse'
+          description: OK
+      summary: Get recent policy alerts for device, grouped by time
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlertGroupsForLocation:
+    post:
+      description: Get recent policy alerts for a location, grouped by time. Groups are constructed of alerts that occur within 2 minutes of the previous alert, up to a maximum of 50. Results are returned in reverse-chronological order, so all fields are relative to that ordering.
+      operationId: getPolicyAlertGroupsForLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertGroupsForLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertGroupsForLocationWSResponse'
+          description: OK
+      summary: Get recent policy alerts for a location, grouped by time
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlertGroupsV2:
+    post:
+      deprecated: true
+      description: Get recent policy alerts for organization, grouped by time. Groups are constructed of alerts that occur within 2 minutes of the previous alert, up to a maximum of 50. Results are returned in reverse-chronological order, so all fields are relative to that ordering.
+      operationId: getPolicyAlertGroupsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertGroupsV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertGroupsV2WSResponse'
+          description: OK
+      summary: Get recent policy alerts for organization, grouped by time
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlertV2:
+    post:
+      deprecated: true
+      description: Get information about a policy alert
+      operationId: getPolicyAlertV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertV2WSResponse'
+          description: OK
+      summary: Get information about a policy alert
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlerts:
+    post:
+      description: Get recent policy alerts for organization
+      operationId: getPolicyAlerts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertsWSResponse'
+          description: OK
+      summary: Get recent policy alerts for organization
+      tags:
+      - Event Webservice
+  /api/event/getPolicyAlertsV2:
+    post:
+      deprecated: true
+      description: Get recent policy alerts for organization
+      operationId: getPolicyAlertsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetPolicyAlertsV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetPolicyAlertsV2WSResponse'
+          description: OK
+      summary: Get recent policy alerts for organization
+      tags:
+      - Event Webservice
+  /api/event/getSavedClipCount:
+    post:
+      description: Get a count of saved clips in and organization
+      operationId: getSavedClipCount
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSavedClipCountWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSavedClipCountWSResponse'
+          description: OK
+      summary: Get a count of saved clips in an organization
+      tags:
+      - Event Webservice
+  /api/event/getSavedClipDetails:
+    post:
+      description: Get detailed information about a saved clip, including seekpoints and bounding boxes
+      operationId: getSavedClipDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSavedClipDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSavedClipDetailsWSResponse'
+          description: OK
+      summary: Get detailed information about a saved clip, including seekpoints and bounding boxes
+      tags:
+      - Event Webservice
+  /api/event/getSavedClips:
+    post:
+      deprecated: true
+      description: Use /getSavedClipsV2 instead
+      operationId: getSavedClips
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSavedClipsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSavedClipsWSResponse'
+          description: OK
+      summary: Use /getSavedClipsV2 instead
+      tags:
+      - Event Webservice
+  /api/event/getSavedClipsByExternalTransactionId:
+    post:
+      description: Get list of saved clips matching the external transaction id
+      operationId: getSavedClipsByExternalTransactionId
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSavedClipsByExternalTransactionIdWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSavedClipsByExternalTransactionIdWSResponse'
+          description: OK
+      summary: Get list of saved clips matching the external transaction id
+      tags:
+      - Event Webservice
+  /api/event/getSavedClipsV2:
+    post:
+      description: Get list of saved clips in organization
+      operationId: getSavedClipsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSavedClipsV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSavedClipsV2WSResponse'
+          description: OK
+      summary: Get list of saved clips in organization
+      tags:
+      - Event Webservice
+  /api/event/getSharedClipGroupDetails:
+    post:
+      description: Get detailed information about a shared clip page, including seekpoints and bounding boxes
+      operationId: getSharedClipGroupDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSharedClipGroupDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSharedClipGroupDetailsWSResponse'
+          description: OK
+      summary: Get detailed information about a shared clip page, including seekpoints and bounding boxes
+      tags:
+      - Event Webservice
+  /api/event/getSharedClipGroupsV2:
+    post:
+      description: Get list of shared clip pages in organization
+      operationId: getSharedClipGroupsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSharedClipGroupsV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSharedClipGroupsV2WSResponse'
+          description: OK
+      summary: Get list of shared clip pages in organization
+      tags:
+      - Event Webservice
+  /api/event/getSplicedClipsInProgress:
+    post:
+      deprecated: true
+      description: Get spliced clips in progress
+      operationId: DEPRECATED_getSplicedClipsInProgress
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetSplicedClipsInProgressWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetSplicedClipsInProgressWSResponse'
+          description: OK
+      summary: Get spliced clips in progress
+      tags:
+      - Event Webservice
+  /api/event/getUnhealthyDeviceAlerts:
+    post:
+      description: Get list of unhealthy devices in organization
+      operationId: getUnhealthyDeviceAlerts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_GetUnhealthyDeviceAlertsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_GetUnhealthyDeviceAlertsWSResponse'
+          description: OK
+      summary: Get list of unhealthy devices in organization
+      tags:
+      - Event Webservice
+  /api/event/muteNotificationsForDevice:
+    post:
+      description: Mute notifications from a device for specified number of seconds
+      operationId: muteNotificationsForDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_MuteNotificationsForDevicetWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_MuteNotificationsForDevicetWSResponse'
+          description: OK
+      summary: Mute notifications from a device for specified number of seconds
+      tags:
+      - Event Webservice
+  /api/event/reportBadPolicyAlert:
+    post:
+      description: 'Report a bad policy event (AI false positive) and send information for feedback. Note: this adds the clip to our AI training data set'
+      operationId: reportBadPolicyAlert
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_ReportBadPolicyAlertWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_ReportBadPolicyAlertWSResponse'
+          description: OK
+      summary: Report a bad policy event (AI false positive) and send information for feedback
+      tags:
+      - Event Webservice
+  /api/event/savePolicyAlertV2:
+    post:
+      description: Save a policy alert as a saved clip
+      operationId: savePolicyAlertV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_SavePolicyAlertWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_SavePolicyAlertWSResponse'
+          description: OK
+      summary: Save a policy alert as a saved clip
+      tags:
+      - Event Webservice
+  /api/event/searchMotionGrid:
+    post:
+      description: 'Search motion grid for motion events occuring in specified grid cells. Note: motion grid is a 64x36 grid of cells with the upper left hand corner being (0, 0)'
+      operationId: searchMotionGrid
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_SearchMotionGridWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_SearchMotionGridWSResponse'
+          description: OK
+      summary: Search motion grid for motion events occuring in specified grid cells
+      tags:
+      - Event Webservice
+  /api/event/searchMotionGridWithActivities:
+    post:
+      description: 'Search motion grid for motion events occuring in specified grid cells. Note: motion grid is a 64x36 grid of cells with the upper left hand corner being (0, 0)'
+      operationId: searchMotionGridWithActivities
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_SearchMotionGridWithActivitiesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_SearchMotionGridWithActivitiesWSResponse'
+          description: OK
+      summary: Search motion grid for motion events occuring in specified grid cells
+      tags:
+      - Event Webservice
+  /api/event/unSavePolicyAlertV2:
+    post:
+      deprecated: true
+      description: Unsave policy alert and remove associated saved clip
+      operationId: unSavePolicyAlertV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_UnSavePolicyAlertWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_UnSavePolicyAlertWSResponse'
+          description: OK
+      summary: Unsave policy alert and remove associated saved clip
+      tags:
+      - Event Webservice
+  /api/event/updateSavedClip:
+    post:
+      description: Selectively updates a saved clip
+      operationId: updateSavedClip
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_UpdateSavedClipWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_UpdateSavedClipWSResponse'
+          description: OK
+      summary: Selectively update a saved clip
+      tags:
+      - Event Webservice
+  /api/event/updateSharedClipGroupV2:
+    post:
+      description: Update shared clip page title, description, password, or expiration time
+      operationId: updateSharedClipGroupV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event_UpdateSharedClipGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event_UpdateSharedClipGroupWSResponse'
+          description: OK
+      summary: Update shared clip page title, description, password, or expiration time
+      tags:
+      - Event Webservice
+components:
+  schemas:
+    Event_GetSavedClipsWSRequest:
+      type: object
+      description: Request object for retrieving saved clips (deprecated).
+    ClipSeekPointV2Type:
+      type: object
+      description: List of seek points for the clip
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        alert:
+          type:
+          - boolean
+          - 'null'
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
+          type:
+          - string
+          - 'null'
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+        dcao:
+          type:
+          - boolean
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        faceName:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        inMotion:
+          type:
+          - boolean
+          - 'null'
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pose:
+          type:
+          - string
+          - 'null'
+        relativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toastOrderIdInfo:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        tu:
+          type:
+          - string
+          - 'null'
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    Event_DeleteSharedClipGroupWSResponse:
+      type: object
+      description: Response object for deleting a shared clip group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetSharedClipGroupsV2WSRequest:
+      type: object
+      description: Request object for retrieving shared clip groups with date filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter for clip groups created after this timestamp
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter for clip groups created before this timestamp
+          example: 1641081600000
+    Event_DeleteSharedClipGroupWSRequest:
+      type: object
+      description: Request object for deleting a shared clip group.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Resolution:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    PointType:
+      type: object
+      properties:
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Event_DeleteAlertMonitoringThreatCaseByStatusWSRequest:
+      type: object
+      description: Request object for deleting alert monitoring threat cases by status.
+      properties:
+        status:
+          $ref: '#/components/schemas/ThreatCaseStatusEnum'
+    ThreatCaseTimelineEventTypeEnum:
+      type: string
+      enum:
+      - ALERT
+      - DELAYED_ALERT
+      - USER
+      - SERVICE_PROVIDER
+      - ERROR
+      - PANIC_BUTTON
+      - ACCESS_CONTROL_INTEGRATION
+      - ALARM_INTEGRATION
+      - UNKNOWN
+    Event_GetPolicyAlertDetailsWSRequest:
+      type: object
+      description: Request object for retrieving detailed information about a policy alert.
+      properties:
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetPolicyAlertCountWSRequest:
+      type: object
+      description: Request object for retrieving the count of policy alerts.
+      properties:
+        maxResultsSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of results to count
+          example: 1000
+    Event_GetPolicyAlertsV2WSRequest:
+      type: object
+      description: Request object for retrieving policy alerts V2 with filtering and pagination options.
+      properties:
+        afterTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter for alerts after this timestamp
+          example: 1640995200000
+        beforeTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter for alerts before this timestamp
+          example: 1641081600000
+        deviceFilter:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to filter by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        lastTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Last timestamp for pagination
+          example: 1640995200000
+        lastUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationFilter:
+          type:
+          - array
+          - 'null'
+          description: List of location UUIDs to filter by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        maxResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of results to return
+          example: 100
+    ApiClientTypeEnum:
+      type: string
+      enum:
+      - PARTNER_DEVELOPER
+      - DEVELOPER
+      - INTERNAL_SALESFORCE
+      - TVOS
+      - WINDOWS
+      - LINUX
+      - KIOSK
+      - KEYPAD
+      - SQUARE
+      - KISI
+      - OPENPATH
+      - TOAST
+      - BOULEVARD
+      - BRIVO
+      - EXECUTABLE
+      - HALO
+      - SALTO
+      - BUTTERFLYMX
+      - GENEA
+      - PRODATAKEY
+      - ENVOY
+      - AMT
+      - PIMLOC
+      - PLACEOS
+      - OMNIALERT
+      - FLIC
+      - SHELLY_DEVICE_EVENT
+      - NINEONEONECELLULAR
+      - HONEYWELL_ELEMENTS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - TRITON
+      - CHATBOT
+      - SIGNATURE_API
+      - INCOMING_WEBHOOK
+      - UNKNOWN
+    Event_GetPolicyAlertsWSResponse:
+      type:
+      - object
+      - 'null'
+      description: Response object containing a list of policy alerts.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyAlerts:
+          type:
+          - array
+          - 'null'
+          description: List of policy alerts matching the request criteria
+          items:
+            $ref: '#/components/schemas/BasePolicyAlertType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetPolicyAlertGroupsForLocationWSResponse:
+      type: object
+      description: Response object containing policy alert groups for a specific location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyAlertGroups:
+          type:
+          - array
+          - 'null'
+          description: List of policy alert groups for the location
+          items:
+            $ref: '#/components/schemas/Event_PolicyAlertGroupV2'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CheckCondition:
+      type:
+      - object
+      - 'null'
+      properties:
+        operator:
+          $ref: '#/components/schemas/OPERATOREnum'
+        value:
+          type:
+          - string
+          - 'null'
+    Event_GetSharedClipGroupDetailsWSRequest:
+      type: object
+      description: Request object for retrieving detailed information about a shared clip group.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OPERATOREnum:
+      type: string
+      enum:
+      - GT
+      - LT
+      - LTE
+      - GTE
+      - EQ
+      - CONTAINS
+    SharedClipV2Type:
+      type: object
+      properties:
+        clipLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationV2:
+          type:
+          - string
+          - 'null'
+        deviceUuidMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetClipsWithProgressWSResponse:
+      type: object
+      description: Response object containing clips with progress information.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        pageToken:
+          type:
+          - string
+          - 'null'
+          description: Token to be supplied on the next search request to get the next page. If token is null, there is no more data available.
+        savedClips:
+          type:
+          - array
+          - 'null'
+          description: List of saved clips with progress information
+          items:
+            $ref: '#/components/schemas/Event_SavedClipWithProgressType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    CameraMountingDirectionEnum:
+      type: string
+      enum:
+      - DOWN
+      - UP
+      - SIDEWAYS
+      - UNKNOWN
+    ThreatCaseStatusEnum:
+      type: string
+      enum:
+      - INITIATED
+      - REQUESTED
+      - FOLLOW_ON
+      - ESCALATED
+      - PSAP_CONTACTED
+      - VERIFIED
+      - DISMISSED
+      - CANCELLED
+      - UNVERIFIABLE
+      - TIMEOUT
+      - ERROR
+      - CLOSED
+    Event_GetPolicyAlertGroupsV2WSResponse:
+      type: object
+      description: Response object containing policy alert groups V2.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyAlertGroups:
+          type:
+          - array
+          - 'null'
+          description: List of policy alert groups V2
+          items:
+            $ref: '#/components/schemas/Event_PolicyAlertGroupV2'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetSavedClipCountWSResponse:
+      type: object
+      description: Response object containing the count of saved clips.
+      properties:
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Count of org-wide saved clips matching the filter criteria
+          example: 42
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        privateCount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Count of private saved clips matching the filter criteria
+          example: 10
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetAlertMonitoringThreatCaseWSResponse:
+      type: object
+      description: Response object containing a specific alert monitoring threat case.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        threatCase:
+          $ref: '#/components/schemas/AlertMonitoringThreatCaseType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_DismissAllPolicyAlertsWSResponse:
+      type: object
+      description: Response object for dismissing all policy alerts.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_MuteNotificationsForDevicetWSRequest:
+      type: object
+      description: Request object for muting notifications for a specific device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration to mute notifications in seconds
+          example: 3600
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    Event_SearchMotionGridWithActivitiesWSRequest:
+      type: object
+      description: Request object for searching motion grid data with activity information.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time as a UNIX timestamp in seconds
+          example: 1641081600
+        searchCells:
+          type:
+          - array
+          - 'null'
+          description: List of motion grid cells to include in the search
+          items:
+            $ref: '#/components/schemas/Event_FrontendCell'
+        startTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time as a UNIX timestamp in seconds
+          example: 1640995200
+      required:
+      - deviceUuid
+      - endTimeUtcSecs
+      - searchCells
+      - startTimeUtcSecs
+    Event_GetSavedClipsWSResponse:
+      type: object
+      description: Response object containing saved clips (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        savedClips:
+          type:
+          - array
+          - 'null'
+          description: List of saved clips
+          items:
+            $ref: '#/components/schemas/SavedClipV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_SearchMotionGridWSResponse:
+      type: object
+      description: Response object containing motion grid search results.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timeUtcSecsList:
+          type:
+          - array
+          - 'null'
+          description: List of timestamps where motion was detected in the specified cells
+          items:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            description: List of timestamps where motion was detected in the specified cells
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_DeleteAlertMonitoringThreatCaseWSRequest:
+      type: object
+      description: Request object for deleting alert monitoring threat cases.
+      properties:
+        threatCaseUuids:
+          type:
+          - array
+          - 'null'
+          description: List of threat case UUIDs to delete
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    VerificationRecord:
+      type: object
+      properties:
+        alertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clipVerificationId:
+          type:
+          - string
+          - 'null'
+        failedAsClip:
+          type:
+          - boolean
+          - 'null'
+        failedAsStream:
+          type:
+          - boolean
+          - 'null'
+        initiatedAsClip:
+          type:
+          - boolean
+          - 'null'
+        sentAsClip:
+          type:
+          - boolean
+          - 'null'
+        sentAsClipAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        sentAsWindowedStream:
+          type:
+          - boolean
+          - 'null'
+        sentAsWindowedStreamAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        streamVerificationId:
+          type:
+          - string
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Event_GetPolicyAlertCountWSResponse:
+      type: object
+      description: Response object containing the count of policy alerts.
+      properties:
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Count of policy alerts
+          example: 42
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetPolicyAlertsWSRequest:
+      type: object
+      description: Request object for retrieving policy alerts with filtering and pagination options.
+      properties:
+        accessControlledDoorFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter including chosen Access Controlled Doors
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        afterTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Enter starting timestamp interval in UNIX ms
+          example: 1640995200000
+        beforeTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Enter ending timestamp interval in UNIX ms
+          example: 1641081600000
+        deviceFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter including chosen Devices
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        lastTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Search with last known TimestampMs (Required for Pagination)
+          example: 1640995200000
+        lastUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter any locations you would like to include
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        maxResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Set a max result limit
+          example: 100
+    SplicedClipType:
+      type: object
+      description: List of spliced clips currently in progress
+      properties:
+        accessSettings:
+          $ref: '#/components/schemas/ClipAccessSettings'
+        analyzeClip:
+          type:
+          - boolean
+          - 'null'
+        clipTargetLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        completedSubClipCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        consoleDelete:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        deviceIntervalMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/TimeInterval'
+        deviceMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SplicedClipProgress'
+        devicePresentationOrder:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuidMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SplicedClipProgress'
+        deviceUuidToAlteredViewMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AlteredView'
+        deviceUuidToFisheyePresentationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DewarpedView'
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        expectedSubClipCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        integrationUploadList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationEnum'
+        isPolicyEvent:
+          type:
+          - boolean
+          - 'null'
+        metadataBucketRegion:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        parentClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pendingConsumers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        policyEventPipeline:
+          $ref: '#/components/schemas/PolicyEventPipelineEnum'
+        saveClip:
+          type:
+          - boolean
+          - 'null'
+        saveFrame:
+          type:
+          - boolean
+          - 'null'
+        segmentsUploaded:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sendToSharedStorage:
+          type:
+          - boolean
+          - 'null'
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        status:
+          $ref: '#/components/schemas/ClipStatusEnum'
+        statusUpdatedAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        thumbnailRelativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        title:
+          type:
+          - string
+          - 'null'
+        totalSegments:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        transactionUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DwellEventType:
+      type:
+      - object
+      - 'null'
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        deviceLabels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        dwellStartTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        locationLabels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        regionUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        thumbnailLocation:
+          type:
+          - string
+          - 'null'
+        thumbnailUri:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        trackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Event_DismissPolicyAlertsWSRequest:
+      type: object
+      description: Request object for dismissing multiple policy alerts.
+      properties:
+        alertUuids:
+          type:
+          - array
+          - 'null'
+          description: List of policy alert UUIDs to dismiss
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_SearchMotionGridWithActivitiesWSResponse_MotionGridActivity:
+      type: object
+      description: Motion grid activity information for a specific timestamp.
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        activitiesWithId:
+          type:
+          - array
+          - 'null'
+          description: List of activities with object IDs
+          items:
+            $ref: '#/components/schemas/Event_SearchMotionGridWithActivitiesWSResponse_ActivityWithId'
+        bestTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Best timestamp in milliseconds for the activity
+          example: 1640995200000
+    Event_GetPolicyAlertWSResponse:
+      type: object
+      description: Response object containing a specific policy alert.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyAlert:
+          $ref: '#/components/schemas/BasePolicyAlertType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetSavedClipDetailsWSRequest:
+      type: object
+      description: Request object for retrieving detailed information about a saved clip.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetUnhealthyDeviceAlertsWSResponse:
+      type: object
+      description: Response object containing unhealthy device alerts.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        unhealthyDeviceAlerts:
+          type:
+          - array
+          - 'null'
+          description: List of unhealthy device alerts
+          items:
+            $ref: '#/components/schemas/UnHealthyDeviceAlertType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_ReportBadPolicyAlertWSResponse:
+      type: object
+      description: Response object for reporting a bad policy alert.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetSplicedClipsInProgressWSRequest:
+      type: object
+      description: Request object for retrieving spliced clips in progress (deprecated).
+    Event_UpdateSavedClipWSResponse:
+      type: object
+      description: Response object for updating a saved clip.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetAlertMonitoringThreatCasesWSRequest:
+      type: object
+      description: Request object for retrieving alert monitoring threat cases with filtering and pagination options.
+      properties:
+        afterTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter for threat cases after this timestamp
+          example: 1640995200000
+        beforeTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter for threat cases before this timestamp
+          example: 1641081600000
+        deviceFilter:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to filter by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+        lastTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Last timestamp for pagination
+          example: 1640995200000
+        lastUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationFilter:
+          type:
+          - array
+          - 'null'
+          description: List of location UUIDs to filter by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        maxPageSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        maxResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of results to return
+          example: 100
+        mostRecent:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to return only the most recent threat cases
+          example: true
+        statusFilter:
+          type:
+          - array
+          - 'null'
+          description: List of threat case statuses to filter by
+          items:
+            $ref: '#/components/schemas/ThreatCaseStatusEnum'
+    TimeInterval:
+      type: object
+      properties:
+        endMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    AspectRatio:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Event_SavedClipWithProgressType:
+      type: object
+      description: Saved clip with progress information for processing operations.
+      properties:
+        accessSettings:
+          $ref: '#/components/schemas/ClipAccessSettings'
+        alterMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AlteredView'
+        analyzed:
+          type:
+          - boolean
+          - 'null'
+        byteCount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        clipLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationV2:
+          type:
+          - string
+          - 'null'
+        consoleDelete:
+          type:
+          - boolean
+          - 'null'
+        createdAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        currentOperation:
+          type:
+          - string
+          - 'null'
+          description: Current operation being performed on the clip
+          example: Processing video
+        description:
+          type:
+          - string
+          - 'null'
+        deviceIntervalMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/TimeInterval'
+        devicePresentationOrder:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuidMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        externalTransactionId:
+          type:
+          - string
+          - 'null'
+        fisheyeHardware:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        fisheyeMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DewarpedView'
+        integrationUploadList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationEnum'
+        isMonitoringClip:
+          type:
+          - boolean
+          - 'null'
+        isVendorClip:
+          type:
+          - boolean
+          - 'null'
+        lastUpdatedSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Last update timestamp in seconds
+          example: 1640995200
+        mountingDirection:
+          $ref: '#/components/schemas/CameraMountingDirectionEnum'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        percentComplete:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Percentage of completion for the current operation
+          example: 75
+        placeholder:
+          type:
+          - boolean
+          - 'null'
+        sendToSharedStorage:
+          type:
+          - boolean
+          - 'null'
+        sha256Hex:
+          type:
+          - string
+          - 'null'
+        sourceAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/ClipStatusEnum'
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        title:
+          type:
+          - string
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        videoResolution:
+          $ref: '#/components/schemas/Resolution'
+    Event_RuuidWrapper:
+      type: object
+      description: Wrapper object containing UUIDs for alerts and events.
+      properties:
+        alertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_DismissAllPolicyAlertsForDeviceWSResponse:
+      type: object
+      description: Response object for dismissing all policy alerts for specific devices.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    MetaDataLocationType:
+      type: object
+      properties:
+        region:
+          type:
+          - string
+          - 'null'
+    DewarpedView:
+      type: object
+      properties:
+        aspectRatio:
+          $ref: '#/components/schemas/AspectRatio'
+        pitchDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        rollDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        verticalFieldOfViewDegrees:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        yawDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+    Event_DismissPolicyAlertWSResponse:
+      type: object
+      description: Response object for dismissing a policy alert.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    CroppedPermyriadRect:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    PolicyAlertWithDetailsType:
+      type: object
+      description: Detailed information about the policy alert
+      oneOf:
+      - $ref: '#/components/schemas/PolicyAlertV2Type'
+      - $ref: '#/components/schemas/AccessControlledDoorPolicyAlertType'
+      properties:
+        alertMonitoringThreatCaseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        alertMonitoringVerified:
+          type:
+          - boolean
+          - 'null'
+        archived:
+          type:
+          - boolean
+          - 'null'
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        boundingBoxesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ClipBoundingBoxType'
+        clientType:
+          $ref: '#/components/schemas/ApiClientTypeEnum'
+        clipLocationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationMapV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        componentCompositeSeekPointsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ClipSeekPointV2Type'
+        delayedProcessing:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        finalized:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        notificationSent:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyAlertTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        recognizedEventFaces:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyEventFaceType'
+        recognizedEventVehicles:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyEventVehicleType'
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saved:
+          type:
+          - boolean
+          - 'null'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipSeekPointV2Type'
+        seekPointsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ClipSeekPointV2Type'
+        shared:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        textDescription:
+          type:
+          - string
+          - 'null'
+          description: Natural language description of the alert
+        thirdPartyDeviceName:
+          type:
+          - string
+          - 'null'
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/PolicyAlertEnumType'
+        unrecognizedEventFaces:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyEventFaceType'
+        unrecognizedEventVehicles:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PolicyEventVehicleType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BasePolicyAlertType:
+      type: object
+      description: The requested policy alert
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/PolicyAlertV2Type'
+      - $ref: '#/components/schemas/AccessControlledDoorPolicyAlertType'
+      properties:
+        alertMonitoringThreatCaseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        alertMonitoringVerified:
+          type:
+          - boolean
+          - 'null'
+        archived:
+          type:
+          - boolean
+          - 'null'
+        clientType:
+          $ref: '#/components/schemas/ApiClientTypeEnum'
+        clipLocationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationMapV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        delayedProcessing:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        finalized:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        notificationSent:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyAlertTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saved:
+          type:
+          - boolean
+          - 'null'
+        shared:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        textDescription:
+          type:
+          - string
+          - 'null'
+          description: Natural language description of the alert
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/PolicyAlertEnumType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PolicyAlertEnumType:
+      type: string
+      enum:
+      - POLICY_ALERT_V2
+      - ACCESS_CONTROLLED_DOOR_POLICY_ALERT
+    PolicyEventPipelineEnum:
+      type: string
+      enum:
+      - DEFAULT
+      - POLICY_ALERT_PUBLISHER
+    Event_GetSharedClipGroupsV2WSResponse:
+      type: object
+      description: Response object containing shared clip groups with date filtering.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        sharedClipGroups:
+          type:
+          - array
+          - 'null'
+          description: List of shared clip groups
+          items:
+            $ref: '#/components/schemas/SharedClipGroupWrapperV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PromptTypeEnum:
+      type: string
+      enum:
+      - COUNT
+      - PERCENT
+      - BOOLEAN
+      - TEXT
+    SavedClipWithDetailsType:
+      type: object
+      description: Detailed information about the saved clip
+      properties:
+        accessSettings:
+          $ref: '#/components/schemas/ClipAccessSettings'
+        alterMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AlteredView'
+        analyzed:
+          type:
+          - boolean
+          - 'null'
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        byteCount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        clipLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationV2:
+          type:
+          - string
+          - 'null'
+        consoleDelete:
+          type:
+          - boolean
+          - 'null'
+        createdAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        deviceIntervalMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/TimeInterval'
+        devicePresentationOrder:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuidMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        externalTransactionId:
+          type:
+          - string
+          - 'null'
+        fisheyeHardware:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        fisheyeMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DewarpedView'
+        integrationUploadList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationEnum'
+        isMonitoringClip:
+          type:
+          - boolean
+          - 'null'
+        isVendorClip:
+          type:
+          - boolean
+          - 'null'
+        mountingDirection:
+          $ref: '#/components/schemas/CameraMountingDirectionEnum'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        placeholder:
+          type:
+          - boolean
+          - 'null'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipSeekPointV2Type'
+        sendToSharedStorage:
+          type:
+          - boolean
+          - 'null'
+        sha256Hex:
+          type:
+          - string
+          - 'null'
+        sourceAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/ClipStatusEnum'
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        title:
+          type:
+          - string
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        videoResolution:
+          $ref: '#/components/schemas/Resolution'
+    Event_GetClipWithProgressWSRequest:
+      type: object
+      description: Request object for retrieving a specific clip with progress information.
+      properties:
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - clipUuid
+    Event_GetPolicyAlertGroupsForDeviceWSRequest:
+      type: object
+      description: Request object for retrieving policy alert groups for a specific device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Last timestamp for pagination (required with LastUuid)
+          example: 1640995200000
+        lastUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        maxResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of results to return
+          example: 100
+    Event_GetPolicyAlertDetailsWSResponse:
+      type: object
+      description: Response object containing detailed information about a policy alert.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyAlert:
+          $ref: '#/components/schemas/PolicyAlertWithDetailsType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetPolicyAlertWSRequest:
+      type: object
+      description: Request object for retrieving a specific policy alert.
+      properties:
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetAlertMonitoringThreatCaseWSRequest:
+      type: object
+      description: Request object for retrieving a specific alert monitoring threat case.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_SearchMotionGridWithActivitiesWSResponse_ActivityWithId:
+      type: object
+      description: Activity information with object ID.
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Object ID associated with the activity
+          example: 123
+    VerificationHistory:
+      type: object
+      properties:
+        alertIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        currentVerification:
+          $ref: '#/components/schemas/VerificationRecord'
+        verificationRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VerificationRecord'
+    ClipAccessSettings:
+      type: object
+      description: Visibility setting for the clip
+      properties:
+        allowedRoles:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        allowedUsers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        visibility:
+          $ref: '#/components/schemas/ClipVisibilityEnum'
+    ThreatCaseVerificationModeEnum:
+      type: string
+      enum:
+      - EXTERNAL
+      - INTERNAL
+    Event_GetClipWithProgressWSResponse:
+      type: object
+      description: Response object containing a specific clip with progress information.
+      properties:
+        clip:
+          $ref: '#/components/schemas/Event_SavedClipWithProgressType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PolicyEventVehicleType:
+      type:
+      - object
+      - 'null'
+      properties:
+        imageS3Bucket:
+          type:
+          - string
+          - 'null'
+        imageS3Key:
+          type:
+          - string
+          - 'null'
+        imageS3Region:
+          type:
+          - string
+          - 'null'
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        licensePlateNumber:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    AlertMonitoringThreatCaseType:
+      type: object
+      description: List of threat cases matching the request criteria
+      properties:
+        alertGroupingKeys:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        alertGroupingStrategy:
+          $ref: '#/components/schemas/AlertGroupingStrategyEnum'
+        associatedDeviceUuids:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationName:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        noonlightAlarmId:
+          type:
+          - string
+          - 'null'
+        noonlightVerificationId:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyAlertComponentCompositeUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        policyAlertDeviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyAlertUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        promptTheme:
+          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
+        promptTitle:
+          type:
+          - string
+          - 'null'
+        sharedClipGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sirenSettings:
+          $ref: '#/components/schemas/AMSirenSettingsType'
+        status:
+          $ref: '#/components/schemas/ThreatCaseStatusEnum'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        submissionTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        submitDelayExpireTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timelineEventList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ThreatCaseTimelineEventType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        verificationHistory:
+          $ref: '#/components/schemas/VerificationHistory'
+        verificationMode:
+          $ref: '#/components/schemas/ThreatCaseVerificationModeEnum'
+    Event_GetPolicyAlertV2WSRequest:
+      type: object
+      description: Request object for retrieving a specific policy alert V2.
+      properties:
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetPolicyAlertV2WSResponse:
+      type: object
+      description: Response object containing a specific policy alert V2.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyAlert:
+          $ref: '#/components/schemas/PolicyAlertV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetMotionGridWSResponse:
+      type: object
+      description: Response object containing motion grid data for a device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        motionCells:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of timestamps to motion grid cells
+            items:
+              $ref: '#/components/schemas/Event_FrontendCell'
+          description: Map of timestamps to motion grid cells
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetSplicedClipsInProgressWSResponse:
+      type: object
+      description: Response object containing spliced clips in progress (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        splicedClips:
+          type:
+          - array
+          - 'null'
+          description: List of spliced clips currently in progress
+          items:
+            $ref: '#/components/schemas/SplicedClipType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_SavePolicyAlertWSRequest:
+      type: object
+      description: Request object for saving a policy alert as a clip.
+      properties:
+        alertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        fisheyePresentationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to dewarped view configurations for fisheye cameras
+            items:
+              $ref: '#/components/schemas/DewarpedView'
+          description: Map of device UUIDs to dewarped view configurations for fisheye cameras
+        savedClipDescription:
+          type:
+          - string
+          - 'null'
+          description: Description for the saved clip
+          example: Motion detected at main entrance
+        savedClipTitle:
+          type:
+          - string
+          - 'null'
+          description: Title for the saved clip
+          example: Security Incident - Motion Detected
+    Event_GetPolicyAlertGroupsForLocationWSRequest:
+      type: object
+      description: Request object for retrieving policy alert groups for a specific location.
+      properties:
+        lastTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Last timestamp for pagination
+          example: 1640995200000
+        lastUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        maxResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of results to return
+          example: 100
+    Event_SavePolicyAlertWSResponse:
+      type: object
+      description: Response object for saving a policy alert as a clip.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_DismissPolicyAlertsWSResponse:
+      type: object
+      description: Response object for dismissing multiple policy alerts.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_DismissPolicyAlertWSRequest:
+      type: object
+      description: Request object for dismissing a policy alert.
+      properties:
+        alertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetSavedClipsByExternalTransactionIdWSRequest:
+      type: object
+      description: Request object for retrieving saved clips by external transaction ID.
+      properties:
+        externalTransactionId:
+          type:
+          - string
+          - 'null'
+          description: External transaction ID to search for saved clips
+          example: txn_123456789
+    Event_CreateSharedClipGroupWSResponse:
+      type: object
+      description: Response object for creating a shared clip group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        shareUrl:
+          type:
+          - string
+          - 'null'
+          description: URL for accessing the shared clip group
+          example: https://share.rhombus.com/clips/abc123
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SharedClipWithDetailsType:
+      type: object
+      properties:
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        clipLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationV2:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        deviceUuidMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipSeekPointV2Type'
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_UpdateSharedClipGroupWSRequest:
+      type: object
+      description: Request object for updating a shared clip group.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description for the shared clip group
+          example: Updated description of the security incident
+        expirationTimeSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          writeOnly: true
+        plaintextPassword:
+          type:
+          - string
+          - 'null'
+          description: Password for accessing the shared clip group
+          example: newpassword123
+        sharedClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title for the shared clip group
+          example: Updated Security Incident
+    PolicyEventFaceType:
+      type:
+      - object
+      - 'null'
+      properties:
+        faceId:
+          type:
+          - string
+          - 'null'
+        faceName:
+          type:
+          - string
+          - 'null'
+        imageS3Bucket:
+          type:
+          - string
+          - 'null'
+        imageS3Key:
+          type:
+          - string
+          - 'null'
+        imageS3Region:
+          type:
+          - string
+          - 'null'
+        labels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClipBoundingBoxType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        alert:
+          type:
+          - boolean
+          - 'null'
+        bottom:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: float
+        croppedImageLocator:
+          type:
+          - string
+          - 'null'
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
+          type:
+          - string
+          - 'null'
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        faceName:
+          type:
+          - string
+          - 'null'
+        inMotion:
+          type:
+          - boolean
+          - 'null'
+        keypointsV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PointType'
+        left:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pose:
+          type:
+          - string
+          - 'null'
+        relativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        right:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toastOrderIdInfo:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        top:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    ClipStatusEnum:
+      type: string
+      enum:
+      - INITIATING
+      - UPLOADING
+      - RENDERING
+      - FAILED
+      - COMPLETE
+      - OFFLINE
+      - DELETED
+      - UNKNOWN
+    Event_GetAlertMonitoringThreatCasesWSResponse:
+      type: object
+      description: Response object containing alert monitoring threat cases with pagination information.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+        threatCases:
+          type:
+          - array
+          - 'null'
+          description: List of threat cases matching the request criteria
+          items:
+            $ref: '#/components/schemas/AlertMonitoringThreatCaseType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    EventOriginatorEnum:
+      type: string
+      enum:
+      - USER
+      - SUPPORT_AUTHORITY
+      - API_TOKEN
+      - RULE
+      - COMPONENT_COMPOSITE_EVENT
+      - GUEST_PASS
+      - DEVICE_SERVICE
+      - UNKNOWN
+    ToastCheckInfo:
+      type: object
+      properties:
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+    SharedClipGroupWithDetailsType:
+      type: object
+      description: Detailed information about the shared clip group
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        expirationTimeSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sharedClips:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SharedClipWithDetailsType'
+        title:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    NoonlightPromptThemeEnum:
+      type: string
+      enum:
+      - THREAT
+      - HUMAN
+    AccessControlledDoorPolicyAlertType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          accessControlUnitUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          accessControlledDoorUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          componentUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          initiatingUsername:
+            type:
+            - string
+            - 'null'
+          originatorEntityName:
+            type:
+            - string
+            - 'null'
+          originatorEntityUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          originatorType:
+            $ref: '#/components/schemas/EventOriginatorEnum'
+      properties:
+        alertMonitoringThreatCaseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        alertMonitoringVerified:
+          type:
+          - boolean
+          - 'null'
+        archived:
+          type:
+          - boolean
+          - 'null'
+        clientType:
+          $ref: '#/components/schemas/ApiClientTypeEnum'
+        clipLocationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationMapV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        delayedProcessing:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        finalized:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        notificationSent:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyAlertTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saved:
+          type:
+          - boolean
+          - 'null'
+        shared:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        textDescription:
+          type:
+          - string
+          - 'null'
+          description: Natural language description of the alert
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/PolicyAlertEnumType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_SearchMotionGridWSRequest:
+      type: object
+      description: Request object for searching motion grid data.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time as a UNIX timestamp in seconds
+          example: 1641081600
+        searchCells:
+          type:
+          - array
+          - 'null'
+          description: List of motion grid cells to include in the search
+          items:
+            $ref: '#/components/schemas/Event_FrontendCell'
+        startTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time as a UNIX timestamp in seconds
+          example: 1640995200
+      required:
+      - deviceUuid
+      - endTimeUtcSecs
+      - searchCells
+      - startTimeUtcSecs
+    AlteredView:
+      type: object
+      description: Map of device facet UUIDs to altered view configurations
+      properties:
+        crop:
+          $ref: '#/components/schemas/CroppedPermyriadRect'
+        dewarp:
+          $ref: '#/components/schemas/DewarpedView'
+    Event_GetSavedClipDetailsWSResponse:
+      type: object
+      description: Response object containing detailed information about a saved clip.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        savedClip:
+          $ref: '#/components/schemas/SavedClipWithDetailsType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetMotionGridCountsWSResponse:
+      type: object
+      description: Response object containing motion grid counts for a device.
+      properties:
+        countGrid:
+          type:
+          - array
+          - 'null'
+          description: Matrix where each cell is a fraction of the camera's resolution and stores the total number of motion events that occurred in the given timeframe
+          items:
+            type:
+            - array
+            - 'null'
+            description: Matrix where each cell is a fraction of the camera's resolution and stores the total number of motion events that occurred in the given timeframe
+            items:
+              type:
+              - integer
+              - 'null'
+              format: int32
+              description: Matrix where each cell is a fraction of the camera's resolution and stores the total number of motion events that occurred in the given timeframe
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_UnSavePolicyAlertWSResponse:
+      type: object
+      description: Response object for unsaving a policy alert (deprecated).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetPolicyAlertGroupsForDeviceWSResponse:
+      type: object
+      description: Response object containing policy alert groups for a specific device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyAlertGroups:
+          type:
+          - array
+          - 'null'
+          description: List of policy alert groups for the device
+          items:
+            $ref: '#/components/schemas/Event_PolicyAlertGroupV2'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    AlertGroupingStrategyEnum:
+      type: string
+      enum:
+      - ALARM_RULES
+      - POLICY
+      - CUSTOM_EVENTS
+      - DOORBELL
+      - MULTIPURPOSE_BUTTON
+    Event_GetSavedClipsV2WSResponse:
+      type: object
+      description: Response object containing saved clips with pagination.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        lastEvaluatedTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp of the last evaluated clip for pagination
+        savedClips:
+          type:
+          - array
+          - 'null'
+          description: List of saved clips
+          items:
+            $ref: '#/components/schemas/SavedClipV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetPolicyAlertsV2WSResponse:
+      type: object
+      description: Response object containing policy alerts V2 with filtering and pagination options.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        oldestPolicyAlert:
+          $ref: '#/components/schemas/PolicyAlertV2Type'
+        policyAlerts:
+          type:
+          - array
+          - 'null'
+          description: List of policy alerts V2 matching the request criteria
+          items:
+            $ref: '#/components/schemas/PolicyAlertV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_FrontendCell:
+      type: object
+      description: Represents a cell in the motion grid with column and row coordinates.
+      properties:
+        col:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Column coordinate of the cell
+          example: 5
+        row:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Row coordinate of the cell
+          example: 3
+    Event_GetSavedClipsV2WSRequest:
+      type: object
+      description: Request object for retrieving saved clips with pagination.
+      properties:
+        maxPageSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 'Set max results returned. Note: in future this will be defaulted to 100'
+          example: 100
+        pageTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp start to specify page of up to 100 saved clips
+          example: 1640995200000
+    Event_GetSavedClipCountWSRequest:
+      type: object
+      description: Request object for retrieving the count of saved clips with filtering options.
+      properties:
+        deviceFilter:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to filter clips by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering clips
+          example: 1641081600000
+        locationFilter:
+          type:
+          - array
+          - 'null'
+          description: List of location UUIDs to filter clips by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering clips
+          example: 1640995200000
+    Event_GetSavedClipsByExternalTransactionIdWSResponse:
+      type: object
+      description: Response object containing saved clips by external transaction ID.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        savedClips:
+          type:
+          - array
+          - 'null'
+          description: List of saved clips matching the external transaction ID
+          items:
+            $ref: '#/components/schemas/SavedClipV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_DeleteAlertMonitoringThreatCaseWSResponse:
+      type: object
+      description: Response object for deleting alert monitoring threat cases.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PolicyAlertV2Type:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          airQualityIndex:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          airQualityIndexThreshold:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          alertingDwellEvents:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DwellEventType'
+          alertingEventFaces:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PolicyEventFaceType'
+          alertingEventVehicles:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PolicyEventVehicleType'
+          alertingTrackIds:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - integer
+              - 'null'
+              format: int32
+          cd:
+            type:
+            - string
+            - 'null'
+            description: Custom activity display description, maximum 100 characters
+          cdn:
+            type:
+            - string
+            - 'null'
+            description: Custom activity display name, maximum 32 characters
+          ch2oPpb:
+            type:
+            - number
+            - 'null'
+            format: float
+          ch2oPpbThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          clipLocation:
+            $ref: '#/components/schemas/MetaDataLocationType'
+          cllmBooleanValue:
+            type:
+            - boolean
+            - 'null'
+          cllmCheckCondition:
+            $ref: '#/components/schemas/CheckCondition'
+          cllmIntegerValue:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          cllmPromptTypeEnum:
+            $ref: '#/components/schemas/PromptTypeEnum'
+          cllmPromptUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          co2:
+            type:
+            - number
+            - 'null'
+            format: float
+          co2Ppm:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          co2PpmThreshold:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          co2Threshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          coConcentration:
+            type:
+            - number
+            - 'null'
+            format: double
+          coConcentrationThreshold:
+            type:
+            - number
+            - 'null'
+            format: double
+          componentUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          deviceType:
+            $ref: '#/components/schemas/DeviceTypeEnum'
+          deviceUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          egressBoundaryDevices:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          ethanol:
+            type:
+            - number
+            - 'null'
+            format: float
+          ethanolThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          heatIndexDegF:
+            type:
+            - number
+            - 'null'
+            format: double
+          heatIndexDegFThreshold:
+            type:
+            - number
+            - 'null'
+            format: double
+          humidityPercent1616:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          humidityPercentThreshold1616:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          humidityPermyriad:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          humidityThresholdPermyriad:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          iaq:
+            type:
+            - number
+            - 'null'
+            format: float
+          iaqThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          inactivityThresholdMs:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            description: For INACTIVITY_* alerts, the inactivity threshold configured on the region that fired, in milliseconds. This is the configured threshold, not the elapsed length of the inactivity window.
+          ingressBoundaryDevices:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          leakDetected:
+            type:
+            - boolean
+            - 'null'
+          maxLuf:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          noxIdx:
+            type:
+            - number
+            - 'null'
+            format: float
+          noxIdxThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          numHumans:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          peopleCountHighThreshold:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          peopleCountLowThreshold:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          pm10p0:
+            type:
+            - number
+            - 'null'
+            format: float
+          pm10p0Threshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          pm1p0:
+            type:
+            - number
+            - 'null'
+            format: float
+          pm1p0Threshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          pm25:
+            type:
+            - number
+            - 'null'
+            format: float
+          pm25Threshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          pm4p0:
+            type:
+            - number
+            - 'null'
+            format: float
+          pm4p0Threshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          pressure:
+            type:
+            - number
+            - 'null'
+            format: float
+          pressureThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          probeTempC:
+            type:
+            - number
+            - 'null'
+            format: float
+          probeTempCThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          probeTempThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          relHumid:
+            type:
+            - number
+            - 'null'
+            format: float
+          relHumidThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          tamperByMovementChange:
+            type:
+            - number
+            - 'null'
+            format: float
+          tampered:
+            type:
+            - boolean
+            - 'null'
+          tempC:
+            type:
+            - number
+            - 'null'
+            format: float
+          tempCThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          tempProbePresent:
+            type:
+            - boolean
+            - 'null'
+          temperatureCelsius1616:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          temperatureCelsiusThreshold1616:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          temperaturePermyriad:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          temperatureThresholdPermyriad:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          thcPercent:
+            type:
+            - number
+            - 'null'
+            format: float
+          thcPercentThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          tvoc:
+            type:
+            - number
+            - 'null'
+            format: float
+          tvocThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          vapeDetected:
+            type:
+            - boolean
+            - 'null'
+          vapeSmokePercent:
+            type:
+            - number
+            - 'null'
+            format: float
+          vapeSmokePercentThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+          vocIdx:
+            type:
+            - number
+            - 'null'
+            format: float
+          vocIdxThreshold:
+            type:
+            - number
+            - 'null'
+            format: float
+      properties:
+        alertMonitoringThreatCaseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        alertMonitoringVerified:
+          type:
+          - boolean
+          - 'null'
+        archived:
+          type:
+          - boolean
+          - 'null'
+        clientType:
+          $ref: '#/components/schemas/ApiClientTypeEnum'
+        clipLocationMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationMapV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        delayedProcessing:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        finalized:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        notificationSent:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyAlertTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saved:
+          type:
+          - boolean
+          - 'null'
+        shared:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        textDescription:
+          type:
+          - string
+          - 'null'
+          description: Natural language description of the alert
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/PolicyAlertEnumType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    UnHealthyDeviceSymptomEnum:
+      type: string
+      enum:
+      - POLICY_NOT_ASSIGNED
+      - DOWN
+      - SLOW_INTERNET
+    Event_GetPolicyAlertGroupsV2WSRequest:
+      type: object
+      description: Request object for retrieving policy alert groups V2 with pagination options.
+      properties:
+        lastTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Last timestamp for pagination
+          example: 1640995200000
+        lastUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        maxResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of results to return
+          example: 100
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    Event_UpdateSavedClipWSRequest:
+      type: object
+      description: Request object for updating a saved clip.
+      properties:
+        accessSettings:
+          $ref: '#/components/schemas/ClipAccessSettings'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Updated description for the saved clip
+          example: Updated description of the security incident
+        savedClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        title:
+          type:
+          - string
+          - 'null'
+          description: Updated title for the saved clip
+          example: Updated Security Incident
+      required:
+      - savedClipUuid
+    Event_UpdateSharedClipGroupWSResponse:
+      type: object
+      description: Response object for updating a shared clip group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        shareUrl:
+          type:
+          - string
+          - 'null'
+          description: URL for accessing the updated shared clip group
+          example: https://share.rhombus.com/clips/abc123
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_SearchMotionGridWithActivitiesWSResponse:
+      type: object
+      description: Response object containing motion grid search results with activity information.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timeUtcSecsToActivityMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Event_SearchMotionGridWithActivitiesWSResponse_MotionGridActivity'
+          description: Map of timestamps to motion grid activities
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_GetMotionGridWSRequest:
+      type: object
+      description: Request object for retrieving motion grid data for a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time as a UNIX timestamp in seconds
+          example: 1641081600
+        startTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time as a UNIX timestamp in seconds
+          example: 1640995200
+      required:
+      - deviceUuid
+      - endTimeUtcSecs
+      - startTimeUtcSecs
+    AMSirenSettingsType:
+      type: object
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          description: UUIDs of audio gateways used to play this siren.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The duration (in seconds) to loop the clip audio for the siren.
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of times to play the clip audio for the siren.
+      required:
+      - audioGateways
+      - clipUuid
+    Event_DeleteSavedClipWSResponse:
+      type: object
+      description: Response object for deleting a saved clip.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ThreatCaseTimelineEventType:
+      type: object
+      properties:
+        alertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        message:
+          type:
+          - string
+          - 'null'
+        noonlightVerificationId:
+          type:
+          - string
+          - 'null'
+        threatCaseStatus:
+          $ref: '#/components/schemas/ThreatCaseStatusEnum'
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/ThreatCaseTimelineEventTypeEnum'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetUnhealthyDeviceAlertsWSRequest:
+      type: object
+      description: Request object for retrieving unhealthy device alerts.
+    Event_DeleteAlertMonitoringThreatCaseByStatusWSResponse:
+      type: object
+      description: Response object for deleting alert monitoring threat cases by status.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SharedClipGroupWrapperV2Type:
+      type: object
+      description: List of shared clip groups
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        expirationTimeSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        isSecured:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sharedClips:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SharedClipV2Type'
+        title:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    SplicedClipProgress:
+      type: object
+      properties:
+        region:
+          type:
+          - string
+          - 'null'
+        segmentsUploaded:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        totalSegments:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Event_GetClipsWithProgressWSRequest:
+      type: object
+      description: Request object for retrieving clips with progress information and filtering options.
+      properties:
+        deviceUuidFilters:
+          type:
+          - array
+          - 'null'
+          description: Device uuids to filter clips by.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        excludeAlertMonitoringClips:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: Filter to exclude clips created for alarm monitoring verification.
+        filterByPrivate:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: Filter to only include private clips in the result.
+        locationUuidFilters:
+          type:
+          - array
+          - 'null'
+          description: Location uuids to filter clips by.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        pageSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          default: 100
+          description: Page size
+          maximum: 200
+          minimum: 1
+        pageToken:
+          type:
+          - string
+          - 'null'
+          description: Page token received from the previous search request.
+          example: next_page_token_123
+        searchFilter:
+          type:
+          - string
+          - 'null'
+          description: Search filter for clips
+          example: motion detected
+        sortField:
+          type:
+          - string
+          - 'null'
+          description: Field to sort clips by
+          example: timestamp
+        sortOrder:
+          type:
+          - string
+          - 'null'
+          description: Sort order (asc or desc)
+          example: desc
+        timestampFilterField:
+          type:
+          - string
+          - 'null'
+          description: Timestamp to filter clips by (either clip creation date or clip footage date).
+        timestampMsAfter:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp to find clips after this time.
+          example: 1640995200000
+        timestampMsBefore:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp to find clips before this time
+          example: 1641081600000
+      required:
+      - pageSize
+    Event_DismissAllPolicyAlertsWSRequest:
+      type: object
+      description: Request object for dismissing all policy alerts.
+    Event_PolicyAlertGroupV2:
+      type: object
+      description: Group of policy alerts V2 with time range information.
+      properties:
+        endTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time of the alert group (descending chronological order)
+          example: 1641081600000
+        policyAlerts:
+          type:
+          - array
+          - 'null'
+          description: List of policy alerts V2 in the group
+          items:
+            $ref: '#/components/schemas/PolicyAlertV2Type'
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time of the alert group (descending chronological order)
+          example: 1640995200000
+    Event_ReportBadPolicyAlertWSRequest:
+      type: object
+      description: Request object for reporting a bad policy alert.
+      properties:
+        policyAlert:
+          $ref: '#/components/schemas/PolicyAlertV2Type'
+    Event_DeleteSavedClipWSRequest:
+      type: object
+      description: Request object for deleting a saved clip.
+      properties:
+        savedClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    UnHealthyDeviceAlertType:
+      type: object
+      description: List of unhealthy device alerts
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+        symptom:
+          $ref: '#/components/schemas/UnHealthyDeviceSymptomEnum'
+        timestamp:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+    ClipVisibilityEnum:
+      type: string
+      description: Use accessSettings instead
+      enum:
+      - PRIVATE
+      - ROLE_RESTRICTED
+      - ORG_WIDE
+    Event_MuteNotificationsForDevicetWSResponse:
+      type: object
+      description: Response object for muting notifications for a specific device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_DismissAllPolicyAlertsForDeviceWSRequest:
+      type: object
+      description: Request object for dismissing all policy alerts for specific devices.
+      properties:
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to dismiss alerts for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_GetSharedClipGroupDetailsWSResponse:
+      type: object
+      description: Response object containing detailed information about a shared clip group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        sharedClipGroup:
+          $ref: '#/components/schemas/SharedClipGroupWithDetailsType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Event_UnSavePolicyAlertWSRequest:
+      type: object
+      description: Request object for unsaving a policy alert (deprecated).
+      properties:
+        alertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        savedClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Event_CreateSharedClipGroupWSRequest:
+      type: object
+      description: Request object for creating a shared clip group.
+      properties:
+        expirationTimeSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Expiration time in seconds for the shared clip group
+          example: 86400
+        plaintextPassword:
+          type:
+          - string
+          - 'null'
+          description: Optional password for accessing the shared clip group
+          example: mypassword123
+        title:
+          type:
+          - string
+          - 'null'
+          description: Title for the shared clip group
+          example: Security Incident - Main Entrance
+        uuids:
+          type:
+          - array
+          - 'null'
+          description: List of UUIDs for clips to include in the shared group
+          items:
+            $ref: '#/components/schemas/Event_RuuidWrapper'
+    SavedClipV2Type:
+      type: object
+      description: List of saved clips
+      properties:
+        accessSettings:
+          $ref: '#/components/schemas/ClipAccessSettings'
+        alterMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AlteredView'
+        analyzed:
+          type:
+          - boolean
+          - 'null'
+        byteCount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        clipLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        clipLocationV2:
+          type:
+          - string
+          - 'null'
+        consoleDelete:
+          type:
+          - boolean
+          - 'null'
+        createdAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        deviceIntervalMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/TimeInterval'
+        devicePresentationOrder:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceUuidMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MetaDataLocationType'
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        externalTransactionId:
+          type:
+          - string
+          - 'null'
+        fisheyeHardware:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        fisheyeMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/DewarpedView'
+        integrationUploadList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationEnum'
+        isMonitoringClip:
+          type:
+          - boolean
+          - 'null'
+        isVendorClip:
+          type:
+          - boolean
+          - 'null'
+        mountingDirection:
+          $ref: '#/components/schemas/CameraMountingDirectionEnum'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        placeholder:
+          type:
+          - boolean
+          - 'null'
+        sendToSharedStorage:
+          type:
+          - boolean
+          - 'null'
+        sha256Hex:
+          type:
+          - string
+          - 'null'
+        sourceAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/ClipStatusEnum'
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        title:
+          type:
+          - string
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        videoResolution:
+          $ref: '#/components/schemas/Resolution'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

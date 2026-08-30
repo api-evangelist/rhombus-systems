@@ -1,0 +1,365 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Media Device Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Media Device Webservice
+paths:
+  /api/mediadevice/getBulkMediaDeviceDetails:
+    post:
+      description: Get media information of any video-supporting media device
+      operationId: getBulkMediaDeviceDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mediadevice_GetBulkMediaDeviceDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mediadevice_GetBulkMediaDeviceDetailsWSResponse'
+          description: OK
+      summary: Get bulk media device details
+      tags:
+      - Media Device Webservice
+components:
+  schemas:
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    Mediadevice_MediaDeviceDetailsType:
+      type: object
+      description: Detailed information about a media device including streaming URLs and device characteristics.
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          description: List of audio gateway UUIDs associated with the device
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceFacetUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lanCheckUrls:
+          type:
+          - array
+          - 'null'
+          description: URLs to check if the device is available on LAN
+          items:
+            type:
+            - string
+            - 'null'
+            description: URLs to check if the device is available on LAN
+        lanLiveH264Uris:
+          type:
+          - array
+          - 'null'
+          description: LAN live H264 streaming URIs
+          items:
+            type:
+            - string
+            - 'null'
+            description: LAN live H264 streaming URIs
+        lanLiveM3u8Uris:
+          type:
+          - array
+          - 'null'
+          description: LAN live M3U8 streaming URIs
+          items:
+            type:
+            - string
+            - 'null'
+            description: LAN live M3U8 streaming URIs
+        lanLiveMpdUris:
+          type:
+          - array
+          - 'null'
+          description: LAN live MPD streaming URIs
+          items:
+            type:
+            - string
+            - 'null'
+            description: LAN live MPD streaming URIs
+        lanVodM3u8UrisTemplates:
+          type:
+          - array
+          - 'null'
+          description: LAN VOD M3U8 URI templates
+          items:
+            type:
+            - string
+            - 'null'
+            description: LAN VOD M3U8 URI templates
+        lanVodMpdUrisTemplates:
+          type:
+          - array
+          - 'null'
+          description: LAN VOD MPD URI templates
+          items:
+            type:
+            - string
+            - 'null'
+            description: LAN VOD MPD URI templates
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the device
+          example: Front Door Camera
+        region:
+          type:
+          - string
+          - 'null'
+          description: Region where the device is located
+          example: us-west-2
+        timezone:
+          type:
+          - object
+          - 'null'
+          description: Timezone of the device
+          properties:
+            displayName:
+              type:
+              - string
+              - 'null'
+            dstsavings:
+              type:
+              - integer
+              - 'null'
+              format: int32
+            id:
+              type:
+              - string
+              - 'null'
+            rawOffset:
+              type:
+              - integer
+              - 'null'
+              format: int32
+        uri:
+          type:
+          - string
+          - 'null'
+          description: URI of the device
+          example: rtsp://device.local/stream
+        wanLiveH264Uri:
+          type:
+          - string
+          - 'null'
+          description: WAN live H264 streaming URI
+          example: https://stream.rhombussystems.com/live/device123.h264
+        wanLiveM3u8Uri:
+          type:
+          - string
+          - 'null'
+          description: WAN live M3U8 streaming URI
+          example: https://stream.rhombussystems.com/live/device123.m3u8
+        wanLiveMpdUri:
+          type:
+          - string
+          - 'null'
+          description: WAN live MPD streaming URI
+          example: https://stream.rhombussystems.com/live/device123.mpd
+        wanVodH264UriTemplate:
+          type:
+          - string
+          - 'null'
+          description: WAN VOD H264 URI template
+          example: https://vod.rhombussystems.com/{timestamp}/device123.h264
+        wanVodM3u8UriTemplate:
+          type:
+          - string
+          - 'null'
+          description: WAN VOD M3U8 URI template
+          example: https://vod.rhombussystems.com/{timestamp}/device123.m3u8
+        wanVodMpdUriTemplate:
+          type:
+          - string
+          - 'null'
+          description: WAN VOD MPD URI template
+          example: https://vod.rhombussystems.com/{timestamp}/device123.mpd
+    Mediadevice_GetBulkMediaDeviceDetailsWSRequest:
+      type: object
+      description: Request object for getting media information of any video-supporting media device.
+      properties:
+        devices:
+          type:
+          - array
+          - 'null'
+          description: Set of device facet UUIDs to get media details for
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          uniqueItems: true
+    Mediadevice_GetBulkMediaDeviceDetailsWSResponse:
+      type: object
+      description: Response object containing media information for video-supporting media devices.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        mediaDeviceDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Mediadevice_MediaDeviceDetailsType'
+          description: Map of device facet UUIDs to their media device details
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

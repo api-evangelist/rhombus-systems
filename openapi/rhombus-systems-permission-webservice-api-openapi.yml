@@ -1,0 +1,1098 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Permission Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Permission Webservice
+paths:
+  /api/permission/createPartnerPermissionGroup:
+    post:
+      description: Create a permission group
+      operationId: createPartnerPermissionGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_CreatePartnerPermissionGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_CreatePartnerPermissionGroupWSResponse'
+          description: OK
+      summary: Create partner permission group
+      tags:
+      - Permission Webservice
+  /api/permission/createPermissionGroup:
+    post:
+      description: Create a permission group
+      operationId: createPermissionGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_CreatePermissionGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_CreatePermissionGroupWSResponse'
+          description: OK
+      summary: Create permission group
+      tags:
+      - Permission Webservice
+  /api/permission/deletePartnerPermissionGroup:
+    post:
+      description: Delete a permission group
+      operationId: deletePartnerPermissionGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_DeletePartnerPermissionGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_DeletePartnerPermissionGroupWSResponse'
+          description: OK
+      summary: Delete partner permission group
+      tags:
+      - Permission Webservice
+  /api/permission/deletePermissionGroup:
+    post:
+      description: Delete a permission group
+      operationId: deletePermissionGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_DeletePermissionGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_DeletePermissionGroupWSResponse'
+          description: OK
+      summary: Delete permission group
+      tags:
+      - Permission Webservice
+  /api/permission/getPartnerPermissionGroups:
+    post:
+      description: Get partner permission groups for the organization
+      operationId: getPartnerPermissionGroups
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_GetPartnerPermissionGroupsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_GetPartnerPermissionGroupWSResponse'
+          description: OK
+      summary: Get partner permission groups
+      tags:
+      - Permission Webservice
+  /api/permission/getPermissionGroups:
+    post:
+      description: Get details about all permission groups in organization
+      operationId: getPermissionGroups
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_GetPermissionGroupsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_GetPermissionGroupsWSResponse'
+          description: OK
+      summary: Get permission groups
+      tags:
+      - Permission Webservice
+  /api/permission/getPermissionsForCurrentPartner:
+    post:
+      description: Get permissions for the current partner user
+      operationId: getPermissionsForCurrentPartner
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_GetPermissionsForCurrentPartnerWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_GetPermissionsForCurrentPartnerWSResponse'
+          description: OK
+      summary: Get permissions for current partner
+      tags:
+      - Permission Webservice
+  /api/permission/getPermissionsForCurrentUser:
+    post:
+      description: Get device and functionality permissions for user or API token
+      operationId: getPermissionsForCurrentUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_GetPermissionsForCurrentUserWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_GetPermissionsForCurrentUserWSResponse'
+          description: OK
+      summary: Get permissions for current user
+      tags:
+      - Permission Webservice
+  /api/permission/updatePartnerPermissionGroup:
+    post:
+      description: Update a partner permission group
+      operationId: updatePartnerPermissionGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_UpdatePartnerPermissionGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_UpdatePartnerPermissionGroupWSResponse'
+          description: OK
+      summary: Update partner permission group
+      tags:
+      - Permission Webservice
+  /api/permission/updatePermissionGroup:
+    post:
+      description: Update a permission group
+      operationId: updatePermissionGroup
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permission_UpdatePermissionGroupWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission_UpdatePermissionGroupWSResponse'
+          description: OK
+      summary: Update permission group
+      tags:
+      - Permission Webservice
+components:
+  schemas:
+    Permission_GetPartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object containing partner permission groups and client permission group mappings.
+      properties:
+        clientPermissionGroupMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserPermissionGroupType'
+          description: Map of client UUIDs to their permission group types
+        clientPermissionsGroupMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserPermissionGroupType'
+          writeOnly: true
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        groupMembership:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of permission group UUIDs to list of user UUIDs in each group
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          description: Map of permission group UUIDs to list of user UUIDs in each group
+        permissionGroups:
+          type:
+          - array
+          - 'null'
+          description: List of partner permission groups
+          items:
+            $ref: '#/components/schemas/PartnerUserPermissionGroupType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_CreatePermissionGroupWSResponse:
+      type: object
+      description: Response object containing the UUID of the created permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_UpdatePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for updating an existing partner permission group.
+      properties:
+        partnerPermissionGroup:
+          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
+    Permission_UpdatePermissionGroupWSRequest:
+      type: object
+      description: Request object for updating an existing permission group.
+      properties:
+        userPermissionGroup:
+          $ref: '#/components/schemas/UserPermissionGroupType'
+    Permission_GetPermissionsForCurrentPartnerWSResponse:
+      type: object
+      description: Response object containing partner permission information including functionality lists, client permissions, and group details.
+      properties:
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          description: Set of partner permission group UUIDs the user can assign to other users
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clientFunctionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of client functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        clientPermissionMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PartnerPermissionEnum'
+          description: Map of client UUIDs to partner permission levels
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of partner functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/PartnerFunctionalityEnum'
+        permissionGroupName:
+          type:
+          - string
+          - 'null'
+          description: Name of the partner user's permission group
+          example: Partner Administrator
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the partner user has super admin privileges
+          example: false
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_CreatePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object containing the UUID of the created partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_DeletePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object for deleting a partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_DeletePermissionGroupWSResponse:
+      type: object
+      description: Response object for deleting a permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    FunctionalityEnum:
+      type: string
+      enum:
+      - DEVICE_ADMINISTRATION
+      - ORG_ADMINISTRATION
+      - AUTH_ADMINISTRATION
+      - FIRMWARE_ADMINISTRATION
+      - DOOR_ACCESS_ADMINISTRATION
+      - CAMERA_ADMINISTRATION
+      - REGISTER_DEVICES
+      - DELETE_DEVICES
+      - LOCATION_ADMINISTRATION
+      - POLICY_ADMINISTRATION
+      - USER_ADMINISTRATION
+      - REPORT_ADMINISTRATION
+      - NOTIFICATION_ADMINISTRATION
+      - LICENSE_ADMINISTRATION
+      - RECEIVE_EMAILS
+      - MANAGE_FACES
+      - MANAGE_LICENSEPLATES
+      - API_ADMINISTRATION
+      - INTEGRATION_ADMINISTRATION
+      - DATA_EXFILTRATION
+      - ALERT_MONITORING_ADMINISTRATION
+      - ALERT_MONITORING_VIEWONLY
+      - ALERT_MONITORING_OPERATOR
+      - GUEST_MANAGEMENT_ADMINISTRATION
+      - GUEST_MANAGEMENT_VIEWONLY
+      - CLIP_MANAGEMENT
+      - VIEW_SAVED_VIDEO
+      - VIEW_AND_MANAGE_SAVED_VIDEO
+      - CLLM_ADMINISTRATION
+      - UNKNOWN
+    Permission_GetPermissionGroupsWSResponse:
+      type: object
+      description: Response object containing permission groups and membership information for the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        groupMembership:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of permission group UUIDs to list of user UUIDs in each group
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          description: Map of permission group UUIDs to list of user UUIDs in each group
+        partnerMembership:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of partner UUIDs to list of user UUIDs in each partner organization
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          description: Map of partner UUIDs to list of user UUIDs in each partner organization
+        permissionGroups:
+          type:
+          - array
+          - 'null'
+          description: List of permission groups in the organization
+          items:
+            $ref: '#/components/schemas/UserPermissionGroupType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    UserPermissionGroupType:
+      type: object
+      description: Updated permission group configuration
+      properties:
+        accessControlLocationAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+        accessibleLocations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        componentCompositeGranularAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/PermissionEnum'
+        defaultAccessControlPermissionForNewLocations:
+          $ref: '#/components/schemas/PermissionEnum'
+        defaultPermissionForNewLocations:
+          $ref: '#/components/schemas/PermissionEnum'
+        description:
+          type:
+          - string
+          - 'null'
+        deviceAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        inLine:
+          type:
+          - boolean
+          - 'null'
+        installer:
+          type:
+          - boolean
+          - 'null'
+        locationAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+        locationGranularAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/PermissionEnum'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        storedInS3:
+          type:
+          - boolean
+          - 'null'
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+        userPermissionGroupAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Permission_GetPermissionsForCurrentPartnerWSRequest:
+      type: object
+      description: Request object for getting permissions for the current partner user.
+    Permission_DeletePermissionGroupWSRequest:
+      type: object
+      description: Request object for deleting a permission group.
+      properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PermissionEnum:
+      type: string
+      enum:
+      - READONLY
+      - ADMIN
+      - LIVEONLY
+    PartnerUserPermissionGroupType:
+      type: object
+      description: Updated partner permission group configuration
+      properties:
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clientAssignablePermissionGroupsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+            uniqueItems: true
+        clientFunctionalityList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        clientPermissionMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PartnerPermissionEnum'
+        description:
+          type:
+          - string
+          - 'null'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PartnerFunctionalityEnum'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Permission_GetPermissionsForCurrentUserWSResponse:
+      type: object
+      description: Response object containing comprehensive permission information for the current user including functionality, device, location, and granular access maps.
+      properties:
+        accessControlLocationAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: Map of access control location UUIDs to permission levels
+        accessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: 'Deprecated: Map of device UUIDs to permission levels (use deviceAccessMap instead)'
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          description: Set of permission group UUIDs the user can assign to other users
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        componentCompositeGranularAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/PermissionEnum'
+            description: Map of component composite UUIDs to granular functionality permission maps. Functionality keys are LocationFunctionality values (normalized from ComponentCompositeFunctionality via ComponentCompositeFunctionality#getLocationFunctionality).
+          description: Map of component composite UUIDs to granular functionality permission maps. Functionality keys are LocationFunctionality values (normalized from ComponentCompositeFunctionality via ComponentCompositeFunctionality#getLocationFunctionality).
+        deviceAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: Map of device UUIDs to permission levels
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        installer:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user has installer privileges
+          example: false
+        locationAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: Map of location UUIDs to permission levels
+        locationGranularAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/PermissionEnum'
+            description: Map of location UUIDs to granular functionality permission maps
+          description: Map of location UUIDs to granular functionality permission maps
+        permissionGroupName:
+          type:
+          - string
+          - 'null'
+          description: Name of the user's permission group
+          example: Administrator
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user has super admin privileges
+          example: false
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_CreatePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for creating a new partner permission group.
+      properties:
+        partnerPermissionGroup:
+          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
+    Permission_CreatePermissionGroupWSRequest:
+      type: object
+      description: Request object for creating a new permission group.
+      properties:
+        userPermissionGroup:
+          $ref: '#/components/schemas/UserPermissionGroupType'
+    Permission_GetPartnerPermissionGroupsWSRequest:
+      type: object
+      description: Request object for getting partner permission groups for the organization.
+    Permission_GetPermissionsForCurrentUserWSRequest:
+      type: object
+      description: Request object for getting permissions for the current user.
+    Permission_GetPermissionGroupsWSRequest:
+      type: object
+      description: Request object for getting all permission groups in the organization.
+    Permission_UpdatePermissionGroupWSResponse:
+      type: object
+      description: Response object for updating a permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_DeletePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for deleting a partner permission group.
+      properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Permission_UpdatePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object for updating a partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PartnerFunctionalityEnum:
+      type: string
+      enum:
+      - CREATE_CLIENT
+      - DELETE_CLIENT
+      - DEAL_ADMINISTRATION
+      - REMOTE_REGISTER_DEVICE
+      - ORG_ADMINISTRATION
+      - AUTH_ADMINISTRATION
+      - DOOR_ACCESS_ADMINISTRATION
+      - USER_ADMINISTRATION
+      - REPORT_ADMINISTRATION
+      - NOTIFICATION_ADMINISTRATION
+      - LICENSE_ADMINISTRATION
+      - RECEIVE_EMAILS
+      - API_ADMINISTRATION
+      - INTEGRATION_ADMINISTRATION
+      - DATA_EXFILTRATION
+      - CLIP_MANAGEMENT
+      - UNKNOWN
+    PartnerPermissionEnum:
+      type: string
+      enum:
+      - DEFAULT
+      - CUSTOM
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

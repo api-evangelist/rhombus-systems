@@ -1,0 +1,3753 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Relay Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Relay Webservice
+paths:
+  /api/relay/addThirdPartyCameraViaOnvif:
+    post:
+      description: Probe a single camera by IP address over ONVIF, auto-derive its metadata, and (unless disabled) provision it — adding a camera from just an IP and credentials.
+      operationId: addThirdPartyCameraViaOnvif
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_AddThirdPartyCameraViaOnvifWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_AddThirdPartyCameraViaOnvifWSResponse'
+          description: OK
+      summary: Add third party camera via ONVIF
+      tags:
+      - Relay Webservice
+  /api/relay/assignThirdPartyCameraToNVR:
+    post:
+      description: Assign a third party camera to an NVR
+      operationId: assignThirdPartyCameraToNVR
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_AssignThirdPartyCameraToNVRWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_AssignThirdPartyCameraToNVRWSResponse'
+          description: OK
+      summary: Assign third party camera to NVR
+      tags:
+      - Relay Webservice
+  /api/relay/assignThirdPartyCameraToRelayCamera:
+    post:
+      description: Assign a third party camera to a relay Camera
+      operationId: assignThirdPartyCameraToRelayCamera
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_AssignThirdPartyCameraToRelayCameraWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_AssignThirdPartyCameraToRelayCameraWSResponse'
+          description: OK
+      summary: Assign third party camera to relay camera
+      tags:
+      - Relay Webservice
+  /api/relay/assignThirdPartyMultiFacetCameraToNVR:
+    post:
+      description: Assign a multi-sensor third party camera to an NVR as one camera with multiple video facets (gated on the multiFacetThirdPartyCameraEnabled org flag)
+      operationId: assignThirdPartyMultiFacetCameraToNVR
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_AssignThirdPartyMultiFacetCameraToNVRWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_AssignThirdPartyMultiFacetCameraToNVRWSResponse'
+          description: OK
+      summary: Assign multi-facet third party camera to NVR
+      tags:
+      - Relay Webservice
+  /api/relay/authenticateThirdPartyCamera:
+    post:
+      description: Authenticate a third party camera, effectively validating the credentials specified to be used for it.
+      operationId: authenticateThirdPartyCamera
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_AuthenticateThirdPartyCameraWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_AuthenticateThirdPartyCameraWSResponse'
+          description: OK
+      summary: Authenticate third party camera
+      tags:
+      - Relay Webservice
+  /api/relay/createThirdPartyCameraPassword:
+    post:
+      description: Create a third party camera password
+      operationId: createThirdPartyCameraPassword
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_CreateThirdPartyCameraPasswordWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_CreateThirdPartyCameraPasswordWSResponse'
+          description: OK
+      summary: Create third party camera password
+      tags:
+      - Relay Webservice
+  /api/relay/deleteThirdPartyCameraDiscovery:
+    post:
+      description: Delete third party camera discovery if it has no assignments.
+      operationId: deleteThirdPartyCameraDiscovery
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_DeleteThirdPartyCameraDiscoveryWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_DeleteThirdPartyCameraDiscoveryWSResponse'
+          description: OK
+      summary: Delete third party camera discovery
+      tags:
+      - Relay Webservice
+  /api/relay/deleteThirdPartyCameraPassword:
+    post:
+      description: Delete a third party camera password
+      operationId: deleteThirdPartyCameraPassword
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_DeleteThirdPartyCameraPasswordWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_DeleteThirdPartyCameraPasswordWSResponse'
+          description: OK
+      summary: Delete third party camera password
+      tags:
+      - Relay Webservice
+  /api/relay/executeThirdPartyCameraDiscovery:
+    post:
+      description: Trigger a discovery of cameras on the local LANs
+      operationId: executeThirdPartyCameraDiscovery
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_ExecuteThirdPartyCameraDiscoveryWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_ExecuteThirdPartyCameraDiscoveryWSResponse'
+          description: OK
+      summary: Execute third party camera discovery
+      tags:
+      - Relay Webservice
+  /api/relay/findDiscoveriesWithUnassignedRtspEndpoints:
+    post:
+      description: Finds discoveries that have unassigned RTSP endpoints. Only discoveries containing at least one endpoint are returned.
+      operationId: findDiscoveriesWithUnassignedRtspEndpoints
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_FindDiscoveriesWithUnassignedRtspEndpointsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_FindDiscoveriesWithUnassignedRtspEndpointsWSResponse'
+          description: OK
+      summary: Find discoveries with unassigned RTSP endpoints
+      tags:
+      - Relay Webservice
+  /api/relay/getAssignedThirdPartyCameras:
+    post:
+      description: Get a list of the third party cameras assigned to an NVR
+      operationId: getAssignedThirdPartyCameras
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetAssignedThirdPartyCamerasWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetAssignedThirdPartyCamerasWSResponse'
+          description: OK
+      summary: Get assigned third party cameras
+      tags:
+      - Relay Webservice
+  /api/relay/getDetails:
+    post:
+      description: Get hardware details of multiple NVRs
+      operationId: getNVRDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetNVRDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetNVRDetailsWSResponse'
+          description: OK
+      summary: Get NVR details
+      tags:
+      - Relay Webservice
+  /api/relay/getFullNVRState:
+    post:
+      description: Get detailed information about state of specified NVR
+      operationId: getFullNVRState
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetFullNVRStateWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetFullNVRStateWSResponse'
+          description: OK
+      summary: Get full NVR state
+      tags:
+      - Relay Webservice
+  /api/relay/getMinimalNVRStateList:
+    post:
+      description: Get basic state information about all NVRs in organization
+      operationId: getMinimalNVRStateList
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetMinimalNVRStateListWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetMinimalNVRStateListWSResponse'
+          description: OK
+      summary: Get minimal NVR state list
+      tags:
+      - Relay Webservice
+  /api/relay/getMinimalThirdPartyCameraStateList:
+    post:
+      description: Get basic state information about all third party cameras in the organization
+      operationId: getMinimalThirdPartyCameraStateList
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetMinimalThirdPartyCameraStateListWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetMinimalThirdPartyCameraStateListWSResponse'
+          description: OK
+      summary: Get minimal third party camera state list
+      tags:
+      - Relay Webservice
+  /api/relay/getRtspEndpoints:
+    post:
+      description: Gets rtsp endpoints for device with the specified mac address.
+      operationId: getRtspEndpoints
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetRtspEndpointsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetRtspEndpointsWSResponse'
+          description: OK
+      summary: Get RTSP endpoints
+      tags:
+      - Relay Webservice
+  /api/relay/getThirdPartyCameraDiscoveryScanStatus:
+    post:
+      description: Returns the progress of the current/most-recent third-party camera discovery run in the org, so clients can show progress and distinguish not-started, in-progress, and complete (including complete-with-zero-cameras).
+      operationId: getThirdPartyCameraDiscoveryScanStatus
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetThirdPartyCameraDiscoveryScanStatusWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetThirdPartyCameraDiscoveryScanStatusWSResponse'
+          description: OK
+      summary: Get third party camera discovery scan status
+      tags:
+      - Relay Webservice
+  /api/relay/getThirdPartyCameraPasswords:
+    post:
+      description: Get a list of the third party camera passwords
+      operationId: getThirdPartyCameraPasswords
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_GetThirdPartyCameraPasswordsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_GetThirdPartyCameraPasswordsWSResponse'
+          description: OK
+      summary: Get third party camera passwords
+      tags:
+      - Relay Webservice
+  /api/relay/getUptimeWindows:
+    post:
+      description: Get uptime information for an NVR.
+      operationId: getRelayUptimeWindows
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Common_devices_GetUptimeWindowsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Common_devices_GetUptimeWindowsWSResponse'
+          description: OK
+      summary: Get uptime information for an NVR.
+      tags:
+      - Relay Webservice
+  /api/relay/manualDiscoverCamera:
+    post:
+      description: Manually identify a camera on the network
+      operationId: manualDiscoverCamera
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_ManualDiscoverThirdPartyCameraWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_ManualDiscoverThirdPartyCameraWSResponse'
+          description: OK
+      summary: Manual discover camera
+      tags:
+      - Relay Webservice
+  /api/relay/ptzMove:
+    post:
+      description: Trigger a pan, tilt, or zoom
+      operationId: ptzMove
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_PTZMoveWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_PTZMoveWSResponse'
+          description: OK
+      summary: PTZ move
+      tags:
+      - Relay Webservice
+  /api/relay/ptzStatus:
+    post:
+      description: Returns ptz status
+      operationId: ptz
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_PTZStatusWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_PTZStatusWSResponse'
+          description: OK
+      summary: PTZ status
+      tags:
+      - Relay Webservice
+  /api/relay/reboot:
+    post:
+      description: Reboot an NVR
+      operationId: rebootNVR
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_RebootNVRVWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_RebootNVRVWSResponse'
+          description: OK
+      summary: Reboot NVR
+      tags:
+      - Relay Webservice
+  /api/relay/unassignThirdPartyCamera:
+    post:
+      description: Unassign a third party camera from an NVR
+      operationId: unassignThirdPartyCamera
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_UnassignThirdPartyCameraWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_UnassignThirdPartyCameraWSResponse'
+          description: OK
+      summary: Unassign third party camera
+      tags:
+      - Relay Webservice
+  /api/relay/unregister:
+    post:
+      description: Remove an NVR from organization
+      operationId: unregisterNVR
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_UnregisterNVRWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_UnregisterNVRWSResponse'
+          description: OK
+      summary: Unregister NVR
+      tags:
+      - Relay Webservice
+  /api/relay/updateDetailsV2:
+    post:
+      description: Update hardware details of NVR.
+      operationId: updateNVRDetailsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_UpdateNVRWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_UpdateNVRWSResponse'
+          description: OK
+      summary: Update NVR details V2
+      tags:
+      - Relay Webservice
+  /api/relay/updateFirmware:
+    post:
+      description: Send command to update firmware to NVR
+      operationId: updateNVRFirmware
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relay_UpdateNVRFirmwareWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relay_UpdateNVRFirmwareWSResponse'
+          description: OK
+      summary: Update NVR firmware
+      tags:
+      - Relay Webservice
+components:
+  schemas:
+    Relay_AssignThirdPartyCameraToNVRWSRequest:
+      type: object
+      description: Request object for assigning a third-party camera to an NVR.
+      properties:
+        discoveredCameraMacAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the discovered camera to assign
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the third-party camera
+          example: Front Door Camera
+        nvruuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: RTSP URL for the camera stream
+          example: rtsp://192.168.1.100:554/stream1
+    Relay_RebootNVRVWSResponse:
+      type: object
+      description: Response object for rebooting an NVR.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        result:
+          $ref: '#/components/schemas/Common_devices_RebootDeviceWSResponse_RebootResult'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_GetNVRDetailsWSResponse:
+      type: object
+      description: Response object containing details for specified NVRs.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        nvrs:
+          type:
+          - array
+          - 'null'
+          description: List of NVR details for the specified NVRs
+          items:
+            $ref: '#/components/schemas/Relay_NVRExternalType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_GetAssignedThirdPartyCamerasWSResponse:
+      type: object
+      description: Response object containing third-party cameras assigned to a specific NVR.
+      properties:
+        assignedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of third-party cameras assigned to the specified NVR
+          items:
+            $ref: '#/components/schemas/CameraType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_AssignThirdPartyMultiFacetCameraToNVRWSResponse:
+      type: object
+      description: Response object for assigning a multi-sensor third-party camera as one multi-facet camera.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        facetCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of video facets (streams) bound to the camera
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DeviceFacetEnum:
+      type: string
+      format: DeviceFacet
+      description: facet information for media
+      enum:
+      - ''
+      - v0
+      - v1
+      - v2
+      - v3
+      - a0
+      - v4
+      - v5
+      - v6
+      - v7
+      - v8
+      - v9
+      - v10
+      - v11
+      - v12
+      - v13
+      - v14
+      - v15
+      - v16
+      - v17
+      - v18
+      - v19
+      - v20
+      - v21
+      - v22
+      - v23
+      - v24
+      - v25
+      - v26
+      - v27
+      - v28
+      - v29
+      - v30
+      - v31
+      - v32
+      - v33
+      - v34
+      - v35
+      - v36
+      - v37
+      - v38
+      - v39
+      - v40
+      - v41
+      - v42
+      - v43
+      - v44
+      - v45
+      - v46
+      - v47
+      - v48
+      - v49
+      - v50
+      - v51
+      - a1
+      - a2
+      - a3
+      - a4
+      - a5
+      - a6
+      - a7
+      - a8
+      - a9
+      - a10
+      - a11
+      - a12
+      - a13
+      - a14
+      - a15
+      - a16
+      - a17
+      - a18
+      - a19
+      - a20
+      - a21
+      - a22
+      - a23
+      - a24
+      - a25
+      - a26
+      - a27
+      - a28
+      - a29
+      - a30
+      - a31
+      - a32
+      - a33
+      - a34
+      - a35
+      - a36
+      - a37
+      - a38
+      - a39
+      - a40
+      - a41
+      - a42
+      - a43
+      - a44
+      - a45
+      - a46
+      - a47
+      - a48
+      - a49
+      - a50
+      - a51
+      example: v0, a0
+    Relay_GetRtspEndpointsWSResponse:
+      type: object
+      description: Response object containing RTSP endpoints for a device with the specified MAC address.
+      properties:
+        rtspEndpoints:
+          type:
+          - array
+          - 'null'
+          description: List of RTSP endpoints for the discovered camera
+          items:
+            $ref: '#/components/schemas/Relay_ExternalRtspEndpoint'
+    LensRoleEnum:
+      type: string
+      enum:
+      - VISIBLE
+      - THERMAL
+    Relay_UnregisterNVRWSRequest:
+      type: object
+      description: Request object for unregistering an NVR from the system.
+      properties:
+        nvruuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_AddThirdPartyCameraViaOnvifWSResponse:
+      type: object
+      description: Result of adding a third-party camera via ONVIF.
+      properties:
+        assignedDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        assignmentMsg:
+          type:
+          - string
+          - 'null'
+          description: Why auto-assignment did not happen or failed, when applicable
+        codec:
+          type:
+          - string
+          - 'null'
+          description: Detected codec(s)
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        found:
+          type:
+          - boolean
+          - 'null'
+          description: Whether an ONVIF-streamable camera was found at the address
+        ipAddress:
+          type:
+          - string
+          - 'null'
+          description: Resolved camera IP address
+        macAddress:
+          type:
+          - string
+          - 'null'
+          description: Camera MAC address as reported by ONVIF
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Manufacturer reported by ONVIF
+        model:
+          type:
+          - string
+          - 'null'
+          description: Model reported by ONVIF
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name the camera was (or would be) provisioned with
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: RTSP stream URL derived from ONVIF
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_UpdateNVRWSResponse:
+      type: object
+      description: Response object for updating NVR details.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_GetNVRDetailsWSRequest:
+      type: object
+      description: Request object for getting details for specified NVRs.
+      properties:
+        nvruuids:
+          type:
+          - array
+          - 'null'
+          description: List of NVR UUIDs to get details for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    ThirdPartyCameraPasswordType:
+      type: object
+      description: List of third-party camera passwords
+      properties:
+        notes:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        password:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_DiscoveryWithUnassignedRtspEndpoints:
+      type: object
+      description: Discovery information with unassigned RTSP endpoints available for assignment.
+      properties:
+        codec:
+          type:
+          - string
+          - 'null'
+          description: Codec of the discovered device
+          example: H.264
+        ipAddress:
+          type:
+          - string
+          - 'null'
+          description: IP address of the discovered device
+          example: 192.168.1.100
+        macAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the discovered device
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Manufacturer of the discovered device
+          example: Hikvision
+        model:
+          type:
+          - string
+          - 'null'
+          description: Model of the discovered device
+          example: DS-2CD2142FWD-I
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        unassignedRtspEndpoints:
+          type:
+          - array
+          - 'null'
+          description: List of unassigned RTSP endpoints that are available for assignment. Contains only endpoints with status GOOD and that are not currently assigned.
+          items:
+            $ref: '#/components/schemas/Relay_ExternalRtspEndpoint'
+    Relay_PTZStatusWSResponse:
+      type: object
+      description: Response object containing PTZ status of a camera.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        xpositionPermyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Current X-axis position in permyriad units
+          example: 5000
+        ypositionPermyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Current Y-axis position in permyriad units
+          example: 5000
+        zpositionPermyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Current Z-axis position in permyriad units
+          example: 5000
+    UrlStatusEnum:
+      type: string
+      description: Status of the RTSP URL validation
+      enum:
+      - UNKNOWN
+      - NOT_REACHABLE
+      - NOT_AUTHENTICATED
+      - NOT_SUPPORTED
+      - GOOD
+    Common_devices_GetUptimeWindowsWSResponse:
+      type: object
+      description: Response containing uptime information for a device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        uptimeWindows:
+          type:
+          - array
+          - 'null'
+          description: List of uptime windows for the device
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_ExternalRtspEndpoint:
+      type: object
+      description: External RTSP endpoint configuration for camera streams.
+      properties:
+        lastRtspUrlStatus:
+          $ref: '#/components/schemas/UrlStatusEnum'
+        lensRole:
+          $ref: '#/components/schemas/LensRoleEnum'
+        onvifProfileToken:
+          type:
+          - string
+          - 'null'
+          description: ONVIF media profile token backing this endpoint (multi-sensor grouping); null when unknown
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password for RTSP authentication
+          example: password123
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: RTSP URL for the camera stream
+          example: rtsp://192.168.1.100:554/stream1
+        source:
+          $ref: '#/components/schemas/RtspEndpointSourceEnum'
+        username:
+          type:
+          - string
+          - 'null'
+          description: Username for RTSP authentication
+          example: admin
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_CreateThirdPartyCameraPasswordWSResponse:
+      type: object
+      description: Response object for creating a third-party camera password.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        passwordUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RtspEndpointSourceEnum:
+      type: string
+      enum:
+      - USER
+      - ONVIF
+    Relay_DeleteThirdPartyCameraPasswordWSResponse:
+      type: object
+      description: Response object for deleting a third-party camera password.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_GetMinimalNVRStateListWSResponse:
+      type: object
+      description: Response object containing basic state information about all NVRs in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        nvrstates:
+          type:
+          - array
+          - 'null'
+          description: List of minimal NVR state information for all NVRs in the organization
+          items:
+            $ref: '#/components/schemas/MinimalNVRStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_FindDiscoveriesWithUnassignedRtspEndpointsWSRequest:
+      type: object
+      description: Request object for finding discoveries with unassigned RTSP endpoints.
+    Relay_GetMinimalThirdPartyCameraStateListWSResponse:
+      type: object
+      description: Response object containing basic state information about all third-party cameras in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        thirdPartyCameraStateList:
+          type:
+          - array
+          - 'null'
+          description: List of minimal third-party camera state information for all cameras in the organization
+          items:
+            $ref: '#/components/schemas/Relay_MinimalThirdPartyCameraStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    Relay_GetRtspEndpointsWSRequest:
+      type: object
+      description: Request object for getting RTSP endpoints for a device with the specified MAC address.
+      properties:
+        discoveredCameraMacAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the discovered camera to get RTSP endpoints for
+    Relay_AuthenticateThirdPartyCameraWSRequest:
+      type: object
+      description: Request object for authenticating a third-party camera with RTSP URL.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password to access the RTSP URL. This field MUST be non-empty if trySavedCredentials is false
+          example: password123
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: The RTSP URL of the third-party camera. This RTSP URL should reference a stream that provides H.264 encoded video
+          example: rtsp://192.168.1.100:554/stream1
+        thirdPartyCameraMacAddress:
+          type:
+          - string
+          - 'null'
+          description: The MAC address of the third-party camera this request is operating on
+        trySavedCredentials:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the third-party credentials saved in the account should be used when trying to validate whether the provided RTSP URL is valid
+          example: false
+        username:
+          type:
+          - string
+          - 'null'
+          description: Username to access the RTSP URL. This field MUST be non-empty if trySavedCredentials is false
+          example: admin
+    CameraType:
+      type: object
+      description: List of third-party cameras assigned to the specified NVR
+      properties:
+        archiveRegion:
+          type:
+          - string
+          - 'null'
+        cameraFramerate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        customData:
+          type:
+          - string
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        deviceFacetRadians:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: float
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hardwareId:
+          type:
+          - string
+          - 'null'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        mediaStorageDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mediaStorageDeviceUuidByFacet:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pending:
+          type:
+          - boolean
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        type:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        unregisteredEmailSent:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_IpProbeResultType:
+      type: object
+      description: Result of probing a single IP address during third-party camera discovery.
+      properties:
+        acceptedUsername:
+          type:
+          - string
+          - 'null'
+          description: Username of the credentials that succeeded, if any.
+        codec:
+          type:
+          - string
+          - 'null'
+          description: Video codec(s) the device advertised over ONVIF (e.g. "H264"), if any.
+        ipAddress:
+          type:
+          - string
+          - 'null'
+          description: The probed IP address.
+        macAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address, if known.
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Manufacturer reported over ONVIF, if any.
+        model:
+          type:
+          - string
+          - 'null'
+          description: Model reported over ONVIF, if any.
+        rtspFound:
+          type:
+          - boolean
+          - 'null'
+          description: Whether an RTSP stream URI was obtained for this IP.
+        source:
+          type:
+          - string
+          - 'null'
+          description: 'How the IP was found: MULTICAST (WS-Discovery) or PORT_SCAN (554 open).'
+        status:
+          type:
+          - string
+          - 'null'
+          description: 'ONVIF probe outcome: GOOD, NOT_SUPPORTED, NOT_AUTHENTICATED, NO_ONVIF, NOT_REACHABLE.'
+        statusDetail:
+          type:
+          - string
+          - 'null'
+          description: Human-readable detail about the outcome — especially why a device that responded to ONVIF wasn't usable.
+    Relay_ManualDiscoverThirdPartyCameraWSRequest:
+      type: object
+      description: Request object for manually discovering a third-party camera with RTSP URL.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password to access the RTSP URL. This field MUST be non-empty if trySavedCredentials is false
+          example: password123
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: The RTSP URL of the third-party camera being manually added. This RTSP URL should reference a stream that provides H.264 encoded video
+          example: rtsp://192.168.1.100:554/stream1
+        trySavedCredentials:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the third-party credentials saved in the account should be used when trying to validate whether the provided RTSP URL is valid
+          example: false
+        username:
+          type:
+          - string
+          - 'null'
+          description: Username to access the RTSP URL. This field MUST be non-empty if trySavedCredentials is false
+          example: admin
+    Relay_PTZStatusWSRequest:
+      type: object
+      description: Request object for getting PTZ status of a camera.
+      properties:
+        thirdPartyCameraUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Common_devices_GetUptimeWindowsWSRequest:
+      type: object
+      description: Request to get uptime information for a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds since epoch
+          example: 1643673600000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds since epoch
+          example: 1640995200000
+    Relay_UpdateNVRWSRequest:
+      type: object
+      description: Request object for updating NVR details.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the NVR
+          example: Primary NVR for main building
+        descriptionUpdated:
+          type:
+          - boolean
+          - 'null'
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        directionRadiansUpdated:
+          type:
+          - boolean
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        floorNumberUpdated:
+          type:
+          - boolean
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        latitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        longitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the NVR
+          example: Main NVR
+        nameUpdated:
+          type:
+          - boolean
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_DeleteThirdPartyCameraDiscoveryWSResponse:
+      type: object
+      description: Request object for creating a third-party camera password.
+    FullDeviceStateType:
+      type: object
+      description: Detailed state information for the specified NVR
+      properties:
+        afSupport:
+          type:
+          - boolean
+          - 'null'
+        audioSupported:
+          type:
+          - boolean
+          - 'null'
+        baseVideoOperationUri:
+          type:
+          - string
+          - 'null'
+        connectionStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        connectionTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        externalIPAddress:
+          type:
+          - string
+          - 'null'
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        firmwareUpdateInProgress:
+          type:
+          - boolean
+          - 'null'
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        healthStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        healthStatusDetails:
+          $ref: '#/components/schemas/DeviceHealthStatusDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        latestFirmwareVersion:
+          type:
+          - string
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        liveStreamShared:
+          type:
+          - boolean
+          - 'null'
+        liveStreamsSharedCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        maxZoomPercent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        mediaRegion:
+          type:
+          - string
+          - 'null'
+        mediaStorageDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        onCameraState:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+        onCloudState:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        region:
+          type:
+          - string
+          - 'null'
+        secondaryLanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        ssid:
+          type:
+          - string
+          - 'null'
+        stateUpdatedTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        supportedFacets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DeviceFacetEnum'
+          uniqueItems: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        versionsBehind:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        wifiApMac:
+          type:
+          - string
+          - 'null'
+        wifiBars:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Relay_GetMinimalNVRStateListWSRequest:
+      type: object
+      description: Request object for getting basic state information about all NVRs in the organization.
+    Common_devices_RebootDeviceWSResponse_RebootResult:
+      type: string
+      description: Result of the reboot operation
+      enum:
+      - REBOOT_SENT
+      - DEVICE_OFFLINE
+    Relay_CreateThirdPartyCameraPasswordWSRequest:
+      type: object
+      description: Request object for creating a third-party camera password.
+      properties:
+        notes:
+          type:
+          - string
+          - 'null'
+          description: Notes for the password entry
+          example: Default admin password
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password for the third-party camera
+          example: password123
+        username:
+          type:
+          - string
+          - 'null'
+          description: Username for the third-party camera
+          example: admin
+    Relay_MinimalThirdPartyCameraStateType:
+      type: object
+      description: Minimal third-party camera state information.
+      properties:
+        assignedNVRUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        assignedRelayCameraUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        codec:
+          type:
+          - string
+          - 'null'
+          description: Codec used by the third-party camera
+          example: H.264
+        connectionStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        discoveredByDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        externalIPAddress:
+          type:
+          - string
+          - 'null'
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        firmwareUpdateInProgress:
+          type:
+          - boolean
+          - 'null'
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        healthStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        healthStatusDetails:
+          $ref: '#/components/schemas/DeviceHealthStatusDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        lastRtspUrlStatus:
+          $ref: '#/components/schemas/UrlStatusEnum'
+        lastVisibleLocationMs:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            description: Map of location UUID to last time this third-party device was known to be visible
+          description: Map of location UUID to last time this third-party device was known to be visible
+        lastVisibleMs:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            description: Map of device UUID to last time this third-party device was known to be visible
+          description: Map of device UUID to last time this third-party device was known to be visible
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        liveStreamShared:
+          type:
+          - boolean
+          - 'null'
+        liveStreamsSharedCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: Manufacturer of the third-party camera
+          example: Hikvision
+        mediaRegion:
+          type:
+          - string
+          - 'null'
+        mediaStorageDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        model:
+          type:
+          - string
+          - 'null'
+          description: Model of the third-party camera
+          example: DS-2CD2142FWD-I
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        region:
+          type:
+          - string
+          - 'null'
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: RTSP URL for the third-party camera stream
+          example: rtsp://192.168.1.100:554/stream1
+        secondaryLanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        ssid:
+          type:
+          - string
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        supportedFacets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DeviceFacetEnum'
+          uniqueItems: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        wifiApMac:
+          type:
+          - string
+          - 'null'
+        wifiBars:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Relay_GetMinimalThirdPartyCameraStateListWSRequest:
+      type: object
+      description: Request object for getting basic state information about all third-party cameras in the organization.
+    Relay_UnassignThirdPartyCameraWSResponse:
+      type: object
+      description: Response object for unassigning a third-party camera from an NVR.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_PTZMoveWSRequest:
+      type: object
+      description: Request object for moving a PTZ camera.
+      properties:
+        thirdPartyCameraUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        xmovementPermyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: X-axis movement in permyriad units
+          example: 1000
+        ymovementPermyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Y-axis movement in permyriad units
+          example: 1000
+        zmovementPermyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Z-axis movement in permyriad units
+          example: 1000
+    Relay_FindDiscoveriesWithUnassignedRtspEndpointsWSResponse:
+      type: object
+      description: Response object containing discoveries with unassigned RTSP endpoints.
+      properties:
+        discoveries:
+          type:
+          - array
+          - 'null'
+          description: List of discoveries with unassigned RTSP endpoints
+          items:
+            $ref: '#/components/schemas/Relay_DiscoveryWithUnassignedRtspEndpoints'
+    Relay_AssignThirdPartyCameraToRelayCameraWSResponse:
+      type: object
+      description: Response object for assigning a third-party camera to a relay camera.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_GetThirdPartyCameraDiscoveryScanStatusWSResponse:
+      type: object
+      description: Progress of the current/most-recent third-party camera discovery run.
+      properties:
+        camerasFound:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of cameras discovered so far in this run.
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        hasRun:
+          type:
+          - boolean
+          - 'null'
+          description: Whether discovery has ever been run for this org. When false, all other fields are unset/zero.
+        inProgress:
+          type:
+          - boolean
+          - 'null'
+          description: Whether a discovery run is still in progress (at least one Relay scan outstanding and the run is not stale).
+        nvrCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of Relays (NVRs) this run is scanning.
+        nvrProgress:
+          type:
+          - array
+          - 'null'
+          description: Per-Relay live scan progress and per-IP probe results (for troubleshooting).
+          items:
+            $ref: '#/components/schemas/Relay_NvrScanProgressType'
+        pendingCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of Relays whose scan has not yet finished. Zero means the run is complete.
+        scanId:
+          type:
+          - string
+          - 'null'
+          description: Opaque id of the run, so clients can tell if a newer run superseded theirs.
+        startedMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Epoch millis when the run started.
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_UpdateNVRFirmwareWSResponse:
+      type: object
+      description: Response object for updating NVR firmware.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/Relay_UpdateFirmwareWSStatus'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_GetThirdPartyCameraPasswordsWSRequest:
+      type: object
+      description: Request object for getting third-party camera passwords.
+    Relay_RebootNVRVWSRequest:
+      type: object
+      description: Request object for rebooting an NVR.
+      properties:
+        nvrUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_UnregisterNVRWSResponse:
+      type: object
+      description: Response object for unregistering an NVR from the system.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        responseStatus:
+          $ref: '#/components/schemas/WebResponseStatusEnum'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_UpdateNVRFirmwareWSRequest:
+      type: object
+      description: Request object for updating NVR firmware.
+      properties:
+        nvruuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_AssignThirdPartyCameraToNVRWSResponse:
+      type: object
+      description: Response object for assigning a third-party camera to an NVR.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    Relay_AssignThirdPartyMultiFacetCameraToNVRWSRequest:
+      type: object
+      description: Request to assign a multi-sensor third-party camera to an NVR as one multi-facet camera.
+      properties:
+        discoveredCameraMacAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the discovered multi-sensor camera to assign
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the multi-facet third-party camera
+          example: Loading Dock Bispectrum
+        nvruuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rtspUrls:
+          type:
+          - array
+          - 'null'
+          description: Ordered RTSP URLs, one per sensor/lens; index 0 -> VIDEO_0 (primary), index 1 -> VIDEO_1, ...
+          items:
+            type:
+            - string
+            - 'null'
+            description: Ordered RTSP URLs, one per sensor/lens; index 0 -> VIDEO_0 (primary), index 1 -> VIDEO_1, ...
+    Relay_ExecuteThirdPartyCameraDiscoveryWSRequest:
+      type: object
+      description: Request object for executing third-party camera discovery.
+      properties:
+        additionalScanCidrs:
+          type:
+          - array
+          - 'null'
+          description: Optional list of additional IPv4 CIDRs (e.g. "10.5.0.0/24") to scan for cameras on routed subnets that the NVR is not directly attached to. When empty (the default), discovery only covers the NVR's own directly-attached subnets. Multicast/WS-Discovery cannot cross routers, so these subnets are covered by an RTSP port scan followed by unicast ONVIF probes. At most 8 entries, each /16 or smaller.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Optional list of additional IPv4 CIDRs (e.g. "10.5.0.0/24") to scan for cameras on routed subnets that the NVR is not directly attached to. When empty (the default), discovery only covers the NVR's own directly-attached subnets. Multicast/WS-Discovery cannot cross routers, so these subnets are covered by an RTSP port scan followed by unicast ONVIF probes. At most 8 entries, each /16 or smaller.
+        deviceFilter:
+          type:
+          - array
+          - 'null'
+          description: Set of device UUIDs to filter discovery by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        locationFilter:
+          type:
+          - array
+          - 'null'
+          description: Set of location UUIDs to filter discovery by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+    Relay_GetThirdPartyCameraPasswordsWSResponse:
+      type: object
+      description: Response object containing third-party camera passwords.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        passwords:
+          type:
+          - array
+          - 'null'
+          description: List of third-party camera passwords
+          items:
+            $ref: '#/components/schemas/ThirdPartyCameraPasswordType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    TimeWindowSeconds:
+      type: object
+      description: List of uptime windows for the device
+      properties:
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    DiscoveredThirdPartyCameraType:
+      type: object
+      description: The imported (discovered) third-party camera. This field is populated only if the RTSP URL specified in the import resulted in creation of a new discovery or an addition of a RTSP URL to an existing discovery. It is null, if the RTSP URL already existed or if the import was not successful.
+      properties:
+        codec:
+          type:
+          - string
+          - 'null'
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ipAddress:
+          type:
+          - string
+          - 'null'
+        lastVisibleMs:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        macAddress:
+          type:
+          - string
+          - 'null'
+        manufacturer:
+          type:
+          - string
+          - 'null'
+        model:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        onvifPassword:
+          type:
+          - string
+          - 'null'
+        onvifProfileToken:
+          type:
+          - string
+          - 'null'
+        onvifUsername:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        password:
+          type:
+          - string
+          - 'null'
+        rtspEndpoints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RtspEndpoint'
+          uniqueItems: true
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        username:
+          type:
+          - string
+          - 'null'
+    Relay_GetThirdPartyCameraDiscoveryScanStatusWSRequest:
+      type: object
+      description: Request object for getting the progress of the current/most-recent third-party camera discovery run in the organization.
+    Relay_UnassignThirdPartyCameraWSRequest:
+      type: object
+      description: Request object for unassigning a third-party camera from an NVR.
+      properties:
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: RTSP URL of the camera to unassign
+          example: rtsp://192.168.1.100:554/stream1
+        thirdPartyCameraMacAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the third-party camera to unassign
+        thirdPartyCameraUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_NvrScanProgressType:
+      type: object
+      description: Live scan progress for a single Relay (NVR) within a discovery run.
+      properties:
+        camerasFound:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Cameras discovered by this Relay so far.
+        currentIp:
+          type:
+          - string
+          - 'null'
+          description: IP currently being probed, if any.
+        errorMsg:
+          type:
+          - string
+          - 'null'
+          description: Error message if this Relay's scan failed.
+        ipResults:
+          type:
+          - array
+          - 'null'
+          description: Per-IP probe results for troubleshooting.
+          items:
+            $ref: '#/components/schemas/Relay_IpProbeResultType'
+        ipResultsTruncated:
+          type:
+          - boolean
+          - 'null'
+          description: True if ipResults was capped (more IPs were probed than are listed).
+        ipsProbed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: IPs probed so far in the current phase.
+        ipsTotal:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: IPs to ONVIF-probe in the current phase (0 while the phase is opaque, e.g. nmap).
+        nvrUuid:
+          type:
+          - string
+          - 'null'
+          description: Relay (NVR) uuid this progress is for.
+        phase:
+          type:
+          - string
+          - 'null'
+          description: DISCOVERING | PORT_SCANNING | PROBING | COMPLETE | FAILED.
+        scannedCidrs:
+          type:
+          - array
+          - 'null'
+          description: Subnets/CIDRs being scanned (meaningful during the opaque port-scan phase).
+          items:
+            type:
+            - string
+            - 'null'
+            description: Subnets/CIDRs being scanned (meaningful during the opaque port-scan phase).
+        updatedMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Epoch millis this progress was last updated.
+    Relay_GetFullNVRStateWSResponse:
+      type: object
+      description: Response object containing detailed information about the state of a specified NVR.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        fullNVRState:
+          $ref: '#/components/schemas/FullDeviceStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    MinimalNVRStateType:
+      type: object
+      description: List of minimal NVR state information for all NVRs in the organization
+      properties:
+        connectionStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        externalIPAddress:
+          type:
+          - string
+          - 'null'
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        firmwareUpdateInProgress:
+          type:
+          - boolean
+          - 'null'
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        healthStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        healthStatusDetails:
+          $ref: '#/components/schemas/DeviceHealthStatusDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        liveStreamShared:
+          type:
+          - boolean
+          - 'null'
+        liveStreamsSharedCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        mediaRegion:
+          type:
+          - string
+          - 'null'
+        mediaStorageDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        numThirdPartyCamerasAssigned:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        numThirdPartyCamerasSupported:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        region:
+          type:
+          - string
+          - 'null'
+        secondaryLanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        ssid:
+          type:
+          - string
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        supportedFacets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DeviceFacetEnum'
+          uniqueItems: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        wifiApMac:
+          type:
+          - string
+          - 'null'
+        wifiBars:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    DeviceStatusEnum:
+      type: string
+      enum:
+      - RED
+      - ORANGE
+      - YELLOW
+      - GREEN
+    Relay_ExecuteThirdPartyCameraDiscoveryWSResponse:
+      type: object
+      description: Response object for executing third-party camera discovery.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scanId:
+          type:
+          - string
+          - 'null'
+          description: Id of the discovery run that was started, for polling progress via getThirdPartyCameraDiscoveryScanStatus. Null if no run was started.
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_AuthenticateThirdPartyCameraWSResponse:
+      type: object
+      description: Response object for authenticating a third-party camera with RTSP URL.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        result:
+          $ref: '#/components/schemas/DiscoveredThirdPartyCameraType'
+        rtspUrlStatus:
+          $ref: '#/components/schemas/UrlStatusEnum'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_GetFullNVRStateWSRequest:
+      type: object
+      description: Request object for getting detailed information about the state of a specified NVR.
+      properties:
+        force:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to force refresh the NVR state
+          example: false
+        nvruuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    Relay_PTZMoveWSResponse:
+      type: object
+      description: Response object for moving a PTZ camera.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Relay_AssignThirdPartyCameraToRelayCameraWSRequest:
+      type: object
+      description: Request object for assigning a third-party camera to a relay camera.
+      properties:
+        discoveredCameraMacAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the discovered camera to assign
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the third-party camera
+          example: Front Door Camera
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+          description: RTSP URL for the camera stream
+          example: rtsp://192.168.1.100:554/stream1
+    Relay_AddThirdPartyCameraViaOnvifWSRequest:
+      type: object
+      description: Add a third-party camera via ONVIF from an IP address and credentials.
+      properties:
+        autoAssign:
+          type:
+          - boolean
+          - 'null'
+          description: Provision (assign to the NVR) automatically after a successful probe. Defaults to false (probe-then-confirm).
+        ipAddress:
+          type:
+          - string
+          - 'null'
+          description: IPv4 address of the camera to probe
+          example: 10.5.4.20
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Camera name. When blank, derived from the ONVIF manufacturer and model.
+        nvrUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        password:
+          type:
+          - string
+          - 'null'
+          description: ONVIF password to try first (optional)
+        trySavedCredentials:
+          type:
+          - boolean
+          - 'null'
+          description: Also try the org's saved third-party camera credentials. Defaults to true.
+        username:
+          type:
+          - string
+          - 'null'
+          description: ONVIF username to try first (optional)
+    Relay_DeleteThirdPartyCameraDiscoveryWSRequest:
+      type: object
+      description: Request object for deleting a third-party camera discovery.
+      properties:
+        thirdPartyCameraMacAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the third-party camera to delete
+    Relay_UpdateFirmwareWSStatus:
+      type: string
+      description: Status enumeration for firmware update web service responses.
+      enum:
+      - ALREADY_ON_THE_LATEST_FIRMWARE
+      - DEVICE_ON_A_SPECIAL_FIRMWARE_AND_CANNOT_BE_UPDATED
+      - UPDATE_STARTED
+      - UNABLE_TO_REACH_DEVICE
+      - FIRMWARE_UPDATE_ALREADY_IN_PROGESS
+      - DEVICE_NOT_AUTHROIZED
+    RtspEndpoint:
+      type: object
+      properties:
+        audioSupported:
+          type:
+          - boolean
+          - 'null'
+        lastRtspUrlStatus:
+          $ref: '#/components/schemas/UrlStatusEnum'
+        lensRole:
+          $ref: '#/components/schemas/LensRoleEnum'
+        onvifProfileToken:
+          type:
+          - string
+          - 'null'
+        rtspUrl:
+          type:
+          - string
+          - 'null'
+        source:
+          $ref: '#/components/schemas/RtspEndpointSourceEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_GetAssignedThirdPartyCamerasWSRequest:
+      type: object
+      description: Request object for getting third-party cameras assigned to a specific NVR.
+      properties:
+        nvruuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WebResponseStatusEnum:
+      type: string
+      description: Status of the unregister operation
+      enum:
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - SAME_PASSWORD
+      - USER_EXISTS
+      - USER_NOT_FOUND
+      - DEVICE_NOT_FOUND
+      - POLICY_NOT_FOUND
+      - LOCATION_NOT_FOUND
+      - ORG_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
+    Relay_NVRExternalType:
+      type: object
+      description: External NVR type.
+      properties:
+        archiveRegion:
+          type:
+          - string
+          - 'null'
+        cameraFramerate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        customData:
+          type:
+          - string
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        deviceFacetRadians:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: float
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        mediaStorageDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mediaStorageDeviceUuidByFacet:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        pending:
+          type:
+          - boolean
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        primaryLinkSpeedMbps:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        secondaryLinkSpeedMbps:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        totalStreamingPixels:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        unregisteredEmailSent:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Relay_ManualDiscoverThirdPartyCameraWSResponse:
+      type: object
+      description: Response object for manually discovering a third-party camera with RTSP URL.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        result:
+          $ref: '#/components/schemas/DiscoveredThirdPartyCameraType'
+        rtspUrlStatus:
+          $ref: '#/components/schemas/UrlStatusEnum'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DeviceHealthStatusDetailsEnum:
+      type: string
+      enum:
+      - DISCONNECTED
+      - FIRMWARE_BEHIND
+      - NOT_RECORDING
+      - LINK_SPEED_LOW
+      - MALFUNCTIONING_MODULES
+      - CALIBRATING
+      - DELAYED
+      - NONE
+    Relay_DeleteThirdPartyCameraPasswordWSRequest:
+      type: object
+      description: Request object for deleting a third-party camera password.
+      properties:
+        passwordUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

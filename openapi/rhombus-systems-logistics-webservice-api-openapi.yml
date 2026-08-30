@@ -1,0 +1,904 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Logistics Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Logistics Webservice
+paths:
+  /api/logistics/getActiveRMAs:
+    post:
+      description: Get device uuids for active RMAs
+      operationId: getActiveRMAs
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Internal_GetActiveRMAsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Internal_GetActiveRMAsWSResponse'
+          description: OK
+      summary: Get device uuids for active RMAs
+      tags:
+      - Logistics Webservice
+  /api/logistics/getRMAs:
+    post:
+      description: Get RMAs
+      operationId: getRMAs
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Logistics_GetRMAsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logistics_GetRMAsWSResponse'
+          description: OK
+      summary: Get RMAs
+      tags:
+      - Logistics Webservice
+  /api/logistics/getShipments:
+    post:
+      description: Get shipments
+      operationId: getShipments
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Logistics_GetShipmentsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logistics_GetShipmentsWSResponse'
+          description: OK
+      summary: Get shipments
+      tags:
+      - Logistics Webservice
+  /api/logistics/getWarrantyApprovedRMAs:
+    post:
+      description: Get warranty approved RMAs
+      operationId: getWarrantyApprovedRMAs
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Internal_GetWarrantyApprovedRMAsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Internal_GetWarrantyApprovedRMAsWSResponse'
+          description: OK
+      summary: Get warranty approved RMAs
+      tags:
+      - Logistics Webservice
+components:
+  schemas:
+    RMAStatusEnum:
+      type: string
+      enum:
+      - INITIATED
+      - PENDING
+      - APPROVED
+      - INPROGRESS
+      - COMPLETE
+      - RETURN
+      - STOLEN
+      - OPERATIONAL
+      - FULFILLMENT_ERROR
+    CustomerShipmentType:
+      type: object
+      description: List of customer shipments
+      properties:
+        ait-aitTrackingNumber:
+          type:
+          - string
+          - 'null'
+        ait-carrierTrackingNumber:
+          type:
+          - string
+          - 'null'
+        ait-depositorOrderNumber:
+          type:
+          - string
+          - 'null'
+        ait-destinationAddress:
+          type:
+          - string
+          - 'null'
+        ait-isIngramDistributorShipment:
+          type:
+          - boolean
+          - 'null'
+        ait-shipmentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ait-shippedItems:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShippedItemType'
+        interchangeControlNumber:
+          type:
+          - string
+          - 'null'
+        lastStateUpdateSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        rhombus-additionalEmails:
+          type:
+          - string
+          - 'null'
+        rhombus-chosenCarrierName:
+          type:
+          - string
+          - 'null'
+        rhombus-claimKeyToLicenseMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+            uniqueItems: true
+        rhombus-claimKeyToLicenseMapV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/SalesforceLicenseStartDateTimeAndEndDateTime'
+        rhombus-customerEmails:
+          type:
+          - string
+          - 'null'
+        rhombus-customerName:
+          type:
+          - string
+          - 'null'
+        rhombus-orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-partnerOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-purchaseOrderNumber:
+          type:
+          - string
+          - 'null'
+        rhombus-rmaReturnTrackingNumber:
+          type:
+          - string
+          - 'null'
+        rhombus-rmaUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-rmaUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-salesForceOpportunityId:
+          type:
+          - string
+          - 'null'
+        rhombus-zendeskTicketNumber:
+          type:
+          - string
+          - 'null'
+        shipmentCategory:
+          $ref: '#/components/schemas/CustomerShipmentCategoryEnum'
+        shipmentEmailState:
+          $ref: '#/components/schemas/CustomerShipmentEmailStateEnum'
+        shipmentState:
+          $ref: '#/components/schemas/CustomerShipmentStateEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Internal_GetWarrantyApprovedRMAsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        zendeskTickets:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          uniqueItems: true
+    AdvancedRMAType:
+      type: object
+      properties:
+        falseReport:
+          type:
+          - boolean
+          - 'null'
+        invoiceNeeded:
+          type:
+          - boolean
+          - 'null'
+        knownIssue:
+          type:
+          - boolean
+          - 'null'
+        managerialApproved:
+          type:
+          - boolean
+          - 'null'
+        rctpPartnerRequested:
+          type:
+          - boolean
+          - 'null'
+        rctpPartnerUuid:
+          type:
+          - string
+          - 'null'
+        rectified:
+          type:
+          - boolean
+          - 'null'
+    Logistics_GetRMAsWSResponse:
+      type: object
+      description: Response object containing RMAs (Return Merchandise Authorizations).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        rmaList:
+          type:
+          - array
+          - 'null'
+          description: List of RMAs (Return Merchandise Authorizations)
+          items:
+            $ref: '#/components/schemas/RMAType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Logistics_GetShipmentsWSResponse:
+      type: object
+      description: Response object containing shipments within the specified time range.
+      properties:
+        customerShipmentList:
+          type:
+          - array
+          - 'null'
+          description: List of customer shipments within the specified time range
+          items:
+            $ref: '#/components/schemas/CustomerShipmentType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Logistics_GetShipmentsWSRequest:
+      type: object
+      description: Request object for getting shipments within a time range.
+      properties:
+        endTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in seconds (Unix timestamp)
+          example: 1641081600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds (Unix timestamp)
+          example: 1640995200
+    ShippedItemType:
+      type:
+      - object
+      - 'null'
+      properties:
+        partNumber:
+          type:
+          - string
+          - 'null'
+        quantityShipped:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        serialNumber:
+          type:
+          - string
+          - 'null'
+    ErrorCodeOrMessageEnum:
+      type: string
+      enum:
+      - BADGE_READER_UNKNOWN
+      - DEAD_OR_MISSING_BATTERY
+      - DOORBELL_BUTTON_ISSUE
+      - ERROR_2
+      - ERROR_4
+      - ERROR_5
+      - ERROR_24
+      - ERROR_28
+      - ERROR_30
+      - ERROR_39
+      - ERROR_74
+      - ERROR_84
+      - FOREIGN_HARDWARE
+      - BAD_SD_BLOCKS
+      - NEVER_LEFT_BUSY_STATE
+      - HARDWARE_DAMAGE
+      - HEAVY_HARDWARE_DAMAGE
+      - WATER_DAMAGE
+      - VIDEO_HARDWARE_FAILURE
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - LIGHT_SENSOR
+      - SD_CARD_UNKOWN
+      - SD_CARD_READER_BROKEN
+      - POWER_ISSUES
+      - RS485_ISSUE
+      - CUT_FILTER
+      - QUALITY_OR_PERFORMANCE
+      - NETWORK_ISSUES
+      - UNKNOWN
+      - ILLEGIBLE_SERIAL_COMM
+      - NO_SERIAL_COMM
+      - COSMETIC_DAMAGE
+      - FIRMWARE_REFLASH_REQUIRED
+      - IR_RING_OVERHEATED
+      - REGISTERED_SENSOR
+      - UNDISCOVERED_ISSUE
+      - FOCUS_ISSUES
+      - POTENTIAL_MANUFACTURING_DEFECT
+      - NO_FAULT_FOUND
+      - FDT_COMMAND_LINE_ERROR
+      - KERNEL_PANIC
+      - GET_DTB_FAILED
+      - BOOTS_TO_AMBOOT
+    SalesforceLicenseStartDateTimeAndEndDateTime:
+      type:
+      - object
+      - 'null'
+      properties:
+        contractEndDateTime:
+          type:
+          - string
+          - 'null'
+        contractStartDateTime:
+          type:
+          - string
+          - 'null'
+    CustomerShipmentCategoryEnum:
+      type: string
+      enum:
+      - RMA
+      - PURCHASE_ORDER
+      - TRIAL
+      - UNKNOWN
+    Internal_GetWarrantyApprovedRMAsWSRequest:
+      type: object
+    CustomerShipmentStateEnum:
+      type: string
+      enum:
+      - CREATED
+      - SHIPPED
+      - DELIVERED
+      - RETURN_REGISTERED
+      - RETURN_SENT
+      - RETURN_DELIVERED
+      - COMPLETE
+      - UNKNOWN
+    ShipmentMethodEnum:
+      type: string
+      enum:
+      - GROUND
+      - EXPEDITED
+      - OVERNIGHT
+    RMARequest:
+      type: object
+      properties:
+        formSubmitted:
+          type:
+          - boolean
+          - 'null'
+        requestUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rmaOpportunityId:
+          type:
+          - string
+          - 'null'
+        salesforceAccountId:
+          type:
+          - string
+          - 'null'
+        salesforcePartnerContactId:
+          type:
+          - string
+          - 'null'
+        salesforcePartnerId:
+          type:
+          - string
+          - 'null'
+    Internal_GetActiveRMAsWSResponse:
+      type: object
+      properties:
+        activeRmasList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Internal_GetActiveRMAsWSRequest:
+      type: object
+    Logistics_GetRMAsWSRequest:
+      type: object
+      description: Request object for getting RMAs (Return Merchandise Authorizations).
+    CustomerShipmentEmailStateEnum:
+      type: string
+      enum:
+      - SHIPPING_CONFIRMATION_SUCCESS
+      - SHIPPING_CONFIRMATION_FAILURE
+      - SHIPPING_SHIPPED_SUCCESS
+      - SHIPPING_SHIPPED_FAILURE
+      - UNKNOWN
+    RMAType:
+      type: object
+      description: List of RMAs (Return Merchandise Authorizations)
+      properties:
+        address:
+          type:
+          - string
+          - 'null'
+        advancedRMAs:
+          $ref: '#/components/schemas/AdvancedRMAType'
+        briefDescription:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        costInDollars:
+          type:
+          - number
+          - 'null'
+          format: float
+        country:
+          type:
+          - string
+          - 'null'
+        customerUnresponsive:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        errorCode:
+          $ref: '#/components/schemas/ErrorCodeOrMessageEnum'
+        failureDiagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        fedExReturnLabelSent:
+          type:
+          - boolean
+          - 'null'
+        finalNotes:
+          type:
+          - string
+          - 'null'
+        hardwareUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        initialFirmwareVersion:
+          type:
+          - string
+          - 'null'
+        initiatedBy:
+          type:
+          - string
+          - 'null'
+        inventoryNeeded:
+          type:
+          - string
+          - 'null'
+        inventoryNeededMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        isRefurbished:
+          type:
+          - boolean
+          - 'null'
+        knownIssue:
+          type:
+          - boolean
+          - 'null'
+        lastRecordedFirmwareVersion:
+          type:
+          - string
+          - 'null'
+        lastUpdatedAtSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUpdatedBy:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        postalCode:
+          type:
+          - string
+          - 'null'
+        prevShippingInfoUsedBy:
+          type:
+          - string
+          - 'null'
+        prevShippingInfoUsedByAtSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        proactiveReplacement:
+          type:
+          - boolean
+          - 'null'
+        rctpPartnerOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        recipientName:
+          type:
+          - string
+          - 'null'
+        recipientPhoneNumber:
+          type:
+          - string
+          - 'null'
+        replacementCourier:
+          type:
+          - string
+          - 'null'
+        replacementHardwareUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        replacementTrackingNumber:
+          type:
+          - string
+          - 'null'
+        requesterEmailAddress:
+          type:
+          - string
+          - 'null'
+        returnLabelRequestedUpdatedAtSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        returnLabelSent:
+          type:
+          - boolean
+          - 'null'
+        returnLabelSentUpdatedAtSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        returnTrackingNumber:
+          type:
+          - string
+          - 'null'
+        rmaRequest:
+          $ref: '#/components/schemas/RMARequest'
+        rmaRequestUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sdCardReplaced:
+          type:
+          - boolean
+          - 'null'
+        shipmentMethod:
+          $ref: '#/components/schemas/ShipmentMethodEnum'
+        shipmentRequested:
+          type:
+          - boolean
+          - 'null'
+        shipmentRequestedBy:
+          type:
+          - string
+          - 'null'
+        shipmentRequestedUpdatedAtSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        shipmentSent:
+          type:
+          - boolean
+          - 'null'
+        shipmentSentUpdatedAtSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        skipAutoRegistration:
+          type:
+          - boolean
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/RMAStatusEnum'
+        storageCid:
+          type:
+          - string
+          - 'null'
+        street:
+          type:
+          - string
+          - 'null'
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warehouseInventoryNeeded:
+          type:
+          - boolean
+          - 'null'
+        zenDeskTicketAssigneeEmail:
+          type:
+          - string
+          - 'null'
+        zenDeskTicketSubject:
+          type:
+          - string
+          - 'null'
+        zendeskTicket:
+          type:
+          - integer
+          - 'null'
+          format: int32
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

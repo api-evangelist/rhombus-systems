@@ -1,0 +1,2364 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus AudioGateway Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: AudioGateway Webservice
+paths:
+  /api/audiogateway/delete:
+    post:
+      description: Remove an audio gateway from organization
+      operationId: deleteAudioGateway
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_DeleteAudioGatewayWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_DeleteAudioGatewayWSResponse'
+          description: OK
+      summary: Delete audio gateway
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/getAudioSeekpoints:
+    post:
+      description: Get audio seek points
+      operationId: getAudioSeekpoints
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_GetAudioSeekpointsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_GetAudioSeekpointsWSResponse'
+          description: OK
+      summary: Get audio seek points
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/getConfig:
+    post:
+      description: Get an audio gateway config
+      operationId: getAudioGatewayConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_GetAudioGatewayConfigWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_GetAudioGatewayConfigWSResponse'
+          description: OK
+      summary: Get audio gateway config
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/getFullAudioGatewayState:
+    post:
+      description: Get detailed information about state of specified audio gateway
+      operationId: getFullAudioGatewayState
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_GetFullAudioGatewayStateWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_GetFullAudioGatewayStateWSResponse'
+          description: OK
+      summary: Get full audio gateway state
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/getMediaUris:
+    post:
+      description: Get media uris for audio gateway to retrieve footage
+      operationId: getAudioGatewayMediaUris
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_GetMediaUrisWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_GetMediaUrisWSResponse'
+          description: OK
+      summary: Get media URIs for audio gateway
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/getMinimalAudioGatewayStateList:
+    post:
+      description: Get basic state information for all audio gateways
+      operationId: getMinimalAudioGatewayStateList
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_GetMinimalAudioGatewayStatesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_GetMinimalAudioGatewayStatesWSResponse'
+          description: OK
+      summary: Get minimal audio gateway state list
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/getPresenceWindows:
+    post:
+      description: Get stored video information for an audio gateway
+      operationId: getAudioGatewayPresenceWindows
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Common_devices_GetPresenceWindowsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Common_devices_GetPresenceWindowsWSResponse'
+          description: OK
+      summary: Get audio gateway presence windows
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/getUptimeWindows:
+    post:
+      description: Get uptime information for an audio gateway
+      operationId: getAudioGatewayUptimeWindows
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Common_devices_GetUptimeWindowsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Common_devices_GetUptimeWindowsWSResponse'
+          description: OK
+      summary: Get audio gateway uptime windows
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/updateConfig:
+    post:
+      description: Update config for audio gateway
+      operationId: updateAudioGatewayConfig
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_UpdateAudioGatewayConfigWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_UpdateAudioGatewayConfigWSResponse'
+          description: OK
+      summary: Update audio gateway config
+      tags:
+      - AudioGateway Webservice
+  /api/audiogateway/updateDetails:
+    post:
+      description: 'Update details for audio gateway. Note: uuid is a required field'
+      operationId: updateAudioGatewayDetails
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audiogateway_UpdateAudioGatewayDetailsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audiogateway_UpdateAudioGatewayDetailsWSResponse'
+          description: OK
+      summary: Update audio gateway details
+      tags:
+      - AudioGateway Webservice
+components:
+  schemas:
+    LEDModeEnum:
+      type: string
+      enum:
+      - LED_OFF
+      - LED_RED_SOLID
+      - LED_GREEN_SOLID
+      - LED_ORANGE_SOLID
+      - LED_RED_BLINK
+      - LED_GREEN_BLINK
+      - LED_ORANGE_BLINK
+      - LED_NORMAL
+    Common_devices_GetUptimeWindowsWSResponse:
+      type: object
+      description: Response containing uptime information for a device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        uptimeWindows:
+          type:
+          - array
+          - 'null'
+          description: List of uptime windows for the device
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Common_devices_GetPresenceWindowsWSResponse:
+      type: object
+      description: Response containing stored video information for a device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        presenceWindows:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of presence types to their time windows
+            items:
+              $ref: '#/components/schemas/TimeWindowSeconds'
+          description: Map of presence types to their time windows
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audiogateway_DeleteAudioGatewayWSResponse:
+      type: object
+      description: Response indicating the result of deleting an audio gateway.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        responseStatus:
+          $ref: '#/components/schemas/WebResponseStatusEnum'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audiogateway_GetFullAudioGatewayStateWSRequest:
+      type: object
+      description: Request to get detailed information about the state of a specified audio gateway.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        force:
+          type:
+          - boolean
+          - 'null'
+          description: Force refresh of the device state
+          example: false
+    MinimalAudioGatewayStateType:
+      type: object
+      description: List of minimal audio gateway state information
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        connectionStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        externalIPAddress:
+          type:
+          - string
+          - 'null'
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        firmwareUpdateInProgress:
+          type:
+          - boolean
+          - 'null'
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        healthStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        healthStatusDetails:
+          $ref: '#/components/schemas/DeviceHealthStatusDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        liveStreamShared:
+          type:
+          - boolean
+          - 'null'
+        liveStreamsSharedCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        mediaRegion:
+          type:
+          - string
+          - 'null'
+        mediaStorageDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        region:
+          type:
+          - string
+          - 'null'
+        secondaryLanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        ssid:
+          type:
+          - string
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        supportedFacets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DeviceFacetEnum'
+          uniqueItems: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        wifiApMac:
+          type:
+          - string
+          - 'null'
+        wifiBars:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Audiogateway_UpdateAudioGatewayDetailsWSRequest:
+      type: object
+      description: 'Request to update details for an audio gateway. Note: uuid is a required field.'
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        associatedCamerasUpdated:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the audio gateway is deleted
+          example: false
+        deletedUpdated:
+          type:
+          - boolean
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the audio gateway
+          example: Audio gateway for main entrance monitoring
+        descriptionUpdated:
+          type:
+          - boolean
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the audio gateway is located
+          example: 1
+        floorNumberUpdated:
+          type:
+          - boolean
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the audio gateway location
+          example: 37.7749
+        latitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the audio gateway location
+          example: -122.4194
+        longitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the audio gateway
+          example: Main Entrance Audio Gateway
+        nameUpdated:
+          type:
+          - boolean
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DeviceStatusEnum:
+      type: string
+      enum:
+      - RED
+      - ORANGE
+      - YELLOW
+      - GREEN
+    Audiogateway_GetMinimalAudioGatewayStatesWSResponse:
+      type: object
+      description: Response containing basic state information for all audio gateways.
+      properties:
+        audioGatewayStates:
+          type:
+          - array
+          - 'null'
+          description: List of minimal audio gateway state information
+          items:
+            $ref: '#/components/schemas/MinimalAudioGatewayStateType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DeviceFacetEnum:
+      type: string
+      format: DeviceFacet
+      description: facet information for media
+      enum:
+      - ''
+      - v0
+      - v1
+      - v2
+      - v3
+      - a0
+      - v4
+      - v5
+      - v6
+      - v7
+      - v8
+      - v9
+      - v10
+      - v11
+      - v12
+      - v13
+      - v14
+      - v15
+      - v16
+      - v17
+      - v18
+      - v19
+      - v20
+      - v21
+      - v22
+      - v23
+      - v24
+      - v25
+      - v26
+      - v27
+      - v28
+      - v29
+      - v30
+      - v31
+      - v32
+      - v33
+      - v34
+      - v35
+      - v36
+      - v37
+      - v38
+      - v39
+      - v40
+      - v41
+      - v42
+      - v43
+      - v44
+      - v45
+      - v46
+      - v47
+      - v48
+      - v49
+      - v50
+      - v51
+      - a1
+      - a2
+      - a3
+      - a4
+      - a5
+      - a6
+      - a7
+      - a8
+      - a9
+      - a10
+      - a11
+      - a12
+      - a13
+      - a14
+      - a15
+      - a16
+      - a17
+      - a18
+      - a19
+      - a20
+      - a21
+      - a22
+      - a23
+      - a24
+      - a25
+      - a26
+      - a27
+      - a28
+      - a29
+      - a30
+      - a31
+      - a32
+      - a33
+      - a34
+      - a35
+      - a36
+      - a37
+      - a38
+      - a39
+      - a40
+      - a41
+      - a42
+      - a43
+      - a44
+      - a45
+      - a46
+      - a47
+      - a48
+      - a49
+      - a50
+      - a51
+      example: v0, a0
+    Audiogateway_GetAudioGatewayConfigWSRequest:
+      type: object
+      description: Request to get configuration for an audio gateway.
+      properties:
+        audioGatewayUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Audiogateway_GetMinimalAudioGatewayStatesWSRequest:
+      type: object
+      description: Request to get basic state information for all audio gateways.
+    IAudioUserConfig:
+      type: object
+      description: Audio gateway configuration settings
+      properties:
+        ai_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        audio_aec_via_software:
+          type:
+          - boolean
+          - 'null'
+        audio_ai_disabled:
+          type:
+          - boolean
+          - 'null'
+        audio_analysis_enabled:
+          type:
+          - boolean
+          - 'null'
+        audio_analysis_params:
+          $ref: '#/components/schemas/AudioParamConfig'
+        audio_external_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_external_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_aec_enabled:
+          type:
+          - boolean
+          - 'null'
+        audio_internal_mic_boost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_mic_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_internal_speaker_volume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_min_echo_amplitude:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_playback_gain_percent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audio_record:
+          type:
+          - boolean
+          - 'null'
+        audio_supported:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_mic:
+          type:
+          - boolean
+          - 'null'
+        audio_use_external_speaker:
+          type:
+          - boolean
+          - 'null'
+        audio_use_internal_speaker:
+          type:
+          - boolean
+          - 'null'
+        bandwidth_reports_disabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_ai_smart_crop_enabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_ai_stream_enabled:
+          type:
+          - boolean
+          - 'null'
+        cloud_archive_days:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        cloud_archive_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        cloud_archive_upload_schedule:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+        cloud_archive_upload_schedule_inverted:
+          type:
+          - boolean
+          - 'null'
+        cloud_archive_upload_schedule_uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        device_mic_enabled:
+          type:
+          - boolean
+          - 'null'
+        device_near_audio_silenced:
+          type:
+          - boolean
+          - 'null'
+        device_speaker_enabled:
+          type:
+          - boolean
+          - 'null'
+        event_clip_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        firmware_dev_settings:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        frontendEqualizerHighShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerLowShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking1:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking2:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking3:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendNoiseSuppression:
+          type:
+          - boolean
+          - 'null'
+        lastModified:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        led_mode_blink_period_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        led_mode_when_active:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_mode_when_inactive:
+          $ref: '#/components/schemas/LEDModeEnum'
+        led_stealth_mode:
+          type:
+          - boolean
+          - 'null'
+        lightweight_detection_disabled:
+          type:
+          - boolean
+          - 'null'
+        live_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        max_event_duration_ms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        media_ttl_minutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        on_demand_license_invalid:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        snapshot_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        splice_clip_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+        storage_target_free_megabytes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        storage_target_free_space_permyriad:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        thumbstrip_upload_target:
+          $ref: '#/components/schemas/UploadTargetEnum'
+    Audiogateway_GetAudioGatewayConfigWSResponse:
+      type: object
+      description: Response containing configuration for an audio gateway.
+      properties:
+        config:
+          $ref: '#/components/schemas/IAudioUserConfig'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audiogateway_GetMediaUrisWSResponse:
+      type: object
+      description: Response containing media URIs for audio gateway footage retrieval.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        lanCheckUrls:
+          type:
+          - array
+          - 'null'
+          description: List of LAN check URLs to verify device availability on local network
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of LAN check URLs to verify device availability on local network
+        lanLiveMpdUris:
+          type:
+          - array
+          - 'null'
+          description: List of LAN live MPD URIs for local network media streaming
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of LAN live MPD URIs for local network media streaming
+        lanLiveOpusUris:
+          type:
+          - array
+          - 'null'
+          description: List of LAN live Opus URIs for local network audio streaming
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of LAN live Opus URIs for local network audio streaming
+        lanVodMpdUrisTemplates:
+          type:
+          - array
+          - 'null'
+          description: List of LAN VOD MPD URI templates for local network video on demand
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of LAN VOD MPD URI templates for local network video on demand
+        wanLiveMpdUri:
+          type:
+          - string
+          - 'null'
+          description: WAN live MPD URI for real-time media streaming
+        wanLiveOpusUri:
+          type:
+          - string
+          - 'null'
+          description: WAN live Opus URI for real-time audio streaming
+        wanVodMpdUriTemplate:
+          type:
+          - string
+          - 'null'
+          description: WAN VOD MPD URI template for video on demand content
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audiogateway_GetAudioSeekpointsWSResponse:
+      type: object
+      description: Response containing audio seek points for an audio gateway.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        footageSeekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of audio seek points for the specified time period
+          items:
+            $ref: '#/components/schemas/FootageSeekPointV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audiogateway_UpdateAudioGatewayConfigWSRequest:
+      type: object
+      description: Request to update configuration for an audio gateway.
+      properties:
+        audioAnalysisParams:
+          $ref: '#/components/schemas/AudioParamConfig'
+        audioExternalMicBoost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Adjust boost for external mic. Integer between 0 and 3.
+          example: 1
+        audioExternalMicVolume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Adjust volume for external mic. Integer between 0 and 63.
+          example: 32
+        audioExternalSpeakerVolume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Adjust volume for external speaker. Integer between 0 and 127.
+          example: 64
+        audioInternalMicAecEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Enable acoustic echo cancellation for internal microphone
+          example: true
+        audioInternalMicBoost:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Adjust boost for internal mic. Integer between 0 and 3.
+          example: 1
+        audioInternalMicVolume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Adjust volume for internal mic. Integer between 0 and 63.
+          example: 32
+        audioInternalSpeakerVolume:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Adjust volume for internal speaker. Integer between 0 and 127.
+          example: 64
+        audioRecord:
+          type:
+          - boolean
+          - 'null'
+          description: Enable/disable audio recording. Cannot set to true unless organization settings allow it
+          example: true
+        audioUseExternalMic:
+          type:
+          - boolean
+          - 'null'
+          description: Use external microphone instead of internal
+          example: false
+        audioUseExternalSpeaker:
+          type:
+          - boolean
+          - 'null'
+          description: Use external speaker instead of internal
+          example: false
+        deviceMicEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Enable/disable device mic. Cannot set to true unless organization settings allow it
+          example: true
+        deviceSpeakerEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Enable/disable device speaker
+          example: true
+        frontendEqualizerHighShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerLowShelf:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking1:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking2:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendEqualizerPeaking3:
+          $ref: '#/components/schemas/FrontendEqualizerSettings'
+        frontendNoiseSuppression:
+          type:
+          - boolean
+          - 'null'
+          description: Enable frontend noise suppression
+          example: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    Audiogateway_GetFullAudioGatewayStateWSResponse:
+      type: object
+      description: Response containing detailed information about the state of a specified audio gateway.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        fullAudioGatewayState:
+          $ref: '#/components/schemas/FullDeviceStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audiogateway_GetAudioSeekpointsWSRequest:
+      type: object
+      description: Request to get audio seek points for an audio gateway.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        duration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds
+          example: 3600
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds since epoch
+          example: 1640995200000
+    WeeklyMinuteIntervalType:
+      type: object
+      properties:
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Audiogateway_GetMediaUrisWSRequest:
+      type: object
+      description: Request to get media URIs for an audio gateway to retrieve footage.
+      properties:
+        gatewayUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    Audiogateway_UpdateAudioGatewayDetailsWSResponse:
+      type: object
+      description: Response indicating the result of updating audio gateway details.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    WebResponseStatusEnum:
+      type: string
+      description: Status of the unregister operation
+      enum:
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - SAME_PASSWORD
+      - USER_EXISTS
+      - USER_NOT_FOUND
+      - DEVICE_NOT_FOUND
+      - POLICY_NOT_FOUND
+      - LOCATION_NOT_FOUND
+      - ORG_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Common_devices_GetUptimeWindowsWSRequest:
+      type: object
+      description: Request to get uptime information for a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds since epoch
+          example: 1643673600000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds since epoch
+          example: 1640995200000
+    UploadTargetEnum:
+      type: string
+      enum:
+      - '0'
+      - '1'
+      - '2'
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    FootageSeekPointV2Type:
+      type: object
+      description: List of shared footage seekpoints (deprecated)
+      properties:
+        a:
+          $ref: '#/components/schemas/ActivityEnum'
+        ae:
+          type:
+          - string
+          - 'null'
+          description: area being entered
+        al:
+          type:
+          - boolean
+          - 'null'
+          description: alerted on this?
+        ax:
+          type:
+          - string
+          - 'null'
+          description: area being exited
+        bs:
+          type:
+          - string
+          - 'null'
+          description: badge status (e.g. Active, Lost)
+        bt:
+          type:
+          - string
+          - 'null'
+          description: badge type
+        cc:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        cd:
+          type:
+          - string
+          - 'null'
+          description: Custom activity display description, maximum 100 characters
+        cdn:
+          type:
+          - string
+          - 'null'
+          description: Custom activity display name, maximum 32 characters
+        ch:
+          type:
+          - string
+          - 'null'
+          description: badge holder's name
+        dcao:
+          type:
+          - boolean
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        em:
+          type:
+          - boolean
+          - 'null'
+          description: access granted and entry made (false = no entry / possible tailgating)
+        fn:
+          type:
+          - string
+          - 'null'
+          description: face names
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lp:
+          type:
+          - string
+          - 'null'
+          description: license plate
+        m:
+          type:
+          - boolean
+          - 'null'
+          description: object in motion?
+        p:
+          type:
+          - string
+          - 'null'
+          description: pose
+        ro:
+          type:
+          - array
+          - 'null'
+          description: recognized objects
+          items:
+            type:
+            - string
+            - 'null'
+            description: recognized objects
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toi:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        ts:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: timestamp
+        tu:
+          type:
+          - string
+          - 'null'
+        uf:
+          type:
+          - string
+          - 'null'
+          description: FaceId for an unidentified face
+        vn:
+          type:
+          - string
+          - 'null'
+          description: vehicle name
+      required:
+      - a
+      - ts
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    Audiogateway_DeleteAudioGatewayWSRequest:
+      type: object
+      description: Request to remove an audio gateway from organization.
+      properties:
+        gatewayUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        mummify:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether to mummify the audio gateway
+          example: false
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    AudioParamConfig:
+      type: object
+      description: Audio analysis parameters
+      properties:
+        expressions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioExpressionDetectionConfig'
+        significant_loudness_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    FrontendEqualizerSettings:
+      type: object
+      properties:
+        frequency:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        gain:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        q:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Common_devices_GetPresenceWindowsWSRequest:
+      type: object
+      description: Request to get stored video information for a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds
+          example: 3600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds since epoch
+          example: 1640995200
+    ToastCheckInfo:
+      type: object
+      properties:
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+    TimeWindowSeconds:
+      type: object
+      description: List of uptime windows for the device
+      properties:
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Audiogateway_UpdateAudioGatewayConfigWSResponse:
+      type: object
+      description: Response indicating the result of updating audio gateway configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DeviceHealthStatusDetailsEnum:
+      type: string
+      enum:
+      - DISCONNECTED
+      - FIRMWARE_BEHIND
+      - NOT_RECORDING
+      - LINK_SPEED_LOW
+      - MALFUNCTIONING_MODULES
+      - CALIBRATING
+      - DELAYED
+      - NONE
+    FullDeviceStateType:
+      type: object
+      description: Detailed state information for the specified NVR
+      properties:
+        afSupport:
+          type:
+          - boolean
+          - 'null'
+        audioSupported:
+          type:
+          - boolean
+          - 'null'
+        baseVideoOperationUri:
+          type:
+          - string
+          - 'null'
+        connectionStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        connectionTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        directionRadians:
+          type:
+          - number
+          - 'null'
+          format: float
+        externalIPAddress:
+          type:
+          - string
+          - 'null'
+        facetNameMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        firmwareUpdateInProgress:
+          type:
+          - boolean
+          - 'null'
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        healthStatus:
+          $ref: '#/components/schemas/DeviceStatusEnum'
+        healthStatusDetails:
+          $ref: '#/components/schemas/DeviceHealthStatusDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        latestFirmwareVersion:
+          type:
+          - string
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        liveStreamShared:
+          type:
+          - boolean
+          - 'null'
+        liveStreamsSharedCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        maxZoomPercent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        mediaRegion:
+          type:
+          - string
+          - 'null'
+        mediaStorageDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        mummified:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        onCameraState:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+        onCloudState:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        region:
+          type:
+          - string
+          - 'null'
+        secondaryLanAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        serialNumber:
+          type:
+          - string
+          - 'null'
+        ssid:
+          type:
+          - string
+          - 'null'
+        stateUpdatedTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        supportedFacets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DeviceFacetEnum'
+          uniqueItems: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        versionsBehind:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        wifiApMac:
+          type:
+          - string
+          - 'null'
+        wifiBars:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    AudioExpressionDetectionConfig:
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/ActivityEnum'
+        confidence_min:
+          type:
+          - number
+          - 'null'
+          format: float
+        expression:
+          type:
+          - string
+          - 'null'
+        loudness_min:
+          type:
+          - integer
+          - 'null'
+          format: int32
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

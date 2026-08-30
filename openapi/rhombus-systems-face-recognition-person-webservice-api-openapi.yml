@@ -1,0 +1,533 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Face Recognition Person Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Face Recognition Person Webservice
+paths:
+  /api/faceRecognition/person/addPersonLabel:
+    post:
+      description: Add a label to a person
+      operationId: addPersonLabel
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_AddPersonLabelWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_AddPersonLabelWSResponse'
+          description: OK
+      summary: Add a label to a person
+      tags:
+      - Face Recognition Person Webservice
+  /api/faceRecognition/person/createPerson:
+    post:
+      description: Create a person for face recognition purposes.
+      operationId: createPerson
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_CreatePersonWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_CreatePersonWSResponse'
+          description: OK
+      summary: Create a person
+      tags:
+      - Face Recognition Person Webservice
+  /api/faceRecognition/person/deletePerson:
+    post:
+      description: Delete person created for face recognition purposes.
+      operationId: deletePerson
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_DeletePersonWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_DeletePersonWSResponse'
+          description: OK
+      summary: Delete person
+      tags:
+      - Face Recognition Person Webservice
+  /api/faceRecognition/person/findPeopleByOrg:
+    post:
+      description: Find people created for face recognition purposes in an organization.
+      operationId: findPeopleByOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_FindPeopleByOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_FindPeopleByOrgWSResponse'
+          description: OK
+      summary: Find people by organization
+      tags:
+      - Face Recognition Person Webservice
+  /api/faceRecognition/person/findPersonLabelsByOrg:
+    post:
+      description: Find all person labels for organization.
+      operationId: findPersonLabelsByOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_FindPersonLabelsByOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_FindPersonLabelsByOrgWSResponse'
+          description: OK
+      summary: Find all person labels for organization
+      tags:
+      - Face Recognition Person Webservice
+  /api/faceRecognition/person/getPerson:
+    post:
+      description: Get a person created for face recognition purposes.
+      operationId: getPerson
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_GetPersonWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_GetPersonWSResponse'
+          description: OK
+      summary: Get a person
+      tags:
+      - Face Recognition Person Webservice
+  /api/faceRecognition/person/removePersonLabel:
+    post:
+      description: Remove a label from a person.
+      operationId: removePersonLabel
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_RemovePersonLabelWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_RemovePersonLabelWSResponse'
+          description: OK
+      summary: Remove a label from a person
+      tags:
+      - Face Recognition Person Webservice
+  /api/faceRecognition/person/updatePerson:
+    post:
+      description: Update person created for face recognition purposes.
+      operationId: updatePerson
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Facerecognition_person_UpdatePersonWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facerecognition_person_UpdatePersonWSResponse'
+          description: OK
+      summary: Update person
+      tags:
+      - Face Recognition Person Webservice
+components:
+  schemas:
+    Facerecognition_person_UpdatePersonWSResponse:
+      type: object
+      description: Response object for updating a person for face recognition purposes.
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+    PersonSelectiveUpdate:
+      type: object
+      description: Selective update information for the person
+      properties:
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        email:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_person_CreatePersonWSRequest:
+      type: object
+      description: Request object for creating a person for face recognition purposes.
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the person to create
+          example: John Doe
+    Facerecognition_person_RemovePersonLabelWSRequest:
+      type: object
+      description: Request object for removing a label from a person for face recognition purposes.
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: Label to remove from the person
+          example: VIP
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_person_GetPersonWSResponse:
+      type: object
+      description: Response object containing a person.
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+    Facerecognition_person_FindPeopleByOrgWSRequest:
+      type: object
+      description: Request object for finding people by organization for face recognition purposes.
+    Facerecognition_person_RemovePersonLabelWSResponse:
+      type: object
+      description: Response object for removing a label from a person for face recognition purposes.
+    Facerecognition_person_CreatePersonWSResponse:
+      type: object
+      description: Response object for creating a person for face recognition purposes.
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+    Facerecognition_person_AddPersonLabelWSRequest:
+      type: object
+      description: Request object for adding a label to a person for face recognition purposes.
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: Label to add to the person
+          example: VIP
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Person:
+      type: object
+      description: The updated person
+      properties:
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        email:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_person_FindPeopleByOrgWSResponse:
+      type: object
+      description: Response object containing people for an organization for face recognition purposes.
+      properties:
+        people:
+          type:
+          - array
+          - 'null'
+          description: List of people for the organization
+          items:
+            $ref: '#/components/schemas/Person'
+    Facerecognition_person_FindPersonLabelsByOrgWSResponse:
+      type: object
+      description: Response object containing person labels by organization for face recognition purposes.
+      properties:
+        labelsByPerson:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of person UUIDs to their associated labels
+            items:
+              type:
+              - string
+              - 'null'
+              description: Map of person UUIDs to their associated labels
+            uniqueItems: true
+          description: Map of person UUIDs to their associated labels
+    Facerecognition_person_AddPersonLabelWSResponse:
+      type: object
+      description: Response object for adding a label to a person for face recognition purposes.
+    Facerecognition_person_UpdatePersonWSRequest:
+      type: object
+      description: Request object for updating a person for face recognition purposes.
+      properties:
+        personSelectiveUpdate:
+          $ref: '#/components/schemas/PersonSelectiveUpdate'
+    Facerecognition_person_GetPersonWSRequest:
+      type: object
+      description: Request object for retrieving a person by UUID.
+      properties:
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_person_DeletePersonWSResponse:
+      type: object
+      description: Response object for deleting a person for face recognition purposes.
+    Facerecognition_person_FindPersonLabelsByOrgWSRequest:
+      type: object
+      description: Request object for finding person labels by organization for face recognition purposes.
+    Facerecognition_person_DeletePersonWSRequest:
+      type: object
+      description: Request object for deleting a person for face recognition purposes.
+      properties:
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

@@ -1,0 +1,4311 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Report Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Report Webservice
+paths:
+  /api/report/getAuditFeed:
+    post:
+      description: Get the latest audit logs for organization
+      operationId: getAuditFeed
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetAuditFeedWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetAuditFeedWSResponse'
+          description: OK
+      summary: Get audit feed
+      tags:
+      - Report Webservice
+  /api/report/getBatchThresholdCrossingCountReport:
+    post:
+      description: Get batch threshold crossing count report
+      operationId: getBatchThresholdCrossingCountReport
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetBatchThresholdCrossingCountReportWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetThresholdCrossingCountReportWSResponse'
+          description: OK
+      summary: Get batch threshold crossing count report
+      tags:
+      - Report Webservice
+  /api/report/getCountReport:
+    post:
+      deprecated: true
+      description: Use /getCountReportV2 instead
+      operationId: getCountReport
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetCountReportWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetCountReportWSResponse'
+          description: OK
+      summary: Get count report
+      tags:
+      - Report Webservice
+  /api/report/getCountReportV2:
+    post:
+      description: Get the specified count reports
+      operationId: getCountReportV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetCountReportV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetCountReportWSResponse'
+          description: OK
+      summary: Get count report V2
+      tags:
+      - Report Webservice
+  /api/report/getCountReports:
+    post:
+      description: Get multiple specified count reports
+      operationId: getCountReports
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetCountReportsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetCountReportsWSResponse'
+          description: OK
+      summary: Get count reports
+      tags:
+      - Report Webservice
+  /api/report/getCountReportsForDevicesAtLocation:
+    post:
+      description: Get count reports by device for a specified location
+      operationId: getCountReportsForDevicesAtLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetCountReportsForDevicesAtLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetCountReportsWSResponse'
+          description: OK
+      summary: Get count reports for devices at location
+      tags:
+      - Report Webservice
+  /api/report/getCustomEventsBinaryCounts:
+    post:
+      description: "Retrieves aggregated counts of boolean event values (true/false) produced by a selected prompt over a specified time window.\n\nScope & filters:\n\t•\tpromptUuid – The prompt to aggregate (required).\n\nTime window & interval:\n\t•\tA time range (startTimeMs → endTimeMs, epoch ms) is required and is used exactly as provided.\n\t•\tIf an interval is supplied (e.g., MINUTELY, QUARTERHOURLY, HOURLY), events are bucketed at that granularity.\n\t•\tAggregation is always performed in the device’s local timezone. Buckets are computed relative to each device’s timezone, then evaluated within the exact provided window.\n\nResponse:\n\t•\tPer interval bucket, returns a BinaryAggregationValue with counts for true and false.\n\t•\tIncludes minValueTimestampMs and maxValueTimestampMs (if available) and the bucket timestamp from BaseReportValue.\n\nNotes:\n\t•\tOnly binary/boolean prompt types are valid for this endpoint.\n"
+      operationId: getCustomEventsBinaryCounts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetCustomLLMWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetCustomLLMWBinaryWSResponse'
+          description: OK
+      summary: Get custom events aggregation binary counts
+      tags:
+      - Report Webservice
+  /api/report/getCustomEventsNumericCounts:
+    post:
+      description: "Retrieves aggregated statistics for numeric events event values produced by a selected prompt over a specified time window.\nScope & filters:\n\t•\tpromptUuid – The prompt to aggregate (required).\n\nTime window & interval:\n\t•\tA time range (startTimeMs → endTimeMs, epoch ms) is required and is used exactly as provided.\n\t•\tIf an interval is supplied (e.g., MINUTELY, QUARTERHOURLY, HOURLY), events are bucketed at that granularity.\n\t•\tAggregation is always performed in the device’s local timezone. Buckets are computed relative to each device’s timezone, then evaluated within the exact provided window.\n\nResponse:\n\t•\tPer interval bucket, returns numeric aggregates derived from raw values: count, sum, min, max, average.\n\t•\tIncludes minValueTimestampMs and maxValueTimestampMs indicating when min/max occurred within the bucket (if available).\n\t•\tBucket timestamps are returned as epoch ms.\n\nNotes:\n\t•\tOnly numeric prompt types are valid for this endpoint.\n"
+      operationId: getCustomEventsNumericCounts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetCustomLLMWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetCustomLLMNumericWSResponse'
+          description: OK
+      summary: Get custom events aggregation numeric counts
+      tags:
+      - Report Webservice
+  /api/report/getCustomEventsReport:
+    post:
+      description: "Retrieves a custom events report containing raw time-series event values recorded by selected prompts and devices within the specified time window.\nThe report can be filtered by:\n\t•\tpromptUuid – The specific prompt to query.\n\t•\tdeviceFacetUuids – A set of devices to include.\n\t•\tlocationUuid – The location context for the query.\nFor example, a request may specify a promptUuid to fetch results from a certain LLM prompt, and additionally restrict results to only devices in a given locationUuid.\nThe time range (startTimeMs → endTimeMs) is required and determines the interval of events returned.\nThe response includes, per device and prompt, the raw event values (numeric or boolean as string) along with timestamps, check-condition results (if selected), and prompt type."
+      operationId: getCustomEventsReport
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetCustomLLMReportWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetCustomLLMReportWSResponse'
+          description: OK
+      summary: Get custom events report
+      tags:
+      - Report Webservice
+  /api/report/getDiagnosticFeed:
+    post:
+      description: Get the latest diagnostic logs for organization
+      operationId: getDiagnosticFeed
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetDiagnosticFeedWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetDiagnosticFeedWSResponse'
+          description: OK
+      summary: Get diagnostic feed
+      tags:
+      - Report Webservice
+  /api/report/getEnvoyDeliveries:
+    post:
+      description: Get a list of deliveries from Envoy to populate reporting logs
+      operationId: getEnvoyDeliveries
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetEnvoyDeliveriesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetEnvoyDeliveriesWSResponse'
+          description: OK
+      summary: Get Envoy deliveries
+      tags:
+      - Report Webservice
+  /api/report/getEnvoyEmployees:
+    post:
+      description: Get a list of employees from Envoy
+      operationId: getEnvoyEmployees
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetEnvoyEmployeesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetEnvoyEmployeesWSResponse'
+          description: OK
+      summary: Get Envoy employees
+      tags:
+      - Report Webservice
+  /api/report/getEnvoyLocations:
+    post:
+      description: Get list of Envoy locations
+      operationId: getEnvoyLocations
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetEnvoyLocationsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetEnvoyLocationsWSResponse'
+          description: OK
+      summary: Get Envoy locations
+      tags:
+      - Report Webservice
+  /api/report/getEnvoyVisitors:
+    post:
+      description: Get a list of visitors from Envoy to populate reporting logs
+      operationId: getEnvoyVisitors
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetEnvoyVisitorsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetEnvoyVisitorsWSResponse'
+          description: OK
+      summary: Get Envoy visitors
+      tags:
+      - Report Webservice
+  /api/report/getIntegrationDiagnosticEvents:
+    post:
+      description: Get the diagnostic logs of supported third-party devices for organization
+      operationId: getIntegrationDiagnosticEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetIntegrationDiagnosticEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetIntegrationDiagnosticEventsWSResponse'
+          description: OK
+      summary: Get integration diagnostic events
+      tags:
+      - Report Webservice
+  /api/report/getLicensePlatesByDevice:
+    post:
+      description: Get license plate counting events for a specified camera
+      operationId: getLicensePlatesByDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetLicensePlatesByDeviceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetLicensePlatesByDeviceWSResponse'
+          description: OK
+      summary: Get license plates by device
+      tags:
+      - Report Webservice
+  /api/report/getMostRecentPeopleCountEvents:
+    post:
+      description: Get the X most recent people counting events for a specified device
+      operationId: getMostRecentPeopleCountEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetMostRecentPeopleCountWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetMostRecentPeopleCountWSResponse'
+          description: OK
+      summary: Get most recent people count events
+      tags:
+      - Report Webservice
+  /api/report/getOccupancyCounts:
+    post:
+      description: 'Returns the estimated occupancy count for a specified room or area within a given time range. This endpoint allows you to monitor occupancy trends over time or retrieve a single count for a defined interval.
+
+        Important: An occupancy region must be defined in the Rhombus Console before using this endpoint.
+
+        You can optionally specify an interval (e.g., MINUTELY, QUARTERHOURLY, HOURLY ...) to retrieve occupancy counts broken down by sub-intervals between startTime and endTime.
+
+        If no interval is provided, a single occupancy count is returned for the entire duration between startTime and endTime.'
+      operationId: getOccupancyCounts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetOccupancyCountsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetOccupancyCountsWSResponse'
+          description: OK
+      summary: Get occupancy counts
+      tags:
+      - Report Webservice
+  /api/report/getOccupancyCountsV2:
+    post:
+      description: 'Returns the estimated occupancy count for a specified room or area within a given time range using person reidentification data.
+
+        Important: An occupancy region must be defined in the Rhombus Console before using this endpoint.
+
+        You can optionally specify an interval (e.g., MINUTELY, QUARTERHOURLY, HOURLY ...) to retrieve occupancy counts broken down by sub-intervals between startTime and endTime.
+
+        If no interval is provided, a single occupancy count is returned for the entire duration between startTime and endTime.'
+      operationId: getOccupancyCountsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetOccupancyCountsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetOccupancyCountsWSResponse'
+          description: OK
+      summary: Get occupancy counts V2
+      tags:
+      - Report Webservice
+  /api/report/getProximityTagLocationsByDate:
+    post:
+      description: Get proximity tag locations by date
+      operationId: getProximityTagLocationsByDate
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetProximityTagLocationsByDateWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetProximityTagLocationsByDateWSResponse'
+          description: OK
+      summary: Get proximity tag locations by date
+      tags:
+      - Report Webservice
+  /api/report/getRunningAverage:
+    post:
+      description: Get the running average for the specified count report if it is available, based on recent data
+      operationId: getRunningAverage
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetRunningAverageWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetRunningAverageWSResponse'
+          description: OK
+      summary: Get running average
+      tags:
+      - Report Webservice
+  /api/report/getSummaryCountReport:
+    post:
+      description: Get a summary report for a camera, location, or organization
+      operationId: getSummaryCountReport
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetSummaryCountReportWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetSummaryCountReportWSResponse'
+          description: OK
+      summary: Get summary count report
+      tags:
+      - Report Webservice
+  /api/report/getThresholdCrossingCountReport:
+    post:
+      description: Get threshold crossing count report for device
+      operationId: getThresholdCrossingCountReport
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetThresholdCrossingCountReportWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetThresholdCrossingCountReportWSResponse'
+          description: OK
+      summary: Get threshold crossing count report for device
+      tags:
+      - Report Webservice
+  /api/report/getThresholdCrossingCountReportForOrg:
+    post:
+      description: Get org wide batch threshold crossing count report
+      operationId: getThresholdCrossingCountReportForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetThresholdCrossingCountReportForOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetThresholdCrossingCountReportWSResponse'
+          description: OK
+      summary: Get org wide batch threshold crossing count report
+      tags:
+      - Report Webservice
+  /api/report/getThresholdCrossingCounts:
+    post:
+      deprecated: true
+      description: Get the occupancy counts from threshold crossing for a group of cameras over a period of time
+      operationId: getThresholdCrossingCounts
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetThresholdCrossingCountsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetThresholdCrossingCountsWSResponse'
+          description: OK
+      summary: Get threshold crossing counts
+      tags:
+      - Report Webservice
+  /api/report/getThresholdCrossingEvents:
+    post:
+      description: Get the raw threshold crossing events for a group of cameras over a period of time
+      operationId: getThresholdCrossingEvents
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetThresholdCrossingEventsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetThresholdCrossingEventsWSResponse'
+          description: OK
+      summary: Get threshold crossing events
+      tags:
+      - Report Webservice
+  /api/report/getThresholdCrossingEventsForDevice:
+    post:
+      description: Get threshold crossing events for device
+      operationId: getThresholdCrossingEventsForDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_GetThresholdCrossingEventsForDeviceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_GetThresholdCrossingEventsForDeviceWSResponse'
+          description: OK
+      summary: Get threshold crossing events for device
+      tags:
+      - Report Webservice
+  /api/report/getToastEventsTable:
+    post:
+      description: Get list of Toast orders to populate events table
+      operationId: getToastEventsTable
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetToastEventsTableWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetToastEventsTableWSResponse'
+          description: OK
+      summary: Get Toast events table
+      tags:
+      - Report Webservice
+  /api/report/getToastEventsTableAllLocations:
+    post:
+      description: Get list of Toast orders from all restaurants to populate events table
+      operationId: getToastEventsTableAllLocations
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetToastEventsTableAllLocationsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetToastEventsTableAllLocationsWSResponse'
+          description: OK
+      summary: Get Toast events table all locations
+      tags:
+      - Report Webservice
+  /api/report/resetRunningAverage:
+    post:
+      description: Reset the running average for the specified count report
+      operationId: resetRunningAverage
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report_ResetRunningAverageWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report_ResetRunningAverageWSResponse'
+          description: OK
+      summary: Reset running average
+      tags:
+      - Report Webservice
+components:
+  schemas:
+    Report_GetProximityTagLocationsByDateWSResponse:
+      type: object
+      description: Response object for getting proximity tag locations by date.
+      properties:
+        dataPoints:
+          type:
+          - array
+          - 'null'
+          description: List of proximity tag time series data points
+          items:
+            $ref: '#/components/schemas/ProximityTagTimeSeriesDataPointType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    BinaryAggregationValue:
+      type: object
+      description: Map of binary count reports
+      properties:
+        eventCount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        'false':
+          type:
+          - integer
+          - 'null'
+          format: int64
+        localDate:
+          type:
+          - string
+          - 'null'
+        maxValueTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        minValueTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        'true':
+          type:
+          - integer
+          - 'null'
+          format: int64
+        utcDate:
+          type:
+          - string
+          - 'null'
+    Report_GetAuditFeedWSRequest:
+      type: object
+      description: Request object for getting audit feed.
+      properties:
+        excludeActions:
+          type:
+          - array
+          - 'null'
+          description: If not empty, events with actions specified in the list are filtered out. If both include and exclude actions are specified, exclude actions are ignored.
+          items:
+            $ref: '#/components/schemas/AuditActionEnum'
+          maxItems: 50
+        includeActions:
+          type:
+          - array
+          - 'null'
+          description: 'If not empty, only events with actions specified in the list are returned. If both include and exclude actions are specified, exclude actions are ignored. '
+          items:
+            $ref: '#/components/schemas/AuditActionEnum'
+          maxItems: 50
+        timestampMsAfter:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds after which to get audit events
+          example: 1640995200000
+        timestampMsBefore:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds before which to get audit events
+          example: 1640998800000
+    Integration_GetToastEventsTableAllLocationsWSRequest:
+      type: object
+      properties:
+        businessDate:
+          type:
+          - string
+          - 'null'
+    Report_GetOccupancyCountsWSRequest:
+      type: object
+      description: Request object for getting occupancy counts from a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The end timestamp (in Unix epoch milliseconds) of the selected interval
+          example: 1640998800000
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The start timestamp (in Unix epoch milliseconds) of the selected interval
+          example: 1640995200000
+    EnvoyExpectedGuest:
+      type: object
+      properties:
+        expectedArrivalAt:
+          type:
+          - string
+          - 'null'
+        expectedArrivalTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        host:
+          $ref: '#/components/schemas/EnvoyPersonInfo'
+        invitee:
+          $ref: '#/components/schemas/EnvoyPersonInfo'
+        locationId:
+          type:
+          - string
+          - 'null'
+    CrossingObjectEnum:
+      type: string
+      enum:
+      - HUMAN
+      - VEHICLE
+      - FACE
+      - LPR
+      - POSE
+      - CLIP_EMBED
+      - UNKNOWN
+    CrossingCountsType:
+      type: object
+      description: List of crossing counts
+      properties:
+        egressCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ingressCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Report_GetCustomLLMReportWSResponse:
+      type: object
+      description: Response object for custom LLM reports.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timeSeriesDataPoints:
+          type:
+          - array
+          - 'null'
+          description: List of time series data points
+          items:
+            $ref: '#/components/schemas/SceneQueryReport'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetOccupancyCountsWSResponse:
+      type: object
+      description: Response object for getting occupancy counts from a device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timeSeriesDataPoints:
+          type:
+          - array
+          - 'null'
+          description: List of time series data points with occupancy counts
+          items:
+            $ref: '#/components/schemas/Report_TimeSeriesDataPointV2ExtendedType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    EventCount:
+      type: object
+      properties:
+        count:
+          type:
+          - number
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetEnvoyDeliveriesWSResponse:
+      type: object
+      properties:
+        collectedDeliveries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnvoyDelivery'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        pendingDeliveries:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnvoyDelivery'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_AuditEventWeb:
+      type: object
+      description: Web representation of an audit event.
+      properties:
+        action:
+          $ref: '#/components/schemas/AuditActionEnum'
+        asi:
+          type:
+          - string
+          - 'null'
+        clientType:
+          $ref: '#/components/schemas/ClientEnum'
+        displayText:
+          type:
+          - string
+          - 'null'
+          description: Display text for the audit event
+          example: User login successful
+        failure:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the audit event represents a failure
+          example: false
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        principalName:
+          type:
+          - string
+          - 'null'
+        principalType:
+          $ref: '#/components/schemas/PrincipalUuidEnum'
+        principalUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        selectiveUpdateStr:
+          type:
+          - string
+          - 'null'
+        sourceCity:
+          type:
+          - string
+          - 'null'
+        sourceCountry:
+          type:
+          - string
+          - 'null'
+        sourceIp:
+          type:
+          - string
+          - 'null'
+        sourceState:
+          type:
+          - string
+          - 'null'
+        targetName:
+          type:
+          - string
+          - 'null'
+        targetUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        userAgent:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DiagnosticEventType:
+      type: object
+      description: List of diagnostic events
+      properties:
+        activity:
+          $ref: '#/components/schemas/DiagnosticActivityEnum'
+        apMac:
+          type:
+          - string
+          - 'null'
+        asi:
+          type:
+          - string
+          - 'null'
+        componentCompositeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        componentUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        connectionUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        deviceName:
+          type:
+          - string
+          - 'null'
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        reportingDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rssi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ssid:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Report_GetCountReportV2WSRequest:
+      type: object
+      description: Request object for getting count reports V2.
+      properties:
+        endDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use endTimeMs instead
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        startDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use startTimeMs instead
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+        types:
+          type:
+          - array
+          - 'null'
+          description: Types of reports to receive
+          items:
+            $ref: '#/components/schemas/ReportTypeEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - interval
+      - scope
+      - types
+    ReportBucketSizeEnum:
+      type: string
+      description: Size of the report buckets
+      enum:
+      - QUARTER_HOUR
+      - HOUR
+      - DAY
+      - WEEK
+      - MONTH
+    Integration_GetIntegrationDiagnosticEventsWSRequest:
+      type: object
+      properties:
+        timestampMsAfter:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timestampMsBefore:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Integration_GetEnvoyDeliveriesWSRequest:
+      type: object
+      properties:
+        endTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        locationIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        startTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Report_GetLicensePlatesByDeviceWSResponse:
+      type: object
+      description: Response object for getting license plates by device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        licensePlateEvents:
+          type:
+          - array
+          - 'null'
+          description: List of license plate events
+          items:
+            $ref: '#/components/schemas/VehicleEventIndexType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetThresholdCrossingCountsWSRequest:
+      type: object
+      description: Request object for getting threshold crossing counts.
+      properties:
+        crossingObject:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        dailyResetTimeMinute:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Daily reset time in minutes
+          example: 0
+        devices:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to get threshold crossing counts for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds
+          example: 1640998800000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds
+          example: 1640995200000
+    SceneQueryReport:
+      type: object
+      description: List of time series data points
+      properties:
+        deviceFacetUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        events:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SceneQueryReportEvent'
+        promptType:
+          $ref: '#/components/schemas/PromptTypeEnum'
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Report_GetCountReportsWSResponse:
+      type: object
+      description: Response object for getting count reports.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timeSeriesDataPointsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of UUIDs to their time series data points
+            items:
+              $ref: '#/components/schemas/TimeSeriesDataPointV2Type'
+          description: Map of UUIDs to their time series data points
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ReportTypeEnum:
+      type: string
+      description: Type of report to receive
+      enum:
+      - CROWD
+      - PEOPLE
+      - FACES
+      - MOTION
+      - BANDWIDTH
+      - VEHICLES
+      - LICENSEPLATES
+      - ALERTS
+      - DWELL
+    Report_GetMostRecentPeopleCountWSResponse:
+      type: object
+      description: Response object for getting most recent people count.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of people count events
+          items:
+            $ref: '#/components/schemas/PeopleCountEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetCountReportsForDevicesAtLocationWSRequest:
+      type: object
+      description: Request object for getting count reports for devices at a specific location.
+      properties:
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End timestamp in epoch milliseconds.
+          minimum: 0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start timestamp in epoch milliseconds.
+          minimum: 0
+        type:
+          $ref: '#/components/schemas/ReportTypeEnum'
+      required:
+      - endTimeMs
+      - interval
+      - locationUuid
+      - startTimeMs
+      - type
+    Report_GetDiagnosticFeedWSRequest:
+      type: object
+      description: Request object for getting diagnostic feed.
+      properties:
+        timestampMsAfter:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds after which to get diagnostic events
+          example: 1640995200000
+        timestampMsBefore:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds before which to get diagnostic events
+          example: 1640998800000
+    Integration_GetEnvoyVisitorsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        invites:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnvoyExpectedGuest'
+        visitors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnvoyGuest'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ReportIntervalEnum:
+      type: string
+      description: Report interval for filtering face events
+      enum:
+      - MINUTELY
+      - QUARTERHOURLY
+      - HOURLY
+      - DAILY
+      - WEEKLY
+      - MONTHLY
+    Report_GetThresholdCrossingEventsWSRequest:
+      type: object
+      description: Request object for getting threshold crossing events.
+      properties:
+        crossingObject:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        devices:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to get threshold crossing events for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds
+          example: 1640998800000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds
+          example: 1640995200000
+    ClientEnum:
+      type: string
+      enum:
+      - DEVICE
+      - MOBILE
+      - BROWSER
+      - BROWSER_V2
+      - BROWSER_PARTNER
+      - MOBILE_PARTNER
+      - ANONYMOUS
+      - SHARE_ANONYMOUS
+      - SHARE_ANONYMOUS_V2
+      - SHARE_RAW
+      - SHARE_SSO
+      - TV_API
+      - API
+      - API_TOKEN
+      - API_OAUTH_TOKEN
+      - FEDERATED_TOKEN
+      - PARTNER_API
+      - PARTNER_API_TOKEN
+      - PARTNER_API_OAUTH_TOKEN
+      - KEYPAD_API
+      - INTERNAL_SALESFORCE
+      - RHOMBUS_KEY_MOBILE
+      - KIOSK_CONSOLE
+      - KIOSK_IOS_API
+      - CHATBOT
+    Report_GetCountReportsWSRequest:
+      type: object
+      description: Request object for getting count reports.
+      properties:
+        endDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use endTimeMs instead
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        startDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use startTimeMs instead
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+        type:
+          $ref: '#/components/schemas/ReportTypeEnum'
+      required:
+      - interval
+      - scope
+      - type
+    Report_GetThresholdCrossingCountsWSResponse:
+      type: object
+      description: Response object for getting threshold crossing counts.
+      properties:
+        counts:
+          type:
+          - array
+          - 'null'
+          description: List of threshold crossing counts
+          items:
+            $ref: '#/components/schemas/Report_GetThresholdCrossingCountsWSResponse_ThresholdCrossingCountType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    Report_GetThresholdCrossingCountReportForOrgWSRequest:
+      type: object
+      description: Request object for getting org wide threshold crossing count reports.
+      properties:
+        bucketSize:
+          $ref: '#/components/schemas/ReportBucketSizeEnum'
+        crossingObject:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        dedupe:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to deduplicate the results
+          example: true
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds
+          example: 1640998800000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds
+          example: 1640995200000
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+    Report_GetThresholdCrossingCountReportWSResponse:
+      type: object
+      description: Response object for getting threshold crossing count reports.
+      properties:
+        crossingCounts:
+          type:
+          - array
+          - 'null'
+          description: List of crossing counts
+          items:
+            $ref: '#/components/schemas/CrossingCountsType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetLicensePlatesByDeviceWSRequest:
+      type: object
+      description: Request object for getting license plates by device.
+      properties:
+        dateLocal:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use timestampMs instead
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+      required:
+      - deviceUuid
+      - interval
+    PromptTypeEnum:
+      type: string
+      enum:
+      - COUNT
+      - PERCENT
+      - BOOLEAN
+      - TEXT
+    Report_GetMostRecentPeopleCountWSRequest:
+      type: object
+      description: Request object for getting most recent people count.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        numMostRecent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of most recent people counts to retrieve
+          example: 10
+    EnvoyPersonInfo:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        locationIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+    Report_GetThresholdCrossingCountReportWSRequest:
+      type: object
+      description: Request object for getting threshold crossing count reports.
+      properties:
+        bucketSize:
+          $ref: '#/components/schemas/ReportBucketSizeEnum'
+        crossingObject:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        dedupe:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to deduplicate the results
+          example: true
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds
+          example: 1640998800000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds
+          example: 1640995200000
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+    Report_GetCountReportWSRequest:
+      type: object
+      description: Request object for getting count reports.
+      properties:
+        endDate:
+          type:
+          - string
+          - 'null'
+          description: End date for the report
+          example: '2024-01-31'
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: Start date for the report
+          example: '2024-01-01'
+        type:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetEnvoyLocationsWSResponse:
+      type: object
+      properties:
+        authError:
+          type:
+          - boolean
+          - 'null'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locationList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnvoyLocation'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Integration_GetToastEventsTableWSResponse_EventTableRow:
+      type: object
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        employeeName:
+          type:
+          - string
+          - 'null'
+        orderGuid:
+          type:
+          - string
+          - 'null'
+        paymentType:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        revenueCenterName:
+          type:
+          - string
+          - 'null'
+        serviceAreaName:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
+        tipAmount:
+          type:
+          - string
+          - 'null'
+        totalAmount:
+          type:
+          - string
+          - 'null'
+        totalDiscountAmount:
+          type:
+          - string
+          - 'null'
+        voided:
+          type:
+          - string
+          - 'null'
+    SceneQueryReportEvent:
+      type: object
+      description: Scene query report event from the triggered prompt
+      properties:
+        checkCondition:
+          type:
+          - boolean
+          - 'null'
+        image:
+          type:
+          - string
+          - 'null'
+        imageOffsets:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - integer
+            - 'null'
+            format: int32
+        prompt:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        value:
+          type:
+          - string
+          - 'null'
+    Report_GetBatchThresholdCrossingCountReportWSRequest:
+      type: object
+      description: Request object for getting batch threshold crossing count reports.
+      properties:
+        bucketSize:
+          $ref: '#/components/schemas/ReportBucketSizeEnum'
+        crossingObject:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        dedupe:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to deduplicate the results
+          example: true
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: UUID of devices to get threshold crossing count report for
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds
+          example: 1640998800000
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds
+          example: 1640995200000
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+    ProximityTagTimeSeriesDataPointType:
+      type: object
+      description: List of proximity tag time series data points
+      properties:
+        dateLocal:
+          type:
+          - string
+          - 'null'
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetEnvoyLocationsWSRequest:
+      type: object
+    Report_GetThresholdCrossingEventsWSResponse:
+      type: object
+      description: Response object for getting threshold crossing events.
+      properties:
+        deviceToThresholdCrossingEventMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to their threshold crossing events
+            items:
+              $ref: '#/components/schemas/MinimalThresholdEventType'
+          description: Map of device UUIDs to their threshold crossing events
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetProximityTagLocationsByDateWSRequest:
+      type: object
+      description: Request object for getting proximity tag locations by date.
+      properties:
+        endDateStr:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use endTimeMs instead
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        startDateStr:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use startTimeMs instead
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - tagUuid
+    Report_GetCustomLLMWSRequest:
+      type: object
+      description: Request object for custom LLM reports.
+      properties:
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The end timestamp (in Unix epoch milliseconds) of the selected interval
+          example: 1640998800000
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The start timestamp (in Unix epoch milliseconds) of the selected interval
+          example: 1640995200000
+    Stats:
+      type: object
+      properties:
+        avg:
+          type:
+          - number
+          - 'null'
+          format: float
+        stddev:
+          type:
+          - number
+          - 'null'
+          format: float
+    Report_GetThresholdCrossingCountsWSResponse_ThresholdCrossingCountType:
+      type: object
+      description: Threshold crossing count data point.
+      properties:
+        count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Count of threshold crossings
+          example: 5
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds
+          example: 1640995200000
+    Integration_GetToastEventsTableAllLocationsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        eventTable:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Integration_GetToastEventsTableWSResponse_EventTableRow'
+        failedGuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetThresholdCrossingEventsForDeviceWSResponse:
+      type: object
+      description: Response object for getting threshold crossing events for a specific device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+          description: If a max page size was specified and there are additional results that can be retrieved this will be non-null and should be supplied in the next request to retrieve the next page of results
+        thresholdCrossingEvents:
+          type:
+          - array
+          - 'null'
+          description: List of threshold crossing events for the device
+          items:
+            $ref: '#/components/schemas/MinimalThresholdEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Integration_GetEnvoyEmployeesWSRequest:
+      type: object
+      properties:
+        locationIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+    Integration_GetEnvoyEmployeesWSResponse:
+      type: object
+      properties:
+        employees:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnvoyPersonInfo'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetSummaryCountReportWSRequest:
+      type: object
+      description: Request object for getting summary count reports.
+      properties:
+        endDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use endTimeMs instead
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        startDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use startTimeMs instead
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+        type:
+          $ref: '#/components/schemas/ReportTypeEnum'
+      required:
+      - interval
+      - scope
+      - type
+    EnvoyGuest:
+      type: object
+      properties:
+        agreementsStatus:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        fullName:
+          type:
+          - string
+          - 'null'
+        host:
+          $ref: '#/components/schemas/EnvoyPersonInfo'
+        locationId:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        signedInAt:
+          type:
+          - string
+          - 'null'
+        signedInTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        signedOutAt:
+          type:
+          - string
+          - 'null'
+        signedOutTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    EnvoyDelivery:
+      type: object
+      properties:
+        carrier:
+          $ref: '#/components/schemas/EnvoyDeliveryInfo'
+        carrierInfo:
+          $ref: '#/components/schemas/EnvoyDeliveryInfo'
+        deliveryArea:
+          $ref: '#/components/schemas/EnvoyDeliveryInfo'
+        deliveryAreaInfo:
+          $ref: '#/components/schemas/EnvoyDeliveryInfo'
+        locationId:
+          type:
+          - string
+          - 'null'
+        pickedUpAt:
+          type:
+          - string
+          - 'null'
+        pickedUpBy:
+          $ref: '#/components/schemas/EnvoyPersonInfo'
+        receivedTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        recipient:
+          $ref: '#/components/schemas/EnvoyPersonInfo'
+        status:
+          type:
+          - string
+          - 'null'
+    Integration_GetEnvoyVisitorsWSRequest:
+      type: object
+      properties:
+        endTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        includeSignedOutVisitors:
+          type:
+          - boolean
+          - 'null'
+        locationIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        startTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    BoundingBoxType:
+      type: object
+      properties:
+        bottom:
+          type:
+          - number
+          - 'null'
+          format: float
+        left:
+          type:
+          - number
+          - 'null'
+          format: float
+        right:
+          type:
+          - number
+          - 'null'
+          format: float
+        top:
+          type:
+          - number
+          - 'null'
+          format: float
+    Report_GetRunningAverageWSRequest:
+      type: object
+      description: Request object for getting running average statistics.
+      properties:
+        endDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use endTimeMs instead
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        startDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated input, use startTimeMs instead
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start datetime provided as a UNIX timestamp in milliseconds
+          minimum: 0
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - interval
+      - scope
+    PrincipalUuidEnum:
+      type: string
+      enum:
+      - USER
+      - DEVICE
+      - PARTNER
+      - RHOMBUS_SUPPORT
+      - API_TOKEN
+      - API_OAUTH_TOKEN
+      - PARTNER_API_OAUTH_TOKEN
+      - SHARED_CLIP
+      - SHARED_STREAM
+      - SHARED_TIMELAPSE
+      - SHARED_VIDEOWALL
+      - KIOSK_CONSOLE
+      - UNKNOWN
+    Report_GetCustomLLMReportWSRequest:
+      type: object
+      description: Request object for custom LLM reports.
+      properties:
+        deviceFacetUuids:
+          type:
+          - array
+          - 'null'
+          description: Uuids of the selected devices
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          uniqueItems: true
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The end timestamp (in Unix epoch milliseconds) of the selected interval
+          example: 1640998800000
+        extendedResponse:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The start timestamp (in Unix epoch milliseconds) of the selected interval
+          example: 1640995200000
+    Report_TimeSeriesDataPointV2ExtendedType:
+      type: object
+      description: Extended time series data point with additional timestamp information.
+      properties:
+        approximateTimestampMsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            description: A mapping of timestamps (in Unix epoch milliseconds) that indicate, for each type and interval, the point in time where the aggregated occupancy count is closest to the occupancy observed in the corresponding video segment
+          description: A mapping of timestamps (in Unix epoch milliseconds) that indicate, for each type and interval, the point in time where the aggregated occupancy count is closest to the occupancy observed in the corresponding video segment
+        dateLocal:
+          type:
+          - string
+          - 'null'
+        dateUtc:
+          type:
+          - string
+          - 'null'
+        eventCountMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        reportingDevicesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: DeviceFacetUuid
+              description: RUUID with optional appended facet information
+              example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The representative timestamp (in Unix epoch milliseconds) for the interval
+          example: 1640995200000
+    Integration_GetToastEventsTableWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        eventTable:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Integration_GetToastEventsTableWSResponse_EventTableRow'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetCustomLLMWBinaryWSResponse:
+      type: object
+      description: Response object for custom LLM binary reports.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        reports:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of binary count reports
+            items:
+              $ref: '#/components/schemas/BinaryAggregationValue'
+          description: Map of binary count reports
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    EnvoyDeliveryInfo:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+    IntegrationDiagnosticEventType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/DiagnosticActivityEnum'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        thirdPartyDeviceId:
+          type:
+          - string
+          - 'null'
+        thirdPartyDeviceName:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Report_GetSummaryCountReportWSResponse:
+      type: object
+      description: Response object for getting summary count reports.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timeSeriesDataPoints:
+          type:
+          - array
+          - 'null'
+          description: List of summary count time series data points
+          items:
+            $ref: '#/components/schemas/SummaryCountTimeSeriesDataPointType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    EnvoyLocation:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+    WeeklyStatisticsDataPoint:
+      type: object
+      description: List of weekly statistics data points
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+        stats:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Stats'
+    PeopleCountEventType:
+      type: object
+      description: List of people count events
+      properties:
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BoundingBoxType'
+        deviceLabels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        eventTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        imageS3Key:
+          type:
+          - string
+          - 'null'
+        locationLabels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        peopleCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetIntegrationDiagnosticEventsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        integrationDiagnosticEvents:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationDiagnosticEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetAuditFeedWSResponse:
+      type: object
+      description: Response object for getting audit feed.
+      properties:
+        auditEvents:
+          type:
+          - array
+          - 'null'
+          description: List of audit events
+          items:
+            $ref: '#/components/schemas/Report_AuditEventWeb'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_ResetRunningAverageWSRequest:
+      type: object
+      description: Request object for resetting running average.
+      properties:
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    MinimalThresholdEventType:
+      type: object
+      description: List of threshold crossing events for the device
+      properties:
+        crossingObject:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        direction:
+          $ref: '#/components/schemas/CrossingDirectionEnum'
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Report_GetCountReportWSResponse:
+      type: object
+      description: Response object for getting count reports.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        timeSeriesDataPoints:
+          type:
+          - array
+          - 'null'
+          description: List of time series data points for count report
+          items:
+            $ref: '#/components/schemas/TimeSeriesDataPointV2Type'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    Report_GetDiagnosticFeedWSResponse:
+      type: object
+      description: Response object for getting diagnostic feed.
+      properties:
+        diagnosticEvents:
+          type:
+          - array
+          - 'null'
+          description: List of diagnostic events
+          items:
+            $ref: '#/components/schemas/DiagnosticEventType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CrossingDirectionEnum:
+      type: string
+      enum:
+      - INGRESS
+      - EGRESS
+    TimeSeriesDataPointV2Type:
+      type: object
+      description: Map of UUIDs to their time series data points
+      properties:
+        dateLocal:
+          type:
+          - string
+          - 'null'
+        dateUtc:
+          type:
+          - string
+          - 'null'
+        eventCountMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        reportingDevicesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: DeviceFacetUuid
+              description: RUUID with optional appended facet information
+              example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    NumericAggregationValue:
+      type: object
+      description: Map of numeric count reports
+      properties:
+        average:
+          type:
+          - number
+          - 'null'
+          format: double
+        eventCount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        localDate:
+          type:
+          - string
+          - 'null'
+        max:
+          type:
+          - number
+          - 'null'
+          format: double
+        maxValueTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        min:
+          type:
+          - number
+          - 'null'
+          format: double
+        minValueTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        sum:
+          type:
+          - number
+          - 'null'
+          format: double
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        utcDate:
+          type:
+          - string
+          - 'null'
+    VehicleEventIndexType:
+      type: object
+      description: List of vehicle events matching the query criteria
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        eventTimestamp:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        imageS3Key:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        matchingLicensePlates:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        partialLicensePlates:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        thumbnailS3Key:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        vehicleLicensePlate:
+          type:
+          - string
+          - 'null'
+    DiagnosticActivityEnum:
+      type: string
+      enum:
+      - CAMERA_CONNECTED
+      - CAMERA_DISCONNECTED
+      - STARTUP
+      - GATEWAY_CONNECTED
+      - GATEWAY_DISCONNECTED
+      - UPDATE_STARTED
+      - UPDATE_FIRMWARE_DOWNLOADED
+      - UPDATE_FIRMWARE_APPLIED
+      - UPDATE_STARTING_REBOOT
+      - UPDATE_FAILED_MD5_MISMATCH
+      - UPDATE_FAILED_ACCESS_DENIED
+      - UPDATE_FAILED_MITM
+      - UPDATE_FAILED_CONNNECTION_REFUSED
+      - UPDATE_FAILED_CONNNECTION_TIMEOUT
+      - UPDATE_FAILED_CONNECTION_REFUSED
+      - UPDATE_FAILED_CONNECTION_TIMEOUT
+      - UPDATE_FAILED_DNS_FAILURE
+      - UPDATE_RUNNING
+      - UPDATE_HALTED_FOR_INVESTIGATION
+      - UPDATE_HALT_CLEARED
+      - UPDATE_HALT_STATE_ACTIVE
+      - UPDATE_REFUSED_HALTED
+      - BLE_CONNECTED
+      - BLE_CONNECTION_FAILED
+      - BLE_DISCONNECTED
+      - BLE_OP_SUCCESS
+      - BLE_OP_FAILURE
+      - UPLOAD_CLIP_SUCCESS
+      - UPLOAD_CLIP_FAILURE
+      - NOTIFICATION_FAILURE
+      - USB_FAILURE_REBOOT
+      - PERSISTENT_STORAGE_FAILURE
+      - PING
+      - FORCED_REBOOT
+      - AUTO_REBOOT
+      - AUDIO_HARDWARE_NOT_DETECTED
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - VIDEO_HARDWARE_FAILURE
+      - WIFI_NETWORK_CHANGED
+      - AI_ENGINE_DOWNLOADED
+      - AI_ENGINE_DOWNLOAD_FAILED_MD5_MISMATCH
+      - AI_ENGINE_CONFIGURED
+      - AI_ENGINE_CONFIGURATION_FAILED
+      - MITM_FAILURE
+      - SERVER_RECONNECT
+      - AP_CHANGED
+      - WATCHDOG_KILLED_AGENT
+      - WATCHDOG_DID_RESET
+      - CLIMATE_OFFLINE
+      - CLIMATE_ONLINE
+      - CLIMATE_LOW_BATTERY
+      - CLIMATE_PROBE_CONNECTED
+      - CLIMATE_PROBE_DISCONNECTED
+      - DOOR_OFFLINE
+      - DOOR_ONLINE
+      - DOOR_LOW_BATTERY
+      - OCCUPANCY_SENSOR_ONLINE
+      - OCCUPANCY_SENSOR_OFFLINE
+      - OCCUPANCY_SENSOR_LOW_BATTERY
+      - BUTTON_OFFLINE
+      - BUTTON_ONLINE
+      - BUTTON_LOW_BATTERY
+      - PROXIMITY_LOW_BATTERY
+      - ROBOT_LOW_BATTERY
+      - DOOR_CONTROLLER_CONNECTED
+      - DOOR_CONTROLLER_DISCONNECTED
+      - APERIO_LOW_BATTERY
+      - APERIO_FLAT_BATTERY
+      - APERIO_OK_BATTERY
+      - APERIO_GW_CONNECTED
+      - APERIO_GW_DISCONNECTED
+      - BADGE_READER_CONNECTED
+      - BADGE_READER_DISCONNECTED
+      - REBOOT
+      - NETWORK_INTERRUPTION
+      - OPENPATH_WEBHOOK_FAILURE
+      - TOAST_WEBHOOK_FAILURE
+      - KISI_WEBHOOK_FAILURE
+      - BRIVO_WEBHOOK_FAILURE
+      - HALO_WEBHOOK_FAILURE
+      - SALTO_WEBHOOK_FAILURE
+      - SQUARE_WEBHOOK_FAILURE
+      - BUTTERFLYMX_WEBHOOK_FAILURE
+      - ENVOY_WEBHOOK_FAILURE
+      - GENEA_WEBHOOK_FAILURE
+      - PRODATAKEY_WEBHOOK_FAILURE
+      - AMT_WEBHOOK_FAILURE
+      - PLACEOS_WEBHOOK_FAILURE
+      - OMNIALERT_WEBHOOK_FAILURE
+      - FLIC_WEBHOOK_FAILURE
+      - SHELLY_WEBHOOK_FAILURE
+      - PIMLOC_WEBHOOK_FAILURE
+      - NINEONEONECELLULAR_WEBHOOK_FAILURE
+      - HONEYWELL_ELEMENTS_WEBHOOK_FAILURE
+      - HONEYWELL_ONGUARD_WEBHOOK_FAILURE
+      - TRITON_WEBHOOK_FAILURE
+      - EXTERNAL_WEBHOOK_FAILURE
+      - CV_FAILURE
+      - NFC_HW_FAILURE
+      - CONFIG_ERROR
+      - HW_FAILURE
+      - KEYPAD_ONLINE
+      - KEYPAD_OFFLINE
+      - ALM_OVERAGE_APPROACHING
+      - ALM_OVERAGE_REACHED
+      - ALM_OVERAGE_EXCEEDED
+      - ALM_EXCESSIVE_VERIFICATIONS
+      - KIOSK_OFFLINE
+      - KIOSK_ONLINE
+      - TUNNELED_DEVICE_CONNECTED
+      - TUNNELED_DEVICE_DISCONNECTED
+      - SD_CARD_CHANGED
+      - SD_CARD_NOT_FOUND
+      - SUPERVISION_CUT_DETECTED
+      - SUPERVISION_SHORT_DETECTED
+      - SUPERVISION_INVALID_SETUP
+      - THIRD_PARTY_DEVICE_CONNECTED
+      - THIRD_PARTY_DEVICE_DISCONNECTED
+      - NVR_STREAMING_STATUS
+      - STORAGE_SM
+      - DEVICE_OFFLINE_EXTENDED
+      - DEVICE_OFFLINE_RECOVERED
+      - DEVICES_OFFLINE_THRESHOLD
+      - CLOUD_ARCHIVE_LAGGING
+      - CLOUD_ARCHIVE_RECOVERED
+      - LOCAL_RECORDING_INTERRUPTED
+      - LOCAL_RECORDING_RECOVERED
+      - UNKNOWN
+    Report_GetRunningAverageWSResponse:
+      type: object
+      description: Response object for getting running average statistics.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        statsDataPoints:
+          type:
+          - array
+          - 'null'
+          description: List of weekly statistics data points
+          items:
+            $ref: '#/components/schemas/WeeklyStatisticsDataPoint'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetThresholdCrossingEventsForDeviceWSRequest:
+      type: object
+      description: Request object for getting threshold crossing events for a specific device.
+      properties:
+        crossingObject:
+          $ref: '#/components/schemas/CrossingObjectEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End timestamp of query period in epoch MS
+          example: 1640998800000
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+          description: Should be null on first request and populated on subsequent requests if provided in the response to retrieve the next page
+        maxPageSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Max number of results to return. Response's lastEvaluatedKey will be null if no additional results are available
+          example: 100
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start timestamp of query period in epoch MS
+          example: 1640995200000
+    AuditActionEnum:
+      type: string
+      enum:
+      - THREAT_CASE_ESCALATED
+      - THREAT_CASE_CANCELLED
+      - THREAT_CASE_DISMISSED
+      - THREAT_CASE_DELETED
+      - THREAT_CASE_DELETE_BY_STATUS
+      - PIN_CREATED
+      - PIN_DELETED
+      - ALM_PIN_CREATE
+      - ALM_PIN_BULK_CREATE
+      - ALM_PIN_UPDATE
+      - ALM_PIN_ROTATE
+      - ALM_PIN_BULK_ROTATE
+      - ALM_PIN_DELETE
+      - ALM_PIN_KEY_IN
+      - ALM_PIN_KEY_IN_FAILED
+      - BASIC_AUTH_SUCCESS
+      - BASIC_AUTH_FAILURE
+      - SAML_LOGIN_WEB
+      - LOGIN_WEB
+      - PASSWORDLESS_LOGIN_WEB
+      - PARTNER_LOGIN_WEB
+      - PARTNER_PASSWORDLESS_LOGIN_WEB
+      - SAML_LOGIN_FAILURE_WEB
+      - LOGIN_FAILURE_WEB
+      - RHOMBUS_KEY_LOGIN
+      - RHOMBUS_KEY_PASSWORDLESS_LOGIN
+      - RHOMBUS_KEY_SAML_LOGIN
+      - LOGOUT_WEB
+      - PARTNER_LOGOUT_WEB
+      - WEB_CONSOLE_ACCESS
+      - MOBILE_CONSOLE_ACCESS
+      - SAML_LOGIN_MOBILE
+      - PARTNER_LOGIN_MOBILE
+      - PARTNER_PASSWORDLESS_LOGIN_MOBILE
+      - LOGIN_MOBILE
+      - PASSWORDLESS_LOGIN_MOBILE
+      - SAML_LOGIN_FAILURE_MOBILE
+      - LOGIN_FAILURE_MOBILE
+      - LOGOUT_MOBILE
+      - PARTNER_LOGOUT_MOBILE
+      - MOBILE_ACCESS
+      - PARTNER_LOGIN_MOBIlE_REFRESH
+      - LOGIN_MOBIlE_REFRESH
+      - RHOMBUS_KEY_LOGIN_REFRESH
+      - CAMERA_WIFI_NETWORK_CHANGED
+      - CAMERA_FORCED_REBOOT
+      - AUDIO_GATEWAY_FORCED_REBOOT
+      - ENVIRONMENTAL_GATEWAY_FORCED_REBOOT
+      - DOORBELL_CAMERA_FORCED_REBOOT
+      - BADGE_READER_FORCED_REBOOT
+      - NVR_FORCED_REBOOT
+      - FIRMWARE_UPDATE_CAMERA
+      - DELETE_CAMERA
+      - DELETE_USER
+      - DELETE_LOCATION
+      - LOCATION_CREATE
+      - LOCATION_UPDATED
+      - DELETE_ROLE
+      - ERASE_CAMERA
+      - POLICY_UPDATE
+      - POLICY_DELETE
+      - POLICY_PAUSED_LOCATION
+      - POLICY_PAUSED_DEVICE
+      - POLICY_PAUSED_COMPONENT_COMPOSITE
+      - CREATE_POLICY_ADDENDUM
+      - DEVICE_REGISTERED
+      - PENDING_REGISTRATION_CREATE
+      - PENDING_REGISTRATION_REMOVED
+      - PENDING_REGISTRATION_UPDATED
+      - DEVICE_UPDATE
+      - DEVICE_SETTINGS_UPDATE
+      - REVERT_TO_DEFAULTS
+      - DEVICE_FEATURE_UPDATE
+      - DEVICE_ORG_REASSIGN
+      - CLAIMKEY_RENEWAL_CREATED
+      - LICENSES_CLAIMED
+      - LICENSES_RETURNED
+      - LICENSE_ASSIGNED
+      - LICENSE_CREATED
+      - LICENSE_UPDATED
+      - USER_UPDATE
+      - USER_CREATE
+      - USER_IMPORT
+      - BULK_PROVISION_CREDENTIALS
+      - ROLE_CREATE
+      - POLICY_CREATE
+      - PARTNER_CLIENT_CREATE
+      - PARTNER_CLIENT_DELETE
+      - PARTNER_CUSTOMIZE_CLIENT
+      - PARTNER_CUSTOMIZE_CLIENT_DEVICE
+      - ORG_UPDATE
+      - DELETE_ORG
+      - DISABLE_ORG
+      - CREATE_ORG
+      - ROLE_UPDATE
+      - USER_ROLE_UPDATE
+      - USER_EMAIL_UPDATE
+      - TIMELAPSE_CREATE
+      - TIMELAPSE_DELETE
+      - ALERT_DISMISS
+      - ALL_ALERT_DISMISS
+      - SAVED_CLIP_CREATE
+      - SAVED_CLIP_DELETE
+      - CLIP_GROUP_CREATED
+      - CLIP_GROUP_DELETE
+      - SHARED_CLIP_DELETE
+      - SHARED_CLIP_CREATE
+      - SHARED_LINK_SENT
+      - SHARED_LIVE_VIDEO_STREAM_WITH_PASSWORD_CREATE
+      - SHARED_LIVE_VIDEO_STREAM_WITHOUT_PASSWORD_CREATE
+      - SHARED_LIVE_VIDEO_STREAM_DELETE
+      - SHARED_VIDEOWALL_WITH_PASSWORD_CREATE
+      - SHARED_VIDEOWALL_WITHOUT_PASSWORD_CREATE
+      - SHARED_VIDEOWALL_DELETE
+      - RAW_HTTP_STREAM_CREATED
+      - RAW_HTTP_STREAM_DELETED
+      - SETUP_VIRTUAL_MFA_DEVICE
+      - DELETE_VIRTUAL_MFA_DEVICE
+      - SETUP_SCIM_API_ACCESS
+      - REVOKE_SCIM_API_ACCESS
+      - AUDIT_EXPORT
+      - COUNT_EXPORT
+      - DIAGNOSTIC_EXPORT
+      - INVENTORY_EXPORT
+      - USERS_EXPORT
+      - UPTIME_EXPORT
+      - ALM_EVENT_EXPORT
+      - SUPPORT_TICKET_OPEN
+      - RMA_OPEN
+      - FEEDBACK_CREATE
+      - SUPPORT_ACCESS_GRANT
+      - SUPPORT_ACCESS_REVOKE
+      - SUPPORT_PARTNER_ADD
+      - SUPPORT_PARTNER_REMOVE
+      - SUPPORT_PARTNER_LOGIN_ACCESS_EXPIRED
+      - SUPPORT_SEARCH_TICKETS
+      - ACCEPT_UAP
+      - ACCEPT_RHOMBUS_UAP
+      - ACCEPT_ALERTMONITORING_UAP
+      - CREATE_SEEKPOINT
+      - DELETE_CUSTOM_SEEKPOINT
+      - UPDATE_INTEGRATION_SAML
+      - UPDATE_INTEGRATION_SLACK
+      - UPDATE_INTEGRATION_SLACK_V2
+      - DELETE_INTEGRATION_SLACK_V2
+      - UPDATE_INTEGRATION_BOX
+      - DELETE_INTEGRATION_BOX
+      - UPDATE_INTEGRATION_GOOGLE
+      - DELETE_INTEGRATION_GOOGLE
+      - UPDATE_INTEGRATION_GOOGLE_V2
+      - DELETE_INTEGRATION_GOOGLE_V2
+      - UPDATE_INTEGRATION_PAGERDUTY
+      - DELETE_INTEGRATION_PAGERDUTY
+      - UPDATE_INTEGRATION_SERVICENOW
+      - DELETE_INTEGRATION_SERVICENOW
+      - UPDATE_INTEGRATION_OFFICE365
+      - DELETE_INTEGRATION_OFFICE365
+      - UPDATE_INTEGRATION_DROPBOX
+      - DELETE_INTEGRATION_DROPBOX
+      - UPDATE_INTEGRATION_SQUARE
+      - DELETE_INTEGRATION_SQUARE
+      - UPDATE_INTEGRATION_AWS
+      - DELETE_INTEGRATION_AWS
+      - UPDATE_INTEGRATION_HALO
+      - DELETE_INTEGRATION_HALO
+      - UPDATE_INTEGRATION_TRITON
+      - DELETE_INTEGRATION_TRITON
+      - UPDATE_INTEGRATION_WEBHOOK
+      - DELETE_INTEGRATION_WEBHOOK
+      - UPDATE_INTEGRATION_EMAIL
+      - DELETE_INTEGRATION_EMAIL
+      - UPDATE_INTEGRATION_MATTERMOST
+      - DELETE_INTEGRATION_MATTERMOST
+      - UPDATE_INTEGRATION_OPENPATH
+      - DELETE_INTEGRATION_OPENPATH
+      - UPDATE_INTEGRATION_AVIGILON_ALTA
+      - DELETE_INTEGRATION_AVIGILON_ALTA
+      - UPDATE_INTEGRATION_DICE
+      - DELETE_INTEGRATION_DICE
+      - UPDATE_INTEGRATION_LUMEO
+      - DELETE_INTEGRATION_LUMEO
+      - UPDATE_INTEGRATION_DEVICE
+      - DELETE_INTEGRATION_DEVICE
+      - UPDATE_INTEGRATION_GUESTMANAGEMENT
+      - DELETE_INTEGRATION_GUESTMANAGEMENT
+      - UPDATE_GUESTMANAGEMENT_SETTINGS
+      - DELETE_GUESTMANAGEMENT_SETTINGS
+      - INVITE_GUEST
+      - CREATE_GUEST
+      - CHECKIN_GUEST
+      - CHECKOUT_GUEST
+      - UPDATE_GUEST
+      - DELETE_GUEST
+      - ACTIVATE_KIOSK
+      - UPDATE_INTEGRATION_OMNIALERT
+      - DELETE_INTEGRATION_OMNIALERT
+      - UPDATE_INTEGRATION_OPENTECHALLIANCE
+      - DELETE_INTEGRATION_OPENTECHALLIANCE
+      - UPDATE_INTEGRATION_TOAST
+      - DELETE_INTEGRATION_TOAST
+      - UPDATE_INTEGRATION_KISI
+      - DELETE_INTEGRATION_KISI
+      - UPDATE_INTEGRATION_BRIVO
+      - DELETE_INTEGRATION_BRIVO
+      - UPDATE_INTEGRATION_BUTTERFLYMX
+      - DELETE_INTEGRATION_BUTTERFLYMX
+      - UPDATE_INTEGRATION_ENVOY
+      - DELETE_INTEGRATION_ENVOY
+      - CREATE_ENVOY_INVITE
+      - UPDATE_INTEGRATION_SALTO
+      - UPDATE_INTEGRATION_PDK
+      - DELETE_INTEGRATION_PDK
+      - UPDATE_INTEGRATION_GENEA
+      - DELETE_INTEGRATION_GENEA
+      - UPDATE_INTEGRATION_MICROSOFTTEAMS
+      - DELETE_INTEGRATION_MICROSOFTTEAMS
+      - UPDATE_INTEGRATION_AMT
+      - DELETE_INTEGRATION_AMT
+      - UPDATE_INTEGRATION_PLACEOS
+      - DELETE_INTEGRATION_PLACEOS
+      - UPDATE_INTEGRATION_INTUIFACE
+      - DELETE_INTEGRATION_INTUIFACE
+      - UPDATE_INTEGRATION_INFORMACAST
+      - DELETE_INTEGRATION_INFORMACAST
+      - UPDATE_INTEGRATION_BOULEVARD
+      - DELETE_INTEGRATION_BOULEVARD
+      - UPDATE_INTEGRATION_INNERRANGE
+      - DELETE_INTEGRATION_INNERRANGE
+      - UPDATE_INTEGRATION_HONEYWELL_ELEMENTS
+      - DELETE_INTEGRATION_HONEYWELL_ELEMENTS
+      - UPDATE_INTEGRATION_HONEYWELL_ONGUARD
+      - DELETE_INTEGRATION_HONEYWELL_ONGUARD
+      - UPDATE_INTEGRATION_SHELLY
+      - DELETE_INTEGRATION_SHELLY
+      - UPDATE_INTEGRATION_FLIC
+      - DELETE_INTEGRATION_FLIC
+      - UPDATE_INTEGRATION_NINEONEONECELLULAR
+      - DELETE_INTEGRATION_NINEONEONECELLULAR
+      - UPDATE_INTEGRATION_PIMLOC
+      - DELETE_INTEGRATION_PIMLOC
+      - UPDATE_INTEGRATION_RAPTOR
+      - DELETE_INTEGRATION_RAPTOR
+      - UPDATE_INTEGRATION_LLM
+      - DELETE_INTEGRATION_LLM
+      - UPDATE_INTEGRATION_NOONLIGHT
+      - UPDATE_INTEGRATION_ALARM_MONITORING
+      - ENABLE_LIVE_ALARM_MONITORING
+      - ENABLE_LIVE_ALARM_MONITORING_LOCATION
+      - CREATE_ALARM_MONITORING_SETTINGS
+      - UPDATE_ALARM_MONITORING_SETTINGS
+      - DELETE_ALARM_MONITORING_SETTINGS
+      - ENABLE_ALARM_MONITORING_SETTINGS
+      - DISABLE_ALARM_MONITORING_SETTINGS
+      - ALM_CANCEL_MANUAL_ARM
+      - ALM_CANCEL_MANUAL_DISARM
+      - ALM_THREAT_QUALIFICATION_CREATE
+      - ALM_THREAT_QUALIFICATION_UPDATE
+      - ALM_THREAT_QUALIFICATION_DELETE
+      - REPORT_VEHICLE_EVENT
+      - API_TOKEN_REQUEST
+      - API_TOKEN_REVOKE
+      - API_INVOCATION
+      - API_OAUTH_TOKEN_REQUEST
+      - API_OAUTH_TOKEN_REFRESH
+      - API_OAUTH_TOKEN_REVOKE
+      - API_OAUTH_INVOCATION
+      - API_OAUTH_SUBMIT_APPLICATION
+      - API_OAUTH_UPDATE_APPLICATION
+      - API_OAUTH_DELETE_APPLICATION
+      - API_OAUTH_AUTHORIZE
+      - VIDEO_WALL_CREATE
+      - VIDEO_WALL_UPDATE
+      - VIDEO_WALL_DELETE
+      - VIEW_SHARE_TIMELAPSE
+      - VIEW_SHARE_CLIP
+      - VIEW_SHARE_STREAM
+      - VIEW_SHARE_VIDEOWALL
+      - VIEW_CAMERA_VOD
+      - CAMERA_POLICY_UPDATE
+      - CAMERA_POLICY_CREATE
+      - CAMERA_POLICY_DELETE
+      - TAG_POLICY_UPDATE
+      - TAG_POLICY_CREATE
+      - TAG_POLICY_DELETE
+      - CLIMATE_POLICY_UPDATE
+      - CLIMATE_POLICY_CREATE
+      - CLIMATE_POLICY_DELETE
+      - DOOR_POLICY_UPDATE
+      - DOOR_POLICY_CREATE
+      - DOOR_POLICY_DELETE
+      - DOOR_SCHEDULE_EXCEPTION_UPDATE
+      - DOOR_SCHEDULE_EXCEPTION_CREATE
+      - DOOR_SCHEDULE_EXCEPTION_DELETE
+      - ACCESS_CONTROLLED_DOOR_POLICY_UPDATE
+      - ACCESS_CONTROLLED_DOOR_POLICY_CREATE
+      - ACCESS_CONTROLLED_DOOR_POLICY_DELETE
+      - VIDEO_INTERCOM_POLICY_UPDATE
+      - VIDEO_INTERCOM_POLICY_CREATE
+      - VIDEO_INTERCOM_POLICY_DELETE
+      - OCCUPANCY_POLICY_UPDATE
+      - OCCUPANCY_POLICY_CREATE
+      - OCCUPANCY_POLICY_DELETE
+      - AUDIO_POLICY_UPDATE
+      - AUDIO_POLICY_CREATE
+      - AUDIO_POLICY_DELETE
+      - SCHEDULE_CREATE
+      - SCHEDULE_DELETE
+      - SCHEDULE_UPDATE
+      - CUSTOM_EVENT_CREATE
+      - CUSTOM_EVENT_DELETE
+      - CUSTOM_EVENT_UPDATE
+      - CUSTOM_EVENT_TOS_ACCEPTED
+      - CUSTOM_EVENT_TOS_REVOKED
+      - SUBSCRIPTION_SETUP_INTENT_CREATE
+      - SUBSCRIPTION_CREATE
+      - SUBSCRIPTION_DELETE
+      - SUBSCRIPTION_PAYMENT_METHOD_DELETE
+      - SUBSCRIPTION_PAYMENT_METHOD_UPDATE
+      - SUBSCRIPTION_MAX_SPEND_UPDATE
+      - SUBSCRIPTION_CHECKOUT_SESSION_CREATE
+      - UPLOAD_FLOORPLAN
+      - ORG_AUDIO_RECORD_UPDATE
+      - ORG_AUDIO_ANALYSIS_UPDATE
+      - ORG_LLM_USAGE_UPDATE
+      - ORG_LLM_USAGE_ENABLED
+      - ORG_LLM_USAGE_DISABLED
+      - DOOR_ACCESS_UNLOCK
+      - RHOMBUS_KEY_DOOR_UNLOCK
+      - ELEVATOR_ACCESS_UNLOCK
+      - RHOMBUS_KEY_ELEVATOR_UNLOCK
+      - VIDEO_INTERCOM_TALK
+      - RHOMBUS_KEY_UPDATE_APP_SETTINGS
+      - UPLOAD_ACCESS_CONTROLLED_DOOR
+      - UPLOAD_ACCESS_CONTROLLED_ELEVATOR
+      - UPLOAD_ACCESS_CONTROLLED_ELEVATOR_LANDING
+      - UPLOAD_USER_PROFILE_PICTURE
+      - ACCESS_GRANT_CREATE
+      - ACCESS_GRANT_UPDATE
+      - ACCESS_GRANT_DELETE
+      - ACCESS_REVOCATION_CREATE
+      - ACCESS_REVOCATION_UPDATE
+      - ACCESS_REVOCATION_DELETE
+      - ACCESS_CONTROLLED_DOOR_CREATE
+      - ACCESS_CONTROLLED_DOOR_UPDATE
+      - ACCESS_CONTROLLED_DOOR_DELETE
+      - ACCESS_CONTROLLED_ELEVATOR_CREATE
+      - ACCESS_CONTROLLED_ELEVATOR_UPDATE
+      - ACCESS_CONTROLLED_ELEVATOR_DELETE
+      - ACCESS_CONTROLLED_ELEVATOR_LANDING_CREATE
+      - ACCESS_CONTROLLED_ELEVATOR_LANDING_UPDATE
+      - ACCESS_CONTROLLED_ELEVATOR_LANDING_DELETE
+      - AC_CRED_RHOMBUS_SECURE_CSN_CREATE
+      - AC_CRED_RHOMBUS_SECURE_CSN_UPDATE
+      - AC_CRED_RHOMBUS_SECURE_CSN_DELETE
+      - AC_CRED_RHOMBUS_SECURE_CSN_REVOKED
+      - AC_CRED_RHOMBUS_SECURE_CSN_ASSIGN
+      - AC_CRED_RHOMBUS_SECURE_CSN_UNASSIGN
+      - AC_CRED_RHOMBUS_SECURE_CSN_SUSPEND
+      - AC_CRED_RHOMBUS_SECURE_CSN_UNSUSPEND
+      - AC_CRED_STANDARD_CSN_CREATE
+      - AC_CRED_STANDARD_CSN_UPDATE
+      - AC_CRED_STANDARD_CSN_DELETE
+      - AC_CRED_STANDARD_CSN_REVOKED
+      - AC_CRED_STANDARD_CSN_ASSIGN
+      - AC_CRED_STANDARD_CSN_UNASSIGN
+      - AC_CRED_STANDARD_CSN_SUSPEND
+      - AC_CRED_STANDARD_CSN_UNSUSPEND
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_CREATE
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_UPDATE
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_DELETE
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_REVOKED
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_ASSIGN
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_UNASSIGN
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_SUSPEND
+      - AC_CRED_RHOMBUS_SECURE_MOBILE_UNSUSPEND
+      - AC_CRED_PIN_CREATE
+      - AC_CRED_PIN_BULK_CREATE
+      - AC_CRED_PIN_UPDATE
+      - AC_CRED_PIN_ROTATE
+      - AC_CRED_PIN_BULK_ROTATE
+      - AC_CRED_PIN_DELETE
+      - AC_CRED_PIN_REVOKED
+      - AC_CRED_PIN_ASSIGN
+      - AC_CRED_PIN_UNASSIGN
+      - AC_CRED_PIN_SUSPEND
+      - AC_CRED_PIN_UNSUSPEND
+      - AC_CRED_QR_CREATE
+      - AC_CRED_QR_REVOKED
+      - AC_CRED_QR_DELETE
+      - AC_CRED_QR_SUSPEND
+      - AC_CRED_QR_UNSUSPEND
+      - AC_CRED_WIEGAND_CREATE
+      - AC_CRED_WIEGAND_UPDATE
+      - AC_CRED_WIEGAND_DELETE
+      - AC_CRED_WIEGAND_REVOKED
+      - AC_CRED_WIEGAND_ASSIGN
+      - AC_CRED_WIEGAND_UNASSIGN
+      - AC_CRED_WIEGAND_SUSPEND
+      - AC_CRED_WIEGAND_UNSUSPEND
+      - AC_CRED_NOTE_UPDATE
+      - AC_LOCKDOWN_PLAN_CREATED
+      - AC_LOCKDOWN_PLAN_UPDATED
+      - AC_LOCKDOWN_PLAN_DELETED
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_COMPONENT_POWER_CYCLE
+      - AC_DOOR_STATE_OVERRIDE_APPLIED
+      - AC_DOOR_STATE_OVERRIDE_CANCELLED
+      - AC_ELEVATOR_LANDING_ACCESS_STATE_OVERRIDE_APPLIED
+      - AC_ELEVATOR_LANDING_ACCESS_STATE_OVERRIDE_CANCELLED
+      - AC_GUEST_PASS_CREATE
+      - AC_GUEST_PASS_UPDATE
+      - AC_GUEST_PASS_SUSPEND
+      - AC_GUEST_PASS_UNSUSPEND
+      - AC_GUEST_PASS_EXPIRE
+      - AC_GUEST_PASS_DELETE
+      - SCIM_GET_ALL_USERS
+      - SCIM_POST_CREATE_USER
+      - SCIM_PUT_UPDATE_USER
+      - SCIM_PATCH_UPDATE_USER
+      - SCIM_GET_USER_BY_ID
+      - SCIM_DELETE_USER_BY_ID
+      - SCIM_GET_ALL_GROUPS
+      - SCIM_POST_CREATE_GROUP
+      - SCIM_PUT_UPDATE_GROUP
+      - SCIM_PATCH_UPDATE_GROUP
+      - SCIM_GET_GROUP_BY_ID
+      - SCIM_DELETE_GROUP_BY_ID
+      - CREATE_ACCESS_CONTROL_GROUP
+      - UPDATE_ACCESS_CONTROL_GROUP
+      - DELETE_ACCESS_CONTROL_GROUP
+      - RULE_CREATE
+      - RULE_DELETE
+      - RULE_UPDATE
+      - RULE_PAUSE
+      - UPLOAD_FACES
+      - UPDATE_FACE
+      - REPORT_FACE_EVENT
+      - FACE_EVENT_UPDATED
+      - FACE_EVENT_DELETED
+      - FACE_PERSON_CREATED
+      - FACE_PERSON_UPDATED
+      - FACE_PERSON_DELETED
+      - FACE_MATCHMAKER_CREATED
+      - FACE_MATCHMAKER_DELETED
+      - FACE_MATCHMAKER_UPLOADED
+      - FACE_MATCHING_CONFIG_UPDATED
+      - EXPUNGE_FACES_ORG
+      - EXPUNGE_VEHICLES_ORG
+      - DEVICE_NETWORK_CONFIGURATION_CHANGE
+      - KIOSK_UPDATED
+      - KIOSK_DELETED
+      - KIOSK_CREATED
+      - GUEST_DELETED
+      - UPDATE_APERIO_FIRMWARE
+      - UPDATE_INTEGRATION_APERIO
+      - DELETE_INTEGRATION_APERIO
+      - APERIO_GATEWAY_CREATE
+      - APERIO_DOORS_CREATE
+      - APERIO_GATEWAY_REBOOT
+      - APERIO_DTC_CLEAR
+      - THIRD_PARTY_CAMERA_CREATE
+      - THIRD_PARTY_CAMERA_DELETE
+      - THIRD_PARTY_CAMERA_UPDATED
+      - THIRD_PARTY_CAMERA_ASSIGNED_TO_CORE
+      - THIRD_PARTY_CAMERA_ASSIGNED_TO_LITE
+      - THIRD_PARTY_CAMERA_UNASSIGNED
+      - THIRD_PARTY_CAMERA_PASSWORD_CREATE
+      - THIRD_PARTY_CAMERA_PASSWORD_DELTE
+      - THIRD_PARTY_CAMERA_PASSWORD_DELETE
+      - CREATE_CHATBOT_CONFIG
+      - UPDATE_CHATBOT_CONFIG
+      - DELETE_CHATBOT_CONFIG
+      - SUPPORT_AUTHORITY_UPDATE
+      - SUPPORT_AUTHORITY_LOGOUT_ALL
+      - DELETE_DOOR_CONTROLLER
+      - DELETE_DOORBELL_CAMERA
+      - DELETE_BADGE_READER
+      - DELETE_ENVIRONMENTAL_GATEWAY
+      - AC_LOCKDOWN_TEST_MODE_ENABLED
+      - AC_LOCKDOWN_TEST_MODE_DISABLED
+      - CLOUD_ARCHIVING_CONFIG_UPDATE
+      - CLOUD_ARCHIVING_CONFIG_DELETE
+      - SCIM_UPDATE_SETTINGS
+      - INCIDENT_REPORT_CREATE
+      - INCIDENT_REPORT_DELETE
+      - INCIDENT_REPORT_UPDATED
+      - UNKNOWN
+    SummaryCountTimeSeriesDataPointType:
+      type: object
+      description: List of summary count time series data points
+      properties:
+        avgEventCountMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/EventCount'
+        dateLocal:
+          type:
+          - string
+          - 'null'
+        dateUtc:
+          type:
+          - string
+          - 'null'
+        maxEventCountMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/EventCount'
+        minEventCountMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/EventCount'
+        reportingDevicesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: DeviceFacetUuid
+              description: RUUID with optional appended facet information
+              example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    ReportScopeEnum:
+      type: string
+      description: Scope of the report to reset
+      enum:
+      - REGION
+      - DEVICE
+      - LOCATION
+      - ORG
+    Integration_GetToastEventsTableWSRequest:
+      type: object
+      properties:
+        businessDate:
+          type:
+          - string
+          - 'null'
+        restaurantGuid:
+          type:
+          - string
+          - 'null'
+    Report_ResetRunningAverageWSResponse:
+      type: object
+      description: Response object for resetting running average.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Report_GetCustomLLMNumericWSResponse:
+      type: object
+      description: Response object for custom LLM numeric reports.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        reports:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of numeric count reports
+            items:
+              $ref: '#/components/schemas/NumericAggregationValue'
+          description: Map of numeric count reports
+        warningMsg:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

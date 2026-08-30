@@ -1,0 +1,890 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus OAuth Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: OAuth Webservice
+paths:
+  /api/oauth/authorize:
+    get:
+      description: User authorizes to share permission and ac settings, receives temporary authorization code
+      operationId: authorize
+      parameters:
+      - in: query
+        name: clientId
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: redirectUri
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: responseType
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: state
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: consentGiven
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - in: query
+        name: codeChallenge
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: client_id
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: redirect_uri
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: response_type
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: consent_given
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - in: query
+        name: code_challenge
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: code_challenge_method
+        schema:
+          type:
+          - string
+          - 'null'
+      - in: query
+        name: resource
+        schema:
+          type:
+          - string
+          - 'null'
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+      summary: Authorize OAuth application
+      tags:
+      - OAuth Webservice
+  /api/oauth/deleteApplication:
+    post:
+      description: Delete application
+      operationId: deleteApplication
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Oauth_OAuthApplicationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete OAuth application
+      tags:
+      - OAuth Webservice
+  /api/oauth/getAllApplicationsForOrg:
+    post:
+      description: Get all applications for org
+      operationId: getAllApplicationsForOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Oauth_GetAllApplicationsForOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Oauth_GetAllApplicationsForOrgWSResponse'
+          description: OK
+      summary: Get all applications for organization
+      tags:
+      - OAuth Webservice
+  /api/oauth/getApplicationByClientId:
+    post:
+      description: Get application by clientId
+      operationId: getApplicationByClientId
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Oauth_GetApplicationByClientIdWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Oauth_GetApplicationByClientIdWSResponse'
+          description: OK
+      summary: Get application by client ID
+      tags:
+      - OAuth Webservice
+  /api/oauth/submitApplication:
+    post:
+      description: Application for client_id and client_secret
+      operationId: submitApplication
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Oauth_OAuthApplicationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Oauth_OAuthApplicationWSResponse'
+          description: OK
+      summary: Submit OAuth application
+      tags:
+      - OAuth Webservice
+  /api/oauth/updateApplication:
+    post:
+      description: Update application
+      operationId: updateApplication
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Oauth_OAuthApplicationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Update OAuth application
+      tags:
+      - OAuth Webservice
+components:
+  schemas:
+    Oauth_GetApplicationByClientIdWSRequest:
+      type: object
+      description: Request object for getting OAuth application by client ID.
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Oauth_GetAllApplicationsForOrgWSRequest:
+      type: object
+      description: Request object for getting all OAuth applications for an organization.
+    OAuthApplication:
+      type: object
+      description: OAuth application details
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clientSecretHash:
+          type:
+          - string
+          - 'null'
+        contactEmail:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        publicClient:
+          type:
+          - boolean
+          - 'null'
+        redirectUri:
+          type:
+          - string
+          - 'null'
+        tokenEndpointAuthMethod:
+          type:
+          - string
+          - 'null'
+    StatusType:
+      type:
+      - object
+      - 'null'
+      properties:
+        family:
+          $ref: '#/components/schemas/JakartaFamilyEnum'
+        reasonPhrase:
+          type:
+          - string
+          - 'null'
+        statusCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    JakartaFamilyEnum:
+      type: string
+      enum:
+      - INFORMATIONAL
+      - SUCCESSFUL
+      - REDIRECTION
+      - CLIENT_ERROR
+      - SERVER_ERROR
+      - OTHER
+    Link:
+      type:
+      - object
+      - 'null'
+      properties:
+        params:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        rel:
+          type:
+          - string
+          - 'null'
+        rels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        uri:
+          type:
+          - string
+          - 'null'
+          format: uri
+        uriBuilder:
+          $ref: '#/components/schemas/UriBuilder'
+    Oauth_GetAllApplicationsForOrgWSResponse:
+      type: object
+      description: Response object containing all OAuth applications for an organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        oauthApplications:
+          type:
+          - array
+          - 'null'
+          description: List of OAuth applications for the organization
+          items:
+            $ref: '#/components/schemas/OAuthApplication'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    MediaType:
+      type: object
+      properties:
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        concrete:
+          type:
+          - boolean
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        qualityValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        subtype:
+          type:
+          - string
+          - 'null'
+        subtypeSuffix:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        wildcardSubtype:
+          type:
+          - boolean
+          - 'null'
+        wildcardType:
+          type:
+          - boolean
+          - 'null'
+    Oauth_GetApplicationByClientIdWSResponse:
+      type: object
+      description: Response object containing OAuth application details.
+      properties:
+        application:
+          $ref: '#/components/schemas/OAuthApplication'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    NewCookie:
+      type:
+      - object
+      - 'null'
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        domain:
+          type:
+          - string
+          - 'null'
+        expiry:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        httpOnly:
+          type:
+          - boolean
+          - 'null'
+        maxAge:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+        sameSite:
+          $ref: '#/components/schemas/JakartaSameSiteEnum'
+        secure:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Oauth_OAuthApplicationWSRequest:
+      type: object
+      description: Request object for OAuth application management.
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        contactEmail:
+          type:
+          - string
+          - 'null'
+          description: Contact email for the OAuth application
+          example: admin@myapp.com
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the OAuth application
+          example: Integration app for accessing Rhombus API
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the OAuth application
+          example: My Integration App
+        redirectUri:
+          type:
+          - string
+          - 'null'
+          description: OAuth redirect URI
+          example: https://myapp.com/oauth/callback
+        tokenEndpointAuthMethod:
+          type:
+          - string
+          - 'null'
+          description: OAuth token endpoint auth method. 'none' registers a PUBLIC (PKCE-only) client with no secret; omit or 'client_secret_basic'/'client_secret_post' for a confidential client.
+          example: none
+    Oauth_OAuthApplicationWSResponse:
+      type: object
+      description: Response object containing OAuth application credentials.
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clientSecret:
+          type:
+          - string
+          - 'null'
+          description: OAuth client secret
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    BaseApiResponse:
+      type: object
+      description: Base response object denoting success, or failure with a reason, for an endpoint.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Response:
+      type:
+      - object
+      - 'null'
+      properties:
+        allowedMethods:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        closed:
+          type:
+          - boolean
+          - 'null'
+        cookies:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/NewCookie'
+        date:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        entity:
+          type:
+          - object
+          - 'null'
+        entityTag:
+          $ref: '#/components/schemas/EntityTag'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - object
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        language:
+          type:
+          - object
+          - 'null'
+          properties:
+            country:
+              type:
+              - string
+              - 'null'
+            displayCountry:
+              type:
+              - string
+              - 'null'
+            displayLanguage:
+              type:
+              - string
+              - 'null'
+            displayName:
+              type:
+              - string
+              - 'null'
+            displayScript:
+              type:
+              - string
+              - 'null'
+            displayVariant:
+              type:
+              - string
+              - 'null'
+            extensionKeys:
+              type:
+              - array
+              - 'null'
+              items:
+                type:
+                - string
+                - 'null'
+              uniqueItems: true
+            iso3Country:
+              type:
+              - string
+              - 'null'
+            iso3Language:
+              type:
+              - string
+              - 'null'
+            language:
+              type:
+              - string
+              - 'null'
+            script:
+              type:
+              - string
+              - 'null'
+            unicodeLocaleAttributes:
+              type:
+              - array
+              - 'null'
+              items:
+                type:
+                - string
+                - 'null'
+              uniqueItems: true
+            unicodeLocaleKeys:
+              type:
+              - array
+              - 'null'
+              items:
+                type:
+                - string
+                - 'null'
+              uniqueItems: true
+            variant:
+              type:
+              - string
+              - 'null'
+        lastModified:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        length:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        links:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Link'
+          uniqueItems: true
+        location:
+          type:
+          - string
+          - 'null'
+          format: uri
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - object
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        statusInfo:
+          $ref: '#/components/schemas/StatusType'
+        stringHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+    UriBuilder:
+      type:
+      - object
+      - 'null'
+    EntityTag:
+      type:
+      - object
+      - 'null'
+      properties:
+        value:
+          type:
+          - string
+          - 'null'
+        weak:
+          type:
+          - boolean
+          - 'null'
+    JakartaSameSiteEnum:
+      type: string
+      enum:
+      - NONE
+      - LAX
+      - STRICT
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

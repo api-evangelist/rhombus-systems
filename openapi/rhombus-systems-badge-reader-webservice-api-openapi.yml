@@ -1,0 +1,198 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Badge Reader Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Badge Reader Webservice
+paths:
+  /api/badgereader/delete:
+    post:
+      description: Remove the badge reader from the organization
+      operationId: deleteBadgeReader
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Badgereader_DeleteBadgeReaderWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Badgereader_DeleteBadgeReaderWSResponse'
+          description: OK
+      summary: Delete badge reader
+      tags:
+      - Badge Reader Webservice
+  /api/badgereader/reboot:
+    post:
+      description: Reboot the specified badge reader
+      operationId: rebootBadgeReader
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Badgereader_RebootBadgeReaderWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Common_devices_RebootDeviceWSResponse'
+          description: OK
+      summary: Reboot badge reader
+      tags:
+      - Badge Reader Webservice
+components:
+  schemas:
+    Common_devices_RebootDeviceWSResponse:
+      type: object
+      description: Response indicating the result of rebooting a device.
+      properties:
+        result:
+          $ref: '#/components/schemas/Common_devices_RebootDeviceWSResponse_RebootResult'
+    WebResponseStatusEnum:
+      type: string
+      description: Status of the unregister operation
+      enum:
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - SAME_PASSWORD
+      - USER_EXISTS
+      - USER_NOT_FOUND
+      - DEVICE_NOT_FOUND
+      - POLICY_NOT_FOUND
+      - LOCATION_NOT_FOUND
+      - ORG_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
+    Common_devices_RebootDeviceWSResponse_RebootResult:
+      type: string
+      description: Result of the reboot operation
+      enum:
+      - REBOOT_SENT
+      - DEVICE_OFFLINE
+    Badgereader_DeleteBadgeReaderWSRequest:
+      type: object
+      description: Request to delete a badge reader device.
+      properties:
+        badgeReaderUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        mummify:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to mummify the device instead of hard delete
+          example: false
+      required:
+      - badgeReaderUuid
+      - mummify
+    Badgereader_RebootBadgeReaderWSRequest:
+      type: object
+      description: Request to reboot a badge reader device.
+      properties:
+        badgeReaderUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - badgeReaderUuid
+    Badgereader_DeleteBadgeReaderWSResponse:
+      type: object
+      description: Response from deleting a badge reader device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        responseStatus:
+          $ref: '#/components/schemas/WebResponseStatusEnum'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

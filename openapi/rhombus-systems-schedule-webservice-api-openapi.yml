@@ -1,0 +1,1187 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Schedule Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Schedule Webservice
+paths:
+  /api/schedule/createAbsoluteSchedule:
+    post:
+      description: Create a absolute schedule
+      operationId: createAbsoluteSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_CreateAbsoluteScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_CreateAbsoluteScheduleWSResponse'
+          description: OK
+      summary: Create absolute schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/createRelativeDateTimeIntervalsSchedule:
+    post:
+      description: Create a one-time relative datetime schedule
+      operationId: createRelativeDateTimeIntervalsSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_CreateRelativeDateTimeIntervalsScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_CreateRelativeDateTimeIntervalsScheduleWSResponse'
+          description: OK
+      summary: Create relative datetime intervals schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/createRelativeSchedule:
+    post:
+      description: Create a realtime relative schedule
+      operationId: createRelativeSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_CreateRelativeScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_CreateRelativeScheduleWSResponse'
+          description: OK
+      summary: Create relative schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/createWeeklySchedule:
+    post:
+      description: Create a weekly schedule
+      operationId: createWeeklySchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_CreateWeeklyScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_CreateWeeklyScheduleWSResponse'
+          description: OK
+      summary: Create weekly schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/deleteSchedule:
+    post:
+      description: Delete a schedule
+      operationId: deleteScheduleV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy_DeleteScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy_DeleteScheduleWSResponse'
+          description: OK
+      summary: Delete schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/findAbsoluteSchedule:
+    post:
+      description: Find an absolute schedule
+      operationId: findAbsoluteSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_FindAbsoluteScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_FindAbsoluteScheduleWSResponse'
+          description: OK
+      summary: Find absolute schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/findRelativeDateTimeIntervalsSchedule:
+    post:
+      description: Find a one-time relative datetime schedule
+      operationId: findRelativeDateTimeIntervalsSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_FindRelativeDateTimeIntervalsScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_FindRelativeDateTimeIntervalsScheduleWSResponse'
+          description: OK
+      summary: Find relative datetime intervals schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/findRelativeSchedule:
+    post:
+      description: Find a relative schedule
+      operationId: findRelativeSchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_FindRelativeScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_FindRelativeScheduleWSResponse'
+          description: OK
+      summary: Find relative schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/findWeeklySchedule:
+    post:
+      description: Find a weekly schedule
+      operationId: findWeeklySchedule
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_FindWeeklyScheduleWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_FindWeeklyScheduleWSResponse'
+          description: OK
+      summary: Find weekly schedule
+      tags:
+      - Schedule Webservice
+  /api/schedule/getScheduleData:
+    post:
+      description: Get weekly schedules in org with usage data
+      operationId: getScheduleData
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_GetSchedulesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_GetScheduleDataWSResponse'
+          description: OK
+      summary: Get schedule data
+      tags:
+      - Schedule Webservice
+  /api/schedule/getScheduleDataV2:
+    post:
+      description: Get weekly schedules in org with usage data
+      operationId: getScheduleDataV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_GetScheduleDataV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_GetScheduleDataV2WSResponse'
+          description: OK
+      summary: Get schedule data V2
+      tags:
+      - Schedule Webservice
+  /api/schedule/getSchedules:
+    post:
+      description: Get schedules in org
+      operationId: getSchedules
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule_GetSchedulesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule_GetSchedulesWSResponse'
+          description: OK
+      summary: Get schedules
+      tags:
+      - Schedule Webservice
+components:
+  schemas:
+    Schedule_FindRelativeDateTimeIntervalsScheduleWSResponse:
+      type: object
+      description: Response object for finding a relative datetime intervals schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedule:
+          $ref: '#/components/schemas/RelativeDateTimeIntervalsScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RealtimeRelativeSecondsScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          pastSeconds:
+            type:
+            - integer
+            - 'null'
+            format: int32
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteScheduleWSResponse:
+      type: object
+      description: Response object for deleting a schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_FindRelativeScheduleWSResponse:
+      type: object
+      description: Response object for finding a relative schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedule:
+          $ref: '#/components/schemas/RealtimeRelativeSecondsScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_CreateRelativeScheduleWSRequest:
+      type: object
+      description: Request object for creating a relative schedule.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/RealtimeRelativeSecondsScheduleType'
+    AbsoluteSecondsIntervalType:
+      type: object
+      properties:
+        b:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        e:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Schedule_GetSchedulesWSRequest:
+      type: object
+      description: Request object for getting all schedules.
+    LocalDateTimeIntervalType:
+      type:
+      - object
+      - 'null'
+      properties:
+        localEndDateTime:
+          type:
+          - string
+          - 'null'
+          description: Interval end time in 'yyyy-MM-ddTHH:mm:ss' format. Interval end time is exclusive.
+        localStartDateTime:
+          type:
+          - string
+          - 'null'
+          description: Interval start time in 'yyyy-MM-ddTHH:mm:ss' format. Interval start time is inclusive.
+      required:
+      - localEndDateTime
+      - localStartDateTime
+    WeeklyMinuteIntervalType:
+      type: object
+      properties:
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Schedule_FindAbsoluteScheduleWSRequest:
+      type: object
+      description: Request object for finding an absolute schedule.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateAbsoluteScheduleWSRequest:
+      type: object
+      description: Request object for creating an absolute schedule.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/AbsoluteSecondsScheduleType'
+    Schedule_GetScheduleDataV2WSResponse:
+      type: object
+      description: Response object for getting schedule data v2.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        weeklyScheduleData:
+          $ref: '#/components/schemas/Schedule_WeeklyRepeatingScheduleDataType'
+    Schedule_CreateRelativeDateTimeIntervalsScheduleWSResponse:
+      type: object
+      description: Response object for creating a relative datetime intervals schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_FindWeeklyScheduleWSResponse:
+      type: object
+      description: Response object for finding a weekly schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_GetScheduleDataV2WSRequest:
+      type: object
+      description: Request object for getting schedule data v2.
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateWeeklyScheduleWSResponse:
+      type: object
+      description: Response object for creating a weekly schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RelativeDateTimeIntervalsScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          intervals:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/LocalDateTimeIntervalType'
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_FindAbsoluteScheduleWSResponse:
+      type: object
+      description: Response object for finding an absolute schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedule:
+          $ref: '#/components/schemas/AbsoluteSecondsScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_CreateAbsoluteScheduleWSResponse:
+      type: object
+      description: Response object for creating an absolute schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_WeeklyRepeatingScheduleDataType:
+      type: object
+      description: Weekly repeating schedule data type with usage information.
+      properties:
+        accessGrantUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of access grant UUIDs using this schedule
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        alarmMonitoringUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of alarm monitoring UUIDs using this schedule
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        alertPolicyUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of alert policy UUIDs using this schedule
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        customEventUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of custom event UUIDs using this schedule
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        doorSettingUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of door setting UUIDs using this schedule
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        intervalList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+        locationsUsedIn:
+          type:
+          - array
+          - 'null'
+          description: Set of location UUIDs where this schedule is used
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of rule UUIDs using this schedule
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        sharedStreamUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of shared stream UUIDs using this schedule
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WeeklyRepeatingScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          intervalList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ScheduleStrategyEnum:
+      type: string
+      enum:
+      - WEEKLY_REPEATING_MINUTES
+      - ABSOLUTE_SECONDS
+      - REALTIME_RELATIVE_SECONDS
+      - RELATIVE_DATETIME_INTERVALS
+    Schedule_FindWeeklyScheduleWSRequest:
+      type: object
+      description: Request object for finding a weekly schedule.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_GetSchedulesWSResponse:
+      type: object
+      description: Response object for getting all schedules.
+      properties:
+        absoluteSchedules:
+          type:
+          - array
+          - 'null'
+          description: List of absolute schedules
+          items:
+            $ref: '#/components/schemas/AbsoluteSecondsScheduleType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        relativeDatetimeSchedules:
+          type:
+          - array
+          - 'null'
+          description: List of relative datetime intervals schedules
+          items:
+            $ref: '#/components/schemas/RelativeDateTimeIntervalsScheduleType'
+        relativeSchedules:
+          type:
+          - array
+          - 'null'
+          description: List of relative schedules
+          items:
+            $ref: '#/components/schemas/RealtimeRelativeSecondsScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        weeklySchedules:
+          type:
+          - array
+          - 'null'
+          description: List of weekly repeating schedules
+          items:
+            $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+    Policy_DeleteScheduleWSRequest:
+      type: object
+      description: Request object for deleting a schedule used for policy creation.
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateRelativeScheduleWSResponse:
+      type: object
+      description: Response object for creating a relative schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_CreateRelativeDateTimeIntervalsScheduleWSRequest:
+      type: object
+      description: Request object for creating a relative datetime intervals schedule.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/RelativeDateTimeIntervalsScheduleType'
+    AbsoluteSecondsScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          intervalList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AbsoluteSecondsIntervalType'
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_GetScheduleDataWSResponse:
+      type: object
+      description: Response object for getting schedule data.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        weeklyScheduleData:
+          type:
+          - array
+          - 'null'
+          description: List of weekly schedule data
+          items:
+            $ref: '#/components/schemas/Schedule_WeeklyRepeatingScheduleDataType'
+    Schedule_FindRelativeScheduleWSRequest:
+      type: object
+      description: Request object for finding a relative schedule.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateWeeklyScheduleWSRequest:
+      type: object
+      description: Request object for creating a weekly schedule.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+    Schedule_FindRelativeDateTimeIntervalsScheduleWSRequest:
+      type: object
+      description: Request object for finding a relative datetime intervals schedule.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

@@ -1,0 +1,1618 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus License Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: License Webservice
+paths:
+  /api/license/assignACUDoorLicense:
+    post:
+      description: Assign ACU door license
+      operationId: assignACUDoorLicense
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_AssignACUDoorLicenseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_AssignACUDoorLicenseWSResponse'
+          description: OK
+      summary: Assign ACU door license
+      tags:
+      - License Webservice
+  /api/license/assignAlertMonitoringLicense:
+    post:
+      description: Assign alert monitoring license
+      operationId: assignAlertMonitoringLicense
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_AssignAlertMonitoringLicenseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_AssignAlertMonitoringLicenseWSResponse'
+          description: OK
+      summary: Assign alert monitoring license
+      tags:
+      - License Webservice
+  /api/license/assignDeviceLicense:
+    post:
+      description: Assign or unassign a device license.
+      operationId: assignDeviceLicense
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_AssignDeviceLicenseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_AssignDeviceLicenseWSResponse'
+          description: OK
+      summary: Assign device license
+      tags:
+      - License Webservice
+  /api/license/assignGuestManagementLicense:
+    post:
+      description: Assign guest management license
+      operationId: assignGuestManagementLicense
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_AssignGuestManagementLicenseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_AssignGuestManagementLicenseWSResponse'
+          description: OK
+      summary: Assign guest management license
+      tags:
+      - License Webservice
+  /api/license/assignLicense:
+    post:
+      description: Assign an add-on license to a device
+      operationId: assignLicense
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_AssignLicenseWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_AssignLicenseWSResponse'
+          description: OK
+      summary: Assign license
+      tags:
+      - License Webservice
+  /api/license/findAssignedLicensesByLocation:
+    post:
+      description: Find all licenses assigned to a location
+      operationId: findAssignedLicensesByLocation
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_FindAssignedLicensesByLocationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_FindAssignedLicensesByLocationWSResponse'
+          description: OK
+      summary: Find assigned licenses by location
+      tags:
+      - License Webservice
+  /api/license/getACUDoorLicenses:
+    post:
+      description: Get list of access controlled door licenses licenses available in organization
+      operationId: getACUDoorLicenses
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetACUDoorLicensesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetACUDoorLicensesWSResponse'
+          description: OK
+      summary: Get ACU door licenses
+      tags:
+      - License Webservice
+  /api/license/getACUDoorLicensesForClientOrg:
+    post:
+      description: Get list of access controlled door licenses licenses available for a client organization
+      operationId: getACUDoorLicensesForClientOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetACUDoorLicensesForClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetACUDoorLicensesForClientOrgWSResponse'
+          description: OK
+      summary: Get ACU door licenses for client org
+      tags:
+      - License Webservice
+  /api/license/getAlertMonitoringLicenses:
+    post:
+      description: Get list of alert monitoring licenses available in organization
+      operationId: getAlertMonitoringLicenses
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetAlertMonitoringLicensesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetAlertMonitoringLicensesWSResponse'
+          description: OK
+      summary: Get alert monitoring licenses
+      tags:
+      - License Webservice
+  /api/license/getAlertMonitoringLicensesForClientOrg:
+    post:
+      description: Get list of alert monitoring licenses available for a client organization
+      operationId: getAlertMonitoringLicensesForClientOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetAlertMonitoringLicensesForClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetAlertMonitoringLicensesForClientOrgWSResponse'
+          description: OK
+      summary: Get alert monitoring licenses for client org
+      tags:
+      - License Webservice
+  /api/license/getDeviceLicenses:
+    post:
+      description: Get list of device licenses available in organization
+      operationId: getDeviceLicenses
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetDeviceLicensesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetDeviceLicensesWSResponse'
+          description: OK
+      summary: Get device licenses
+      tags:
+      - License Webservice
+  /api/license/getDeviceLicensesForClientOrg:
+    post:
+      description: Get list of device licenses available for a client organization
+      operationId: getDeviceLicensesForClientOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetDeviceLicensesForClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetDeviceLicensesForClientOrgWSResponse'
+          description: OK
+      summary: Get device licenses for client org
+      tags:
+      - License Webservice
+  /api/license/getGuestManagementLicenses:
+    post:
+      description: Get list of guest management licenses available in organization
+      operationId: getGuestManagementLicenses
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetGuestManagementLicensesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetGuestManagementLicensesWSResponse'
+          description: OK
+      summary: Get guest management licenses
+      tags:
+      - License Webservice
+  /api/license/getGuestManagementLicensesForClientOrg:
+    post:
+      description: Get list of guest management licenses available for a client organization
+      operationId: getGuestManagementLicensesForClientOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetGuestManagementLicensesForClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetGuestManagementLicensesForClientOrgWSResponse'
+          description: OK
+      summary: Get guest management licenses for client org
+      tags:
+      - License Webservice
+  /api/license/getLicenses:
+    post:
+      description: Get list of add-on licenses available in organization
+      operationId: getLicenses
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetLicensesWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetLicensesWSResponse'
+          description: OK
+      summary: Get licenses
+      tags:
+      - License Webservice
+  /api/license/getLicensesForClientOrg:
+    post:
+      description: Get a list of licenses available for a client organization
+      operationId: getLicensesForClientOrg
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: partner-api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: partner-api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/License_GetLicensesForClientOrgWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/License_GetLicensesForClientOrgWSResponse'
+          description: OK
+      summary: Get licenses for client org
+      tags:
+      - License Webservice
+components:
+  schemas:
+    License_GetACUDoorLicensesWSRequest:
+      type: object
+      description: Request object for getting list of access controlled door licenses available in organization.
+    License_AssignACUDoorLicenseWSResponse:
+      type: object
+      description: Response object for assigning ACU door license.
+      properties:
+        acuDoorLicense:
+          $ref: '#/components/schemas/ACUDoorLicenseType'
+    AddOnLicenseEnum:
+      type: string
+      enum:
+      - CLOUD_ARCHIVING
+      - PERCEPTION
+      - POSE
+      - BEHAVIOR
+      - VEHICLE
+      - PEOPLE
+      - PPE
+      - PEOPLE_ANALYTICS
+      - UNKNOWN
+    License_AssignDeviceLicenseWSResponse:
+      type: object
+      description: Response object for assigning or unassigning a device license.
+      properties:
+        deviceLicense:
+          $ref: '#/components/schemas/DeviceLicenseType'
+    License_GetAlertMonitoringLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of alert monitoring licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetAlertMonitoringLicensesWSRequest:
+      type: object
+      description: Request object for getting list of alert monitoring licenses available in organization.
+    LicenseFeature:
+      type: object
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    LicenseEnum:
+      type: string
+      enum:
+      - STARTER
+      - STANDARD
+      - ENTERPRISE
+      - LEGACY
+    License_AssignGuestManagementLicenseWSRequest:
+      type: object
+      description: Request object for assigning guest management license.
+      properties:
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LicenseToUnassignEmailStateEnum:
+      type: string
+      enum:
+      - INITIAL_EMAIL_SUCCEEDED
+      - INITIAL_EMAIL_FAILED
+      - FIFTEEN_DAY_WARNING_EMAIL_SUCCEEDED
+      - FIFTEEN_DAY_WARNING_EMAIL_FAILED
+      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_SUCCEEDED
+      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_FAILED
+      - UNKNOWN
+    License_GetDeviceLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of device licenses available for a client organization.
+      properties:
+        deviceLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of device licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/DeviceLicenseType'
+    License_FindAssignedLicensesByLocationWSResponse:
+      type: object
+      description: Response object containing licenses assigned to a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        licenses:
+          type:
+          - array
+          - 'null'
+          description: List of licenses assigned to the location
+          items:
+            $ref: '#/components/schemas/BaseLicenseType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    LicenseUsageType:
+      type: object
+      description: List of licenses available for the client organization
+      properties:
+        addOnLicenseType:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        additionalPerceptionFeatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        cloudArchiveDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        license:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        perceptionTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BaseLicenseType:
+      type: object
+      description: List of licenses found by claim key
+      discriminator:
+        propertyName: productType
+      properties:
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetAlertMonitoringLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of alert monitoring licenses available for a client organization.
+      properties:
+        alertMonitoringLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of alert monitoring licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/AlertMonitoringLicenseType'
+    License_AssignAlertMonitoringLicenseWSResponse:
+      type: object
+      description: Response object for assigning alert monitoring license.
+      properties:
+        alertMonitoringLicense:
+          $ref: '#/components/schemas/AlertMonitoringLicenseType'
+    License_AssignGuestManagementLicenseWSResponse:
+      type: object
+      description: Response object for assigning guest management license.
+      properties:
+        guestManagementLicense:
+          $ref: '#/components/schemas/GuestManagementLicenseType'
+    License_GetGuestManagementLicensesWSResponse:
+      type: object
+      description: Response object containing list of guest management licenses available in organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        guestManagementLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of guest management licenses available in the organization
+          items:
+            $ref: '#/components/schemas/GuestManagementLicenseType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetDeviceLicensesWSResponse:
+      type: object
+      description: Response object containing list of device licenses available in organization.
+      properties:
+        deviceLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of device licenses available in the organization
+          items:
+            $ref: '#/components/schemas/DeviceLicenseType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetLicensesWSRequest:
+      type: object
+      description: Request object for getting list of add-on licenses available in organization.
+      properties:
+        optionalDeviceTypeFilter:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+    License_GetACUDoorLicensesWSResponse:
+      type: object
+      description: Response object containing list of access controlled door licenses available in organization.
+      properties:
+        acuDoorLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of access controlled door licenses available in the organization
+          items:
+            $ref: '#/components/schemas/ACUDoorLicenseType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    AlertMonitoringLicenseType:
+      type: object
+      description: List of alert monitoring licenses available for the client organization
+      properties:
+        allowedDeviceCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        licenseType:
+          $ref: '#/components/schemas/LicenseEnum'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        monthlyFallbackVerificationLimit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        monthlyVerificationLimit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        monthsReset:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        percentUsage:
+          type:
+          - number
+          - 'null'
+          format: double
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        remainingAlarms:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        remainingFallbackVerifications:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        remainingVerifications:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningStage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    DeviceLicenseType:
+      type: object
+      description: List of device licenses available for the client organization
+      properties:
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        features:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+          uniqueItems: true
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        licenseType:
+          $ref: '#/components/schemas/LicenseEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    ProductTypeEnum:
+      type: string
+      enum:
+      - DEVICE
+      - ALERT_MONITORING
+      - ACCESS_CONTROL
+      - GUEST_MANAGEMENT
+      - LICENSE_USAGE
+      - UNKNOWN
+    License_GetLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of licenses available for a client organization.
+      properties:
+        licenses:
+          type:
+          - array
+          - 'null'
+          description: List of licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/LicenseUsageType'
+    License_GetAlertMonitoringLicensesWSResponse:
+      type: object
+      description: Response object containing list of alert monitoring licenses available in organization.
+      properties:
+        alertMonitoringLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of alert monitoring licenses available in the organization
+          items:
+            $ref: '#/components/schemas/AlertMonitoringLicenseType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PerceptionTypeEnum:
+      type: string
+      enum:
+      - PEOPLE_COUNTING
+      - FACE_COUNTING_UNIQUE
+      - FACE_COUNTING_NONUNIQUE
+      - ENGAGMENT_COUNTING
+      - FACE_RECOGNITION
+      - LICENSEPLATE_RECOGNITION
+      - VEHICLE_COUNTING
+      - OCCUPANCY_COUNTING
+      - UNKNOWN
+    License_GetACUDoorLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of access controlled door licenses available for a client organization.
+      properties:
+        acuDoorLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of access controlled door licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/ACUDoorLicenseType'
+    License_GetLicensesWSResponse:
+      type: object
+      description: Response object containing list of add-on licenses available in organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        licenses:
+          type:
+          - array
+          - 'null'
+          description: List of add-on licenses available in the organization
+          items:
+            $ref: '#/components/schemas/LicenseUsageType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetGuestManagementLicensesWSRequest:
+      type: object
+      description: Request object for getting list of guest management licenses available in organization.
+    License_GetDeviceLicensesWSRequest:
+      type: object
+      description: Request object for getting list of device licenses available in organization.
+      properties:
+        optionalDeviceTypeFilter:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+    License_AssignLicenseWSResponse:
+      type: object
+      description: Response object for assigning an add-on license to a device.
+      properties:
+        licenseUsage:
+          $ref: '#/components/schemas/LicenseUsageType'
+    DeviceLicenseFamilyEnum:
+      type: string
+      enum:
+      - CAMERA
+      - CAMERA_MS
+      - VIDEO_INTERCOM
+      - AUDIO_GATEWAY
+      - ENVIRONMENTAL_SENSOR
+      - ENVIRONMENTAL_GATEWAY
+    License_GetACUDoorLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of access controlled door licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetGuestManagementLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of guest management licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignDeviceLicenseWSRequest:
+      type: object
+      description: Request object for assigning or unassigning a device license.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ACUDoorLicenseType:
+      type: object
+      description: List of access controlled door licenses available for the client organization
+      properties:
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        doorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_FindAssignedLicensesByLocationWSRequest:
+      type: object
+      description: Request object for finding licenses assigned to a location.
+      properties:
+        includeSubLocations:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Whether to also include licenses assigned to sub locations of the location
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignLicenseWSRequest:
+      type: object
+      description: Request object for assigning an add-on license to a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignACUDoorLicenseWSRequest:
+      type: object
+      description: Request object for assigning ACU door license.
+      properties:
+        doorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignAlertMonitoringLicenseWSRequest:
+      type: object
+      description: Request object for assigning alert monitoring license.
+      properties:
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetGuestManagementLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of guest management licenses available for a client organization.
+      properties:
+        guestManagementLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of guest management licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/GuestManagementLicenseType'
+    GuestManagementLicenseType:
+      type: object
+      description: List of guest management licenses available for the client organization
+      properties:
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        licenseType:
+          $ref: '#/components/schemas/LicenseEnum'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetDeviceLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of device licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LicenseStateEnum:
+      type: string
+      enum:
+      - CLAIMED
+      - RENEWED
+      - PENDING_RETURN
+      - NOT_RENEWED
+      - EXPIRED
+      - PERMANENTLY_EXPIRED
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

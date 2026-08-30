@@ -1,0 +1,1407 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Help Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Help Webservice
+paths:
+  /api/help/feedback:
+    post:
+      description: Leave feedback of our system
+      operationId: sendFeedback
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Help_SendFeedbackWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Help_SendFeedbackWSResponse'
+          description: OK
+      summary: Leave feedback of our system
+      tags:
+      - Help Webservice
+  /api/help/openTickets:
+    post:
+      deprecated: true
+      description: 'Get Open Support Tickets For A Client Organization. Tickets are associated to an organziation based on the requester''s organization association.
+
+        This endpoint returns a paginated response sorted by the request date. The first page is indexed at 1 and each page has up to 100 ticket entries.'
+      operationId: getOpenTickets
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Help_GetOpenTicketsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Help_GetOpenTicketsWSResponse'
+          description: OK
+      summary: Get open support tickets for a client organization
+      tags:
+      - Help Webservice
+  /api/help/openTicketsV2:
+    post:
+      description: Get Open Support Tickets For A Client Organization. Tickets are associated to an organziation based on the requester's organization association.
+      operationId: getOpenTicketsV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Help_GetOpenTicketsV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Help_GetOpenTicketsV2WSResponse'
+          description: OK
+      summary: Get open support tickets for a client organization V2
+      tags:
+      - Help Webservice
+  /api/help/rma:
+    post:
+      description: Open an RMA for a camera
+      operationId: processRMA
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Help_ProcessRMAWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Help_ProcessRMAWSResponse'
+          description: OK
+      summary: Open an RMA for a camera
+      tags:
+      - Help Webservice
+  /api/help/ticket:
+    post:
+      description: Open a support ticket
+      operationId: createTicket
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Help_CreateTicketWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Help_CreateTicketWSResponse'
+          description: OK
+      summary: Open a support ticket
+      tags:
+      - Help Webservice
+  /api/help/ticketWithFile:
+    post:
+      description: Open a support ticket and optionally include a file upload. Uploading multiple Files are not supported throught this call.
+      operationId: createTicketWithFile
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataMultiPart'
+        description: multipart/form-data with field 'file' for the file and 'request' for the CreateTicketWSRequest(see '/ticket' for details on CreateTicketWSRequest)
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Help_CreateTicketWSResponse'
+          description: OK
+      summary: Open a support ticket with file upload
+      tags:
+      - Help Webservice
+  /api/help/triageDevice:
+    post:
+      description: Triage a device connection/recording issue
+      operationId: triageDevice
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Help_TriageDeviceWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Help_TriageDeviceWSResponse'
+          description: OK
+      summary: Triage a device connection/recording issue
+      tags:
+      - Help Webservice
+components:
+  schemas:
+    Help_CreateTicketWSResponse:
+      type: object
+      description: Response object for creating a support ticket.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failureReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for failure if ticket creation was unsuccessful
+          example: Invalid email address
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the ticket creation was successful
+          example: true
+        ticketId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ID of the created support ticket
+          example: 12345
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Help_ShippingAddress:
+      type: object
+      description: Shipping address information for RMA returns.
+      properties:
+        returnAddressCity:
+          type:
+          - string
+          - 'null'
+          description: City for return shipping
+          example: San Francisco
+        returnAddressCountry:
+          type:
+          - string
+          - 'null'
+          description: Country for return shipping
+          example: United States
+        returnAddressPostalCode:
+          type:
+          - string
+          - 'null'
+          description: Postal code for return shipping
+          example: '94105'
+        returnAddressState:
+          type:
+          - string
+          - 'null'
+          description: State/province for return shipping
+          example: CA
+        returnAddressStreet:
+          type:
+          - string
+          - 'null'
+          description: Street address for return shipping
+          example: 123 Main Street
+    Help_TicketInformation:
+      type: object
+      description: Information about a support ticket.
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the ticket was created
+          example: '2024-01-15T10:30:00Z'
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Unique identifier for the support ticket
+          example: 12345
+        status:
+          type:
+          - string
+          - 'null'
+          description: Current status of the support ticket
+          example: Open
+        subject:
+          type:
+          - string
+          - 'null'
+          description: Subject of the support ticket
+          example: Camera connectivity issue
+    Help_SendFeedbackWSResponse:
+      type: object
+      description: Response object for sending system feedback.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failureReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for failure if feedback sending was unsuccessful
+          example: Invalid feedback content
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the feedback was sent successfully
+          example: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    BodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    Help_GetOpenTicketsWSResponse:
+      type: object
+      description: Response object containing open support tickets with pagination information.
+      properties:
+        currentPage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Current page number in the paginated response
+          example: 1
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        hasNexPage:
+          type:
+          - boolean
+          - 'null'
+          description: True if there is a next page, false otherwise
+        tickets:
+          type:
+          - array
+          - 'null'
+          description: List of open support tickets
+          items:
+            $ref: '#/components/schemas/Help_TicketInformation'
+        totalTickets:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of tickets, not limited to the current page
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Help_TriageDeviceWSRequest:
+      type: object
+      description: Request object for triaging device connection/recording issues.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in seconds for triage analysis
+          example: 1642233600
+    FormDataMultiPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        bodyParts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fields:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/FormDataBodyPart'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    Providers:
+      type:
+      - object
+      - 'null'
+    ContentDisposition:
+      type: object
+      properties:
+        attachment:
+          type:
+          - boolean
+          - 'null'
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        filename:
+          type:
+          - string
+          - 'null'
+        formData:
+          type:
+          - boolean
+          - 'null'
+        inline:
+          type:
+          - boolean
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    DiagnosticActivityEnum:
+      type: string
+      enum:
+      - CAMERA_CONNECTED
+      - CAMERA_DISCONNECTED
+      - STARTUP
+      - GATEWAY_CONNECTED
+      - GATEWAY_DISCONNECTED
+      - UPDATE_STARTED
+      - UPDATE_FIRMWARE_DOWNLOADED
+      - UPDATE_FIRMWARE_APPLIED
+      - UPDATE_STARTING_REBOOT
+      - UPDATE_FAILED_MD5_MISMATCH
+      - UPDATE_FAILED_ACCESS_DENIED
+      - UPDATE_FAILED_MITM
+      - UPDATE_FAILED_CONNNECTION_REFUSED
+      - UPDATE_FAILED_CONNNECTION_TIMEOUT
+      - UPDATE_FAILED_CONNECTION_REFUSED
+      - UPDATE_FAILED_CONNECTION_TIMEOUT
+      - UPDATE_FAILED_DNS_FAILURE
+      - UPDATE_RUNNING
+      - UPDATE_HALTED_FOR_INVESTIGATION
+      - UPDATE_HALT_CLEARED
+      - UPDATE_HALT_STATE_ACTIVE
+      - UPDATE_REFUSED_HALTED
+      - BLE_CONNECTED
+      - BLE_CONNECTION_FAILED
+      - BLE_DISCONNECTED
+      - BLE_OP_SUCCESS
+      - BLE_OP_FAILURE
+      - UPLOAD_CLIP_SUCCESS
+      - UPLOAD_CLIP_FAILURE
+      - NOTIFICATION_FAILURE
+      - USB_FAILURE_REBOOT
+      - PERSISTENT_STORAGE_FAILURE
+      - PING
+      - FORCED_REBOOT
+      - AUTO_REBOOT
+      - AUDIO_HARDWARE_NOT_DETECTED
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - VIDEO_HARDWARE_FAILURE
+      - WIFI_NETWORK_CHANGED
+      - AI_ENGINE_DOWNLOADED
+      - AI_ENGINE_DOWNLOAD_FAILED_MD5_MISMATCH
+      - AI_ENGINE_CONFIGURED
+      - AI_ENGINE_CONFIGURATION_FAILED
+      - MITM_FAILURE
+      - SERVER_RECONNECT
+      - AP_CHANGED
+      - WATCHDOG_KILLED_AGENT
+      - WATCHDOG_DID_RESET
+      - CLIMATE_OFFLINE
+      - CLIMATE_ONLINE
+      - CLIMATE_LOW_BATTERY
+      - CLIMATE_PROBE_CONNECTED
+      - CLIMATE_PROBE_DISCONNECTED
+      - DOOR_OFFLINE
+      - DOOR_ONLINE
+      - DOOR_LOW_BATTERY
+      - OCCUPANCY_SENSOR_ONLINE
+      - OCCUPANCY_SENSOR_OFFLINE
+      - OCCUPANCY_SENSOR_LOW_BATTERY
+      - BUTTON_OFFLINE
+      - BUTTON_ONLINE
+      - BUTTON_LOW_BATTERY
+      - PROXIMITY_LOW_BATTERY
+      - ROBOT_LOW_BATTERY
+      - DOOR_CONTROLLER_CONNECTED
+      - DOOR_CONTROLLER_DISCONNECTED
+      - APERIO_LOW_BATTERY
+      - APERIO_FLAT_BATTERY
+      - APERIO_OK_BATTERY
+      - APERIO_GW_CONNECTED
+      - APERIO_GW_DISCONNECTED
+      - BADGE_READER_CONNECTED
+      - BADGE_READER_DISCONNECTED
+      - REBOOT
+      - NETWORK_INTERRUPTION
+      - OPENPATH_WEBHOOK_FAILURE
+      - TOAST_WEBHOOK_FAILURE
+      - KISI_WEBHOOK_FAILURE
+      - BRIVO_WEBHOOK_FAILURE
+      - HALO_WEBHOOK_FAILURE
+      - SALTO_WEBHOOK_FAILURE
+      - SQUARE_WEBHOOK_FAILURE
+      - BUTTERFLYMX_WEBHOOK_FAILURE
+      - ENVOY_WEBHOOK_FAILURE
+      - GENEA_WEBHOOK_FAILURE
+      - PRODATAKEY_WEBHOOK_FAILURE
+      - AMT_WEBHOOK_FAILURE
+      - PLACEOS_WEBHOOK_FAILURE
+      - OMNIALERT_WEBHOOK_FAILURE
+      - FLIC_WEBHOOK_FAILURE
+      - SHELLY_WEBHOOK_FAILURE
+      - PIMLOC_WEBHOOK_FAILURE
+      - NINEONEONECELLULAR_WEBHOOK_FAILURE
+      - HONEYWELL_ELEMENTS_WEBHOOK_FAILURE
+      - HONEYWELL_ONGUARD_WEBHOOK_FAILURE
+      - TRITON_WEBHOOK_FAILURE
+      - EXTERNAL_WEBHOOK_FAILURE
+      - CV_FAILURE
+      - NFC_HW_FAILURE
+      - CONFIG_ERROR
+      - HW_FAILURE
+      - KEYPAD_ONLINE
+      - KEYPAD_OFFLINE
+      - ALM_OVERAGE_APPROACHING
+      - ALM_OVERAGE_REACHED
+      - ALM_OVERAGE_EXCEEDED
+      - ALM_EXCESSIVE_VERIFICATIONS
+      - KIOSK_OFFLINE
+      - KIOSK_ONLINE
+      - TUNNELED_DEVICE_CONNECTED
+      - TUNNELED_DEVICE_DISCONNECTED
+      - SD_CARD_CHANGED
+      - SD_CARD_NOT_FOUND
+      - SUPERVISION_CUT_DETECTED
+      - SUPERVISION_SHORT_DETECTED
+      - SUPERVISION_INVALID_SETUP
+      - THIRD_PARTY_DEVICE_CONNECTED
+      - THIRD_PARTY_DEVICE_DISCONNECTED
+      - NVR_STREAMING_STATUS
+      - STORAGE_SM
+      - DEVICE_OFFLINE_EXTENDED
+      - DEVICE_OFFLINE_RECOVERED
+      - DEVICES_OFFLINE_THRESHOLD
+      - CLOUD_ARCHIVE_LAGGING
+      - CLOUD_ARCHIVE_RECOVERED
+      - LOCAL_RECORDING_INTERRUPTED
+      - LOCAL_RECORDING_RECOVERED
+      - UNKNOWN
+    FormDataContentDisposition:
+      type: object
+      properties:
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        fileName:
+          type:
+          - string
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    DiagnosticEventType:
+      type: object
+      description: List of diagnostic events
+      properties:
+        activity:
+          $ref: '#/components/schemas/DiagnosticActivityEnum'
+        apMac:
+          type:
+          - string
+          - 'null'
+        asi:
+          type:
+          - string
+          - 'null'
+        componentCompositeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        componentUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        connectionUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        deviceName:
+          type:
+          - string
+          - 'null'
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        reportingDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rssi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ssid:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    Help_GetOpenTicketsWSRequest:
+      type: object
+      description: Request object for retrieving open support tickets with pagination.
+      properties:
+        pageNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Page number used for paginated response. If empty, the search will return the first page.
+    Help_SendFeedbackWSRequest:
+      type: object
+      description: Request object for sending system feedback.
+      properties:
+        feedback:
+          type:
+          - string
+          - 'null'
+          description: Feedback message about the system
+          example: The new interface is much more user-friendly!
+    Help_ProcessRMAWSResponse:
+      type: object
+      description: Response object for processing a Return Merchandise Authorization (RMA).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failureReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for failure if RMA processing was unsuccessful
+          example: Invalid serial number
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the RMA processing was successful
+          example: true
+        ticketId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ID of the RMA ticket created
+          example: 12345
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    MediaType:
+      type: object
+      properties:
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        concrete:
+          type:
+          - boolean
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        qualityValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        subtype:
+          type:
+          - string
+          - 'null'
+        subtypeSuffix:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        wildcardSubtype:
+          type:
+          - boolean
+          - 'null'
+        wildcardType:
+          type:
+          - boolean
+          - 'null'
+    ParameterizedHeader:
+      type:
+      - object
+      - 'null'
+      properties:
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    Help_GetOpenTicketsV2WSResponse:
+      type: object
+      description: Response object containing open support tickets V2 with organization and user tickets.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        tickets:
+          type:
+          - array
+          - 'null'
+          description: List of organization support tickets
+          items:
+            $ref: '#/components/schemas/Help_TicketInformation'
+        userTickets:
+          type:
+          - array
+          - 'null'
+          description: List of user-specific support tickets
+          items:
+            $ref: '#/components/schemas/Help_TicketInformation'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Help_ProcessRMAWSRequest:
+      type: object
+      description: Request object for processing a Return Merchandise Authorization (RMA).
+      properties:
+        contactName:
+          type:
+          - string
+          - 'null'
+          description: Contact name for the RMA
+          example: John Doe
+        contactPhoneNumber:
+          type:
+          - string
+          - 'null'
+          description: Contact phone number for the RMA
+          example: +1-555-123-4567
+        deviceName:
+          type:
+          - string
+          - 'null'
+          description: Name of the device for RMA
+          example: Rhombus Camera Pro
+        problem:
+          type:
+          - string
+          - 'null'
+          description: Description of the problem with the device
+          example: Camera not recording properly
+        returnShippingAddress:
+          $ref: '#/components/schemas/Help_ShippingAddress'
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the device
+          example: RHCAM123456789
+    MessageBodyWorkers:
+      type:
+      - object
+      - 'null'
+    MultiPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        bodyParts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    Help_GetOpenTicketsV2WSRequest:
+      type: object
+      description: Request object for retrieving open support tickets V2 with time range filtering.
+      properties:
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering tickets
+          example: 1642319999999
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering tickets
+          example: 1642233600000
+    Help_TriageDeviceWSResponse:
+      type: object
+      description: Response object containing device triage diagnostic information.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        firmwareUpdates:
+          type:
+          - array
+          - 'null'
+          description: List of firmware update diagnostic events
+          items:
+            $ref: '#/components/schemas/DiagnosticEventType'
+        hardwareFailureEvents:
+          type:
+          - array
+          - 'null'
+          description: List of hardware failure diagnostic events
+          items:
+            $ref: '#/components/schemas/DiagnosticEventType'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Triage analysis message
+          example: Device appears to be functioning normally
+        presenceWindows:
+          type:
+          - array
+          - 'null'
+          description: List of device presence time windows
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        suggestedArticles:
+          type:
+          - array
+          - 'null'
+          description: List of suggested help articles for the device issue
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of suggested help articles for the device issue
+        uptimeWindows:
+          type:
+          - array
+          - 'null'
+          description: List of device uptime time windows
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    TimeWindowSeconds:
+      type: object
+      description: List of uptime windows for the device
+      properties:
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Help_CreateTicketWSRequest:
+      type: object
+      description: Request object for creating a support ticket.
+      properties:
+        body:
+          type:
+          - string
+          - 'null'
+          description: Body content of the support ticket
+          example: My camera is not connecting to the network properly.
+        collaborators:
+          type:
+          - array
+          - 'null'
+          description: List of collaborator email addresses
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of collaborator email addresses
+        consoleAccessGranted:
+          type:
+          - boolean
+          - 'null'
+          description: Whether console access has been granted for troubleshooting
+          example: true
+        productType:
+          type:
+          - string
+          - 'null'
+        serialNumbers:
+          type:
+          - array
+          - 'null'
+          description: List of device serial numbers related to the issue
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of device serial numbers related to the issue
+        serviceType:
+          type:
+          - string
+          - 'null'
+        subject:
+          type:
+          - string
+          - 'null'
+          description: Subject of the support ticket
+          example: Camera connectivity issue
+    FormDataBodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        content:
+          type:
+          - object
+          - 'null'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fileName:
+          type:
+          - string
+          - 'null'
+        formDataContentDisposition:
+          $ref: '#/components/schemas/FormDataContentDisposition'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        name:
+          type:
+          - string
+          - 'null'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+        simple:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java

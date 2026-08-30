@@ -1,0 +1,5261 @@
+openapi: 3.2.0
+info:
+  contact:
+    email: developer@rhombussystems.com
+  description: 'This API is for use by Rhombus customers and partners.
+
+
+    ## Authentication
+
+
+    All requests require two headers:
+
+    - `x-auth-scheme` — The authentication scheme identifier. Use `api-token` for standard API key auth, or `partner-api-token` for partner API auth.
+
+    - `x-auth-apikey` — Your Rhombus API key.
+
+
+    Example:
+
+    ```
+
+    POST /api/camera/getMinimalCameraStateList
+
+    x-auth-scheme: api-token
+
+    x-auth-apikey: YOUR_API_KEY
+
+    Content-Type: application/json
+
+    ```'
+  title: Rhombus Incident Management Integrations Webservice API
+  version: '1.0'
+servers:
+- description: Production Server
+  url: https://api2.rhombussystems.com
+security:
+- ApiKeyAuth: []
+tags:
+- name: Incident Management Integrations Webservice
+paths:
+  /api/integrations/incidentManagement/deleteDiceIntegration:
+    post:
+      description: Delete Dice integration
+      operationId: deleteDiceIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Dice Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteEmailIntegration:
+    post:
+      description: Delete email alert integration
+      operationId: deleteEmailIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Email Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteInformacastIntegration:
+    post:
+      description: Delete Informacast integration
+      operationId: deleteInformacastIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Informacast Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteLumeoIntegration:
+    post:
+      description: Delete Lumeo integration
+      operationId: deleteLumeoIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Lumeo Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteMattermostIntegration:
+    post:
+      description: Delete Mattermost alert integration
+      operationId: deleteMattermostIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Mattermost Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteMicrosoftTeamsIntegrationV2:
+    post:
+      description: Delete Microsoft Teams alert integration
+      operationId: deleteMicrosoftTeamsIntegrationV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Microsoft Teams Integration V2
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteMicrosoftTeamsUser:
+    post:
+      description: Remove configurations for Microsoft Teams user
+      operationId: deleteMicrosoftTeamsUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Microsoft Teams User
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteOpenAIIntegration:
+    post:
+      description: Delete OpenAI integration
+      operationId: deleteOpenAIIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete OpenAI Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deletePagerDutyIntegration:
+    post:
+      description: Delete PagerDuty alert integration
+      operationId: deletePagerDutyIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete PagerDuty Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteServiceNowIntegration:
+    post:
+      description: Delete ServiceNow alert integration
+      operationId: deleteServiceNowIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete ServiceNow Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/deleteSlackIntegrationV2:
+    post:
+      description: Delete Slack alert integration v2
+      operationId: deleteSlackIntegrationV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Delete Slack Integration V2
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getDiceIntegration:
+    post:
+      description: Get Dice integration
+      operationId: getDiceIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetOrgIntegrationsV2WSResponse'
+          description: OK
+      summary: Get Dice Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getInformacastIntegration:
+    post:
+      description: Get Informacast integration
+      operationId: getInformacastIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetOrgIntegrationsV2WSResponse'
+          description: OK
+      summary: Get Informacast Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getInformacastScenarios:
+    post:
+      description: Get Informacast scenarios
+      operationId: getInformacastScenarios
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetInformacastScenariosWSResponse'
+          description: OK
+      summary: Get Informacast Scenarios
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getLumeoIntegration:
+    post:
+      description: Get Lumeo integration
+      operationId: getLumeoIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetOrgIntegrationsV2WSResponse'
+          description: OK
+      summary: Get Lumeo Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getMicrosoftTeamsIntegration:
+    post:
+      description: Get Microsoft Teams alert integration
+      operationId: getMicrosoftTeamsIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetOrgIntegrationsV2WSResponse'
+          description: OK
+      summary: Get Microsoft Teams Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getMicrosoftUsersJoinedTeams:
+    post:
+      description: Get a list of teams a Microsoft Teams user joined
+      operationId: getMicrosoftUsersJoinedTeams
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetMicrosoftUsersJoinedTeamsWSResponse'
+          description: OK
+      summary: Get Microsoft Users Joined Teams
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getOpenAIIntegration:
+    post:
+      description: Get OpenAI integration
+      operationId: getOpenAIIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetOrgIntegrationsV2WSResponse'
+          description: OK
+      summary: Get OpenAI Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/getOpenAIModels:
+    post:
+      description: Get list of OpenAI models
+      operationId: getOpenAIModels
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_GetOpenAIModelsWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_GetOpenAIModelsWSResponse'
+          description: OK
+      summary: Get OpenAI Models
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/installMicrosoftTeamsBotForTeam:
+    post:
+      description: Install notification bot for Microsoft Teams team
+      operationId: installMicrosoftTeamsBotForTeam
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateMicrosoftTeamsBotForTeamWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Install Microsoft Teams Bot For Team
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/installMicrosoftTeamsBotForUser:
+    post:
+      description: Install notification bot for Microsoft Teams user
+      operationId: installMicrosoftTeamsBotForUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Install Microsoft Teams Bot For User
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/uninstallMicrosoftTeamsBotForTeam:
+    post:
+      description: Uninstall notification bot for Microsoft Teams team
+      operationId: uninstallMicrosoftTeamsBotForTeam
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateMicrosoftTeamsBotForTeamWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Uninstall Microsoft Teams Bot For Team
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/uninstallMicrosoftTeamsBotForUser:
+    post:
+      description: Uninstall notification bot for Microsoft Teams user
+      operationId: uninstallMicrosoftTeamsBotForUser
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_BaseIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseApiResponse'
+          description: OK
+      summary: Uninstall Microsoft Teams Bot For User
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateDiceIntegration:
+    post:
+      description: Update Dice integration
+      operationId: updateDiceIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateDiceIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Dice Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateEmailIntegration:
+    post:
+      description: Update email alert integration
+      operationId: updateEmailIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateEmailIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Email Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateInformacastIntegration:
+    post:
+      description: Update Informacast rules engine integration
+      operationId: updateInformacastIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateInformacastIntegrationRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Informacast Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateLumeoIntegration:
+    post:
+      description: Update Lumeo integration
+      operationId: updateLumeoIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateLumeoIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Lumeo Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateMattermostIntegration:
+    post:
+      description: Update Mattermost alert integration
+      operationId: updateMattermostIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateMattermostIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Mattermost Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateMicrosoftTeamsIntegrationV2:
+    post:
+      description: Update Microsoft Teams alert integration
+      operationId: updateMicrosoftTeamsIntegrationV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateMicrosoftTeamsIntegrationV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Microsoft Teams Integration V2
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateOpenAIIntegration:
+    post:
+      description: Update OpenAI integration
+      operationId: updateOpenAIIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateOpenAIIntegrationRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update OpenAI Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updatePagerDutyIntegration:
+    post:
+      description: Update PagerDuty alert integration
+      operationId: updatePagerDutyIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdatePagerDutyIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update PagerDuty Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateServiceNowIntegration:
+    post:
+      description: Update ServiceNow alert integration
+      operationId: updateServiceNowIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateServiceNowIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update ServiceNow Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateSlackIntegration:
+    post:
+      description: Update Slack alert integration
+      operationId: updateSlackIntegration
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateSlackIntegrationWSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Slack Integration
+      tags:
+      - Incident Management Integrations Webservice
+  /api/integrations/incidentManagement/updateSlackIntegrationV2:
+    post:
+      description: Update Slack alert integration v2
+      operationId: updateSlackIntegrationV2
+      parameters:
+      - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
+        example: api-token
+        in: header
+        name: x-auth-scheme
+        required: true
+        schema:
+          type: string
+          default: api-token
+          enum:
+          - api-token
+          - api
+          - partner-api-token
+          - partner-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Integration_UpdateSlackIntegrationV2WSRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration_UpdateOrgIntegrationsWSResponse'
+          description: OK
+      summary: Update Slack Integration V2
+      tags:
+      - Incident Management Integrations Webservice
+components:
+  schemas:
+    EnvoyLocationInfoType:
+      type:
+      - object
+      - 'null'
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        locationName:
+          type:
+          - string
+          - 'null'
+    Integration_UpdateMicrosoftTeamsBotForTeamWSRequest:
+      type: object
+      properties:
+        teamId:
+          type:
+          - string
+          - 'null'
+    DeviceIntegrationSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+        name:
+          type:
+          - string
+          - 'null'
+    IOpenAIType:
+      type: object
+      properties:
+        apiToken:
+          type:
+          - string
+          - 'null'
+        baseUrl:
+          type:
+          - string
+          - 'null'
+          description: The base url for any OpenAI Chat Completions compliant API. For example, to use Gemini models, set this to 'https://generativelanguage.googleapis.com/v1beta/openai/'.  If left blank, we will try to use OpenAI models.
+        defaultModel:
+          type:
+          - string
+          - 'null'
+          description: The model identifier to use as a default model.  This is provider specific and typically found on model card pages. For example, set to 'gemini-2.0-flash' to use the Gemini 2.0 Flash model.  Currently we require a model with vision capabilities for this integration.
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        refreshToken:
+          type:
+          - string
+          - 'null'
+        tokenValid:
+          type:
+          - boolean
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetOrgIntegrationsV2WSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        orgIntegrationV2:
+          $ref: '#/components/schemas/IBaseIntegrationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    GenericPosSettings:
+      type:
+      - object
+      - 'null'
+      description: Collection of service area settings for this restaurant
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          description: A list of camera uuids from Rhombus that are assigned to the PoS device
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        posName:
+          type:
+          - string
+          - 'null'
+          description: The name of the point of sale device
+    ILumeoType:
+      type: object
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    MicrosoftTeamsChannelSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        botInstallationId:
+          type:
+          - string
+          - 'null'
+        channelId:
+          type:
+          - string
+          - 'null'
+        installingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sendChannelNotifications:
+          type:
+          - boolean
+          - 'null'
+    HoneywellNetBoxType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          baseUrl:
+            type:
+            - string
+            - 'null'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AvigilonAltaType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorToCameraMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - array
+              - 'null'
+              items:
+                type:
+                - string
+                - 'null'
+                format: RUUID
+                description: base 64 (url-safe) uuid string
+                example: AAAAAAAAAAAAAAAAAAAAAA
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          email:
+            type:
+            - string
+            - 'null'
+          eventToWebhookIdMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - integer
+              - 'null'
+              format: int32
+          eventToWebhookMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/WebhookMapEntry'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          password:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          webhookId:
+            type:
+            - integer
+            - 'null'
+            format: int32
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OpentechAllianceDoorInfoType:
+      type:
+      - object
+      - 'null'
+      properties:
+        actionGroupId:
+          type:
+          - string
+          - 'null'
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        clipDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        doorName:
+          type:
+          - string
+          - 'null'
+        leadingSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        remoteUnlock:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    OpenAIModel:
+      type: object
+      description: List of available OpenAI models
+      properties:
+        created:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        object:
+          type:
+          - string
+          - 'null'
+        ownedBy:
+          type:
+          - string
+          - 'null'
+        owned_by:
+          type:
+          - string
+          - 'null'
+    ButterflyMXType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          buildingWebhookIdMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              description: 'A HashMap of <ButterflyMx Building Id, Webhook Id>. '
+            description: 'A HashMap of <ButterflyMx Building Id, Webhook Id>. '
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          panelInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ButterflymxPanelInfoType'
+            description: A HashMap of <Panel Id, ButterflymxPanelInfoType>.
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdatePagerDutyIntegrationWSRequest:
+      type: object
+      description: Request object for updating PagerDuty incident management integration settings.
+      properties:
+        pagerDutySettings:
+          $ref: '#/components/schemas/PagerDutySettings'
+    Integration_GetOpenAIModelsWSRequest:
+      type: object
+      description: Request object for retrieving OpenAI models.
+      properties:
+        openAISettings:
+          $ref: '#/components/schemas/IOpenAIType'
+    Integration_UpdateServiceNowIntegrationWSRequest:
+      type: object
+      description: Request object for updating ServiceNow IT service management integration settings.
+      properties:
+        serviceNowSettings:
+          $ref: '#/components/schemas/ServiceNowSettings'
+    InnerRangeType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          consoleToSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/InnerRangeConsoleSettings'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/InnerRangeDoorInfoType'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          skyTunnelSN:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ShellyDeviceTypeEnum:
+      type: string
+      enum:
+      - RELAY
+      - LIGHT
+      - ROLLER
+      - INPUT
+    UserInfo:
+      type: object
+      description: 'A HashMap of <RhombusOrgUser uuid : Slack user uuid, user access token>. This stores the information for each Slack user.'
+      properties:
+        userAccessToken:
+          type:
+          - string
+          - 'null'
+          description: Slack user access token
+        userId:
+          type:
+          - string
+          - 'null'
+          description: Slack user uuid
+    ZapierEnum:
+      type: string
+      description: Zapier integration type
+      enum:
+      - BUTTON_EVENTS
+      - DOOR_SENSOR_EVENTS
+      - ENVIRONMENTAL_SENSOR_EVENTS
+      - RULE_EVENTS
+    MicrosoftTeamsUserSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        botInstallationId:
+          type:
+          - string
+          - 'null'
+        chatId:
+          type:
+          - string
+          - 'null'
+        refreshToken:
+          type:
+          - string
+          - 'null'
+        sendUserNotifications:
+          type:
+          - boolean
+          - 'null'
+        teamIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        userId:
+          type:
+          - string
+          - 'null'
+    WebhookInfo:
+      type: object
+      properties:
+        webhookDisabled:
+          type:
+          - boolean
+          - 'null'
+        webhookSecret:
+          type:
+          - string
+          - 'null'
+    IBaseIntegrationType:
+      type: object
+      discriminator:
+        propertyName: integration
+      oneOf:
+      - $ref: '#/components/schemas/AperioType'
+      - $ref: '#/components/schemas/AvigilonAltaType'
+      - $ref: '#/components/schemas/BoulevardType'
+      - $ref: '#/components/schemas/BrivoType'
+      - $ref: '#/components/schemas/ButterflyMXType'
+      - $ref: '#/components/schemas/DeviceIntegrationType'
+      - $ref: '#/components/schemas/DiceType'
+      - $ref: '#/components/schemas/EnvoyType'
+      - $ref: '#/components/schemas/FlicType'
+      - $ref: '#/components/schemas/GeneaType'
+      - $ref: '#/components/schemas/GoogleType'
+      - $ref: '#/components/schemas/GuestManagementType'
+      - $ref: '#/components/schemas/HoneywellElementsType'
+      - $ref: '#/components/schemas/InformacastType'
+      - $ref: '#/components/schemas/InnerRangeType'
+      - $ref: '#/components/schemas/KisiType'
+      - $ref: '#/components/schemas/LumeoType'
+      - $ref: '#/components/schemas/MicrosoftTeamsType'
+      - $ref: '#/components/schemas/NineOneOneCellularType'
+      - $ref: '#/components/schemas/OmnialertType'
+      - $ref: '#/components/schemas/OpenAIType'
+      - $ref: '#/components/schemas/OpentechAllianceType'
+      - $ref: '#/components/schemas/PimlocType'
+      - $ref: '#/components/schemas/PlaceOsType'
+      - $ref: '#/components/schemas/ProDataKeyType'
+      - $ref: '#/components/schemas/RaptorType'
+      - $ref: '#/components/schemas/ShellyType'
+      - $ref: '#/components/schemas/ToastType'
+      - $ref: '#/components/schemas/WebhooksType'
+      - $ref: '#/components/schemas/ZapierType'
+      - $ref: '#/components/schemas/ParPOSType'
+      - $ref: '#/components/schemas/HoneywellOnGuardType'
+      - $ref: '#/components/schemas/HoneywellNetBoxType'
+      - $ref: '#/components/schemas/SignatureApiType'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdateMattermostIntegrationWSRequest:
+      type: object
+      description: Request object for updating Mattermost team communication integration settings.
+      properties:
+        mattermostSettings:
+          $ref: '#/components/schemas/MattermostSettings'
+    LumeoType:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ButterflymxPanelInfoType:
+      type:
+      - object
+      - 'null'
+      description: A HashMap of <Panel Id, ButterflymxPanelInfoType>.
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          description: The list of Rhombus Camera RUUIDs.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        buildingId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The ButterflyMx Building Id.
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        panelName:
+          type:
+          - string
+          - 'null'
+          description: The ButterflyMx Panel Name.
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    GeneaType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          webhookSignatureSecret:
+            type:
+            - string
+            - 'null'
+          webhookUuid:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    IDiceType:
+      type: object
+      description: Dice access control integration settings to update
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OpenAIType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          baseUrl:
+            type:
+            - string
+            - 'null'
+            description: The base url for any OpenAI Chat Completions compliant API. For example, to use Gemini models, set this to 'https://generativelanguage.googleapis.com/v1beta/openai/'.  If left blank, we will try to use OpenAI models.
+          defaultModel:
+            type:
+            - string
+            - 'null'
+            description: The model identifier to use as a default model.  This is provider specific and typically found on model card pages. For example, set to 'gemini-2.0-flash' to use the Gemini 2.0 Flash model.  Currently we require a model with vision capabilities for this integration.
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    IntegrationAuditEvent:
+      type: object
+      properties:
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        integrationAuditEvent:
+          $ref: '#/components/schemas/IntegrationAuditEventEnum'
+        user:
+          type:
+          - string
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    GuestManagementType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          locationSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/LocationSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdateOrgIntegrationsWSResponse:
+      type: object
+      description: Response object for updating organization integrations.
+      properties:
+        authError:
+          type:
+          - boolean
+          - 'null'
+          description: Whether an authentication error occurred during update
+          example: false
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failedGuids:
+          type:
+          - array
+          - 'null'
+          description: List of GUIDs that failed to update
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of GUIDs that failed to update
+        misconfiguredDoors:
+          type:
+          - array
+          - 'null'
+          description: List of door names that are assigned to multiple Rhombus locations
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of door names that are assigned to multiple Rhombus locations
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SlackSettings:
+      type: object
+      properties:
+        accessToken:
+          type:
+          - string
+          - 'null'
+        channel:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        webhookUrl:
+          type:
+          - string
+          - 'null'
+    WebhookMapEntry:
+      type:
+      - object
+      - 'null'
+      properties:
+        orgId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        webhookId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    ToastRestaurantSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        locationName:
+          type:
+          - string
+          - 'null'
+          description: The location name of the restaurant from Toast
+        restaurantName:
+          type:
+          - string
+          - 'null'
+          description: The name of the restaurant from Toast, e.g. COFFEE CAN
+        serviceAreaSettingsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/GenericPosSettings'
+          description: Collection of service area settings for this restaurant
+    RaptorType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          clientId:
+            type:
+            - string
+            - 'null'
+          clientSecret:
+            type:
+            - string
+            - 'null'
+          clientUid:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PimlocType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          baseAPIUrl:
+            $ref: '#/components/schemas/PimlocBaseAPIUrlEnum'
+          clientId:
+            type:
+            - string
+            - 'null'
+          clientSecret:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          validCredentials:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    SecurityZoneInfoType:
+      type:
+      - object
+      - 'null'
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        isParentZone:
+          type:
+          - boolean
+          - 'null'
+        securityZoneName:
+          type:
+          - string
+          - 'null'
+        zoneAddress:
+          type:
+          - string
+          - 'null'
+        zoneId:
+          type:
+          - string
+          - 'null'
+        zoneParentId:
+          type:
+          - string
+          - 'null'
+    KisiType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiSecretKey:
+            type:
+            - string
+            - 'null'
+          defaultOptions:
+            $ref: '#/components/schemas/BadgeIntegrationDefaultOptions'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          placeToSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdateLumeoIntegrationWSRequest:
+      type: object
+      properties:
+        lumeoSettings:
+          $ref: '#/components/schemas/ILumeoType'
+    PimlocBaseAPIUrlEnum:
+      type: string
+      enum:
+      - US
+      - EU
+    EnvoyType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          envoyIntegrationInstalled:
+            type:
+            - boolean
+            - 'null'
+          envoyUserSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/EnvoyUserSettings'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          locationInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/EnvoyLocationInfoType'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OmnialertType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          associatedCameras:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+            uniqueItems: true
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          triggerNotification:
+            type:
+            - boolean
+            - 'null'
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BoulevardType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          accessWindowAfterMinutes:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          accessWindowBeforeMinutes:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          apiToken:
+            type:
+            - string
+            - 'null'
+          boulevardBusinessId:
+            type:
+            - string
+            - 'null'
+          boulevardLocationToRhombusLocationMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_BaseIntegrationWSRequest:
+      type: object
+      description: Base request object for integration operations.
+    HoneywellElementsType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiKey:
+            type:
+            - string
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          baseUrl:
+            type:
+            - string
+            - 'null'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          siteId:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdateMicrosoftTeamsIntegrationV2WSRequest:
+      type: object
+      properties:
+        microsoftTeamsSettings:
+          $ref: '#/components/schemas/IMicrosoftTeamsType'
+        teamsToUpdate:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+    WebhooksType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          activityWebhooks:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+          activityWebhooksV2:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/WebhookInfo'
+          diagnosticWebhooks:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+          diagnosticWebhooksV2:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/WebhookInfo'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    GoogleUserSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        defaultAlertFolderId:
+          type:
+          - string
+          - 'null'
+        defaultAlertFolderName:
+          type:
+          - string
+          - 'null'
+        defaultFolderId:
+          type:
+          - string
+          - 'null'
+        defaultFolderName:
+          type:
+          - string
+          - 'null'
+        refreshToken:
+          type:
+          - string
+          - 'null'
+        saveAllAlerts:
+          type:
+          - boolean
+          - 'null'
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+        tokenValid:
+          type:
+          - boolean
+          - 'null'
+    SignatureApiType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PlaceOsType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          apiUrl:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          triggerNotification:
+            type:
+            - boolean
+            - 'null'
+          webhookSignatureSecret:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BadgeIntegrationDefaultOptions:
+      type:
+      - object
+      - 'null'
+      properties:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesAlarmMonitoring:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        defaultOptionsEnabled:
+          type:
+          - boolean
+          - 'null'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+    InformacastType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BrivoType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          accessToken:
+            type:
+            - string
+            - 'null'
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiKey:
+            type:
+            - string
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          clientId:
+            type:
+            - string
+            - 'null'
+          clientSecret:
+            type:
+            - string
+            - 'null'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          password:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          username:
+            type:
+            - string
+            - 'null'
+          version:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          webhookId:
+            type:
+            - integer
+            - 'null'
+            format: int32
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdateSlackIntegrationV2WSRequest:
+      type: object
+      description: Request object for updating Slack integration V2 settings with enhanced user management.
+      properties:
+        adminRequest:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this is an admin request
+          example: true
+        requestUrl:
+          type:
+          - string
+          - 'null'
+          description: Request URL for Slack OAuth
+          example: https://slack.com/oauth/v2/authorize?client_id=123&scope=...
+        revokeUserAccessToken:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to revoke user access token
+          example: false
+        rhombusOrgUserUuid:
+          type:
+          - string
+          - 'null'
+          description: Rhombus organization user UUID
+          example: user-uuid-12345
+        slackSettingsV2:
+          $ref: '#/components/schemas/SlackSettingsV2'
+        userAssociate:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to associate user
+          example: true
+        userRequest:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this is a user request
+          example: false
+      required:
+      - requestUrl
+    Integration_UpdateEmailIntegrationWSRequest:
+      type: object
+      description: Request object for updating email notification integration settings.
+      properties:
+        emailSettings:
+          $ref: '#/components/schemas/EmailSettings'
+    MicrosoftTeamsType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          adminConsent:
+            type:
+            - boolean
+            - 'null'
+          allowUserNotifications:
+            type:
+            - boolean
+            - 'null'
+          microsoftTeamSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/MicrosoftTeamsChannelSettings'
+          microsoftTeamsUserSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/MicrosoftTeamsUserSettings'
+          tenantId:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    SlackSettingsV2:
+      type: object
+      properties:
+        channelId:
+          type:
+          - string
+          - 'null'
+        channelName:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enablingUser:
+          type:
+          - string
+          - 'null'
+        enablingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgAccessToken:
+          type:
+          - string
+          - 'null'
+        sendChannelNotifications:
+          type:
+          - boolean
+          - 'null'
+        sendUserNotifications:
+          type:
+          - boolean
+          - 'null'
+        userMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserInfo'
+          description: 'A HashMap of <RhombusOrgUser uuid : Slack user uuid, user access token>. This stores the information for each Slack user.'
+        webhookUrl:
+          type:
+          - string
+          - 'null'
+    Integration_GetOpenAIModelsWSResponse:
+      type: object
+      description: Response object containing available OpenAI models.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        models:
+          type:
+          - array
+          - 'null'
+          description: List of available OpenAI models
+          items:
+            $ref: '#/components/schemas/OpenAIModel'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DiceType:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    InnerRangeDoorInfoType:
+      type:
+      - object
+      - 'null'
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        clipDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        doorName:
+          type:
+          - string
+          - 'null'
+        leadingSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        readerIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        remoteUnlock:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Integration_UpdateSlackIntegrationWSRequest:
+      type: object
+      description: Request object for updating Slack integration settings.
+      properties:
+        slackSettings:
+          $ref: '#/components/schemas/SlackSettings'
+    IInformacastType:
+      type: object
+      properties:
+        apiToken:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        refreshToken:
+          type:
+          - string
+          - 'null'
+        tokenValid:
+          type:
+          - boolean
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BadgeFaceVerificationModeEnum:
+      type: string
+      enum:
+      - 'OFF'
+      - SHADOW
+      - SUPERVISED
+      - AUTO
+    NineOneOneCellularType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          bearerToken:
+            type:
+            - string
+            - 'null'
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          securityZoneMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/SecurityZoneInfoType'
+          triggerNotification:
+            type:
+            - boolean
+            - 'null'
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          zonesValidated:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    HoneywellOnGuardType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          deploymentToSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/OnGuardDeploymentSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OpentechAllianceType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiKey:
+            type:
+            - string
+            - 'null'
+          apiSecret:
+            type:
+            - string
+            - 'null'
+          facilityToSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/OpentechAllianceFacilitySettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetMicrosoftUsersJoinedTeamsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        teamsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ParPOSType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          accessToken:
+            type:
+            - string
+            - 'null'
+          locationTokenMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+          serverUrl:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ShellyDevice:
+      type:
+      - object
+      - 'null'
+      properties:
+        canSendCommands:
+          $ref: '#/components/schemas/ShellyDevicePermissionEnum'
+        channels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        deviceType:
+          $ref: '#/components/schemas/ShellyDeviceTypeEnum'
+        hostUrl:
+          type:
+          - string
+          - 'null'
+        isOnline:
+          type:
+          - boolean
+          - 'null'
+        temperature:
+          type:
+          - number
+          - 'null'
+          format: double
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        voltage:
+          type:
+          - number
+          - 'null'
+          format: double
+    MattermostSettings:
+      type: object
+      properties:
+        channel:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enablingUser:
+          type:
+          - string
+          - 'null'
+        enablingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        webhookUrl:
+          type:
+          - string
+          - 'null'
+    Integration_GetInformacastScenariosWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scenarios:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/InformacastScenario'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ShellyType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          canSendDiagnosticNotifications:
+            type:
+            - boolean
+            - 'null'
+          diagnosticQuietPeriodSecs:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          shellyDeviceMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ShellyDevice'
+          thirdPartyDeviceToLocationMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ShellyDevicePermissionEnum:
+      type: string
+      enum:
+      - AUTHORIZED
+      - UNAUTHORIZED
+      - UNKNOWN
+    ZapierWebhookSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        backoffSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        doorState:
+          $ref: '#/components/schemas/DoorStatusEnum'
+        humidityLowerThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        humidityUpperThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        tempLowerThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        tempUpperThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        url:
+          type:
+          - string
+          - 'null'
+        uuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        zapEnum:
+          $ref: '#/components/schemas/ZapierEnum'
+      required:
+      - url
+      - zapEnum
+    PagerDutySettings:
+      type: object
+      properties:
+        allLocationIntegrationKeys:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enablingUser:
+          type:
+          - string
+          - 'null'
+        enablingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        integrationKey:
+          type:
+          - string
+          - 'null'
+        locationToIntegrationKeysMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+    GoogleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          allowUserStorage:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          defaultAlertFolderId:
+            type:
+            - string
+            - 'null'
+          defaultAlertFolderName:
+            type:
+            - string
+            - 'null'
+          defaultFolderId:
+            type:
+            - string
+            - 'null'
+          defaultFolderName:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          saveAllAlerts:
+            type:
+            - boolean
+            - 'null'
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          userSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/GoogleUserSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BadgeIntegrationSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesAlarmMonitoring:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        misconfiguredDoors:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - integer
+            - 'null'
+            format: int32
+        placeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placeName:
+          type:
+          - string
+          - 'null'
+        rhombusToken:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+        webhookId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Integration_UpdateDiceIntegrationWSRequest:
+      type: object
+      description: Request object for updating Dice access control integration settings.
+      properties:
+        diceSettings:
+          $ref: '#/components/schemas/IDiceType'
+    BaseApiResponse:
+      type: object
+      description: Base response object denoting success, or failure with a reason, for an endpoint.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    InformacastScenario:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        scenarioId:
+          type:
+          - string
+          - 'null'
+    ProDataKeyType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          organizationId:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          systemId:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          webhookId:
+            type:
+            - string
+            - 'null'
+          webhookSignatureSecret:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    InnerRangeConsoleSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        apiKey:
+          type:
+          - string
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/InnerRangeDoorInfoType'
+        skyTunnelSN:
+          type:
+          - string
+          - 'null'
+        tokenValid:
+          type:
+          - boolean
+          - 'null'
+    ToastType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          currentToastRestaurantGuid:
+            type:
+            - string
+            - 'null'
+          restaurantSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ToastRestaurantSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    LocationSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        printBadge:
+          type:
+          - boolean
+          - 'null'
+    ZapierType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          zapierWebhooks:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ZapierWebhookSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DoorStatusEnum:
+      type: string
+      description: Door state for door sensor webhooks
+      enum:
+      - OPEN
+      - CLOSED
+      - AJAR
+    Integration_UpdateInformacastIntegrationRequest:
+      type: object
+      properties:
+        informacastSettings:
+          $ref: '#/components/schemas/IInformacastType'
+    AperioType:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    FlicType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiKey:
+            type:
+            - string
+            - 'null'
+          apiSecret:
+            type:
+            - string
+            - 'null'
+          associatedLocations:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+            uniqueItems: true
+          moduleUploaded:
+            type:
+            - boolean
+            - 'null'
+          webhookId:
+            type:
+            - string
+            - 'null'
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OnGuardDeploymentSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesAlarmMonitoring:
+          type:
+          - boolean
+          - 'null'
+        badgeFaceVerificationMode:
+          $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+        createAccessAnomalyAlerts:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+        doorsValidated:
+          type:
+          - boolean
+          - 'null'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        misconfiguredDoors:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        presharedSecret:
+          type:
+          - string
+          - 'null'
+        rhombusToken:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+    ServiceNowSettings:
+      type: object
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enablingUser:
+          type:
+          - string
+          - 'null'
+        enablingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        instanceUrl:
+          type:
+          - string
+          - 'null'
+        password:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+    Integration_UpdateOpenAIIntegrationRequest:
+      type: object
+      properties:
+        openAISettings:
+          $ref: '#/components/schemas/IOpenAIType'
+    EnvoyUserSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        guestsEnabled:
+          type:
+          - boolean
+          - 'null'
+        packagesEnabled:
+          type:
+          - boolean
+          - 'null'
+    IntegrationAuditEventEnum:
+      type: string
+      enum:
+      - UPDATE
+      - DELETE
+    IMicrosoftTeamsType:
+      type: object
+      properties:
+        adminConsent:
+          type:
+          - boolean
+          - 'null'
+        allowUserNotifications:
+          type:
+          - boolean
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        microsoftTeamSettingsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MicrosoftTeamsChannelSettings'
+        microsoftTeamsUserSettingsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MicrosoftTeamsUserSettings'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        tenantId:
+          type:
+          - string
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    BadgeIntegrationDoorInfoType:
+      type:
+      - object
+      - 'null'
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        clipDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        doorName:
+          type:
+          - string
+          - 'null'
+        leadingSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        remoteUnlock:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    DeviceIntegrationType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          deviceSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/DeviceIntegrationSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    EmailSettings:
+      type: object
+      properties:
+        emailAddresses:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enablingUser:
+          type:
+          - string
+          - 'null'
+        enablingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OpentechAllianceFacilitySettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/OpentechAllianceDoorInfoType'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
+      in: header
+      name: x-auth-apikey
+      type: apiKey
+x-samples-languages:
+- curl
+- node
+- python
+- java
