@@ -38,6 +38,17 @@ tags:
 - IoT Sensors
 - Cloud Video Management
 - Alarm Monitoring
+- Computer-Vision
+- Building Management
+- Security Cameras
+- Company
+tags_raw:
+- Physical Security
+- Video Surveillance
+- Access Control
+- IoT Sensors
+- Cloud Video Management
+- Alarm Monitoring
 - Computer Vision
 - Building Management
 - Security Cameras
@@ -53,6 +64,10 @@ apis:
   humanURL: https://api-docs.rhombus.community/websocket/overview
   baseURL: wss://ws.rhombussystems.com:8443/websocket
   tags:
+  - Event
+  - WebSocket
+  - Streaming
+  tags_raw:
   - Events
   - WebSocket
   - Streaming
