@@ -9,13 +9,17 @@ deployment:
   package: https://www.npmjs.com/package/rhombus-node-mcp
   auth: api-key
   verified: probed
-  note: >-
-    Rhombus ships TWO distinct MCP servers and they are not interchangeable. The ACTION server
-    (rhombus-node-mcp) is local-stdio only — npm or an OCI image, run on the operator's machine
-    with a RHOMBUS_API_KEY environment variable; there is no hosted endpoint for it. The
-    KNOWLEDGE server (the documentation MCP) IS remote and answered an anonymous tools/list with
-    HTTP 200. `mode: both` records that the provider ships one of each; `endpoint` names the only
-    URL an MCP client can actually POST to today, and `install` names the action server.
+  note: 'Rhombus ships TWO distinct MCP servers and they are not interchangeable. The ACTION server (rhombus-node-mcp)
+    is local-stdio only — npm or an OCI image, run on the operator''s machine with a RHOMBUS_API_KEY environment
+    variable; there is no hosted endpoint for it. The KNOWLEDGE server (the documentation MCP) IS remote
+    and answered an anonymous tools/list with HTTP 200. `mode: both` records that the provider ships one
+    of each; `endpoint` names the only URL an MCP client can actually POST to today, and `install` names
+    the action server.'
+  probe_prior: (never probed)
+  probe: live
+  probe_why: live
+  checked: '2026-09-11'
+  source: claimed-backlog re-probe 2026-09-11
 servers:
 - name: Rhombus API MCP server
   role: action
@@ -52,11 +56,10 @@ servers:
     description: Resolve natural-language times to timestamps for the Rhombus API
   - name: user
     description: Look up Rhombus user profile information
-  tools_source: >-
-    https://www.rhombus.com/.well-known/mcp/server-card.json — names and descriptions only.
-    inputSchema is NOT published on the card and the server is stdio-only, so live tools/list
-    introspection requires installing the package with a valid API key. Schemas are therefore
-    unrecorded rather than guessed.
+  tools_source: https://www.rhombus.com/.well-known/mcp/server-card.json — names and descriptions only.
+    inputSchema is NOT published on the card and the server is stdio-only, so live tools/list introspection
+    requires installing the package with a valid API key. Schemas are therefore unrecorded rather than
+    guessed.
 - name: Rhombus documentation MCP server
   role: knowledge
   mode: remote
@@ -71,15 +74,20 @@ servers:
   tools:
   - name: search_rhombus_developer
     description: Search the Rhombus Developer Documentation knowledge base
-    input_schema_properties: [query, language]
+    input_schema_properties:
+    - query
+    - language
   - name: query_docs_filesystem_rhombus_developer
-    description: Read-only shell-like query (rg/grep/find/tree/ls/cat/head/jq) over a virtualized in-memory filesystem of the docs pages and OpenAPI specs
-    input_schema_properties: [command]
+    description: Read-only shell-like query (rg/grep/find/tree/ls/cat/head/jq) over a virtualized in-memory
+      filesystem of the docs pages and OpenAPI specs
+    input_schema_properties:
+    - command
   - name: submit_feedback
     description: Submit feedback on a documentation page
-    input_schema_properties: [path, feedback]
+    input_schema_properties:
+    - path
+    - feedback
   tools_source: live tools/list POST, saved verbatim to mcp/rhombus-systems-docs-mcp-tools.json
 discrepancies:
-- >-
-  The published MCP server card declares version 0.1.41 while npm registry metadata reports
-  rhombus-node-mcp@0.1.56 published 2026-06-30. The server card is 15 patch releases stale.
+- The published MCP server card declares version 0.1.41 while npm registry metadata reports rhombus-node-mcp@0.1.56
+  published 2026-06-30. The server card is 15 patch releases stale.
