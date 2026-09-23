@@ -1,0 +1,73 @@
+slug: rhombus-systems
+provider: Rhombus Systems
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Help Webservice
+  spec_file: rhombus-systems-help-webservice-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.8
+  evidence: '"createTicket  Open a support ticket"; "getOpenTickets  Get open support tickets for a client
+    organization"; "sendFeedback  Leave feedback of our system"'
+  reason: Operations create and retrieve customer support tickets, capture product feedback and open RMAs
+    — inbound customer contact capture and resolution. Maps to Customer Service Management / Customer
+    Inquiry Management; some spill into feedback (BC-430.50) and returns, hence 0.8 not 0.95.
+- tag: Permission Webservice
+  spec_file: rhombus-systems-permission-webservice-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: '''Create permission group'', ''Update permission group'', ''Get permissions for current user'',
+    schemas UserPermissionGroupType, PermissionEnum'
+  reason: CRUD over permission groups and resolution of the effective permissions of the current user/partner
+    is authorisation administration — access management. Mapped to Identity & Access Management; not raised
+    higher because the surface is authorisation only, with no identity lifecycle or federation.
+- tag: License Webservice
+  spec_file: rhombus-systems-license-webservice-api-openapi.yml
+  capability_id: BC-4240
+  capability_id_l1: BC-4240
+  capability_name: Subscription Lifecycle Management
+  confidence: 0.7
+  evidence: '"assignDeviceLicense  Assign device license"; "getAlertMonitoringLicensesForClientOrg"; schemas
+    "AddOnLicenseEnum", "LicenseUsageType"'
+  reason: Operations assign and query product licences (device, ACU door, alert monitoring, guest management
+    add-ons) per client organisation — commercial entitlement/seat administration for the SaaS offering.
+    L1 Subscription Lifecycle Management is clear; whether this is provisioning (.30), modification (.40)
+    or entitlement enforcement (.70) is ambiguous, so no L2.
+- tag: User Webservice
+  spec_file: rhombus-systems-user-webservice-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: createUser  Create user for organization; deleteUser; updateRhombusKeySettingsForUser  Update
+    Rhombus key settings for user; PartnerPermissionType
+  reason: Operations create, update and delete user accounts within an organisation, manage partner-user
+    permissions and mobile credential (Rhombus Key) settings — account and access administration, i.e.
+    Identity & Access Management. Confidence tempered because much of the surface is notification preference
+    settings.
+- tag: Webhook Integrations Webservice
+  spec_file: rhombus-systems-webhook-integrations-webservice-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.7
+  evidence: subscribeZapierWebhook  Subscribe Zapier webhook; updateWebhookIntegration  Update webhook
+    integration; schema WebhookInfo
+  reason: The operations manage the lifecycle of outbound webhook subscriptions/integrations exposed to
+    customers and third-party tools (Zapier), which is precisely Webhook & Event Subscription Management
+    within the developer/API ecosystem. Moderate confidence because it is also arguably generic integration
+    plumbing.

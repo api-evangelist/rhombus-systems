@@ -304,7 +304,6 @@ paths:
       - Rules Webservice
   /api/rules/pauseRule:
     post:
-      description: Pause rule
       operationId: pauseRule
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -370,18 +369,13 @@ paths:
       - Rules Webservice
 components:
   schemas:
-    Rules_DeleteRulePauseSettingWSRequest:
-      type: object
-      description: Request object for deleting a rule pause setting.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ConnectAudioDeviceToMobileAppActionType:
+    AlertMonitoringRulesEventTypeEnum:
+      type: string
+      enum:
+      - ALARM_CREATED
+      - ALARM_CANCELED
+      - UNKNOWN
+    ConnectAudioDeviceToPhoneNumberActionType:
       type: object
       properties:
         audioDeviceUuid:
@@ -400,224 +394,58 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        targetUserUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    RuleType:
-      type: object
-      description: Updated rule data
-      properties:
-        action:
-          $ref: '#/components/schemas/RuleActionType'
-        conjunction:
-          $ref: '#/components/schemas/RuleTriggerConjunctionEnum'
-        name:
+        optionalGreeting:
           type:
           - string
           - 'null'
-        orgUuid:
+        phoneNumber:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        ownerUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        ruleFilters:
-          $ref: '#/components/schemas/RuleFilterType'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypeEnum'
-        triggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BaseRuleTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    CustomLLMEventRuleTriggerType:
+    RuleTriggerTypeEnum:
+      type: string
+      enum:
+      - DEVICE_ACTIVITY_EVENT
+      - AUDIT_EVENT
+      - DIAGNOSTIC_EVENT
+      - ALERT_MONITORING_EVENT
+      - BADGE_INTEGRATION_EVENT
+      - SCHEDULED_EVENT
+      - VISION_LLM_EVENT
+      - RECURRING_EVENT
+      - LOCATION_LOCKDOWN_ACTIVATED_EVENT
+      - LOCATION_LOCKDOWN_DEACTIVATED_EVENT
+      - BUTTON_INTEGRATION_EVENT
+      - CUSTOM_LLM_EVENT
+      - SHELLY_INTEGRATION_EVENT
+      - INCOMING_WEBHOOK_EVENT
+      - UNKNOWN
+    SimpleAuditEventType:
       type:
       - object
       - 'null'
-      allOf:
-      - type: object
-        properties:
-          deviceFacetUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: DeviceFacetUuid
-              description: RUUID with optional appended facet information
-              example: AAAAAAAAAAAAAAAAAAAAAA.v0
-          promptUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
       properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    PointType:
+        auditEvent:
+          $ref: '#/components/schemas/AuditActionEnum'
+    RemoteDoorUnlockActionType:
       type: object
       properties:
-        x:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        y:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Rules_GetRulesForOrgWSRequest:
-      type: object
-      description: Request object for getting rules for an organization.
-    Rules_records_GetRulesFilteredWSRequest:
-      type: object
-      description: Request object for getting filtered rules.
-      properties:
-        associatedUuids:
-          type:
-          - array
-          - 'null'
-          description: List of associated UUIDs to filter by
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        ruleTypeFilter:
-          type:
-          - array
-          - 'null'
-          description: List of rule types to filter by
-          items:
-            $ref: '#/components/schemas/RuleTypeEnum'
-    IncomingWebhookRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          displayName:
-            type:
-            - string
-            - 'null'
-          webhookToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    RuleTypeEnum:
-      type: string
-      enum:
-      - BUTTON_DEFINED
-      - USER_DEFINED
-      - DOORBELL_CAMERA_DEFINED
-      - DOOR_CONTROLLER_DEFINED
-      - LOCKDOWN_PLAN_DEFINED
-      - CUSTOM_LLM_DEFINED
-      - ROBOT_DEFINED
-      - SCHEDULED_REPORT_DEFINED
-    ScheduledIntervalType:
-      type: object
-      description: Map of location UUIDs to snooze intervals
-      properties:
-        durationSecs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        timestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        uuid:
+        doorId:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    AccessStateOverrideExpirationStrategyEnum:
-      type: string
-      enum:
-      - TIME_DELAY
-      - TIME_OF_DAY_LOCAL
-      - NONE
-    ChangeComponentCompositeAccessStateActionType:
-      type: object
-      properties:
-        accessState:
-          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
-        alwaysCreateOverrideIfNoFirstIn:
-          type:
-          - boolean
-          - 'null'
-        componentCompositeUuid:
+        placeId:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        expirationStrategy:
-          $ref: '#/components/schemas/AccessStateOverrideExpirationStrategyEnum'
-        expireTimeDelaySeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        expireTimeOfDayLocalSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        useFirstInRulesIfPossible:
-          type:
-          - boolean
-          - 'null'
-        version:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          readOnly: true
+        system:
+          $ref: '#/components/schemas/RemoteDoorUnlockSystemEnum'
+    RuleTriggerConjunctionEnum:
+      type: string
+      enum:
+      - AND
+      - OR
+      - UNKNOWN
     ReportLookbackTypeEnum:
       type: string
       enum:
@@ -625,95 +453,6 @@ components:
       - PREVIOUS_DAY
       - PREVIOUS_WEEK
       - PREVIOUS_MONTH
-    EnableDisableAudioRecordActionType:
-      type: object
-      properties:
-        audioDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        enable:
-          type:
-          - boolean
-          - 'null'
-    IntegrationNotificationActionType:
-      type: object
-      properties:
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        notificationEntity:
-          type:
-          - string
-          - 'null'
-        notificationTarget:
-          type:
-          - string
-          - 'null'
-    NoOpAction:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    Rules_DeleteRuleWSRequest:
-      type: object
-      description: Request object for deleting a rule.
-      properties:
-        ruleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    SensorValType:
-      type: object
-      properties:
-        sensorBoolean:
-          type:
-          - boolean
-          - 'null'
-        sensorDouble:
-          type:
-          - number
-          - 'null'
-          format: double
-        sensorLong:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Rules_GenerateIncomingWebhookTokenWSRequest:
-      type: object
-      description: Request object for generating an incoming webhook trigger token.
-      properties:
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Optional display name for the webhook token, shown in api token listings
-    CreateAlarmTriggerTypeEnum:
-      type: string
-      enum:
-      - PANIC_BUTTON
-      - ALARM_INTEGRATION
-    ComponentRelayOutputTypeEnum:
-      type: string
-      enum:
-      - TRANSIENT
-      - STEADY
     ActivityEnum:
       type: string
       enum:
@@ -937,31 +676,290 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    CancelLoopingAudioPlaybackActionType:
+    ToastCheckInfo:
       type: object
       properties:
-        _audioDevices:
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+    RuleFilterType:
+      type: object
+      description: Optional filters to apply to this lockdown rule.
+      properties:
+        scheduleUuids:
           type:
           - array
           - 'null'
+          description: List of schedules that apply to the rule. at least one schedule must be met to trigger this rule. If null, then this rule is enabled all the time.
           items:
             type:
             - string
             - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        audioDevices:
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerBackoffSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of seconds to back off after rule is triggered before triggering again. I.e. this rule will only trigger once every X seconds regardless of how many triggering events occur within that window
+    Rules_DeleteRuleWSResponse:
+      type: object
+      description: Response object for deleting a rule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SimpleDeviceActivityEventType:
+      type:
+      - object
+      - 'null'
+      discriminator:
+        propertyName: activityEvent
+      properties:
+        activityEvent:
+          $ref: '#/components/schemas/ActivityEnum'
+      title: DeviceActivityEventType
+    CustomRuleAction:
+      type: object
+      properties:
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+    Rules_GenerateIncomingWebhookTokenWSRequest:
+      type: object
+      description: Request object for generating an incoming webhook trigger token.
+      properties:
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Optional display name for the webhook token, shown in api token listings
+    Rules_GenerateIncomingWebhookTokenWSResponse:
+      type: object
+      description: Response object for generating an incoming webhook trigger token.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        webhookToken:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        webhookUrl:
+          type:
+          - string
+          - 'null'
+          description: Full public URL that fires triggers referencing this token
+    Rules_DeleteRulePauseSettingWSResponse:
+      type: object
+      description: Response object for deleting a rule pause setting.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SimpleDiagnosticEventType:
+      type:
+      - object
+      - 'null'
+      properties:
+        diagnosticEvent:
+          $ref: '#/components/schemas/DiagnosticActivityEnum'
+    ChangeComponentCompositeAccessStateActionType:
+      type: object
+      properties:
+        accessState:
+          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
+        alwaysCreateOverrideIfNoFirstIn:
+          type:
+          - boolean
+          - 'null'
+        componentCompositeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        expirationStrategy:
+          $ref: '#/components/schemas/AccessStateOverrideExpirationStrategyEnum'
+        expireTimeDelaySeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        expireTimeOfDayLocalSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        useFirstInRulesIfPossible:
+          type:
+          - boolean
+          - 'null'
+        version:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+    CreateAlarmTriggerTypeEnum:
+      type: string
+      enum:
+      - PANIC_BUTTON
+      - ALARM_INTEGRATION
+    ComponentRelayOutputTypeEnum:
+      type: string
+      enum:
+      - TRANSIENT
+      - STEADY
+    AccessControlledDoorStateEnumType:
+      type: string
+      enum:
+      - UNLOCKED
+      - ACCESS_CONTROLLED
+    LocationLockdownDeactivatedRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          locationUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    Pose:
+      type: object
+      properties:
+        orientation:
           type:
           - array
           - 'null'
           items:
+            type: number
+            format: double
+            description: Serialized as [x, y, z, w]
+          maxItems: 4
+          minItems: 4
+        position:
+          type:
+          - array
+          - 'null'
+          items:
+            type: number
+            format: double
+            description: Serialized as [x, y, z]
+          maxItems: 3
+          minItems: 3
+    RuleTypeEnum:
+      type: string
+      enum:
+      - BUTTON_DEFINED
+      - USER_DEFINED
+      - DOORBELL_CAMERA_DEFINED
+      - DOOR_CONTROLLER_DEFINED
+      - LOCKDOWN_PLAN_DEFINED
+      - CUSTOM_LLM_DEFINED
+      - ROBOT_DEFINED
+      - SCHEDULED_REPORT_DEFINED
+    ScheduledRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          locationUuids:
             type:
-            - string
+            - array
             - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+            description: List of locations to use for timezone evaluation and for display purposes
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          minOfDay:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            description: minute of the day for this trigger. note that it is dependent on the timezone of the devices in the rule actions or the timezone of the specified locations.
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
     RuleActionType:
       type: object
       description: The action to take when this lockdown rule is triggered.
@@ -1060,283 +1058,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/WebhookActionType'
-    ToastOrderIdType:
-      type: object
-      properties:
-        employeeName:
-          type:
-          - string
-          - 'null'
-        guid:
-          type:
-          - string
-          - 'null'
-        locationName:
-          type:
-          - string
-          - 'null'
-        restaurantName:
-          type:
-          - string
-          - 'null'
-        toastCheckInfo:
-          $ref: '#/components/schemas/ToastCheckInfo'
-    ActivateLocationLockdownActionType:
-      type: object
-      properties:
-        locationLockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    CustomRuleAction:
-      type: object
-      properties:
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        path:
-          type:
-          - string
-          - 'null'
-    BadgeIntegrationRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    GenericRelayStateEnumType:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - UNKNOWN
-    AudioPlaybackActionType:
-      type: object
-      properties:
-        audioClipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        audioGateways:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        loopDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    DiagnosticRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          deviceLabels:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          deviceUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-          diagnosticEvent:
-            $ref: '#/components/schemas/SimpleDiagnosticEventType'
-          locationUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    Rules_GetRulePauseSettingsResponse:
-      type: object
-      description: Response object for getting rule pause settings.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        rulesPausedMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of rule UUIDs to their pause settings
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of rule UUIDs to their pause settings
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    SimpleDiagnosticEventType:
-      type:
-      - object
-      - 'null'
-      properties:
-        diagnosticEvent:
-          $ref: '#/components/schemas/DiagnosticActivityEnum'
-    RuleTriggerConjunctionEnum:
-      type: string
-      enum:
-      - AND
-      - OR
-      - UNKNOWN
-    ReportLookbackUnitEnum:
-      type: string
-      enum:
-      - HOURS
-      - DAYS
-      - WEEKS
-    ActivityEventData:
-      type: object
-      properties:
-        activities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-        boundingBoxes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClipBoundingBoxType'
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    AuditRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          auditEvent:
-            $ref: '#/components/schemas/SimpleAuditEventType'
-          userUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    Rules_UpdateRuleWSResponse:
-      type: object
-      description: Response object for updating a rule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-        webhookSecrets:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-            description: Shared secret per webhook action, keyed by webhook URL. Use it to verify the x-rhombus-signature-sha256 HMAC on webhooks Rhombus sends when this rule fires. Existing webhook URLs keep their previous secret; newly added webhook URLs get a new secret returned here. Store it securely.
-          description: Shared secret per webhook action, keyed by webhook URL. Use it to verify the x-rhombus-signature-sha256 HMAC on webhooks Rhombus sends when this rule fires. Existing webhook URLs keep their previous secret; newly added webhook URLs get a new secret returned here. Store it securely.
-    Rules_DeleteRulePauseSettingWSResponse:
-      type: object
-      description: Response object for deleting a rule pause setting.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     TriggerComponentRelayActionType:
       type: object
       properties:
@@ -1374,186 +1095,31 @@ components:
           - 'null'
           format: int32
           readOnly: true
-    ShellyIntegrationRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          shellyChannel:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          shellyDeviceId:
-            type:
-            - string
-            - 'null'
-          shellyEventType:
-            $ref: '#/components/schemas/ShellyEventTypeEnum'
-          timestamp:
-            type:
-            - integer
-            - 'null'
-            format: int64
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    DeviceTypeEnum:
+    GenericRelayStateEnumType:
       type: string
       enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
+      - ACTIVE
+      - INACTIVE
       - UNKNOWN
-    RecurringTimeUnitEnum:
-      type: string
-      description: Time unit of recurrence. i.e. trigger every 5 minutes, timeUnit would be MINUTES
-      enum:
-      - SECONDS
-      - MINUTES
-      - HOURS
-    Rules_DeleteIncomingWebhookTokenWSRequest:
-      type: object
-      description: Request object for deleting an incoming webhook trigger token.
-      properties:
-        webhookToken:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    NavigationTypeEnum:
-      type: string
-      enum:
-      - ROUTE
-      - PATROL
-      - WAYPOINT
-      - POSE
-    RecurringRuleTriggerType:
+    CustomLLMEventRuleTriggerType:
       type:
       - object
       - 'null'
       allOf:
       - type: object
         properties:
-          locationUuids:
+          deviceFacetUuids:
             type:
             - array
             - 'null'
-            description: Optional list of locations to specify timezones for evaluation. Note that if not specified, then we rely on the Actions to derive timezones.
             items:
               type:
               - string
               - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-          repeatInterval:
-            type:
-            - integer
-            - 'null'
-            format: int32
-            description: Interval of timeUnit to re-occur at. i.e. trigger every 5 minutes, repeatInerval would be 5
-          timeUnit:
-            $ref: '#/components/schemas/RecurringTimeUnitEnum'
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    ShellyEventTypeEnum:
-      type: string
-      enum:
-      - SWITCH_ON
-      - SWITCH_OFF
-      - INPUT_ON
-      - INPUT_OFF
-      - BUTTON_PUSH
-      - BUTTON_LONG_PUSH
-      - BUTTON_DOUBLE_PUSH
-    EmailAuditLogExportActionType:
-      type: object
-      properties:
-        includeActions:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        includeApiInvocation:
-          type:
-          - boolean
-          - 'null'
-        lookbackCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lookbackType:
-          $ref: '#/components/schemas/ReportLookbackTypeEnum'
-        lookbackUnit:
-          $ref: '#/components/schemas/ReportLookbackUnitEnum'
-        recipientEmails:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        timezoneId:
-          type:
-          - string
-          - 'null'
-    ConnectAudioDeviceToPhoneNumberActionType:
-      type: object
-      properties:
-        audioDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        doorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        optionalGreeting:
-          type:
-          - string
-          - 'null'
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-    LocationLockdownDeactivatedRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          locationUuid:
+              format: DeviceFacetUuid
+              description: RUUID with optional appended facet information
+              example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          promptUuid:
             type:
             - string
             - 'null'
@@ -1563,215 +1129,37 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    ThirdPartyAudioPlaybackActionType:
-      type: object
-      properties:
-        audioFileName:
-          type:
-          - string
-          - 'null'
-        ipAddress:
-          type:
-          - string
-          - 'null'
-        loopDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        password:
-          type:
-          - string
-          - 'null'
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        proxyDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        username:
-          type:
-          - string
-          - 'null'
-    Rules_DeleteIncomingWebhookTokenWSResponse:
-      type: object
-      description: Response object for deleting an incoming webhook trigger token.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    RobotActionTypeEnum:
-      type: string
-      enum:
-      - DEPLOY
-      - UNKNOWN
-    LocationLockdownActivatedRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          locationUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    RobotAction:
-      type: object
-      discriminator:
-        mapping:
-          DEPLOY: '#/components/schemas/DeployRobotAction'
-          UNKNOWN: '#/components/schemas/NoOpAction'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/DeployRobotAction'
-      - $ref: '#/components/schemas/NoOpAction'
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    Rules_GenerateIncomingWebhookTokenWSResponse:
-      type: object
-      description: Response object for generating an incoming webhook trigger token.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-        webhookToken:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        webhookUrl:
-          type:
-          - string
-          - 'null'
-          description: Full public URL that fires triggers referencing this token
-    SimpleAuditEventType:
-      type:
-      - object
-      - 'null'
-      properties:
-        auditEvent:
-          $ref: '#/components/schemas/AuditActionEnum'
-    ButtonIntegrationRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          thirdPartyBatteryLevel:
-            type:
-            - string
-            - 'null'
-          thirdPartyButtonAction:
-            type:
-            - string
-            - 'null'
-          thirdPartyButtonName:
-            type:
-            - string
-            - 'null'
-          thirdPartyButtonSerialNumber:
-            type:
-            - string
-            - 'null'
-          thirdPartyButtonUuid:
-            type:
-            - string
-            - 'null'
-          timestamp:
-            type:
-            - integer
-            - 'null'
-            format: int64
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    Rules_GetRulesForOrgWSResponse:
-      type: object
-      description: Response object for getting rules for an organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        rules:
-          type:
-          - array
-          - 'null'
-          description: List of rules for the organization
-          items:
-            $ref: '#/components/schemas/RuleType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Rules_PauseRuleWSResponse:
-      type: object
-      description: Response object for pausing a rule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     Rules_CreateRuleWSRequest:
       type: object
       description: Request object for creating a rule.
       properties:
         rule:
           $ref: '#/components/schemas/RuleType'
+    CancelLoopingAudioPlaybackActionType:
+      type: object
+      properties:
+        _audioDevices:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        audioDevices:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
     IntegrationCommandActionType:
       type: object
       properties:
@@ -1819,50 +1207,66 @@ components:
             - 'null'
             description: Shared secret per webhook action, keyed by webhook URL. Use it to verify the x-rhombus-signature-sha256 HMAC on webhooks Rhombus sends when this rule fires. Returned once at create time; store it securely.
           description: Shared secret per webhook action, keyed by webhook URL. Use it to verify the x-rhombus-signature-sha256 HMAC on webhooks Rhombus sends when this rule fires. Returned once at create time; store it securely.
-    EmergencyContact:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the emergency contact.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: The phone number for this emergency contact.
-      required:
-      - name
-      - phoneNumber
-    Rules_DeleteRuleWSResponse:
-      type: object
-      description: Response object for deleting a rule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ScheduledRuleTriggerType:
+    RobotActionTypeEnum:
+      type: string
+      enum:
+      - DEPLOY
+      - UNKNOWN
+    DeployRobotAction:
       type:
       - object
       - 'null'
       allOf:
       - type: object
         properties:
-          locationUuids:
+          mapUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          navType:
+            $ref: '#/components/schemas/NavigationTypeEnum'
+          pose:
+            $ref: '#/components/schemas/Pose'
+          routeUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          waypointUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    AuditRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          auditEvent:
+            $ref: '#/components/schemas/SimpleAuditEventType'
+          userUuids:
             type:
             - array
             - 'null'
-            description: List of locations to use for timezone evaluation and for display purposes
             items:
               type:
               - string
@@ -1870,15 +1274,48 @@ components:
               format: RUUID
               description: base 64 (url-safe) uuid string
               example: AAAAAAAAAAAAAAAAAAAAAA
-          minOfDay:
-            type:
-            - integer
-            - 'null'
-            format: int32
-            description: minute of the day for this trigger. note that it is dependent on the timezone of the devices in the rule actions or the timezone of the specified locations.
       properties:
         type:
           $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    WebhookActionType:
+      type: object
+      properties:
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        oauthClientId:
+          type:
+          - string
+          - 'null'
+        oauthClientSecret:
+          type:
+          - string
+          - 'null'
+        oauthGrantType:
+          type:
+          - string
+          - 'null'
+        oauthScope:
+          type:
+          - string
+          - 'null'
+        oauthUrl:
+          type:
+          - string
+          - 'null'
+        webhookSecret:
+          type:
+          - string
+          - 'null'
+        webhookUrl:
+          type:
+          - string
+          - 'null'
     ClipBoundingBoxType:
       type: object
       properties:
@@ -1985,633 +1422,164 @@ components:
           type:
           - string
           - 'null'
-    Rules_PauseRuleWSRequest:
+    Rules_DeleteIncomingWebhookTokenWSResponse:
       type: object
-      description: Request object for pausing a rule.
+      description: Response object for deleting an incoming webhook trigger token.
       properties:
-        durationSec:
+        error:
           type:
-          - integer
+          - boolean
           - 'null'
-          format: int64
-          description: Duration to pause the rule in seconds
-          example: 3600
-        ruleUuid:
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Rules_DeleteRulePauseSettingWSRequest:
+      type: object
+      description: Request object for deleting a rule pause setting.
+      properties:
+        uuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTimestampSec:
+    EmailAuditLogExportActionType:
+      type: object
+      properties:
+        includeActions:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        includeApiInvocation:
+          type:
+          - boolean
+          - 'null'
+        lookbackCount:
           type:
           - integer
           - 'null'
-          format: int64
-          description: Scheduled timestamp in seconds when the pause should take effect
-          example: 1640995200
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
-    ToastCheckInfo:
+          format: int32
+        lookbackType:
+          $ref: '#/components/schemas/ReportLookbackTypeEnum'
+        lookbackUnit:
+          $ref: '#/components/schemas/ReportLookbackUnitEnum'
+        recipientEmails:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        timezoneId:
+          type:
+          - string
+          - 'null'
+    SensorValType:
       type: object
       properties:
-        totalAmount:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
           type:
           - number
           - 'null'
           format: double
-    DeviceActivityRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          activityEvent:
-            $ref: '#/components/schemas/SimpleDeviceActivityEventType'
-          componentCompositeUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-          componentUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-          deviceLabels:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          deviceUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-          locationUuids:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    ThirdPartyStrobeSirenActionType:
-      type: object
-      properties:
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ipAddress:
-          type:
-          - string
-          - 'null'
-        lightColors:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        lightIntensity:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lightPattern:
-          type:
-          - string
-          - 'null'
-        lightSpeed:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        password:
-          type:
-          - string
-          - 'null'
-        profileName:
-          type:
-          - string
-          - 'null'
-        proxyDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        sirenIntensity:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        sirenPattern:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-    WebhookActionType:
-      type: object
-      properties:
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        oauthClientId:
-          type:
-          - string
-          - 'null'
-        oauthClientSecret:
-          type:
-          - string
-          - 'null'
-        oauthGrantType:
-          type:
-          - string
-          - 'null'
-        oauthScope:
-          type:
-          - string
-          - 'null'
-        oauthUrl:
-          type:
-          - string
-          - 'null'
-        webhookSecret:
-          type:
-          - string
-          - 'null'
-        webhookUrl:
-          type:
-          - string
-          - 'null'
-    Rules_GetRulePauseSettingsWSRequest:
-      type: object
-      description: Request object for getting rule pause settings.
-    Rules_UpdateRuleWSRequest:
-      type: object
-      description: Request object for updating a rule.
-      properties:
-        ruleUpdate:
-          $ref: '#/components/schemas/RuleType'
-    RemoteDoorUnlockSystemEnum:
-      type: string
-      enum:
-      - BRIVO
-      - OPENPATH
-      - KISI
-      - PLACEOS
-      - GENEA
-      - PDK
-      - INNER_RANGE
-      - RHOMBUS
-      - HONEYWELL_ELEMENTS
-      - UNKNOWN
-    DeployRobotAction:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          mapUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          navType:
-            $ref: '#/components/schemas/NavigationTypeEnum'
-          pose:
-            $ref: '#/components/schemas/Pose'
-          routeUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          waypointUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    IntegrationEnum:
-      type: string
-      enum:
-      - AVIGILON_ALTA
-      - BOULEVARD
-      - BRIVO
-      - BUTTERFLY_MX
-      - DEVICE_INTEGRATION
-      - DICE
-      - ENVOY
-      - FLIC
-      - GENEA
-      - GOOGLE
-      - HONEYWELL_ELEMENTS
-      - GUEST_MANAGEMENT
-      - INFORMACAST
-      - INNER_RANGE
-      - KISI
-      - LUMEO
-      - MICROSOFT_TEAMS
-      - OMNIALERT
-      - OPENAI
-      - OPENTECH_ALLIANCE
-      - PIMLOC
-      - PLACE_OS
-      - PRODATAKEY
-      - SHELLY
-      - TOAST
-      - WEBHOOKS
-      - ZAPIER
-      - RAPTOR
-      - NINEONEONE_CELLULAR
-      - SLACK
-      - APERIO
-      - PAR_POS
-      - HONEYWELL_ONGUARD
-      - HONEYWELL_NETBOX
-      - SIGNATURE_API
-      - UNKNOWN
-    RuleFilterType:
-      type: object
-      description: Optional filters to apply to this lockdown rule.
-      properties:
-        scheduleUuids:
-          type:
-          - array
-          - 'null'
-          description: List of schedules that apply to the rule. at least one schedule must be met to trigger this rule. If null, then this rule is enabled all the time.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerBackoffSecs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Number of seconds to back off after rule is triggered before triggering again. I.e. this rule will only trigger once every X seconds regardless of how many triggering events occur within that window
-    Pose:
-      type: object
-      properties:
-        orientation:
-          type:
-          - array
-          - 'null'
-          items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z, w]
-          maxItems: 4
-          minItems: 4
-        position:
-          type:
-          - array
-          - 'null'
-          items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z]
-          maxItems: 3
-          minItems: 3
-    DiagnosticActivityEnum:
-      type: string
-      enum:
-      - CAMERA_CONNECTED
-      - CAMERA_DISCONNECTED
-      - STARTUP
-      - GATEWAY_CONNECTED
-      - GATEWAY_DISCONNECTED
-      - UPDATE_STARTED
-      - UPDATE_FIRMWARE_DOWNLOADED
-      - UPDATE_FIRMWARE_APPLIED
-      - UPDATE_STARTING_REBOOT
-      - UPDATE_FAILED_MD5_MISMATCH
-      - UPDATE_FAILED_ACCESS_DENIED
-      - UPDATE_FAILED_MITM
-      - UPDATE_FAILED_CONNNECTION_REFUSED
-      - UPDATE_FAILED_CONNNECTION_TIMEOUT
-      - UPDATE_FAILED_CONNECTION_REFUSED
-      - UPDATE_FAILED_CONNECTION_TIMEOUT
-      - UPDATE_FAILED_DNS_FAILURE
-      - UPDATE_RUNNING
-      - UPDATE_HALTED_FOR_INVESTIGATION
-      - UPDATE_HALT_CLEARED
-      - UPDATE_HALT_STATE_ACTIVE
-      - UPDATE_REFUSED_HALTED
-      - BLE_CONNECTED
-      - BLE_CONNECTION_FAILED
-      - BLE_DISCONNECTED
-      - BLE_OP_SUCCESS
-      - BLE_OP_FAILURE
-      - UPLOAD_CLIP_SUCCESS
-      - UPLOAD_CLIP_FAILURE
-      - NOTIFICATION_FAILURE
-      - USB_FAILURE_REBOOT
-      - PERSISTENT_STORAGE_FAILURE
-      - PING
-      - FORCED_REBOOT
-      - AUTO_REBOOT
-      - AUDIO_HARDWARE_NOT_DETECTED
-      - ENCRYPTED_CONTAINER_FAILURE_CREATE
-      - ENCRYPTED_CONTAINER_FAILURE_OPEN
-      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
-      - VIDEO_HARDWARE_FAILURE
-      - WIFI_NETWORK_CHANGED
-      - AI_ENGINE_DOWNLOADED
-      - AI_ENGINE_DOWNLOAD_FAILED_MD5_MISMATCH
-      - AI_ENGINE_CONFIGURED
-      - AI_ENGINE_CONFIGURATION_FAILED
-      - MITM_FAILURE
-      - SERVER_RECONNECT
-      - AP_CHANGED
-      - WATCHDOG_KILLED_AGENT
-      - WATCHDOG_DID_RESET
-      - CLIMATE_OFFLINE
-      - CLIMATE_ONLINE
-      - CLIMATE_LOW_BATTERY
-      - CLIMATE_PROBE_CONNECTED
-      - CLIMATE_PROBE_DISCONNECTED
-      - DOOR_OFFLINE
-      - DOOR_ONLINE
-      - DOOR_LOW_BATTERY
-      - OCCUPANCY_SENSOR_ONLINE
-      - OCCUPANCY_SENSOR_OFFLINE
-      - OCCUPANCY_SENSOR_LOW_BATTERY
-      - BUTTON_OFFLINE
-      - BUTTON_ONLINE
-      - BUTTON_LOW_BATTERY
-      - PROXIMITY_LOW_BATTERY
-      - ROBOT_LOW_BATTERY
-      - DOOR_CONTROLLER_CONNECTED
-      - DOOR_CONTROLLER_DISCONNECTED
-      - APERIO_LOW_BATTERY
-      - APERIO_FLAT_BATTERY
-      - APERIO_OK_BATTERY
-      - APERIO_GW_CONNECTED
-      - APERIO_GW_DISCONNECTED
-      - BADGE_READER_CONNECTED
-      - BADGE_READER_DISCONNECTED
-      - REBOOT
-      - NETWORK_INTERRUPTION
-      - OPENPATH_WEBHOOK_FAILURE
-      - TOAST_WEBHOOK_FAILURE
-      - KISI_WEBHOOK_FAILURE
-      - BRIVO_WEBHOOK_FAILURE
-      - HALO_WEBHOOK_FAILURE
-      - SALTO_WEBHOOK_FAILURE
-      - SQUARE_WEBHOOK_FAILURE
-      - BUTTERFLYMX_WEBHOOK_FAILURE
-      - ENVOY_WEBHOOK_FAILURE
-      - GENEA_WEBHOOK_FAILURE
-      - PRODATAKEY_WEBHOOK_FAILURE
-      - AMT_WEBHOOK_FAILURE
-      - PLACEOS_WEBHOOK_FAILURE
-      - OMNIALERT_WEBHOOK_FAILURE
-      - FLIC_WEBHOOK_FAILURE
-      - SHELLY_WEBHOOK_FAILURE
-      - PIMLOC_WEBHOOK_FAILURE
-      - NINEONEONECELLULAR_WEBHOOK_FAILURE
-      - HONEYWELL_ELEMENTS_WEBHOOK_FAILURE
-      - HONEYWELL_ONGUARD_WEBHOOK_FAILURE
-      - TRITON_WEBHOOK_FAILURE
-      - EXTERNAL_WEBHOOK_FAILURE
-      - CV_FAILURE
-      - NFC_HW_FAILURE
-      - CONFIG_ERROR
-      - HW_FAILURE
-      - KEYPAD_ONLINE
-      - KEYPAD_OFFLINE
-      - ALM_OVERAGE_APPROACHING
-      - ALM_OVERAGE_REACHED
-      - ALM_OVERAGE_EXCEEDED
-      - ALM_EXCESSIVE_VERIFICATIONS
-      - KIOSK_OFFLINE
-      - KIOSK_ONLINE
-      - TUNNELED_DEVICE_CONNECTED
-      - TUNNELED_DEVICE_DISCONNECTED
-      - SD_CARD_CHANGED
-      - SD_CARD_NOT_FOUND
-      - SUPERVISION_CUT_DETECTED
-      - SUPERVISION_SHORT_DETECTED
-      - SUPERVISION_INVALID_SETUP
-      - THIRD_PARTY_DEVICE_CONNECTED
-      - THIRD_PARTY_DEVICE_DISCONNECTED
-      - NVR_STREAMING_STATUS
-      - STORAGE_SM
-      - DEVICE_OFFLINE_EXTENDED
-      - DEVICE_OFFLINE_RECOVERED
-      - DEVICES_OFFLINE_THRESHOLD
-      - CLOUD_ARCHIVE_LAGGING
-      - CLOUD_ARCHIVE_RECOVERED
-      - LOCAL_RECORDING_INTERRUPTED
-      - LOCAL_RECORDING_RECOVERED
-      - UNKNOWN
-    AMSirenSettingsType:
-      type: object
-      properties:
-        audioGateways:
-          type:
-          - array
-          - 'null'
-          description: UUIDs of audio gateways used to play this siren.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The duration (in seconds) to loop the clip audio for the siren.
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The number of times to play the clip audio for the siren.
-      required:
-      - audioGateways
-      - clipUuid
-    VisionLLMRuleTriggerType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          createAffirmativeSeekpoints:
-            type:
-            - boolean
-            - 'null'
-          createNegativeSeekpoints:
-            type:
-            - boolean
-            - 'null'
-          deviceFacetUuid:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-          highDetail:
-            type:
-            - boolean
-            - 'null'
-          userPrompt:
-            type:
-            - string
-            - 'null'
-      properties:
-        type:
-          $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    AccessControlledDoorStateEnumType:
-      type: string
-      enum:
-      - UNLOCKED
-      - ACCESS_CONTROLLED
-    CustomLLMActionType:
-      type: object
-      properties:
-        deviceActivityEvents:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ActivityEventData'
-        deviceFacetUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        promptUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        timestampMs:
+        sensorLong:
           type:
           - integer
           - 'null'
           format: int64
-    RuleTriggerTypeEnum:
-      type: string
-      enum:
-      - DEVICE_ACTIVITY_EVENT
-      - AUDIT_EVENT
-      - DIAGNOSTIC_EVENT
-      - ALERT_MONITORING_EVENT
-      - BADGE_INTEGRATION_EVENT
-      - SCHEDULED_EVENT
-      - VISION_LLM_EVENT
-      - RECURRING_EVENT
-      - LOCATION_LOCKDOWN_ACTIVATED_EVENT
-      - LOCATION_LOCKDOWN_DEACTIVATED_EVENT
-      - BUTTON_INTEGRATION_EVENT
-      - CUSTOM_LLM_EVENT
-      - SHELLY_INTEGRATION_EVENT
-      - INCOMING_WEBHOOK_EVENT
-      - UNKNOWN
+    LocationLockdownActivatedRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          locationUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    ScheduledIntervalType:
+      type: object
+      description: Map of location UUIDs to snooze intervals
+      properties:
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Rules_GetRulesForOrgWSRequest:
+      type: object
+      description: Request object for getting rules for an organization.
+    EnableDisableAudioRecordActionType:
+      type: object
+      properties:
+        audioDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        enable:
+          type:
+          - boolean
+          - 'null'
+    Rules_GetRulesForOrgWSResponse:
+      type: object
+      description: Response object for getting rules for an organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        rules:
+          type:
+          - array
+          - 'null'
+          description: List of rules for the organization
+          items:
+            $ref: '#/components/schemas/RuleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     CreateAlarmActionType:
       type: object
       properties:
@@ -2671,19 +1639,103 @@ components:
           pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
         triggerType:
           $ref: '#/components/schemas/CreateAlarmTriggerTypeEnum'
-    RemoteDoorUnlockActionType:
+    BaseRuleTriggerType:
+      type: object
+      discriminator:
+        mapping:
+          ALERT_MONITORING_EVENT: '#/components/schemas/AlertMonitoringRuleTriggerType'
+          AUDIT_EVENT: '#/components/schemas/AuditRuleTriggerType'
+          BADGE_INTEGRATION_EVENT: '#/components/schemas/BadgeIntegrationRuleTriggerType'
+          BUTTON_INTEGRATION_EVENT: '#/components/schemas/ButtonIntegrationRuleTriggerType'
+          CUSTOM_LLM_EVENT: '#/components/schemas/CustomLLMEventRuleTriggerType'
+          DEVICE_ACTIVITY_EVENT: '#/components/schemas/DeviceActivityRuleTriggerType'
+          DIAGNOSTIC_EVENT: '#/components/schemas/DiagnosticRuleTriggerType'
+          INCOMING_WEBHOOK_EVENT: '#/components/schemas/IncomingWebhookRuleTriggerType'
+          LOCATION_LOCKDOWN_ACTIVATED_EVENT: '#/components/schemas/LocationLockdownActivatedRuleTriggerType'
+          LOCATION_LOCKDOWN_DEACTIVATED_EVENT: '#/components/schemas/LocationLockdownDeactivatedRuleTriggerType'
+          RECURRING_EVENT: '#/components/schemas/RecurringRuleTriggerType'
+          SCHEDULED_EVENT: '#/components/schemas/ScheduledRuleTriggerType'
+          SHELLY_INTEGRATION_EVENT: '#/components/schemas/ShellyIntegrationRuleTriggerType'
+          VISION_LLM_EVENT: '#/components/schemas/VisionLLMRuleTriggerType'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/DeviceActivityRuleTriggerType'
+      - $ref: '#/components/schemas/AuditRuleTriggerType'
+      - $ref: '#/components/schemas/AlertMonitoringRuleTriggerType'
+      - $ref: '#/components/schemas/DiagnosticRuleTriggerType'
+      - $ref: '#/components/schemas/BadgeIntegrationRuleTriggerType'
+      - $ref: '#/components/schemas/ScheduledRuleTriggerType'
+      - $ref: '#/components/schemas/VisionLLMRuleTriggerType'
+      - $ref: '#/components/schemas/RecurringRuleTriggerType'
+      - $ref: '#/components/schemas/LocationLockdownActivatedRuleTriggerType'
+      - $ref: '#/components/schemas/LocationLockdownDeactivatedRuleTriggerType'
+      - $ref: '#/components/schemas/CustomLLMEventRuleTriggerType'
+      - $ref: '#/components/schemas/ButtonIntegrationRuleTriggerType'
+      - $ref: '#/components/schemas/ShellyIntegrationRuleTriggerType'
+      - $ref: '#/components/schemas/IncomingWebhookRuleTriggerType'
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+      title: RuleTriggerType
+    ThirdPartyAudioPlaybackActionType:
       type: object
       properties:
-        doorId:
+        audioFileName:
           type:
           - string
           - 'null'
-        placeId:
+        ipAddress:
           type:
           - string
           - 'null'
-        system:
-          $ref: '#/components/schemas/RemoteDoorUnlockSystemEnum'
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        password:
+          type:
+          - string
+          - 'null'
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        proxyDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        username:
+          type:
+          - string
+          - 'null'
+    AlertMonitoringRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertMonitoringRulesEventType:
+            $ref: '#/components/schemas/AlertMonitoringRulesEventTypeEnum'
+          locationUuids:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
     AuditActionEnum:
       type: string
       enum:
@@ -3175,31 +2227,203 @@ components:
       - INCIDENT_REPORT_DELETE
       - INCIDENT_REPORT_UPDATED
       - UNKNOWN
-    SimpleDeviceActivityEventType:
-      type:
-      - object
-      - 'null'
-      discriminator:
-        propertyName: activityEvent
+    ThirdPartyStrobeSirenActionType:
+      type: object
       properties:
-        activityEvent:
-          $ref: '#/components/schemas/ActivityEnum'
-      title: DeviceActivityEventType
-    AlertMonitoringRulesEventTypeEnum:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ipAddress:
+          type:
+          - string
+          - 'null'
+        lightColors:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        lightIntensity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lightPattern:
+          type:
+          - string
+          - 'null'
+        lightSpeed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        password:
+          type:
+          - string
+          - 'null'
+        profileName:
+          type:
+          - string
+          - 'null'
+        proxyDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sirenIntensity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sirenPattern:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+    AccessStateOverrideExpirationStrategyEnum:
       type: string
       enum:
-      - ALARM_CREATED
-      - ALARM_CANCELED
-      - UNKNOWN
-    AlertMonitoringRuleTriggerType:
+      - TIME_DELAY
+      - TIME_OF_DAY_LOCAL
+      - NONE
+    IntegrationNotificationActionType:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        notificationEntity:
+          type:
+          - string
+          - 'null'
+        notificationTarget:
+          type:
+          - string
+          - 'null'
+    NavigationTypeEnum:
+      type: string
+      enum:
+      - ROUTE
+      - PATROL
+      - WAYPOINT
+      - POSE
+    RecurringTimeUnitEnum:
+      type: string
+      description: Time unit of recurrence. i.e. trigger every 5 minutes, timeUnit would be MINUTES
+      enum:
+      - SECONDS
+      - MINUTES
+      - HOURS
+    VisionLLMRuleTriggerType:
       type:
       - object
       - 'null'
       allOf:
       - type: object
         properties:
-          alertMonitoringRulesEventType:
-            $ref: '#/components/schemas/AlertMonitoringRulesEventTypeEnum'
+          createAffirmativeSeekpoints:
+            type:
+            - boolean
+            - 'null'
+          createNegativeSeekpoints:
+            type:
+            - boolean
+            - 'null'
+          deviceFacetUuid:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          highDetail:
+            type:
+            - boolean
+            - 'null'
+          userPrompt:
+            type:
+            - string
+            - 'null'
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    Rules_records_GetRulesFilteredWSRequest:
+      type: object
+      description: Request object for getting filtered rules.
+      properties:
+        associatedUuids:
+          type:
+          - array
+          - 'null'
+          description: List of associated UUIDs to filter by
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleTypeFilter:
+          type:
+          - array
+          - 'null'
+          description: List of rule types to filter by
+          items:
+            $ref: '#/components/schemas/RuleTypeEnum'
+    DiagnosticRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          deviceLabels:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          deviceUuids:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          diagnosticEvent:
+            $ref: '#/components/schemas/SimpleDiagnosticEventType'
           locationUuids:
             type:
             - array
@@ -3214,44 +2438,819 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/RuleTriggerTypeEnum'
-    BaseRuleTriggerType:
-      type: object
-      discriminator:
-        mapping:
-          ALERT_MONITORING_EVENT: '#/components/schemas/AlertMonitoringRuleTriggerType'
-          AUDIT_EVENT: '#/components/schemas/AuditRuleTriggerType'
-          BADGE_INTEGRATION_EVENT: '#/components/schemas/BadgeIntegrationRuleTriggerType'
-          BUTTON_INTEGRATION_EVENT: '#/components/schemas/ButtonIntegrationRuleTriggerType'
-          CUSTOM_LLM_EVENT: '#/components/schemas/CustomLLMEventRuleTriggerType'
-          DEVICE_ACTIVITY_EVENT: '#/components/schemas/DeviceActivityRuleTriggerType'
-          DIAGNOSTIC_EVENT: '#/components/schemas/DiagnosticRuleTriggerType'
-          INCOMING_WEBHOOK_EVENT: '#/components/schemas/IncomingWebhookRuleTriggerType'
-          LOCATION_LOCKDOWN_ACTIVATED_EVENT: '#/components/schemas/LocationLockdownActivatedRuleTriggerType'
-          LOCATION_LOCKDOWN_DEACTIVATED_EVENT: '#/components/schemas/LocationLockdownDeactivatedRuleTriggerType'
-          RECURRING_EVENT: '#/components/schemas/RecurringRuleTriggerType'
-          SCHEDULED_EVENT: '#/components/schemas/ScheduledRuleTriggerType'
-          SHELLY_INTEGRATION_EVENT: '#/components/schemas/ShellyIntegrationRuleTriggerType'
-          VISION_LLM_EVENT: '#/components/schemas/VisionLLMRuleTriggerType'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/DeviceActivityRuleTriggerType'
-      - $ref: '#/components/schemas/AuditRuleTriggerType'
-      - $ref: '#/components/schemas/AlertMonitoringRuleTriggerType'
-      - $ref: '#/components/schemas/DiagnosticRuleTriggerType'
-      - $ref: '#/components/schemas/BadgeIntegrationRuleTriggerType'
-      - $ref: '#/components/schemas/ScheduledRuleTriggerType'
-      - $ref: '#/components/schemas/VisionLLMRuleTriggerType'
-      - $ref: '#/components/schemas/RecurringRuleTriggerType'
-      - $ref: '#/components/schemas/LocationLockdownActivatedRuleTriggerType'
-      - $ref: '#/components/schemas/LocationLockdownDeactivatedRuleTriggerType'
-      - $ref: '#/components/schemas/CustomLLMEventRuleTriggerType'
-      - $ref: '#/components/schemas/ButtonIntegrationRuleTriggerType'
-      - $ref: '#/components/schemas/ShellyIntegrationRuleTriggerType'
-      - $ref: '#/components/schemas/IncomingWebhookRuleTriggerType'
+    RecurringRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          locationUuids:
+            type:
+            - array
+            - 'null'
+            description: Optional list of locations to specify timezones for evaluation. Note that if not specified, then we rely on the Actions to derive timezones.
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          repeatInterval:
+            type:
+            - integer
+            - 'null'
+            format: int32
+            description: Interval of timeUnit to re-occur at. i.e. trigger every 5 minutes, repeatInerval would be 5
+          timeUnit:
+            $ref: '#/components/schemas/RecurringTimeUnitEnum'
       properties:
         type:
           $ref: '#/components/schemas/RuleTriggerTypeEnum'
-      title: RuleTriggerType
+    Rules_PauseRuleWSResponse:
+      type: object
+      description: Response object for pausing a rule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PointType:
+      type: object
+      properties:
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    AMSirenSettingsType:
+      type: object
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          description: UUIDs of audio gateways used to play this siren.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The duration (in seconds) to loop the clip audio for the siren.
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of times to play the clip audio for the siren.
+      required:
+      - audioGateways
+      - clipUuid
+    AudioPlaybackActionType:
+      type: object
+      properties:
+        audioClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    EmergencyContact:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the emergency contact.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for this emergency contact.
+      required:
+      - name
+      - phoneNumber
+    Rules_PauseRuleWSRequest:
+      type: object
+      description: Request object for pausing a rule.
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration to pause the rule in seconds
+          example: 3600
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds when the pause should take effect
+          example: 1640995200
+    Rules_UpdateRuleWSRequest:
+      type: object
+      description: Request object for updating a rule.
+      properties:
+        ruleUpdate:
+          $ref: '#/components/schemas/RuleType'
+    RemoteDoorUnlockSystemEnum:
+      type: string
+      enum:
+      - BRIVO
+      - OPENPATH
+      - KISI
+      - PLACEOS
+      - GENEA
+      - PDK
+      - INNER_RANGE
+      - RHOMBUS
+      - HONEYWELL_ELEMENTS
+      - UNKNOWN
+    DiagnosticActivityEnum:
+      type: string
+      enum:
+      - CAMERA_CONNECTED
+      - CAMERA_DISCONNECTED
+      - STARTUP
+      - GATEWAY_CONNECTED
+      - GATEWAY_DISCONNECTED
+      - UPDATE_STARTED
+      - UPDATE_FIRMWARE_DOWNLOADED
+      - UPDATE_FIRMWARE_APPLIED
+      - UPDATE_STARTING_REBOOT
+      - UPDATE_FAILED_MD5_MISMATCH
+      - UPDATE_FAILED_ACCESS_DENIED
+      - UPDATE_FAILED_MITM
+      - UPDATE_FAILED_CONNNECTION_REFUSED
+      - UPDATE_FAILED_CONNNECTION_TIMEOUT
+      - UPDATE_FAILED_CONNECTION_REFUSED
+      - UPDATE_FAILED_CONNECTION_TIMEOUT
+      - UPDATE_FAILED_DNS_FAILURE
+      - UPDATE_RUNNING
+      - UPDATE_HALTED_FOR_INVESTIGATION
+      - UPDATE_HALT_CLEARED
+      - UPDATE_HALT_STATE_ACTIVE
+      - UPDATE_REFUSED_HALTED
+      - BLE_CONNECTED
+      - BLE_CONNECTION_FAILED
+      - BLE_DISCONNECTED
+      - BLE_OP_SUCCESS
+      - BLE_OP_FAILURE
+      - UPLOAD_CLIP_SUCCESS
+      - UPLOAD_CLIP_FAILURE
+      - NOTIFICATION_FAILURE
+      - USB_FAILURE_REBOOT
+      - PERSISTENT_STORAGE_FAILURE
+      - PING
+      - FORCED_REBOOT
+      - AUTO_REBOOT
+      - AUDIO_HARDWARE_NOT_DETECTED
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - VIDEO_HARDWARE_FAILURE
+      - WIFI_NETWORK_CHANGED
+      - AI_ENGINE_DOWNLOADED
+      - AI_ENGINE_DOWNLOAD_FAILED_MD5_MISMATCH
+      - AI_ENGINE_CONFIGURED
+      - AI_ENGINE_CONFIGURATION_FAILED
+      - MITM_FAILURE
+      - SERVER_RECONNECT
+      - AP_CHANGED
+      - WATCHDOG_KILLED_AGENT
+      - WATCHDOG_DID_RESET
+      - CLIMATE_OFFLINE
+      - CLIMATE_ONLINE
+      - CLIMATE_LOW_BATTERY
+      - CLIMATE_PROBE_CONNECTED
+      - CLIMATE_PROBE_DISCONNECTED
+      - DOOR_OFFLINE
+      - DOOR_ONLINE
+      - DOOR_LOW_BATTERY
+      - OCCUPANCY_SENSOR_ONLINE
+      - OCCUPANCY_SENSOR_OFFLINE
+      - OCCUPANCY_SENSOR_LOW_BATTERY
+      - BUTTON_OFFLINE
+      - BUTTON_ONLINE
+      - BUTTON_LOW_BATTERY
+      - PROXIMITY_LOW_BATTERY
+      - ROBOT_LOW_BATTERY
+      - DOOR_CONTROLLER_CONNECTED
+      - DOOR_CONTROLLER_DISCONNECTED
+      - APERIO_LOW_BATTERY
+      - APERIO_FLAT_BATTERY
+      - APERIO_OK_BATTERY
+      - APERIO_GW_CONNECTED
+      - APERIO_GW_DISCONNECTED
+      - BADGE_READER_CONNECTED
+      - BADGE_READER_DISCONNECTED
+      - REBOOT
+      - NETWORK_INTERRUPTION
+      - OPENPATH_WEBHOOK_FAILURE
+      - TOAST_WEBHOOK_FAILURE
+      - KISI_WEBHOOK_FAILURE
+      - BRIVO_WEBHOOK_FAILURE
+      - HALO_WEBHOOK_FAILURE
+      - SALTO_WEBHOOK_FAILURE
+      - SQUARE_WEBHOOK_FAILURE
+      - BUTTERFLYMX_WEBHOOK_FAILURE
+      - ENVOY_WEBHOOK_FAILURE
+      - GENEA_WEBHOOK_FAILURE
+      - PRODATAKEY_WEBHOOK_FAILURE
+      - AMT_WEBHOOK_FAILURE
+      - PLACEOS_WEBHOOK_FAILURE
+      - OMNIALERT_WEBHOOK_FAILURE
+      - FLIC_WEBHOOK_FAILURE
+      - SHELLY_WEBHOOK_FAILURE
+      - PIMLOC_WEBHOOK_FAILURE
+      - NINEONEONECELLULAR_WEBHOOK_FAILURE
+      - HONEYWELL_ELEMENTS_WEBHOOK_FAILURE
+      - HONEYWELL_ONGUARD_WEBHOOK_FAILURE
+      - TRITON_WEBHOOK_FAILURE
+      - EXTERNAL_WEBHOOK_FAILURE
+      - CV_FAILURE
+      - NFC_HW_FAILURE
+      - CONFIG_ERROR
+      - HW_FAILURE
+      - KEYPAD_ONLINE
+      - KEYPAD_OFFLINE
+      - ALM_OVERAGE_APPROACHING
+      - ALM_OVERAGE_REACHED
+      - ALM_OVERAGE_EXCEEDED
+      - ALM_EXCESSIVE_VERIFICATIONS
+      - KIOSK_OFFLINE
+      - KIOSK_ONLINE
+      - TUNNELED_DEVICE_CONNECTED
+      - TUNNELED_DEVICE_DISCONNECTED
+      - SD_CARD_CHANGED
+      - SD_CARD_NOT_FOUND
+      - SUPERVISION_CUT_DETECTED
+      - SUPERVISION_SHORT_DETECTED
+      - SUPERVISION_INVALID_SETUP
+      - THIRD_PARTY_DEVICE_CONNECTED
+      - THIRD_PARTY_DEVICE_DISCONNECTED
+      - NVR_STREAMING_STATUS
+      - STORAGE_SM
+      - DEVICE_OFFLINE_EXTENDED
+      - DEVICE_OFFLINE_RECOVERED
+      - DEVICES_OFFLINE_THRESHOLD
+      - CLOUD_ARCHIVE_LAGGING
+      - CLOUD_ARCHIVE_RECOVERED
+      - LOCAL_RECORDING_INTERRUPTED
+      - LOCAL_RECORDING_RECOVERED
+      - UNKNOWN
+    DeviceActivityRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          activityEvent:
+            $ref: '#/components/schemas/SimpleDeviceActivityEventType'
+          componentCompositeUuids:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          componentUuids:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          deviceLabels:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          deviceUuids:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          locationUuids:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    NoOpAction:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    Rules_GetRulePauseSettingsResponse:
+      type: object
+      description: Response object for getting rule pause settings.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        rulesPausedMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of rule UUIDs to their pause settings
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of rule UUIDs to their pause settings
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Rules_UpdateRuleWSResponse:
+      type: object
+      description: Response object for updating a rule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        webhookSecrets:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+            description: Shared secret per webhook action, keyed by webhook URL. Use it to verify the x-rhombus-signature-sha256 HMAC on webhooks Rhombus sends when this rule fires. Existing webhook URLs keep their previous secret; newly added webhook URLs get a new secret returned here. Store it securely.
+          description: Shared secret per webhook action, keyed by webhook URL. Use it to verify the x-rhombus-signature-sha256 HMAC on webhooks Rhombus sends when this rule fires. Existing webhook URLs keep their previous secret; newly added webhook URLs get a new secret returned here. Store it securely.
+    ActivateLocationLockdownActionType:
+      type: object
+      properties:
+        locationLockdownPlanUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Rules_DeleteIncomingWebhookTokenWSRequest:
+      type: object
+      description: Request object for deleting an incoming webhook trigger token.
+      properties:
+        webhookToken:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ShellyEventTypeEnum:
+      type: string
+      enum:
+      - SWITCH_ON
+      - SWITCH_OFF
+      - INPUT_ON
+      - INPUT_OFF
+      - BUTTON_PUSH
+      - BUTTON_LONG_PUSH
+      - BUTTON_DOUBLE_PUSH
+    RuleType:
+      type: object
+      description: Updated rule data
+      properties:
+        action:
+          $ref: '#/components/schemas/RuleActionType'
+        conjunction:
+          $ref: '#/components/schemas/RuleTriggerConjunctionEnum'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ownerUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleFilters:
+          $ref: '#/components/schemas/RuleFilterType'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypeEnum'
+        triggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BaseRuleTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ButtonIntegrationRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          thirdPartyBatteryLevel:
+            type:
+            - string
+            - 'null'
+          thirdPartyButtonAction:
+            type:
+            - string
+            - 'null'
+          thirdPartyButtonName:
+            type:
+            - string
+            - 'null'
+          thirdPartyButtonSerialNumber:
+            type:
+            - string
+            - 'null'
+          thirdPartyButtonUuid:
+            type:
+            - string
+            - 'null'
+          timestamp:
+            type:
+            - integer
+            - 'null'
+            format: int64
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    RobotAction:
+      type: object
+      discriminator:
+        mapping:
+          DEPLOY: '#/components/schemas/DeployRobotAction'
+          UNKNOWN: '#/components/schemas/NoOpAction'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/DeployRobotAction'
+      - $ref: '#/components/schemas/NoOpAction'
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    IncomingWebhookRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          displayName:
+            type:
+            - string
+            - 'null'
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    BadgeIntegrationRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
+    ConnectAudioDeviceToMobileAppActionType:
+      type: object
+      properties:
+        audioDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        doorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        targetUserUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    CustomLLMActionType:
+      type: object
+      properties:
+        deviceActivityEvents:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ActivityEventData'
+        deviceFacetUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Rules_DeleteRuleWSRequest:
+      type: object
+      description: Request object for deleting a rule.
+      properties:
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ActivityEventData:
+      type: object
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ReportLookbackUnitEnum:
+      type: string
+      enum:
+      - HOURS
+      - DAYS
+      - WEEKS
+    Rules_GetRulePauseSettingsWSRequest:
+      type: object
+      description: Request object for getting rule pause settings.
+    ShellyIntegrationRuleTriggerType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          shellyChannel:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          shellyDeviceId:
+            type:
+            - string
+            - 'null'
+          shellyEventType:
+            $ref: '#/components/schemas/ShellyEventTypeEnum'
+          timestamp:
+            type:
+            - integer
+            - 'null'
+            format: int64
+      properties:
+        type:
+          $ref: '#/components/schemas/RuleTriggerTypeEnum'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

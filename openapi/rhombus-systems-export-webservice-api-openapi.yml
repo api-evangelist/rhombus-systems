@@ -40,7 +40,6 @@ tags:
 paths:
   /api/export/audit:
     post:
-      description: Download audit log
       operationId: exportAudit
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -73,7 +72,6 @@ paths:
       - Export Webservice
   /api/export/climateEvents:
     post:
-      description: Download climate event log
       operationId: exportClimateEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -106,7 +104,6 @@ paths:
       - Export Webservice
   /api/export/countReports:
     post:
-      description: Download count report
       operationId: exportCountReports
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -139,7 +136,6 @@ paths:
       - Export Webservice
   /api/export/diagnostic:
     post:
-      description: Download diagnostic log
       operationId: exportDiagnostic
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -172,7 +168,6 @@ paths:
       - Export Webservice
   /api/export/doorEvents:
     post:
-      description: Download door event log
       operationId: exportDoorEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -205,7 +200,6 @@ paths:
       - Export Webservice
   /api/export/environmentalGatewayEvents:
     post:
-      description: Download environmental gateway event log
       operationId: exportEnvironmentalGatewayEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -238,7 +232,6 @@ paths:
       - Export Webservice
   /api/export/inventory:
     post:
-      description: Download device inventory
       operationId: exportInventory
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -271,7 +264,6 @@ paths:
       - Export Webservice
   /api/export/motionEvents:
     post:
-      description: Download motion event log for motion sensors
       operationId: exportMotionEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -304,7 +296,6 @@ paths:
       - Export Webservice
   /api/export/peopleCountEvents:
     post:
-      description: Download people count report
       operationId: exportPeopleCountEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -337,7 +328,6 @@ paths:
       - Export Webservice
   /api/export/peopleEvents:
     post:
-      description: Download people event log
       operationId: exportPeopleEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -370,7 +360,6 @@ paths:
       - Export Webservice
   /api/export/proximityEvents:
     post:
-      description: Download proximity tag event log
       operationId: exportProximityEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -403,7 +392,6 @@ paths:
       - Export Webservice
   /api/export/proximityLocomotionEvents:
     post:
-      description: Download proximity tag event log
       operationId: exportProximityLocomotionEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -436,7 +424,6 @@ paths:
       - Export Webservice
   /api/export/uptime:
     post:
-      description: Download device uptime reports
       operationId: exportUptime
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -469,7 +456,6 @@ paths:
       - Export Webservice
   /api/export/users:
     post:
-      description: Download org users
       operationId: exportUsers
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -503,7 +489,7 @@ paths:
   /api/export/vehicleEvents:
     post:
       deprecated: true
-      description: Download vehicle event log.  Use /export/vehicleEventsV2 instead for more functionality
+      description: Download vehicle event log. Use /export/vehicleEventsV2 instead for more functionality
       operationId: exportVehicleEvents
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -536,7 +522,6 @@ paths:
       - Export Webservice
   /api/export/vehicleEventsV2:
     post:
-      description: Download vehicle event log
       operationId: exportVehicleEventsV2
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -569,151 +554,28 @@ paths:
       - Export Webservice
 components:
   schemas:
-    Export_ExportEnvironmentalGatewayEventsWSRequest:
+    StreamingOutput:
+      type:
+      - object
+      - 'null'
+    Export_ExportPeopleEventsWSRequest:
       type: object
-      description: Request object for exporting environmental gateway events with time filtering.
+      description: Request object for exporting people detection events with time interval filtering.
       properties:
-        createdAfterMs:
+        endInterval:
           type:
           - integer
           - 'null'
           format: int64
-          description: Start time in milliseconds for filtering environmental gateway events
-          example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering environmental gateway events
+          description: End time interval in milliseconds for filtering people events
           example: 1641081600000
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ReportTypeEnum:
-      type: string
-      description: Type of report to receive
-      enum:
-      - CROWD
-      - PEOPLE
-      - FACES
-      - MOTION
-      - BANDWIDTH
-      - VEHICLES
-      - LICENSEPLATES
-      - ALERTS
-      - DWELL
-    Export_ExportProximityEventsWSRequest:
-      type: object
-      description: Request object for exporting proximity events with time filtering and tag selection.
-      properties:
-        createBeforeMs:
+        startInterval:
           type:
           - integer
           - 'null'
           format: int64
-          writeOnly: true
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for filtering proximity events
+          description: Start time interval in milliseconds for filtering people events
           example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering proximity events
-          example: 1641081600000
-        tagUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ReportIntervalEnum:
-      type: string
-      description: Report interval for filtering face events
-      enum:
-      - MINUTELY
-      - QUARTERHOURLY
-      - HOURLY
-      - DAILY
-      - WEEKLY
-      - MONTHLY
-    Export_ExportVehicleEventsWSRequest:
-      type: object
-      description: Request object for exporting vehicle events with filtering by time, devices, labels, and plate numbers.
-      properties:
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device UUIDs to filter vehicle events by
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        fuzzy:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to use fuzzy search on the provided plate numbers
-          example: true
-        interval:
-          $ref: '#/components/schemas/TimeInterval'
-        labels:
-          type:
-          - array
-          - 'null'
-          description: List of vehicle labels to filter by
-          example:
-          - car
-          - truck
-          - motorcycle
-          items:
-            type:
-            - string
-            - 'null'
-            description: List of vehicle labels to filter by
-            example: '["car","truck","motorcycle"]'
-        plateNumbers:
-          type:
-          - array
-          - 'null'
-          description: List of license plate numbers to filter by
-          example:
-          - ABC123
-          - XYZ789
-          items:
-            type:
-            - string
-            - 'null'
-            description: List of license plate numbers to filter by
-            example: '["ABC123","XYZ789"]'
-    TimeInterval:
-      type: object
-      properties:
-        endMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
     Export_ExportClimateEventsWSRequest:
       type: object
       description: Request object for exporting climate sensor events with time filtering.
@@ -739,66 +601,16 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Export_ExportMotionEventsWSRequest:
-      type: object
-      description: Request object for exporting motion events from motion sensors with time filtering.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: After datetime provided as a UNIX timestamp in milliseconds
-          example: 1640995200000
-          minimum: 0
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Before datetime provided as a UNIX timestamp in milliseconds
-          example: 1641081600000
-          minimum: 0
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-      required:
-      - deviceUuid
-    Export_ExportProximityLocomotionEventsWSRequest:
-      type: object
-      description: Request object for exporting proximity locomotion events with time filtering and tag selection.
-      properties:
-        createBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          writeOnly: true
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for filtering proximity locomotion events
-          example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering proximity locomotion events
-          example: 1641081600000
-        tagUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+    ReportIntervalEnum:
+      type: string
+      description: Report interval for filtering face events
+      enum:
+      - MINUTELY
+      - QUARTERHOURLY
+      - HOURLY
+      - DAILY
+      - WEEKLY
+      - MONTHLY
     Export_ExportUsersWSRequest:
       type: object
       description: Request object for exporting user information to CSV format.
@@ -840,138 +652,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Vehicle_GetVehicleEventsWSRequest:
-      type: object
-      description: Request object for getting vehicle events with filters and additive queries.
-      properties:
-        deviceUuidFilter:
-          type:
-          - array
-          - 'null'
-          description: Filter events by specific reporting device uuids
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        endTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Time window filter end (newest) time in Epoch milliseconds
-        licensePlateExactQuery:
-          type:
-          - array
-          - 'null'
-          description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
-          items:
-            type:
-            - string
-            - 'null'
-            description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
-        licensePlateFuzzyQuery:
-          type:
-          - string
-          - 'null'
-          description: Query events by partial or complete license plate with fuzzy character matching. Query fields are additive queries (returned events satisfy at least one of the query fields)
-        locationUuidFilter:
-          type:
-          - array
-          - 'null'
-          description: Filter events by specific reporting location uuids
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        nameQuery:
-          type:
-          - array
-          - 'null'
-          description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
-          items:
-            type:
-            - string
-            - 'null'
-            description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
-        startTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Time window filter start (oldest) time in Epoch milliseconds
-        unnamedQuery:
-          type:
-          - boolean
-          - 'null'
-          description: Query events by name presence.  If false, returns events with a name.  If true, returns events without names.  Omit if not needed.  Query fields are additive queries (returned events satisfy at least one of the query fields)
-        vehicleLabelQuery:
-          type:
-          - array
-          - 'null'
-          description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
-          items:
-            type:
-            - string
-            - 'null'
-            description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
-    StreamingOutput:
-      type:
-      - object
-      - 'null'
-    Export_ExportDiagnosticEventsWSRequest:
-      type: object
-      description: Request object for exporting diagnostic events with time interval filtering.
-      properties:
-        endInterval:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time interval in milliseconds for filtering diagnostic events
-          example: 1641081600000
-        startInterval:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time interval in milliseconds for filtering diagnostic events
-          example: 1640995200000
-    Export_ExportInventoryWSRequest:
-      type: object
-      description: Request object for exporting device inventory information to CSV format.
-      properties:
-        cameraUuids:
-          type:
-          - array
-          - 'null'
-          deprecated: true
-          description: List of camera UUIDs to export (deprecated, use deviceUuids instead)
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            deprecated: true
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device UUIDs to export inventory for
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
     AuditActionEnum:
       type: string
       enum:
@@ -1463,17 +1143,163 @@ components:
       - INCIDENT_REPORT_DELETE
       - INCIDENT_REPORT_UPDATED
       - UNKNOWN
-    JavaTimeUnitEnum:
-      type: string
-      description: Time granularity for the uptime report
-      enum:
-      - NANOSECONDS
-      - MICROSECONDS
-      - MILLISECONDS
-      - SECONDS
-      - MINUTES
-      - HOURS
-      - DAYS
+    Export_ExportEnvironmentalGatewayEventsWSRequest:
+      type: object
+      description: Request object for exporting environmental gateway events with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering environmental gateway events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering environmental gateway events
+          example: 1641081600000
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportInventoryWSRequest:
+      type: object
+      description: Request object for exporting device inventory information to CSV format.
+      properties:
+        cameraUuids:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          description: List of camera UUIDs to export (deprecated, use deviceUuids instead)
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            deprecated: true
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to export inventory for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportDiagnosticEventsWSRequest:
+      type: object
+      description: Request object for exporting diagnostic events with time interval filtering.
+      properties:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering diagnostic events
+          example: 1641081600000
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering diagnostic events
+          example: 1640995200000
+    Export_ExportProximityEventsWSRequest:
+      type: object
+      description: Request object for exporting proximity events with time filtering and tag selection.
+      properties:
+        createBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          writeOnly: true
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering proximity events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering proximity events
+          example: 1641081600000
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportVehicleEventsWSRequest:
+      type: object
+      description: Request object for exporting vehicle events with filtering by time, devices, labels, and plate numbers.
+      properties:
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to filter vehicle events by
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        fuzzy:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to use fuzzy search on the provided plate numbers
+          example: true
+        interval:
+          $ref: '#/components/schemas/TimeInterval'
+        labels:
+          type:
+          - array
+          - 'null'
+          description: List of vehicle labels to filter by
+          example:
+          - car
+          - truck
+          - motorcycle
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of vehicle labels to filter by
+            example: '["car","truck","motorcycle"]'
+        plateNumbers:
+          type:
+          - array
+          - 'null'
+          description: List of license plate numbers to filter by
+          example:
+          - ABC123
+          - XYZ789
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of license plate numbers to filter by
+            example: '["ABC123","XYZ789"]'
     Export_ExportPeopleCountEventsWSRequest:
       type: object
       description: Request object for exporting people count events with time interval filtering.
@@ -1492,24 +1318,19 @@ components:
           format: int64
           description: Start time interval in milliseconds for filtering people count events
           example: 1640995200000
-    Export_ExportPeopleEventsWSRequest:
+    TimeInterval:
       type: object
-      description: Request object for exporting people detection events with time interval filtering.
       properties:
-        endInterval:
+        endMs:
           type:
           - integer
           - 'null'
           format: int64
-          description: End time interval in milliseconds for filtering people events
-          example: 1641081600000
-        startInterval:
+        startMs:
           type:
           - integer
           - 'null'
           format: int64
-          description: Start time interval in milliseconds for filtering people events
-          example: 1640995200000
     ReportScopeEnum:
       type: string
       description: Scope of the report to reset
@@ -1518,38 +1339,79 @@ components:
       - DEVICE
       - LOCATION
       - ORG
-    Export_ExportAuditEventsWSRequest:
+    Export_ExportUptimeWSRequest:
       type: object
-      description: Request object for exporting audit events to CSV format with filtering options.
+      description: Request object for exporting device uptime reports with configurable time ranges and granularity.
       properties:
-        endInterval:
+        cameraUuids:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          description: Use deviceUuids instead
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            deprecated: true
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to export uptime reports for
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endDateTime:
+          type:
+          - string
+          - 'null'
+          description: End date and time for the uptime report
+          example: '2024-01-31T23:59:59Z'
+        granularity:
+          $ref: '#/components/schemas/JavaTimeUnitEnum'
+        startDateTime:
+          type:
+          - string
+          - 'null'
+          description: Start date and time for the uptime report
+          example: '2024-01-01T00:00:00Z'
+    Export_ExportMotionEventsWSRequest:
+      type: object
+      description: Request object for exporting motion events from motion sensors with time filtering.
+      properties:
+        createdAfterMs:
           type:
           - integer
           - 'null'
           format: int64
-          description: End time interval in milliseconds for filtering audit events
-          example: 1641081600000
-        excludeActions:
-          type:
-          - array
-          - 'null'
-          description: If not empty, events with actions specified in the list are filtered out. If both include and exclude actions are specified, exclude actions are ignored.
-          items:
-            $ref: '#/components/schemas/AuditActionEnum'
-        includeActions:
-          type:
-          - array
-          - 'null'
-          description: If not empty, only events with actions specified in the list are included. If both include and exclude actions are specified, exclude actions are ignored.
-          items:
-            $ref: '#/components/schemas/AuditActionEnum'
-        startInterval:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time interval in milliseconds for filtering audit events
+          description: After datetime provided as a UNIX timestamp in milliseconds
           example: 1640995200000
+          minimum: 0
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Before datetime provided as a UNIX timestamp in milliseconds
+          example: 1641081600000
+          minimum: 0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - deviceUuid
     Export_ExportCountReportsWSRequest:
       type: object
       description: Request object for exporting count reports with configurable intervals, scopes, and time ranges.
@@ -1614,29 +1476,60 @@ components:
       - scope
       - startTimeMs
       - type
-    Export_ExportUptimeWSRequest:
+    Export_ExportAuditEventsWSRequest:
       type: object
-      description: Request object for exporting device uptime reports with configurable time ranges and granularity.
+      description: Request object for exporting audit events to CSV format with filtering options.
       properties:
-        cameraUuids:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering audit events
+          example: 1641081600000
+        excludeActions:
           type:
           - array
           - 'null'
-          deprecated: true
-          description: Use deviceUuids instead
+          description: If not empty, events with actions specified in the list are filtered out. If both include and exclude actions are specified, exclude actions are ignored.
           items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            deprecated: true
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceUuids:
+            $ref: '#/components/schemas/AuditActionEnum'
+        includeActions:
           type:
           - array
           - 'null'
-          description: List of device UUIDs to export uptime reports for
+          description: If not empty, only events with actions specified in the list are included. If both include and exclude actions are specified, exclude actions are ignored.
+          items:
+            $ref: '#/components/schemas/AuditActionEnum'
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering audit events
+          example: 1640995200000
+    ReportTypeEnum:
+      type: string
+      description: Type of report to receive
+      enum:
+      - CROWD
+      - PEOPLE
+      - FACES
+      - MOTION
+      - BANDWIDTH
+      - VEHICLES
+      - LICENSEPLATES
+      - ALERTS
+      - DWELL
+    Vehicle_GetVehicleEventsWSRequest:
+      type: object
+      description: Request object for getting vehicle events with filters and additive queries.
+      properties:
+        deviceUuidFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter events by specific reporting device uuids
           items:
             type:
             - string
@@ -1644,20 +1537,112 @@ components:
             format: DeviceFacetUuid
             description: RUUID with optional appended facet information
             example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        endDateTime:
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Time window filter end (newest) time in Epoch milliseconds
+        licensePlateExactQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by exact license plate number. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        licensePlateFuzzyQuery:
           type:
           - string
           - 'null'
-          description: End date and time for the uptime report
-          example: '2024-01-31T23:59:59Z'
-        granularity:
-          $ref: '#/components/schemas/JavaTimeUnitEnum'
-        startDateTime:
+          description: Query events by partial or complete license plate with fuzzy character matching. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        locationUuidFilter:
+          type:
+          - array
+          - 'null'
+          description: Filter events by specific reporting location uuids
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        nameQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by vehicle name. Query fields are additive queries (returned events satisfy at least one of the query fields)
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Time window filter start (oldest) time in Epoch milliseconds
+        unnamedQuery:
+          type:
+          - boolean
+          - 'null'
+          description: Query events by name presence.  If false, returns events with a name.  If true, returns events without names.  Omit if not needed.  Query fields are additive queries (returned events satisfy at least one of the query fields)
+        vehicleLabelQuery:
+          type:
+          - array
+          - 'null'
+          description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
+          items:
+            type:
+            - string
+            - 'null'
+            description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
+    Export_ExportProximityLocomotionEventsWSRequest:
+      type: object
+      description: Request object for exporting proximity locomotion events with time filtering and tag selection.
+      properties:
+        createBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          writeOnly: true
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering proximity locomotion events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering proximity locomotion events
+          example: 1641081600000
+        tagUuid:
           type:
           - string
           - 'null'
-          description: Start date and time for the uptime report
-          example: '2024-01-01T00:00:00Z'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    JavaTimeUnitEnum:
+      type: string
+      description: Time granularity for the uptime report
+      enum:
+      - NANOSECONDS
+      - MICROSECONDS
+      - MILLISECONDS
+      - SECONDS
+      - MINUTES
+      - HOURS
+      - DAYS
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

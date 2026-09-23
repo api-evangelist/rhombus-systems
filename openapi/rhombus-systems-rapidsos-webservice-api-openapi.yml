@@ -73,31 +73,6 @@ paths:
       - RapidSOS Webservice
 components:
   schemas:
-    Rapidsos_GetNearbyFeedsRequest:
-      type: object
-      description: Request object for getting the closest 10 feeds by latitude and longitude.
-      properties:
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latitude coordinate for finding nearby feeds
-          example: 40.7128
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Longitude coordinate for finding nearby feeds
-          example: -74.006
-        width:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Width parameter for the search area
-          example: 1000
     Rapidsos_GetNearbyFeedsResponse:
       type: object
       description: Response object containing the closest 10 feed stream URLs by latitude and longitude.
@@ -124,6 +99,31 @@ components:
           type:
           - string
           - 'null'
+    Rapidsos_GetNearbyFeedsRequest:
+      type: object
+      description: Request object for getting the closest 10 feeds by latitude and longitude.
+      properties:
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate for finding nearby feeds
+          example: 40.7128
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate for finding nearby feeds
+          example: -74.006
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Width parameter for the search area
+          example: 1000
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

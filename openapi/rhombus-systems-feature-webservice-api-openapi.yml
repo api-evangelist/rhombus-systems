@@ -73,7 +73,6 @@ paths:
       - Feature Webservice
   /api/feature/getDeviceFeatures:
     post:
-      description: Get enabled features for a device
       operationId: getDeviceFeatures
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -106,7 +105,6 @@ paths:
       - Feature Webservice
   /api/feature/getDeviceFeaturesList:
     post:
-      description: Get enabled features for all devices in an org
       operationId: getDeviceFeaturesList
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -172,7 +170,6 @@ paths:
       - Feature Webservice
   /api/feature/updateDeviceFeatures:
     post:
-      description: Update enabled features for a device
       operationId: updateDeviceFeatures
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -205,6 +202,79 @@ paths:
       - Feature Webservice
 components:
   schemas:
+    Feature_GetDeviceEventTypesWSRequest:
+      type: object
+      description: Request object for retrieving possible event types for a device based on enabled features.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    Feature_UpdateDeviceFeaturesWSRequest:
+      type: object
+      description: Request object for updating enabled features for a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        featureMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+            description: Map of device features to their new enabled/disabled status
+          description: Map of device features to their new enabled/disabled status
+    Feature_GetDeviceFeaturesWSResponse:
+      type: object
+      description: Response object containing enabled features for a device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        features:
+          $ref: '#/components/schemas/Feature_DeviceFeaturesType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Feature_GetDeviceFeaturesListWSResponse:
+      type: object
+      description: Response object containing enabled features for multiple devices in an organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        featureList:
+          type:
+          - array
+          - 'null'
+          description: List of device features for each requested device
+          items:
+            $ref: '#/components/schemas/Feature_DeviceFeaturesType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Feature_UpdateDeviceFeaturesWSResponse:
       type: object
       description: Response object for updating enabled features for a device.
@@ -476,72 +546,6 @@ components:
       - BADGE_READER_ENTERPRISE_CLOUD_ARCHIVING
       - OBJECT_SEARCH
       - UNKNOWN
-    Feature_GetDeviceFeaturesWSResponse:
-      type: object
-      description: Response object containing enabled features for a device.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        features:
-          $ref: '#/components/schemas/Feature_DeviceFeaturesType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Feature_GetFeatureCompatabilityMatrixWSResponse:
-      type: object
-      description: Response object containing the feature compatibility matrix.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        featureCompatabilityMatrix:
-          type:
-          - array
-          - 'null'
-          description: List of feature compatibility information
-          items:
-            $ref: '#/components/schemas/FeatureCompatabilityType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Feature_GetDeviceEventTypesWSRequest:
-      type: object
-      description: Request object for retrieving possible event types for a device based on enabled features.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    Feature_GetDeviceFeaturesWSRequest:
-      type: object
-      description: Request object for retrieving enabled features for a device.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    Feature_GetFeatureCompatabilityMatrixWSRequest:
-      type: object
-      description: Request object for retrieving the feature compatibility matrix.
     Feature_GetDeviceFeaturesListWSRequest:
       type: object
       description: Request object for retrieving enabled features for multiple devices in an organization.
@@ -558,9 +562,9 @@ components:
             format: DeviceFacetUuid
             description: RUUID with optional appended facet information
             example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    Feature_UpdateDeviceFeaturesWSRequest:
+    Feature_GetDeviceFeaturesWSRequest:
       type: object
-      description: Request object for updating enabled features for a device.
+      description: Request object for retrieving enabled features for a device.
       properties:
         deviceUuid:
           type:
@@ -569,16 +573,6 @@ components:
           format: DeviceFacetUuid
           description: RUUID with optional appended facet information
           example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        featureMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - boolean
-            - 'null'
-            description: Map of device features to their new enabled/disabled status
-          description: Map of device features to their new enabled/disabled status
     FeatureCompatabilityType:
       type: object
       description: List of feature compatibility information
@@ -623,6 +617,43 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/HardwareVariationEnum'
+    Feature_GetFeatureCompatabilityMatrixWSResponse:
+      type: object
+      description: Response object containing the feature compatibility matrix.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        featureCompatabilityMatrix:
+          type:
+          - array
+          - 'null'
+          description: List of feature compatibility information
+          items:
+            $ref: '#/components/schemas/FeatureCompatabilityType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Feature_GetDeviceEventTypesWSResponse:
+      type: object
+      description: Response object containing possible event types for a device based on enabled features.
+      properties:
+        eventTypes:
+          type:
+          - array
+          - 'null'
+          description: List of possible event types for the device
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+    Feature_GetFeatureCompatabilityMatrixWSRequest:
+      type: object
+      description: Request object for retrieving the feature compatibility matrix.
     Feature_DeviceFeaturesType:
       type: object
       description: Device features configuration with feature enablement mapping.
@@ -644,29 +675,6 @@ components:
             - 'null'
             description: Map of device features to their enabled/disabled status
           description: Map of device features to their enabled/disabled status
-    Feature_GetDeviceFeaturesListWSResponse:
-      type: object
-      description: Response object containing enabled features for multiple devices in an organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        featureList:
-          type:
-          - array
-          - 'null'
-          description: List of device features for each requested device
-          items:
-            $ref: '#/components/schemas/Feature_DeviceFeaturesType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     HardwareVariationEnum:
       type: string
       enum:
@@ -723,17 +731,6 @@ components:
       - CAMERA_R210
       - CAMERA_R650
       - UNSPECIFIED
-    Feature_GetDeviceEventTypesWSResponse:
-      type: object
-      description: Response object containing possible event types for a device based on enabled features.
-      properties:
-        eventTypes:
-          type:
-          - array
-          - 'null'
-          description: List of possible event types for the device
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

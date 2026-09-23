@@ -304,68 +304,167 @@ paths:
       - Button Webservice
 components:
   schemas:
-    ThirdPartyStrobeSirenActionType:
+    ChangeComponentCompositeAccessStateActionType:
       type: object
       properties:
-        durationSec:
+        accessState:
+          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
+        alwaysCreateOverrideIfNoFirstIn:
           type:
-          - integer
+          - boolean
           - 'null'
-          format: int32
-        ipAddress:
-          type:
-          - string
-          - 'null'
-        lightColors:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        lightIntensity:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lightPattern:
-          type:
-          - string
-          - 'null'
-        lightSpeed:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        password:
-          type:
-          - string
-          - 'null'
-        profileName:
-          type:
-          - string
-          - 'null'
-        proxyDeviceUuid:
+        componentCompositeUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        sirenIntensity:
+        expirationStrategy:
+          $ref: '#/components/schemas/AccessStateOverrideExpirationStrategyEnum'
+        expireTimeDelaySeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        expireTimeOfDayLocalSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        useFirstInRulesIfPossible:
+          type:
+          - boolean
+          - 'null'
+        version:
           type:
           - integer
           - 'null'
           format: int32
-        sirenPattern:
+          readOnly: true
+    CreateAlarmTriggerTypeEnum:
+      type: string
+      enum:
+      - PANIC_BUTTON
+      - ALARM_INTEGRATION
+    EmergencyContact:
+      type: object
+      properties:
+        name:
           type:
           - string
           - 'null'
-        username:
+          description: The name of the emergency contact.
+        phoneNumber:
           type:
           - string
           - 'null'
+          description: The phone number for this emergency contact.
+      required:
+      - name
+      - phoneNumber
+    Button_ButtonHealthEnum:
+      type: string
+      description: Health status for button sensors.
+      enum:
+      - GREEN
+      - RED
+    ComponentRelayOutputTypeEnum:
+      type: string
+      enum:
+      - TRANSIENT
+      - STEADY
+    RemoteDoorUnlockSystemEnum:
+      type: string
+      enum:
+      - BRIVO
+      - OPENPATH
+      - KISI
+      - PLACEOS
+      - GENEA
+      - PDK
+      - INNER_RANGE
+      - RHOMBUS
+      - HONEYWELL_ELEMENTS
+      - UNKNOWN
+    AccessControlledDoorStateEnumType:
+      type: string
+      enum:
+      - UNLOCKED
+      - ACCESS_CONTROLLED
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    Button_UpdateButtonConfigWSRequest:
+      type: object
+      description: Request to update button sensor configuration.
+      properties:
+        configUpdate:
+          $ref: '#/components/schemas/Device_config_userconfig_IExternalUpdateableButtonUserConfig'
+    Button_GetMinimalButtonStatesWSResponse:
+      type: object
+      description: Response containing minimal state information for all button sensors.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        states:
+          type:
+          - array
+          - 'null'
+          description: List of minimal button state information
+          items:
+            $ref: '#/components/schemas/Button_MinimalButtonStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Pose:
+      type: object
+      properties:
+        orientation:
+          type:
+          - array
+          - 'null'
+          items:
+            type: number
+            format: double
+            description: Serialized as [x, y, z, w]
+          maxItems: 4
+          minItems: 4
+        position:
+          type:
+          - array
+          - 'null'
+          items:
+            type: number
+            format: double
+            description: Serialized as [x, y, z]
+          maxItems: 3
+          minItems: 3
     ConnectAudioDeviceToPhoneNumberActionType:
       type: object
       properties:
@@ -393,67 +492,206 @@ components:
           type:
           - string
           - 'null'
-    SupervisionStateEnumType:
-      type: string
-      enum:
-      - CUT_DETECTED
-      - SHORT_DETECTED
-      - NORMAL
-      - INVALID
-      - UNKNOWN
-    WebhookActionType:
+    Button_ExternalButtonRuleType:
+      type: object
+      description: External button rule configuration.
+      properties:
+        action:
+          $ref: '#/components/schemas/RuleActionType'
+        ruleFilters:
+          $ref: '#/components/schemas/RuleFilterType'
+        ruleName:
+          type:
+          - string
+          - 'null'
+          description: Name of the button rule
+          example: Emergency Alert Rule
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerPress:
+          $ref: '#/components/schemas/ButtonPressEnum'
+    NoOpAction:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    Common_devices_UpdateConfigWSResponse:
+      type: object
+      description: Response indicating the result of updating device configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RuleActionType:
+      type: object
+      description: The action to take when this lockdown rule is triggered.
+      properties:
+        activateLocationLockdown:
+          $ref: '#/components/schemas/ActivateLocationLockdownActionType'
+        alertAction:
+          type:
+          - boolean
+          - 'null'
+        audioPlaybackActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioPlaybackActionType'
+        cancelLoopingAudioPlaybackAction:
+          $ref: '#/components/schemas/CancelLoopingAudioPlaybackActionType'
+        changeComponentCompositeAccessStateActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeComponentCompositeAccessStateActionType'
+        connectAudioDeviceToMobileAppAction:
+          $ref: '#/components/schemas/ConnectAudioDeviceToMobileAppActionType'
+        connectAudioDeviceToPhoneNumberAction:
+          $ref: '#/components/schemas/ConnectAudioDeviceToPhoneNumberActionType'
+        createAlarmAction:
+          $ref: '#/components/schemas/CreateAlarmActionType'
+        customActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomRuleAction'
+        customLLMActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomLLMActionType'
+        emailAuditLogExportActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmailAuditLogExportActionType'
+        enableDisableAudioRecordActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnableDisableAudioRecordActionType'
+        integrationCommandActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationCommandActionType'
+        integrationNotificationActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IntegrationNotificationActionType'
+        liveNotificationAction:
+          type:
+          - boolean
+          - 'null'
+        remoteDoorUnlockActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RemoteDoorUnlockActionType'
+        robotActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RobotAction'
+        thirdPartyAudioPlaybackAction:
+          $ref: '#/components/schemas/ThirdPartyAudioPlaybackActionType'
+        thirdPartyStrobeSirenAction:
+          $ref: '#/components/schemas/ThirdPartyStrobeSirenActionType'
+        triggerComponentRelayActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TriggerComponentRelayActionType'
+        webhookActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/WebhookActionType'
+    Button_GetMinimalButtonStatesWSRequest:
+      type: object
+      description: Request to get minimal state information for all button sensors.
+    TriggerComponentRelayActionType:
       type: object
       properties:
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        oauthClientId:
+        componentUuid:
           type:
           - string
           - 'null'
-        oauthClientSecret:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        outputType:
+          $ref: '#/components/schemas/ComponentRelayOutputTypeEnum'
+        overrideRelayDurationMs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        overrideRelayDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ownerDeviceUuid:
           type:
           - string
           - 'null'
-        oauthGrantType:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        state:
+          $ref: '#/components/schemas/GenericRelayStateEnumType'
+        version:
           type:
-          - string
+          - integer
           - 'null'
-        oauthScope:
-          type:
-          - string
-          - 'null'
-        oauthUrl:
-          type:
-          - string
-          - 'null'
-        webhookSecret:
-          type:
-          - string
-          - 'null'
-        webhookUrl:
-          type:
-          - string
-          - 'null'
-    RemoteDoorUnlockSystemEnum:
-      type: string
-      enum:
-      - BRIVO
-      - OPENPATH
-      - KISI
-      - PLACEOS
-      - GENEA
-      - PDK
-      - INNER_RANGE
-      - RHOMBUS
-      - HONEYWELL_ELEMENTS
-      - UNKNOWN
-    ConnectAudioDeviceToMobileAppActionType:
+          format: int32
+          readOnly: true
+    EnableDisableAudioRecordActionType:
       type: object
       properties:
         audioDeviceUuid:
@@ -463,16 +701,60 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        doorUuid:
+        enable:
+          type:
+          - boolean
+          - 'null'
+    Button_GetButtonPressEventsForSensorWSResponse:
+      type: object
+      description: Response containing button press events for a sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of button press events for the sensor
+          items:
+            $ref: '#/components/schemas/ButtonEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CreateAlarmActionType:
+      type: object
+      properties:
+        attachMediaToActiveAlarm:
+          type:
+          - boolean
+          - 'null'
+        entryInstructions:
+          type:
+          - string
+          - 'null'
+        exclusiveEmergencyContact:
+          type:
+          - boolean
+          - 'null'
+        exclusiveEntryInstructions:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        targetUserUuids:
+        mediaDeviceUuids:
           type:
           - array
           - 'null'
@@ -480,59 +762,37 @@ components:
             type:
             - string
             - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    Common_devices_UpdateDeviceDetailsWSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        onsiteEmergencyContact:
+          $ref: '#/components/schemas/EmergencyContact'
+        reason:
           type:
           - string
           - 'null'
-        warningMsg:
+        sirenSettings:
+          $ref: '#/components/schemas/AMSirenSettingsType'
+        subLocationsHierarchyKey:
           type:
           - string
           - 'null'
-    Button_GetButtonRulesForOrgWSResponse:
-      type: object
-      description: Response containing rules for all buttons in an organization.
-      properties:
-        buttonUuidToRulesMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of button UUIDs to their associated rules
-            items:
-              $ref: '#/components/schemas/Button_ExternalButtonRuleType'
-          description: Map of button UUIDs to their associated rules
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Button_ButtonHealthDetailsEnum:
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        triggerType:
+          $ref: '#/components/schemas/CreateAlarmTriggerTypeEnum'
+    GenericRelayStateEnumType:
       type: string
-      description: Detailed health status for button sensors.
       enum:
-      - FIRMWARE_BEHIND
-      - NO_HEARTBEAT
-      - NONE
+      - ACTIVE
+      - INACTIVE
+      - UNKNOWN
     ThirdPartyAudioPlaybackActionType:
       type: object
       properties:
@@ -569,125 +829,16 @@ components:
           type:
           - string
           - 'null'
-    Button_CreateRuleForButtonWSRequest:
-      type: object
-      description: Request to create a rule for a button sensor.
-      properties:
-        rule:
-          $ref: '#/components/schemas/Button_ExternalButtonRuleType'
-    PointType:
+    ActivateLocationLockdownActionType:
       type: object
       properties:
-        x:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        y:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Button_DeleteRuleForButtonWSResponse:
-      type: object
-      description: Response from deleting a rule for a button sensor.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    RobotActionTypeEnum:
-      type: string
-      enum:
-      - DEPLOY
-      - UNKNOWN
-    DeployRobotAction:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          mapUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          navType:
-            $ref: '#/components/schemas/NavigationTypeEnum'
-          pose:
-            $ref: '#/components/schemas/Pose'
-          routeUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          waypointUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        deviceUuid:
+        locationLockdownPlanUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    Button_UpdateButtonDetailsWSRequest:
-      type: object
-      description: Request to update button sensor details.
-      properties:
-        associatedCameras:
-          type:
-          - array
-          - 'null'
-          description: List of associated camera device UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        buttonMode:
-          $ref: '#/components/schemas/ButtonModeEnum'
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description for the button sensor
-        floorNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Optional floor number
-          example: 1
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Optional latitude coordinate
-          example: 37.7749
         locationUuid:
           type:
           - string
@@ -695,94 +846,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Optional longitude coordinate
-          example: -122.4194
-        name:
-          type:
-          - string
-          - 'null'
-          description: Optional name for the button sensor
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        subLocationsHierarchyKeyUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the sub-locations hierarchy key has been updated
-          example: false
-    ReportLookbackUnitEnum:
-      type: string
-      enum:
-      - HOURS
-      - DAYS
-      - WEEKS
-    RobotAction:
+    Button_GetButtonRulesForOrgWSRequest:
       type: object
-      discriminator:
-        mapping:
-          DEPLOY: '#/components/schemas/DeployRobotAction'
-          UNKNOWN: '#/components/schemas/NoOpAction'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/DeployRobotAction'
-      - $ref: '#/components/schemas/NoOpAction'
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    ActivityEventData:
-      type: object
-      properties:
-        activities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-        boundingBoxes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClipBoundingBoxType'
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
+      description: Request to get rules for all buttons in an organization.
     ButtonEventType:
       type:
       - object
@@ -870,133 +936,31 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    IntegrationEnum:
-      type: string
-      enum:
-      - AVIGILON_ALTA
-      - BOULEVARD
-      - BRIVO
-      - BUTTERFLY_MX
-      - DEVICE_INTEGRATION
-      - DICE
-      - ENVOY
-      - FLIC
-      - GENEA
-      - GOOGLE
-      - HONEYWELL_ELEMENTS
-      - GUEST_MANAGEMENT
-      - INFORMACAST
-      - INNER_RANGE
-      - KISI
-      - LUMEO
-      - MICROSOFT_TEAMS
-      - OMNIALERT
-      - OPENAI
-      - OPENTECH_ALLIANCE
-      - PIMLOC
-      - PLACE_OS
-      - PRODATAKEY
-      - SHELLY
-      - TOAST
-      - WEBHOOKS
-      - ZAPIER
-      - RAPTOR
-      - NINEONEONE_CELLULAR
-      - SLACK
-      - APERIO
-      - PAR_POS
-      - HONEYWELL_ONGUARD
-      - HONEYWELL_NETBOX
-      - SIGNATURE_API
-      - UNKNOWN
-    Button_GetButtonPressEventsForSensorWSResponse:
+    CancelLoopingAudioPlaybackActionType:
       type: object
-      description: Response containing button press events for a sensor.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        events:
+        _audioDevices:
           type:
           - array
           - 'null'
-          description: List of button press events for the sensor
-          items:
-            $ref: '#/components/schemas/ButtonEventType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Button_GetButtonRulesForOrgWSRequest:
-      type: object
-      description: Request to get rules for all buttons in an organization.
-    RuleFilterType:
-      type: object
-      description: Optional filters to apply to this lockdown rule.
-      properties:
-        scheduleUuids:
-          type:
-          - array
-          - 'null'
-          description: List of schedules that apply to the rule. at least one schedule must be met to trigger this rule. If null, then this rule is enabled all the time.
           items:
             type:
             - string
             - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerBackoffSecs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Number of seconds to back off after rule is triggered before triggering again. I.e. this rule will only trigger once every X seconds regardless of how many triggering events occur within that window
-    Button_GetRulesForButtonWSRequest:
-      type: object
-      description: Request to get rules for a button sensor.
-      properties:
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    AccessStateOverrideExpirationStrategyEnum:
-      type: string
-      enum:
-      - TIME_DELAY
-      - TIME_OF_DAY_LOCAL
-      - NONE
-    Pose:
-      type: object
-      properties:
-        orientation:
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        audioDevices:
           type:
           - array
           - 'null'
           items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z, w]
-          maxItems: 4
-          minItems: 4
-        position:
-          type:
-          - array
-          - 'null'
-          items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z]
-          maxItems: 3
-          minItems: 3
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
     IntegrationCommandActionType:
       type: object
       properties:
@@ -1011,269 +975,68 @@ components:
           format: int32
         integration:
           $ref: '#/components/schemas/IntegrationEnum'
-    ChangeComponentCompositeAccessStateActionType:
+    ThirdPartyStrobeSirenActionType:
       type: object
       properties:
-        accessState:
-          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
-        alwaysCreateOverrideIfNoFirstIn:
-          type:
-          - boolean
-          - 'null'
-        componentCompositeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        expirationStrategy:
-          $ref: '#/components/schemas/AccessStateOverrideExpirationStrategyEnum'
-        expireTimeDelaySeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        expireTimeOfDayLocalSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        useFirstInRulesIfPossible:
-          type:
-          - boolean
-          - 'null'
-        version:
+        durationSec:
           type:
           - integer
           - 'null'
           format: int32
-          readOnly: true
-    Device_config_userconfig_IExternalUpdateableButtonUserConfig:
-      type: object
-      description: Configuration update for the button sensor
-      properties:
-        button_emergency_onsite_contact:
-          $ref: '#/components/schemas/EmergencyContact'
-        button_test_mode_enabled:
-          type:
-          - boolean
-          - 'null'
-        deviceUuid:
+        ipAddress:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lastModified:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    AMSirenSettingsType:
-      type: object
-      properties:
-        audioGateways:
+        lightColors:
           type:
           - array
           - 'null'
-          description: UUIDs of audio gateways used to play this siren.
           items:
             type:
             - string
             - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSeconds:
+        lightIntensity:
           type:
           - integer
           - 'null'
           format: int32
-          description: The duration (in seconds) to loop the clip audio for the siren.
-        playCount:
+        lightPattern:
+          type:
+          - string
+          - 'null'
+        lightSpeed:
           type:
           - integer
           - 'null'
           format: int32
-          description: The number of times to play the clip audio for the siren.
-      required:
-      - audioGateways
-      - clipUuid
-    ReportLookbackTypeEnum:
-      type: string
-      enum:
-      - ROLLING
-      - PREVIOUS_DAY
-      - PREVIOUS_WEEK
-      - PREVIOUS_MONTH
-    EnableDisableAudioRecordActionType:
-      type: object
-      properties:
-        audioDeviceUuid:
+        password:
+          type:
+          - string
+          - 'null'
+        profileName:
+          type:
+          - string
+          - 'null'
+        proxyDeviceUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        enable:
-          type:
-          - boolean
-          - 'null'
-    TriggerComponentRelayActionType:
-      type: object
-      properties:
-        componentUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        outputType:
-          $ref: '#/components/schemas/ComponentRelayOutputTypeEnum'
-        overrideRelayDurationMs:
+        sirenIntensity:
           type:
           - integer
           - 'null'
           format: int32
-        overrideRelayDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ownerDeviceUuid:
+        sirenPattern:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        state:
-          $ref: '#/components/schemas/GenericRelayStateEnumType'
-        version:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          readOnly: true
-    Button_GetMinimalButtonStatesWSRequest:
-      type: object
-      description: Request to get minimal state information for all button sensors.
-    IntegrationNotificationActionType:
-      type: object
-      properties:
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        notificationEntity:
+        username:
           type:
           - string
           - 'null'
-        notificationTarget:
-          type:
-          - string
-          - 'null'
-    DeviceTypeEnum:
-      type: string
-      enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
-      - UNKNOWN
-    NoOpAction:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    AccessControlledDoorStateEnumType:
-      type: string
-      enum:
-      - UNLOCKED
-      - ACCESS_CONTROLLED
-    EmergencyContact:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the emergency contact.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: The phone number for this emergency contact.
-      required:
-      - name
-      - phoneNumber
-    Button_ExternalButtonRuleType:
-      type: object
-      description: External button rule configuration.
-      properties:
-        action:
-          $ref: '#/components/schemas/RuleActionType'
-        ruleFilters:
-          $ref: '#/components/schemas/RuleFilterType'
-        ruleName:
-          type:
-          - string
-          - 'null'
-          description: Name of the button rule
-          example: Emergency Alert Rule
-        ruleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerPress:
-          $ref: '#/components/schemas/ButtonPressEnum'
     Button_GetButtonPressEventsForSensorWSRequest:
       type: object
       description: Request to get button press events for a specific sensor.
@@ -1306,177 +1069,26 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    CustomLLMActionType:
+    RobotAction:
       type: object
+      discriminator:
+        mapping:
+          DEPLOY: '#/components/schemas/DeployRobotAction'
+          UNKNOWN: '#/components/schemas/NoOpAction'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/DeployRobotAction'
+      - $ref: '#/components/schemas/NoOpAction'
       properties:
-        deviceActivityEvents:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ActivityEventData'
-        deviceFacetUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        orgUuid:
+        deviceUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        promptUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Button_GetRulesForButtonWSResponse:
-      type: object
-      description: Response containing rules for a button sensor.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        rules:
-          type:
-          - array
-          - 'null'
-          description: List of rules configured for the button sensor
-          items:
-            $ref: '#/components/schemas/Button_ExternalButtonRuleType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Button_DeleteRuleForButtonWSRequest:
-      type: object
-      description: Request to delete a rule for a button sensor.
-      properties:
-        ruleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    SensorValType:
-      type: object
-      properties:
-        sensorBoolean:
-          type:
-          - boolean
-          - 'null'
-        sensorDouble:
-          type:
-          - number
-          - 'null'
-          format: double
-        sensorLong:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    CreateAlarmActionType:
-      type: object
-      properties:
-        attachMediaToActiveAlarm:
-          type:
-          - boolean
-          - 'null'
-        entryInstructions:
-          type:
-          - string
-          - 'null'
-        exclusiveEmergencyContact:
-          type:
-          - boolean
-          - 'null'
-        exclusiveEntryInstructions:
-          type:
-          - boolean
-          - 'null'
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        mediaDeviceUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        onsiteEmergencyContact:
-          $ref: '#/components/schemas/EmergencyContact'
-        reason:
-          type:
-          - string
-          - 'null'
-        sirenSettings:
-          $ref: '#/components/schemas/AMSirenSettingsType'
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        triggerType:
-          $ref: '#/components/schemas/CreateAlarmTriggerTypeEnum'
-    Button_ButtonHealthEnum:
-      type: string
-      description: Health status for button sensors.
-      enum:
-      - GREEN
-      - RED
-    CreateAlarmTriggerTypeEnum:
-      type: string
-      enum:
-      - PANIC_BUTTON
-      - ALARM_INTEGRATION
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
     RemoteDoorUnlockActionType:
       type: object
       properties:
@@ -1490,187 +1102,410 @@ components:
           - 'null'
         system:
           $ref: '#/components/schemas/RemoteDoorUnlockSystemEnum'
-    ClipBoundingBoxType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        alert:
-          type:
-          - boolean
-          - 'null'
-        bottom:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        confidence:
-          type:
-          - number
-          - 'null'
-          format: float
-        croppedImageLocator:
-          type:
-          - string
-          - 'null'
-        customActivityColor:
-          $ref: '#/components/schemas/FootageSeekPointColorEnum'
-        customActivityDescription:
-          type:
-          - string
-          - 'null'
-        customActivityDisplayName:
-          type:
-          - string
-          - 'null'
-        dwelling:
-          type:
-          - boolean
-          - 'null'
-        faceName:
-          type:
-          - string
-          - 'null'
-        inMotion:
-          type:
-          - boolean
-          - 'null'
-        keypointsV2:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PointType'
-        left:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        licensePlate:
-          type:
-          - string
-          - 'null'
-        loudness:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        objectId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        pose:
-          type:
-          - string
-          - 'null'
-        relativeSecond:
-          type:
-          - number
-          - 'null'
-          format: float
-        right:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        sensorValType:
-          $ref: '#/components/schemas/SensorValType'
-        stableTrackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        toastOrderIdInfo:
-          $ref: '#/components/schemas/ToastOrderIdType'
-        top:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        unidentifiedFaceId:
-          type:
-          - string
-          - 'null'
-        vehicleName:
-          type:
-          - string
-          - 'null'
-    ComponentRelayOutputTypeEnum:
+    AccessStateOverrideExpirationStrategyEnum:
       type: string
       enum:
-      - TRANSIENT
-      - STEADY
-    ButtonModeEnum:
-      type: string
-      description: Optional button mode configuration
-      enum:
-      - PANIC
-      - PROGRAMMABLE
-      - DOORBELL
+      - TIME_DELAY
+      - TIME_OF_DAY_LOCAL
       - NONE
-    Button_UpdateButtonConfigWSRequest:
+    Button_MinimalButtonStateType:
       type: object
-      description: Request to update button sensor configuration.
+      description: Minimal state information for a button sensor.
       properties:
-        configUpdate:
-          $ref: '#/components/schemas/Device_config_userconfig_IExternalUpdateableButtonUserConfig'
-    HardwareVariationEnum:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        batteryPercent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Battery percentage of the button sensor
+          example: 85
+        buttonEmergencyOnsiteContact:
+          $ref: '#/components/schemas/EmergencyContact'
+        buttonMode:
+          $ref: '#/components/schemas/ButtonModeEnum'
+        closestBaseStation:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Creation timestamp in milliseconds
+          example: 1640995200000
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+          description: Firmware version of the button sensor
+          example: 2.1.0
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the button sensor is located
+          example: 1
+        health:
+          $ref: '#/components/schemas/Button_ButtonHealthEnum'
+        healthDetails:
+          $ref: '#/components/schemas/Button_ButtonHealthDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lastSeenSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Last time the button sensor was seen in seconds
+          example: 1640995200
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the button sensor
+          example: 37.7749
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the button sensor
+          example: -122.4194
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the button sensor
+          example: Main Entrance Button
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the button sensor
+          example: SN123456789
+        signalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Signal strength of the button sensor
+          example: -45
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        testModeEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if test mode is enabled for the button sensor
+          example: false
+    IntegrationNotificationActionType:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        notificationEntity:
+          type:
+          - string
+          - 'null'
+        notificationTarget:
+          type:
+          - string
+          - 'null'
+    NavigationTypeEnum:
       type: string
       enum:
-      - RASPBERRY_PI_3
-      - CAMERA_R1
-      - CAMERA_R2
-      - CAMERA_R2_LONG_RANGE
-      - CAMERA_R2_180
-      - CAMERA_R3
-      - CAMERA_R4
-      - CAMERA_R100
-      - CAMERA_R120
-      - CAMERA_R170
-      - CAMERA_R200
-      - CAMERA_R500
-      - CAMERA_R510
-      - CAMERA_R520
-      - CAMERA_R600
-      - SENSOR_ASSET_TAG_T1
-      - SENSOR_DOOR_D1
-      - SENSOR_DOOR_D20
-      - SENSOR_ENVIRONMENTAL_E1
-      - SENSOR_ENVIRONMENTAL_E15
-      - SENSOR_ENVIRONMENTAL_E2
-      - SENSOR_MOTION_M1
-      - SENSOR_MOTION_M15
-      - GATEWAY_A1
-      - GATEWAY_A100
-      - GATEWAY_ENVIRONMENTAL_E50
-      - CAMERA_R220
-      - CAMERA_R230
-      - CAMERA_R36S
-      - CAMERA_R410
-      - CAMERA_R540
-      - CAMERA_R545
-      - BADGE_READER_DR1
-      - BADGE_READER_DR40
-      - BADGE_READER_DR20
-      - DOOR_CONTROLLER_DC1
-      - DOOR_CONTROLLER_DC20
-      - DOOR_CONTROLLER_DC10
-      - ETHERNET_TESTER_ET1
-      - IO_BOARD_TB1
-      - BLE_BUTTON_B10
-      - BLE_BUTTON_B15
-      - CAMERA_THIRD_PARTY_RELAY
-      - CAMERA_THIRD_PARTY_NVR
-      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
-      - NVR_N100
-      - CAMERA_R130
-      - NVR_N500
-      - CAMERA_R150
-      - ROBOT_RC1
-      - CAMERA_R210
-      - CAMERA_R650
-      - UNSPECIFIED
+      - ROUTE
+      - PATROL
+      - WAYPOINT
+      - POSE
+    ComponentEventEnumType:
+      type: string
+      description: Limits results to only contain the specified type of events, if applicable
+      enum:
+      - DoorbellEvent
+      - DoorReaderStateChangeEvent
+      - DoorRelayStateChangeEvent
+      - DoorPositionIndicatorStateChangeEvent
+      - RequestToExitStateChangeEvent
+      - CredentialReceivedEvent
+      - ButtonEvent
+      - GenericInputStateChangeEvent
+      - GenericRelayStateChangeEvent
+      - AccessControlUnitTamperEvent
+      - AccessControlUnitLocationLockdownStateEvent
+      - DoorLocationLockdownStateEvent
+      - PanicButtonEvent
+      - AccessControlUnitBatteryStateChangeEvent
+      - WaveToUnlockIntentExpiredEvent
+      - DoorStateChangeEvent
+      - DoorAuthFirstInStateEvent
+      - DoorScheduleFirstInStateEvent
+      - AccessControlUnitDoorFirstInStateEvent
+      - AperioDoorExtensionStateEvent
+      - AperioActivatorStateEvent
+      - AperioKeyCylinderStateEvent
+      - AperioDoorModeEvent
+      - AperioDoorHandleStateEvent
+      - AperioGatewayStateEvent
+      - AperioGatewayConnectionStateChangeEvent
+      - AperioDtcEvent
+      - AperioTamperStateEvent
+      - IntercomTalkEvent
+    Common_devices_UpdateDeviceDetailsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RobotActionTypeEnum:
+      type: string
+      enum:
+      - DEPLOY
+      - UNKNOWN
+    ButtonPressEnum:
+      type: string
+      enum:
+      - NONE
+      - SINGLE
+      - DOUBLE
+      - LONG
+      - INITIAL_PRESS
+      - LONG_RELEASE
+    Button_ButtonHealthDetailsEnum:
+      type: string
+      description: Detailed health status for button sensors.
+      enum:
+      - FIRMWARE_BEHIND
+      - NO_HEARTBEAT
+      - NONE
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    ReportLookbackTypeEnum:
+      type: string
+      enum:
+      - ROLLING
+      - PREVIOUS_DAY
+      - PREVIOUS_WEEK
+      - PREVIOUS_MONTH
+    DeployRobotAction:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          mapUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          navType:
+            $ref: '#/components/schemas/NavigationTypeEnum'
+          pose:
+            $ref: '#/components/schemas/Pose'
+          routeUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          waypointUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    Device_config_userconfig_IExternalUpdateableButtonUserConfig:
+      type: object
+      description: Configuration update for the button sensor
+      properties:
+        button_emergency_onsite_contact:
+          $ref: '#/components/schemas/EmergencyContact'
+        button_test_mode_enabled:
+          type:
+          - boolean
+          - 'null'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastModified:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Button_UpdateButtonDetailsWSRequest:
+      type: object
+      description: Request to update button sensor details.
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        buttonMode:
+          $ref: '#/components/schemas/ButtonModeEnum'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description for the button sensor
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Optional floor number
+          example: 1
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Optional latitude coordinate
+          example: 37.7749
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Optional longitude coordinate
+          example: -122.4194
+        name:
+          type:
+          - string
+          - 'null'
+          description: Optional name for the button sensor
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the sub-locations hierarchy key has been updated
+          example: false
     ActivityEnum:
       type: string
       enum:
@@ -1894,10 +1729,28 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    CancelLoopingAudioPlaybackActionType:
+    ToastCheckInfo:
       type: object
       properties:
-        _audioDevices:
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+    CustomLLMActionType:
+      type: object
+      properties:
+        deviceActivityEvents:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ActivityEventData'
+        deviceFacetUuids:
           type:
           - array
           - 'null'
@@ -1908,204 +1761,132 @@ components:
             format: DeviceFacetUuid
             description: RUUID with optional appended facet information
             example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        audioDevices:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    Button_GetMinimalButtonStatesWSResponse:
-      type: object
-      description: Response containing minimal state information for all button sensors.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        states:
-          type:
-          - array
-          - 'null'
-          description: List of minimal button state information
-          items:
-            $ref: '#/components/schemas/Button_MinimalButtonStateType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    RuleActionType:
-      type: object
-      description: The action to take when this lockdown rule is triggered.
-      properties:
-        activateLocationLockdown:
-          $ref: '#/components/schemas/ActivateLocationLockdownActionType'
-        alertAction:
-          type:
-          - boolean
-          - 'null'
-        audioPlaybackActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AudioPlaybackActionType'
-        cancelLoopingAudioPlaybackAction:
-          $ref: '#/components/schemas/CancelLoopingAudioPlaybackActionType'
-        changeComponentCompositeAccessStateActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChangeComponentCompositeAccessStateActionType'
-        connectAudioDeviceToMobileAppAction:
-          $ref: '#/components/schemas/ConnectAudioDeviceToMobileAppActionType'
-        connectAudioDeviceToPhoneNumberAction:
-          $ref: '#/components/schemas/ConnectAudioDeviceToPhoneNumberActionType'
-        createAlarmAction:
-          $ref: '#/components/schemas/CreateAlarmActionType'
-        customActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CustomRuleAction'
-        customLLMActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CustomLLMActionType'
-        emailAuditLogExportActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EmailAuditLogExportActionType'
-        enableDisableAudioRecordActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EnableDisableAudioRecordActionType'
-        integrationCommandActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IntegrationCommandActionType'
-        integrationNotificationActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IntegrationNotificationActionType'
-        liveNotificationAction:
-          type:
-          - boolean
-          - 'null'
-        remoteDoorUnlockActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RemoteDoorUnlockActionType'
-        robotActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RobotAction'
-        thirdPartyAudioPlaybackAction:
-          $ref: '#/components/schemas/ThirdPartyAudioPlaybackActionType'
-        thirdPartyStrobeSirenAction:
-          $ref: '#/components/schemas/ThirdPartyStrobeSirenActionType'
-        triggerComponentRelayActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TriggerComponentRelayActionType'
-        webhookActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/WebhookActionType'
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
-    ToastOrderIdType:
-      type: object
-      properties:
-        employeeName:
-          type:
-          - string
-          - 'null'
-        guid:
-          type:
-          - string
-          - 'null'
-        locationName:
-          type:
-          - string
-          - 'null'
-        restaurantName:
-          type:
-          - string
-          - 'null'
-        toastCheckInfo:
-          $ref: '#/components/schemas/ToastCheckInfo'
-    ActivateLocationLockdownActionType:
-      type: object
-      properties:
-        locationLockdownPlanUuid:
+        orgUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuid:
+        promptUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Common_devices_UpdateConfigWSResponse:
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ClipBoundingBoxType:
       type: object
-      description: Response indicating the result of updating device configuration.
       properties:
-        error:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        alert:
           type:
           - boolean
           - 'null'
-        errorMsg:
+        bottom:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: float
+        croppedImageLocator:
           type:
           - string
           - 'null'
-        warningMsg:
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
           type:
           - string
           - 'null'
-    CustomRuleAction:
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        faceName:
+          type:
+          - string
+          - 'null'
+        inMotion:
+          type:
+          - boolean
+          - 'null'
+        keypointsV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PointType'
+        left:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pose:
+          type:
+          - string
+          - 'null'
+        relativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        right:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toastOrderIdInfo:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        top:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    WebhookActionType:
       type: object
       properties:
         headers:
@@ -2116,216 +1897,79 @@ components:
             type:
             - string
             - 'null'
-        path:
+        oauthClientId:
           type:
           - string
           - 'null'
-    ToastCheckInfo:
-      type: object
-      properties:
-        totalAmount:
+        oauthClientSecret:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-    ButtonPressEnum:
-      type: string
-      enum:
-      - NONE
-      - SINGLE
-      - DOUBLE
-      - LONG
-      - INITIAL_PRESS
-      - LONG_RELEASE
-    NavigationTypeEnum:
-      type: string
-      enum:
-      - ROUTE
-      - PATROL
-      - WAYPOINT
-      - POSE
-    Button_MinimalButtonStateType:
+        oauthGrantType:
+          type:
+          - string
+          - 'null'
+        oauthScope:
+          type:
+          - string
+          - 'null'
+        oauthUrl:
+          type:
+          - string
+          - 'null'
+        webhookSecret:
+          type:
+          - string
+          - 'null'
+        webhookUrl:
+          type:
+          - string
+          - 'null'
+    ActivityEventData:
       type: object
-      description: Minimal state information for a button sensor.
       properties:
-        associatedCameras:
+        activities:
           type:
           - array
           - 'null'
-          description: List of associated camera device UUIDs
           items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        batteryPercent:
+            $ref: '#/components/schemas/ActivityEnum'
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        durationSec:
           type:
           - integer
           - 'null'
           format: int32
-          description: Battery percentage of the button sensor
-          example: 85
-        buttonEmergencyOnsiteContact:
-          $ref: '#/components/schemas/EmergencyContact'
-        buttonMode:
-          $ref: '#/components/schemas/ButtonModeEnum'
-        closestBaseStation:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdAtMillis:
+        timestampMs:
           type:
           - integer
           - 'null'
           format: int64
-          description: Creation timestamp in milliseconds
-          example: 1640995200000
-        firmwareVersion:
-          type:
-          - string
-          - 'null'
-          description: Firmware version of the button sensor
-          example: 2.1.0
-        floorNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Floor number where the button sensor is located
-          example: 1
-        health:
-          $ref: '#/components/schemas/Button_ButtonHealthEnum'
-        healthDetails:
-          $ref: '#/components/schemas/Button_ButtonHealthDetailsEnum'
-        hwVariation:
-          $ref: '#/components/schemas/HardwareVariationEnum'
-        lastSeenSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Last time the button sensor was seen in seconds
-          example: 1640995200
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latitude coordinate of the button sensor
-          example: 37.7749
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Longitude coordinate of the button sensor
-          example: -122.4194
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the button sensor
-          example: Main Entrance Button
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        serialNumber:
-          type:
-          - string
-          - 'null'
-          description: Serial number of the button sensor
-          example: SN123456789
-        signalStrength:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Signal strength of the button sensor
-          example: -45
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        testModeEnabled:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates if test mode is enabled for the button sensor
-          example: false
-    ComponentEventEnumType:
-      type: string
-      description: Limits results to only contain the specified type of events, if applicable
-      enum:
-      - DoorbellEvent
-      - DoorReaderStateChangeEvent
-      - DoorRelayStateChangeEvent
-      - DoorPositionIndicatorStateChangeEvent
-      - RequestToExitStateChangeEvent
-      - CredentialReceivedEvent
-      - ButtonEvent
-      - GenericInputStateChangeEvent
-      - GenericRelayStateChangeEvent
-      - AccessControlUnitTamperEvent
-      - AccessControlUnitLocationLockdownStateEvent
-      - DoorLocationLockdownStateEvent
-      - PanicButtonEvent
-      - AccessControlUnitBatteryStateChangeEvent
-      - WaveToUnlockIntentExpiredEvent
-      - DoorStateChangeEvent
-      - DoorAuthFirstInStateEvent
-      - DoorScheduleFirstInStateEvent
-      - AccessControlUnitDoorFirstInStateEvent
-      - AperioDoorExtensionStateEvent
-      - AperioActivatorStateEvent
-      - AperioKeyCylinderStateEvent
-      - AperioDoorModeEvent
-      - AperioDoorHandleStateEvent
-      - AperioGatewayStateEvent
-      - AperioGatewayConnectionStateChangeEvent
-      - AperioDtcEvent
-      - AperioTamperStateEvent
-      - IntercomTalkEvent
-    GenericRelayStateEnumType:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - UNKNOWN
-    AudioPlaybackActionType:
+    ConnectAudioDeviceToMobileAppActionType:
       type: object
       properties:
-        audioClipUuid:
+        audioDeviceUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        audioGateways:
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        doorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        targetUserUuids:
           type:
           - array
           - 'null'
@@ -2336,16 +1980,101 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
-        loopDurationSec:
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    RuleFilterType:
+      type: object
+      description: Optional filters to apply to this lockdown rule.
+      properties:
+        scheduleUuids:
+          type:
+          - array
+          - 'null'
+          description: List of schedules that apply to the rule. at least one schedule must be met to trigger this rule. If null, then this rule is enabled all the time.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerBackoffSecs:
           type:
           - integer
           - 'null'
           format: int32
-        playCount:
+          description: Number of seconds to back off after rule is triggered before triggering again. I.e. this rule will only trigger once every X seconds regardless of how many triggering events occur within that window
+    Button_GetButtonRulesForOrgWSResponse:
+      type: object
+      description: Response containing rules for all buttons in an organization.
+      properties:
+        buttonUuidToRulesMap:
           type:
-          - integer
+          - object
           - 'null'
-          format: int32
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of button UUIDs to their associated rules
+            items:
+              $ref: '#/components/schemas/Button_ExternalButtonRuleType'
+          description: Map of button UUIDs to their associated rules
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ReportLookbackUnitEnum:
+      type: string
+      enum:
+      - HOURS
+      - DAYS
+      - WEEKS
     Button_CreateRuleForButtonWSResponse:
       type: object
       description: Response from creating a rule for a button sensor.
@@ -2365,6 +2094,206 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PointType:
+      type: object
+      properties:
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Button_CreateRuleForButtonWSRequest:
+      type: object
+      description: Request to create a rule for a button sensor.
+      properties:
+        rule:
+          $ref: '#/components/schemas/Button_ExternalButtonRuleType'
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    SupervisionStateEnumType:
+      type: string
+      enum:
+      - CUT_DETECTED
+      - SHORT_DETECTED
+      - NORMAL
+      - INVALID
+      - UNKNOWN
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    CustomRuleAction:
+      type: object
+      properties:
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+    Button_DeleteRuleForButtonWSRequest:
+      type: object
+      description: Request to delete a rule for a button sensor.
+      properties:
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AMSirenSettingsType:
+      type: object
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          description: UUIDs of audio gateways used to play this siren.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The duration (in seconds) to loop the clip audio for the siren.
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of times to play the clip audio for the siren.
+      required:
+      - audioGateways
+      - clipUuid
+    Button_GetRulesForButtonWSRequest:
+      type: object
+      description: Request to get rules for a button sensor.
+      properties:
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ButtonModeEnum:
+      type: string
+      description: Optional button mode configuration
+      enum:
+      - PANIC
+      - PROGRAMMABLE
+      - DOORBELL
+      - NONE
+    Button_DeleteRuleForButtonWSResponse:
+      type: object
+      description: Response from deleting a rule for a button sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
         warningMsg:
           type:
           - string
@@ -2405,6 +2334,77 @@ components:
           type:
           - string
           - 'null'
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Button_GetRulesForButtonWSResponse:
+      type: object
+      description: Response containing rules for a button sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        rules:
+          type:
+          - array
+          - 'null'
+          description: List of rules configured for the button sensor
+          items:
+            $ref: '#/components/schemas/Button_ExternalButtonRuleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    AudioPlaybackActionType:
+      type: object
+      properties:
+        audioClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

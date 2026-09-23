@@ -73,7 +73,6 @@ paths:
       - Customer Webservice
   /api/customer/deleteNotificationSnoozeSettingForComponentComposite:
     post:
-      description: Delete a policy pause setting for a component composite
       operationId: deleteNotificationSnoozeSettingForComponentComposite
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -106,7 +105,6 @@ paths:
       - Customer Webservice
   /api/customer/deleteNotificationSnoozeSettingForDevice:
     post:
-      description: Delete a policy pause setting for a device
       operationId: deleteNotificationSnoozeSettingForDevice
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -139,7 +137,6 @@ paths:
       - Customer Webservice
   /api/customer/deleteNotificationSnoozeSettingForLocation:
     post:
-      description: Delete a policy pause setting for a location
       operationId: deleteNotificationSnoozeSettingForLocation
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -172,7 +169,6 @@ paths:
       - Customer Webservice
   /api/customer/getUserSnoozedNotificationSettings:
     post:
-      description: Get the current and planned user notification snooze details
       operationId: getUserSnoozedNotificationSettings
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -205,7 +201,6 @@ paths:
       - Customer Webservice
   /api/customer/updateCurrentUserNotificationSettings:
     post:
-      description: Update notification settings for user
       operationId: updateCurrentUserNotificationSettings
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -238,10 +233,193 @@ paths:
       - Customer Webservice
 components:
   schemas:
-    Customer_DeleteNotificationSnoozeSettingWSRequest:
+    NotificationTimeFrameRow:
       type: object
-      description: Request object for deleting notification snooze settings for a specific entity.
       properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        devices:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          uniqueItems: true
+        diagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        locationOnly:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        locationOnlyActivities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        locationOnlyDiagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        promptUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+    Customer_GetUserSnoozedNotificationSettingsWSResponse:
+      type: object
+      description: Response object containing current and planned user notification snooze details.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        snoozedForAllNotificationsIntervals:
+          type:
+          - array
+          - 'null'
+          description: List of intervals when all notifications are snoozed
+          items:
+            $ref: '#/components/schemas/ScheduledIntervalType'
+        snoozedForComponentCompositesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of component composite UUIDs to their snooze notification intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of component composite UUIDs to their snooze notification intervals
+        snoozedForDevicesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to their snooze notification intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of device UUIDs to their snooze notification intervals
+        snoozedForLocationsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location UUIDs to their snooze notification intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of location UUIDs to their snooze notification intervals
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RhombusDayOfWeekEnum:
+      type: string
+      enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
+    NotificationTimeFrame:
+      type: object
+      properties:
+        days:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
+          uniqueItems: true
+        interval:
+          $ref: '#/components/schemas/MinuteOfDayIntervalType'
+        mediums:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationEnumType'
+          uniqueItems: true
+        rows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationTimeFrameRow'
+    ScheduledIntervalType:
+      type: object
+      description: Map of location UUIDs to snooze intervals
+      properties:
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
         uuid:
           type:
           - string
@@ -249,6 +427,24 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    User_UpdateUserNotificationSettingsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Customer_GetUserSnoozedNotificationSettingsWSRequest:
+      type: object
+      description: Request object for retrieving current and planned user notification snooze details.
     ActivityEnum:
       type: string
       enum:
@@ -472,174 +668,6 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    MinuteOfDayIntervalType:
-      type: object
-      properties:
-        dayOfWeek:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        minuteOfDayStartInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        minuteOfDayStopExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    NotificationTimeFrameRow:
-      type: object
-      properties:
-        activities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        devices:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-          uniqueItems: true
-        diagnostics:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DiagnosticActivityEnum'
-          uniqueItems: true
-        locationOnly:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        locationOnlyActivities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        locationOnlyDiagnostics:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DiagnosticActivityEnum'
-          uniqueItems: true
-        locations:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        promptUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-    NotificationTimeFrame:
-      type: object
-      properties:
-        days:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
-          uniqueItems: true
-        interval:
-          $ref: '#/components/schemas/MinuteOfDayIntervalType'
-        mediums:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationEnumType'
-          uniqueItems: true
-        rows:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationTimeFrameRow'
-    RhombusDayOfWeekEnum:
-      type: string
-      enum:
-      - MONDAY
-      - TUESDAY
-      - WEDNESDAY
-      - THURSDAY
-      - FRIDAY
-      - SATURDAY
-      - SUNDAY
-    User_UpdateUserNotificationSettingsWSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ScheduledIntervalType:
-      type: object
-      description: Map of location UUIDs to snooze intervals
-      properties:
-        durationSecs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        timestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     NotificationEnumType:
       type: string
       enum:
@@ -650,81 +678,6 @@ components:
       - MICROSOFT_TEAMS
       - BROWSER
       - UNKNOWN
-    Customer_GetUserSnoozedNotificationSettingsWSResponse:
-      type: object
-      description: Response object containing current and planned user notification snooze details.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        snoozedForAllNotificationsIntervals:
-          type:
-          - array
-          - 'null'
-          description: List of intervals when all notifications are snoozed
-          items:
-            $ref: '#/components/schemas/ScheduledIntervalType'
-        snoozedForComponentCompositesMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of component composite UUIDs to their snooze notification intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of component composite UUIDs to their snooze notification intervals
-        snoozedForDevicesMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of device UUIDs to their snooze notification intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of device UUIDs to their snooze notification intervals
-        snoozedForLocationsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of location UUIDs to their snooze notification intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of location UUIDs to their snooze notification intervals
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Customer_DeleteNotificationSnoozeSettingWSResponse:
-      type: object
-      description: Response object for deleting notification snooze settings.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     DiagnosticActivityEnum:
       type: string
       enum:
@@ -858,6 +811,51 @@ components:
       - LOCAL_RECORDING_INTERRUPTED
       - LOCAL_RECORDING_RECOVERED
       - UNKNOWN
+    Customer_DeleteNotificationSnoozeSettingWSResponse:
+      type: object
+      description: Response object for deleting notification snooze settings.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Customer_DeleteNotificationSnoozeSettingWSRequest:
+      type: object
+      description: Request object for deleting notification snooze settings for a specific entity.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    MinuteOfDayIntervalType:
+      type: object
+      properties:
+        dayOfWeek:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfDayStartInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfDayStopExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int32
     User_UpdateUserNotificationSettingsWSRequest:
       type: object
       properties:
@@ -909,9 +907,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Customer_GetUserSnoozedNotificationSettingsWSRequest:
-      type: object
-      description: Request object for retrieving current and planned user notification snooze details.
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

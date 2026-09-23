@@ -40,7 +40,6 @@ tags:
 paths:
   /api/developer/createEventListener:
     post:
-      description: Create an event listener
       operationId: createEventListener
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -73,7 +72,6 @@ paths:
       - Developer Webservice
   /api/developer/deleteEventListener:
     post:
-      description: Delete an event listener
       operationId: deleteEventListener
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -106,7 +104,6 @@ paths:
       - Developer Webservice
   /api/developer/getAllEventListeners:
     post:
-      description: Get a list of all event listeners
       operationId: getAllEventListeners
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -139,7 +136,6 @@ paths:
       - Developer Webservice
   /api/developer/getEventListenersForDevice:
     post:
-      description: Get a list of event listeners for a device
       operationId: getEventListenersForDevice
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -172,6 +168,73 @@ paths:
       - Developer Webservice
 components:
   schemas:
+    EventListenerType:
+      type: object
+      description: List of event listeners for the specified device
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        clientCertificate:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: byte
+        clientKey:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: byte
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        hostname:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        trustedCertificate:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: byte
+        uri:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Developer_GetEventListenersForDeviceWSResponse:
       type: object
       description: Response object containing a list of event listeners for a specific device.
@@ -434,35 +497,16 @@ components:
           type:
           - string
           - 'null'
-    EventListenerType:
+    Developer_CreateEventListenerWSRequest:
       type: object
-      description: List of event listeners for the specified device
+      description: Request object for creating an event listener.
       properties:
-        activities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        clientCertificate:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: byte
-        clientKey:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: byte
+        eventListner:
+          $ref: '#/components/schemas/EventListenerType'
+    Developer_GetEventListenersForDeviceWSRequest:
+      type: object
+      description: Request object for retrieving a list of event listeners for a specific device.
+      properties:
         deviceUuid:
           type:
           - string
@@ -470,31 +514,11 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        hostname:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        trustedCertificate:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: byte
-        uri:
-          type:
-          - string
-          - 'null'
-        uuid:
+    Developer_DeleteEventListenerWSRequest:
+      type: object
+      description: Request object for deleting an event listener.
+      properties:
+        eventListenerUuid:
           type:
           - string
           - 'null'
@@ -524,17 +548,6 @@ components:
           type:
           - string
           - 'null'
-    Developer_GetEventListenersForDeviceWSRequest:
-      type: object
-      description: Request object for retrieving a list of event listeners for a specific device.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     Developer_GetAllEventListenersWSResponse:
       type: object
       description: Response object containing a list of all event listeners.
@@ -561,23 +574,6 @@ components:
     Developer_GetAllEventListenersWSRequest:
       type: object
       description: Request object for retrieving a list of all event listeners.
-    Developer_CreateEventListenerWSRequest:
-      type: object
-      description: Request object for creating an event listener.
-      properties:
-        eventListner:
-          $ref: '#/components/schemas/EventListenerType'
-    Developer_DeleteEventListenerWSRequest:
-      type: object
-      description: Request object for deleting an event listener.
-      properties:
-        eventListenerUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

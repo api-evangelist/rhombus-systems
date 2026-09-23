@@ -40,7 +40,6 @@ tags:
 paths:
   /api/faceRecognition/person/addPersonLabel:
     post:
-      description: Add a label to a person
       operationId: addPersonLabel
       parameters:
       - description: Authentication scheme identifier. Use `api-token` for standard API key authentication, `partner-api-token` for partner API key authentication. Must be paired with the `x-auth-apikey` header containing your API key.
@@ -304,12 +303,52 @@ paths:
       - Face Recognition Person Webservice
 components:
   schemas:
+    Facerecognition_person_GetPersonWSRequest:
+      type: object
+      description: Request object for retrieving a person by UUID.
+      properties:
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Facerecognition_person_UpdatePersonWSResponse:
       type: object
       description: Response object for updating a person for face recognition purposes.
       properties:
         person:
           $ref: '#/components/schemas/Person'
+    Facerecognition_person_RemovePersonLabelWSRequest:
+      type: object
+      description: Request object for removing a label from a person for face recognition purposes.
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: Label to remove from the person
+          example: VIP
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_person_FindPersonLabelsByOrgWSRequest:
+      type: object
+      description: Request object for finding person labels by organization for face recognition purposes.
+    Facerecognition_person_UpdatePersonWSRequest:
+      type: object
+      description: Request object for updating a person for face recognition purposes.
+      properties:
+        personSelectiveUpdate:
+          $ref: '#/components/schemas/PersonSelectiveUpdate'
+    Facerecognition_person_DeletePersonWSResponse:
+      type: object
+      description: Response object for deleting a person for face recognition purposes.
     PersonSelectiveUpdate:
       type: object
       description: Selective update information for the person
@@ -354,51 +393,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_person_CreatePersonWSRequest:
-      type: object
-      description: Request object for creating a person for face recognition purposes.
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the person to create
-          example: John Doe
-    Facerecognition_person_RemovePersonLabelWSRequest:
-      type: object
-      description: Request object for removing a label from a person for face recognition purposes.
-      properties:
-        label:
-          type:
-          - string
-          - 'null'
-          description: Label to remove from the person
-          example: VIP
-        personUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_person_GetPersonWSResponse:
-      type: object
-      description: Response object containing a person.
-      properties:
-        person:
-          $ref: '#/components/schemas/Person'
-    Facerecognition_person_FindPeopleByOrgWSRequest:
-      type: object
-      description: Request object for finding people by organization for face recognition purposes.
-    Facerecognition_person_RemovePersonLabelWSResponse:
-      type: object
-      description: Response object for removing a label from a person for face recognition purposes.
-    Facerecognition_person_CreatePersonWSResponse:
-      type: object
-      description: Response object for creating a person for face recognition purposes.
-      properties:
-        person:
-          $ref: '#/components/schemas/Person'
     Facerecognition_person_AddPersonLabelWSRequest:
       type: object
       description: Request object for adding a label to a person for face recognition purposes.
@@ -452,17 +446,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_person_FindPeopleByOrgWSResponse:
-      type: object
-      description: Response object containing people for an organization for face recognition purposes.
-      properties:
-        people:
-          type:
-          - array
-          - 'null'
-          description: List of people for the organization
-          items:
-            $ref: '#/components/schemas/Person'
     Facerecognition_person_FindPersonLabelsByOrgWSResponse:
       type: object
       description: Response object containing person labels by organization for face recognition purposes.
@@ -483,32 +466,30 @@ components:
               description: Map of person UUIDs to their associated labels
             uniqueItems: true
           description: Map of person UUIDs to their associated labels
-    Facerecognition_person_AddPersonLabelWSResponse:
+    Facerecognition_person_FindPeopleByOrgWSResponse:
       type: object
-      description: Response object for adding a label to a person for face recognition purposes.
-    Facerecognition_person_UpdatePersonWSRequest:
-      type: object
-      description: Request object for updating a person for face recognition purposes.
+      description: Response object containing people for an organization for face recognition purposes.
       properties:
-        personSelectiveUpdate:
-          $ref: '#/components/schemas/PersonSelectiveUpdate'
-    Facerecognition_person_GetPersonWSRequest:
+        people:
+          type:
+          - array
+          - 'null'
+          description: List of people for the organization
+          items:
+            $ref: '#/components/schemas/Person'
+    Facerecognition_person_CreatePersonWSRequest:
       type: object
-      description: Request object for retrieving a person by UUID.
+      description: Request object for creating a person for face recognition purposes.
       properties:
-        personUuid:
+        name:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_person_DeletePersonWSResponse:
+          description: Name of the person to create
+          example: John Doe
+    Facerecognition_person_FindPeopleByOrgWSRequest:
       type: object
-      description: Response object for deleting a person for face recognition purposes.
-    Facerecognition_person_FindPersonLabelsByOrgWSRequest:
-      type: object
-      description: Request object for finding person labels by organization for face recognition purposes.
+      description: Request object for finding people by organization for face recognition purposes.
     Facerecognition_person_DeletePersonWSRequest:
       type: object
       description: Request object for deleting a person for face recognition purposes.
@@ -520,6 +501,24 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_person_CreatePersonWSResponse:
+      type: object
+      description: Response object for creating a person for face recognition purposes.
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+    Facerecognition_person_AddPersonLabelWSResponse:
+      type: object
+      description: Response object for adding a label to a person for face recognition purposes.
+    Facerecognition_person_GetPersonWSResponse:
+      type: object
+      description: Response object containing a person.
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+    Facerecognition_person_RemovePersonLabelWSResponse:
+      type: object
+      description: Response object for removing a label from a person for face recognition purposes.
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

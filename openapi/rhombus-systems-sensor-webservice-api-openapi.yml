@@ -139,6 +139,198 @@ paths:
       - Sensor Webservice
 components:
   schemas:
+    FootageSeekPointV2Type:
+      type: object
+      description: List of shared footage seekpoints (deprecated)
+      properties:
+        a:
+          $ref: '#/components/schemas/ActivityEnum'
+        ae:
+          type:
+          - string
+          - 'null'
+          description: area being entered
+        al:
+          type:
+          - boolean
+          - 'null'
+          description: alerted on this?
+        ax:
+          type:
+          - string
+          - 'null'
+          description: area being exited
+        bs:
+          type:
+          - string
+          - 'null'
+          description: badge status (e.g. Active, Lost)
+        bt:
+          type:
+          - string
+          - 'null'
+          description: badge type
+        cc:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        cd:
+          type:
+          - string
+          - 'null'
+          description: Custom activity display description, maximum 100 characters
+        cdn:
+          type:
+          - string
+          - 'null'
+          description: Custom activity display name, maximum 32 characters
+        ch:
+          type:
+          - string
+          - 'null'
+          description: badge holder's name
+        dcao:
+          type:
+          - boolean
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        em:
+          type:
+          - boolean
+          - 'null'
+          description: access granted and entry made (false = no entry / possible tailgating)
+        fn:
+          type:
+          - string
+          - 'null'
+          description: face names
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lp:
+          type:
+          - string
+          - 'null'
+          description: license plate
+        m:
+          type:
+          - boolean
+          - 'null'
+          description: object in motion?
+        p:
+          type:
+          - string
+          - 'null'
+          description: pose
+        ro:
+          type:
+          - array
+          - 'null'
+          description: recognized objects
+          items:
+            type:
+            - string
+            - 'null'
+            description: recognized objects
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toi:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        ts:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: timestamp
+        tu:
+          type:
+          - string
+          - 'null'
+        uf:
+          type:
+          - string
+          - 'null'
+          description: FaceId for an unidentified face
+        vn:
+          type:
+          - string
+          - 'null'
+          description: vehicle name
+      required:
+      - a
+      - ts
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    Sensor_GetFootageSensorSeekpointsForLocationWSRequest:
+      type: object
+      description: Request object for getting sensor seekpoints for a location.
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the query period
+          example: 3600
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the query period
+          example: 1640995200
+    Sensor_GetFootageSensorSeekpointsForCameraWSResponse:
+      type: object
+      description: Response object for getting sensor seekpoints for a camera.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of sensor seekpoints for the camera
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     ActivityEnum:
       type: string
       enum:
@@ -362,31 +554,6 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    Sensor_GetFootageSensorSeekpointsForLocationWSRequest:
-      type: object
-      description: Request object for getting sensor seekpoints for a location.
-      properties:
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Duration in seconds for the query period
-          example: 3600
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in seconds for the query period
-          example: 1640995200
     ToastOrderIdType:
       type: object
       properties:
@@ -408,120 +575,6 @@ components:
           - 'null'
         toastCheckInfo:
           $ref: '#/components/schemas/ToastCheckInfo'
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
-    Sensor_GetFootageSensorSeekpointsForCameraWSRequest:
-      type: object
-      description: Request object for getting sensor seekpoints for a camera.
-      properties:
-        cameraUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Duration in seconds for the query period
-          example: 3600
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in seconds for the query period
-          example: 1640995200
-    Sensor_GetFootageSensorSeekpointsForSensorWSResponse:
-      type: object
-      description: Response object for getting sensor seekpoints for a specific sensor.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        footageSeekPoints:
-          type:
-          - array
-          - 'null'
-          description: List of footage seekpoints for the sensor
-          items:
-            $ref: '#/components/schemas/FootageSeekPointV2Type'
-        seekPoints:
-          type:
-          - array
-          - 'null'
-          description: List of sensor seekpoints for the sensor
-          items:
-            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Sensor_GetFootageSensorSeekpointsForSensorWSRequest:
-      type: object
-      description: Request object for getting sensor seekpoints for a specific sensor.
-      properties:
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Duration in seconds for the query period
-          example: 3600
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in seconds for the query period
-          example: 1640995200
-    Sensor_GetFootageSensorSeekpointsForLocationWSResponse:
-      type: object
-      description: Response object for getting sensor seekpoints for a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        seekPoints:
-          type:
-          - array
-          - 'null'
-          description: List of sensor seekpoints for the location
-          items:
-            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     ToastCheckInfo:
       type: object
       properties:
@@ -530,46 +583,6 @@ components:
           - number
           - 'null'
           format: double
-    Sensor_GetFootageSensorSeekpointsForCameraWSResponse:
-      type: object
-      description: Response object for getting sensor seekpoints for a camera.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        seekPoints:
-          type:
-          - array
-          - 'null'
-          description: List of sensor seekpoints for the camera
-          items:
-            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    SensorValType:
-      type: object
-      properties:
-        sensorBoolean:
-          type:
-          - boolean
-          - 'null'
-        sensorDouble:
-          type:
-          - number
-          - 'null'
-          format: double
-        sensorLong:
-          type:
-          - integer
-          - 'null'
-          format: int64
     Sensor_FootageSensorSeekPointDisplayType:
       type: object
       description: Display type for sensor seekpoints with sensor name information.
@@ -712,139 +725,126 @@ components:
       required:
       - a
       - ts
-    FootageSeekPointV2Type:
+    Sensor_GetFootageSensorSeekpointsForSensorWSRequest:
       type: object
-      description: List of shared footage seekpoints (deprecated)
+      description: Request object for getting sensor seekpoints for a specific sensor.
       properties:
-        a:
-          $ref: '#/components/schemas/ActivityEnum'
-        ae:
-          type:
-          - string
-          - 'null'
-          description: area being entered
-        al:
-          type:
-          - boolean
-          - 'null'
-          description: alerted on this?
-        ax:
-          type:
-          - string
-          - 'null'
-          description: area being exited
-        bs:
-          type:
-          - string
-          - 'null'
-          description: badge status (e.g. Active, Lost)
-        bt:
-          type:
-          - string
-          - 'null'
-          description: badge type
-        cc:
-          $ref: '#/components/schemas/FootageSeekPointColorEnum'
-        cd:
-          type:
-          - string
-          - 'null'
-          description: Custom activity display description, maximum 100 characters
-        cdn:
-          type:
-          - string
-          - 'null'
-          description: Custom activity display name, maximum 32 characters
-        ch:
-          type:
-          - string
-          - 'null'
-          description: badge holder's name
-        dcao:
-          type:
-          - boolean
-          - 'null'
-        dwelling:
-          type:
-          - boolean
-          - 'null'
-        em:
-          type:
-          - boolean
-          - 'null'
-          description: access granted and entry made (false = no entry / possible tailgating)
-        fn:
-          type:
-          - string
-          - 'null'
-          description: face names
-        id:
+        durationSec:
           type:
           - integer
           - 'null'
           format: int32
-        loudness:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lp:
+          description: Duration in seconds for the query period
+          example: 3600
+        sensorUuid:
           type:
           - string
           - 'null'
-          description: license plate
-        m:
-          type:
-          - boolean
-          - 'null'
-          description: object in motion?
-        p:
-          type:
-          - string
-          - 'null'
-          description: pose
-        ro:
-          type:
-          - array
-          - 'null'
-          description: recognized objects
-          items:
-            type:
-            - string
-            - 'null'
-            description: recognized objects
-        sensorValType:
-          $ref: '#/components/schemas/SensorValType'
-        stableTrackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        toi:
-          $ref: '#/components/schemas/ToastOrderIdType'
-        ts:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeSec:
           type:
           - integer
           - 'null'
           format: int64
-          description: timestamp
-        tu:
+          description: Start time in seconds for the query period
+          example: 1640995200
+    Sensor_GetFootageSensorSeekpointsForCameraWSRequest:
+      type: object
+      description: Request object for getting sensor seekpoints for a camera.
+      properties:
+        cameraUuid:
           type:
           - string
           - 'null'
-        uf:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the query period
+          example: 3600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the query period
+          example: 1640995200
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Sensor_GetFootageSensorSeekpointsForLocationWSResponse:
+      type: object
+      description: Response object for getting sensor seekpoints for a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          description: FaceId for an unidentified face
-        vn:
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of sensor seekpoints for the location
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
           type:
           - string
           - 'null'
-          description: vehicle name
-      required:
-      - a
-      - ts
+    Sensor_GetFootageSensorSeekpointsForSensorWSResponse:
+      type: object
+      description: Response object for getting sensor seekpoints for a specific sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        footageSeekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of footage seekpoints for the sensor
+          items:
+            $ref: '#/components/schemas/FootageSeekPointV2Type'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of sensor seekpoints for the sensor
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

@@ -73,6 +73,29 @@ paths:
       - Media Device Webservice
 components:
   schemas:
+    Mediadevice_GetBulkMediaDeviceDetailsWSResponse:
+      type: object
+      description: Response object containing media information for video-supporting media devices.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        mediaDeviceDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Mediadevice_MediaDeviceDetailsType'
+          description: Map of device facet UUIDs to their media device details
+        warningMsg:
+          type:
+          - string
+          - 'null'
     DeviceTypeEnum:
       type: string
       enum:
@@ -273,29 +296,6 @@ components:
             description: RUUID with optional appended facet information
             example: AAAAAAAAAAAAAAAAAAAAAA.v0
           uniqueItems: true
-    Mediadevice_GetBulkMediaDeviceDetailsWSResponse:
-      type: object
-      description: Response object containing media information for video-supporting media devices.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        mediaDeviceDetails:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/Mediadevice_MediaDeviceDetailsType'
-          description: Map of device facet UUIDs to their media device details
-        warningMsg:
-          type:
-          - string
-          - 'null'
     HardwareVariationEnum:
       type: string
       enum:

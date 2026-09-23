@@ -2188,114 +2188,33 @@ paths:
       - Access Control Webservice
 components:
   schemas:
-    Accesscontrol_credentials_GetRhombusSecureCsnCredentialDetailsWSResponse:
+    Accesscontrol_credentials_CreateWiegandD10202CredentialWSResponse:
       type: object
-      description: Response containing Rhombus Secure CSN credential details.
+      description: Response for D10202 Wiegand credential creation.
       properties:
         credential:
           $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_UpdateRhombusSecureMobileCredentialWSResponse:
+    Accesscontrol_Create48BitCorp1000StdWSResponse:
       type: object
-      description: Response containing the updated Rhombus Secure mobile credential.
       properties:
         credential:
           $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByUserWSResponse:
+    OrgGroupMemberType:
       type: object
-      description: Response containing location access grants for a user.
+      description: List of user group memberships
       properties:
-        accessGrants:
-          type:
-          - array
-          - 'null'
-          description: List of location access grants
-          items:
-            $ref: '#/components/schemas/LocationAccessGrantType'
-    Group_FindOrgGroupsByExactNameWSResponse:
-      type: object
-      description: Response containing organization group found by exact name.
-      properties:
-        group:
-          $ref: '#/components/schemas/OrgGroupType'
-    AccessGrantModeEnum:
-      type: string
-      enum:
-      - GUEST_PASS_INDIVIDUAL
-      - DEFAULT
-    Wiegand35BitCorp1000Credential:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          cardNumber:
-            type:
-            - integer
-            - 'null'
-            format: int64
-          companyId:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          format:
-            $ref: '#/components/schemas/WiegandFormatEnumType'
-      properties:
-        assigneeType:
-          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
-        assigneeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
         createdAtMillis:
           type:
           - integer
           - 'null'
           format: int64
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedAccessControlledDoorUuid:
+        groupUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        lastUsedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedLocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lowercaseHexValue:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        managedCredUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        note:
-          type:
-          - string
-          - 'null'
         orgUuid:
           type:
           - string
@@ -2303,13 +2222,8 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
         type:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+          $ref: '#/components/schemas/OrgGroupEnumType'
         updatedAtMillis:
           type:
           - integer
@@ -2322,344 +2236,17 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        value:
-          type:
-          - string
-          - 'null'
-        workflowStatus:
-          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_accessgrant_UpdateAccessGrantWSResponse:
+    Accesscontrol_credentials_CreateWiegandH10302CredentialWSRequest:
       type: object
-      description: Response for location access grant update.
-      properties:
-        accessGrant:
-          $ref: '#/components/schemas/LocationAccessGrantType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        expiredACDLicensesDoorUuids:
-          type:
-          - array
-          - 'null'
-          description: Set of expired ACD license door UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        unassignedACDLicensesDoorUuids:
-          type:
-          - array
-          - 'null'
-          description: Set of unassigned ACD license door UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Accesscontrol_credentials_UpdateWiegandCredentialWSRequest:
-      type: object
-      description: Request to update a Wiegand credential.
-      properties:
-        credentialUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Accesscontrol_accessrevocation_GetLocationAccessRevocationWSResponse:
-      type: object
-      description: Response containing a location access revocation.
-      properties:
-        accessRevocation:
-          $ref: '#/components/schemas/LocationAccessRevocationType'
-    WiegandH10304Credential:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          cardNumber:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          facilityCode:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          format:
-            $ref: '#/components/schemas/WiegandFormatEnumType'
-          nonParityValue:
-            type:
-            - string
-            - 'null'
-      properties:
-        assigneeType:
-          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
-        assigneeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedAccessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lastUsedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedLocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lowercaseHexValue:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        managedCredUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        note:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        value:
-          type:
-          - string
-          - 'null'
-        workflowStatus:
-          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_accessrevocation_GetLocationAccessRevocationWSRequest:
-      type: object
-      description: Request to get a location access revocation by UUID.
-      properties:
-        accessRevocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByAccessControlledDoorWSResponse:
-      type:
-      - object
-      - 'null'
-      description: Response containing location access grants for an access controlled door.
-      properties:
-        accessGrants:
-          type:
-          - array
-          - 'null'
-          description: List of location access grants
-          items:
-            $ref: '#/components/schemas/LocationAccessGrantType'
-    Accesscontrol_accessgrant_CreateAccessGrantWSRequest:
-      type: object
-      description: Request to create a location access grant.
-      properties:
-        accessGrant:
-          $ref: '#/components/schemas/LocationAccessGrantType'
-    Accesscontrol_credentials_FindCredentialHistoryByCredentialHexValueWSRequest:
-      type: object
-      description: Request to find credential history by credential hex value.
-      properties:
-        credentialHexValue:
-          type:
-          - string
-          - 'null'
-          description: Hex value of the credential to search for
-          example: 1234567890ABCDEF
-        filter:
-          $ref: '#/components/schemas/CredentialQueryFilter'
-    Accesscontrol_credentials_GetRhombusSecureCsnCredentialDetailsWSRequest:
-      type: object
-      description: Request to get Rhombus Secure CSN credential details.
-      properties:
-        credentialUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_CreateWiegandH10302CredentialWSResponse:
-      type: object
-      description: Response for H10302 Wiegand credential creation.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByDoorLabelWSRequest:
-      type: object
-      description: Request to find location access revocations by door label.
-      properties:
-        doorLabelId:
-          type:
-          - string
-          - 'null'
-          description: Door label identifier
-          example: door_label_123
-    Accesscontrol_credentials_AssignAccessControlCredentialWSRequest:
-      type: object
-      description: Request to assign an access control credential to a user.
-      properties:
-        credentialHexValue:
-          type:
-          - string
-          - 'null'
-          description: Hex value of the credential
-          example: 1234567890ABCDEF
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Group_FindOrgGroupsByNamePrefixWSRequest:
-      type: object
-      description: Request to find organization groups by name prefix.
-      properties:
-        groupNamePrefix:
-          type:
-          - string
-          - 'null'
-          description: Name prefix to search for groups
-          example: Eng
-    Accesscontrol_credentials_FindAccessControlCredentialByOrgWSRequest:
-      type: object
-      description: Request to find access control credentials by organization.
-      properties:
-        filter:
-          $ref: '#/components/schemas/CredentialQueryFilter'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationWSResponse:
-      type: object
-      description: Response containing location access grants for a location.
-      properties:
-        accessGrants:
-          type:
-          - array
-          - 'null'
-          description: List of location access grants
-          items:
-            $ref: '#/components/schemas/LocationAccessGrantType'
-    Accesscontrol_credentials_CreateWiegandH10301CredentialWSResponse:
-      type: object
-      description: Response for H10301 Wiegand credential creation.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_Create35BitCorp1000StdCredentialWSRequest:
-      type: object
-      description: Request to create an HID Corp1000 Standard 35 Bit credential.
+      description: Request to create a H10302 Wiegand credential.
       properties:
         cardNumber:
           type:
           - integer
           - 'null'
           format: int64
-          description: Card number
+          description: Card number (35-bit, no facility code)
           example: 456789
-        companyId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Company Id
-          example: 123
         endDateEpochSecExclusive:
           type:
           - integer
@@ -2681,489 +2268,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    AccessControlCredentialEnumType:
-      type: string
-      enum:
-      - STANDARD_CSN
-      - RHOMBUS_SECURE_CSN
-      - RHOMBUS_SECURE_MOBILE
-      - APPLE_WALLET_DESFIRE
-      - PIN_CODE
-      - WIEGAND_H10301
-      - WIEGAND_H10304
-      - WIEGAND_H10302
-      - WIEGAND_D10202
-      - WIEGAND_64BIT_RAW
-      - HID_CORP1000_STD_35
-      - HID_CORP1000_STD_48
-      - QR_CODE_STATIC
-      - CUSTOM
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledElevatorLandingWSResponse:
+    Accesscontrol_credentials_GetAccessControlCredentialDetailsWSRequest:
       type: object
-      description: Response containing location access revocations for an access controlled elevator landing.
-      properties:
-        accessRevocations:
-          type:
-          - array
-          - 'null'
-          description: List of location access revocations
-          items:
-            $ref: '#/components/schemas/LocationAccessRevocationType'
-    Accesscontrol_accessrevocation_CreateAccessRevocationWSResponse:
-      type: object
-      description: Response for location access revocation creation.
-      properties:
-        accessRevocation:
-          $ref: '#/components/schemas/LocationAccessRevocationType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        expiredACDLicensesDoorUuids:
-          type:
-          - array
-          - 'null'
-          description: Set of expired ACD license door UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        unassignedACDLicensesDoorUuids:
-          type:
-          - array
-          - 'null'
-          description: Set of unassigned ACD license door UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Accesscontrol_UnlockAccessControlledDoorSuccessWSResponse:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      description: Success response for unlock access controlled door operation.
-      properties:
-        type:
-          $ref: '#/components/schemas/BasicResponseEnumType'
-    Accesscontrol_credentials_FindCredentialHistoryByUserWSResponse:
-      type: object
-      description: Response containing credential history found for a specific user.
-      properties:
-        credentials:
-          type:
-          - array
-          - 'null'
-          description: List of credential history records
-          items:
-            $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_CreateAccessControlCredentialByHexValueAndTypeWSResponse:
-      type: object
-      description: Response for access control credential creation by hex value and type.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByGroupWSRequest:
-      type: object
-      description: Request to find location access grants by group.
-      properties:
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_DeleteLocationAccessGrantWSResponse:
-      type: object
-      description: Response for location access grant deletion.
-    WiegandH10302Credential:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          cardNumber:
-            type:
-            - integer
-            - 'null'
-            format: int64
-          format:
-            $ref: '#/components/schemas/WiegandFormatEnumType'
-          nonParityValue:
-            type:
-            - string
-            - 'null'
-      properties:
-        assigneeType:
-          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
-        assigneeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedAccessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lastUsedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedLocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lowercaseHexValue:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        managedCredUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        note:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        value:
-          type:
-          - string
-          - 'null'
-        workflowStatus:
-          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledDoorWSRequest:
-      type: object
-      description: Request to find location access revocations by access controlled door.
-      properties:
-        accessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByOrgWSResponse:
-      type: object
-      description: Response containing location access grants for an organization.
-      properties:
-        accessGrants:
-          type:
-          - array
-          - 'null'
-          description: List of location access grants
-          items:
-            $ref: '#/components/schemas/LocationAccessGrantType'
-    BasicResponseEnumType:
-      type: string
-      enum:
-      - ERROR
-      - SUCCESS
-    CredentialQueryFilter:
-      type: object
-      description: Filter criteria for finding credential history
-      properties:
-        credTypeFilter:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AccessControlCredentialEnumType'
-          uniqueItems: true
-        lastUsedAccessControlledDoorUuidFilter:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        lastUsedAfterFilter:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedBeforeFilter:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedLocationUuidFilter:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        workflowStatusFilter:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-          uniqueItems: true
-    Accesscontrol_credentials_CreateWiegandH10301CredentialWSRequest:
-      type: object
-      description: Request to create a H10301 Wiegand credential.
-      properties:
-        cardNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Card number
-          example: 456789
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End date in epoch seconds (exclusive)
-          example: 1672531200
-        facilityCode:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Facility code
-          example: 123
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start date in epoch seconds (inclusive)
-          example: 1640995200
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByOrgWSRequest:
-      type: object
-      description: Request to find location access revocations by organization.
-    Accesscontrol_credentials_FindAccessControlCredentialByUserWSRequest:
-      type: object
-      description: Request to find access control credentials by user.
-      properties:
-        filter:
-          $ref: '#/components/schemas/CredentialQueryFilter'
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    WiegandFormatEnumType:
-      type: string
-      enum:
-      - H10301
-      - D10202
-      - H10304
-      - H10302
-      - HID_CORP1000_STD_35
-      - HID_CORP1000_STD_48
-      - WIEGAND_64BIT_RAW
-      - CUSTOM
-    RhombusSecureMobileFeatureSettingStatusEnum:
-      type: string
-      enum:
-      - OPTIMAL
-      - INHIBITED
-    AccessControlCredentialAssigneeTypeEnum:
-      type: string
-      enum:
-      - USER
-      - GUEST_PASS
-    Accesscontrol_credentials_FindCredentialHistoryByCredentialHexValueWSResponse:
-      type: object
-      description: Response containing credential history found by credential hex value.
-      properties:
-        credentials:
-          type:
-          - array
-          - 'null'
-          description: List of credential history records
-          items:
-            $ref: '#/components/schemas/AccessControlCredentialType'
-    Group_UpdateOrgGroupWSRequest:
-      type: object
-      description: Request to update an organization group.
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-          description: New description for the group
-          example: Updated software engineering team members
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        name:
-          type:
-          - string
-          - 'null'
-          description: New name for the group
-          example: Updated Engineering Team
-    Accesscontrol_credentials_CreateWiegandCredentialWSResponse:
-      type: object
-      description: Response for Wiegand credential creation.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_accessrevocation_UpdateAccessRevocationWSResponse:
-      type: object
-      description: Response for location access revocation update operation.
-      properties:
-        accessRevocation:
-          $ref: '#/components/schemas/LocationAccessRevocationType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        expiredACDLicensesDoorUuids:
-          type:
-          - array
-          - 'null'
-          description: Set of expired ACD license door UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        unassignedACDLicensesDoorUuids:
-          type:
-          - array
-          - 'null'
-          description: Set of unassigned ACD license door UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Accesscontrol_credentials_CreateWiegand64BitRawCredentialWSResponse:
-      type: object
-      description: Response for 64-bit raw Wiegand credential creation.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Group_FindOrgGroupMembershipsByUserWSRequest:
-      type: object
-      description: Request to find organization group memberships by user.
-      properties:
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_UpdateRhombusSecureCsnCredentialWSRequest:
-      type: object
-      description: Request to update a Rhombus Secure CSN credential.
+      description: Request to get an access control credential's details, including sensitive fields, by UUID.
       properties:
         credentialUuid:
           type:
@@ -3172,36 +2279,24 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Accesscontrol_accessrevocation_UpdateAccessRevocationWSRequest:
+      required:
+      - credentialUuid
+    Group_RemoveUsersFromOrgGroupWSRequest:
       type: object
-      description: Request to update a location access revocation.
+      description: Request to remove users from an organization group.
       properties:
-        accessRevocation:
-          $ref: '#/components/schemas/LocationAccessRevocationType'
-    Group_FindOrgGroupsByOrgWSRequest:
-      type: object
-      description: Request to find organization groups by organization.
-    Accesscontrol_credentials_FindAccessControlCredentialByUsersWSRequest:
-      type: object
-      description: Request to find access control credentials by multiple users.
-      properties:
-        filter:
-          $ref: '#/components/schemas/CredentialQueryFilter'
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         userUuids:
           type:
           - array
           - 'null'
-          description: Set of user UUIDs to search for
+          description: List of user UUIDs to remove from the group
           items:
             type:
             - string
@@ -3209,362 +2304,14 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-    Accesscontrol_credentials_SuspendAccessControlCredentialWSResponse:
+    Group_RemoveUsersFromOrgGroupWSResponse:
       type: object
-      description: Response containing the suspended access control credential details.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_DeleteAccessControlCredentialWSResponse:
+      description: Response indicating successful removal of users from an organization group.
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByGroupWSRequest:
       type: object
-      description: Response indicating successful deletion of an access control credential.
-    Accesscontrol_credentials_UpdateStandardCsnCredentialWSResponse:
-      type: object
-      description: Response containing the updated standard CSN credential.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledDoorWSResponse:
-      type: object
-      description: Response containing location access revocations for an access controlled door.
-      properties:
-        accessRevocations:
-          type:
-          - array
-          - 'null'
-          description: List of location access revocations
-          items:
-            $ref: '#/components/schemas/LocationAccessRevocationType'
-    LocationAccessRevocationType:
-      type: object
-      description: The access revocation to update
-      properties:
-        accessControlledDoorUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        accessControlledElevatorLandingUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        doorLabelIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-          uniqueItems: true
-        groupUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        sortKey:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        storedInS3:
-          type:
-          - boolean
-          - 'null'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_FindAccessControlCredentialByGuestPassWSResponse:
-      type: object
-      description: Response containing access control credentials found for a specific guest pass.
-      properties:
-        credentials:
-          type:
-          - array
-          - 'null'
-          description: List of access control credentials
-          items:
-            $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_Create48BitCorp1000StdCredentialWSRequest:
-      type: object
-      description: Request to create an HID Corp1000 Standard 48 Bit credential.
-      properties:
-        cardNumber:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Card number
-          example: 456789
-        companyId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Company Id
-          example: 123
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End date in epoch seconds (exclusive)
-          example: 1672531200
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start date in epoch seconds (inclusive)
-          example: 1640995200
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_UnlockAccessControlledDoorErrorWSResponse:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          errorType:
-            $ref: '#/components/schemas/Accesscontrol_UnlockAccessControlledDoorEnumType'
-      description: Error response for unlock access controlled door operation.
-      properties:
-        type:
-          $ref: '#/components/schemas/BasicResponseEnumType'
-    OrgGroupEnumType:
-      type: string
-      enum:
-      - RHOMBUS_ACCESS_CONTROL
-      - GUEST_MANAGEMENT_HOST
-    Accesscontrol_credentials_CreateRhombusSecureCsnCredentialWSRequest:
-      type: object
-      description: Request to create a Rhombus Secure CSN credential.
-      properties:
-        credentialValue:
-          type:
-          - string
-          - 'null'
-          description: Credential value
-          example: '123456789'
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End date in epoch seconds (exclusive)
-          example: 1672531200
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start date in epoch seconds (inclusive)
-          example: 1640995200
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_CreateWiegandD10202CredentialWSRequest:
-      type: object
-      description: Request to create a D10202 Wiegand credential.
-      properties:
-        cardNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Card number
-          example: 456789
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End date in epoch seconds (exclusive)
-          example: 1672531200
-        facilityCode:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Facility code
-          example: 123
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start date in epoch seconds (inclusive)
-          example: 1640995200
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByGroupWSResponse:
-      type: object
-      description: Response containing location access grants for a group.
-      properties:
-        accessGrants:
-          type:
-          - array
-          - 'null'
-          description: List of location access grants
-          items:
-            $ref: '#/components/schemas/LocationAccessGrantType'
-    Accesscontrol_accessgrant_GetLocationAccessGrantWSRequest:
-      type: object
-      description: Request to get a location access grant by UUID.
-      properties:
-        accessGrantUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_FindAccessControlCredentialByGuestPassWSRequest:
-      type: object
-      description: Request to find access control credentials by guest pass.
-      properties:
-        filter:
-          $ref: '#/components/schemas/CredentialQueryFilter'
-        guestPassUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_UpdateRhombusSecureCsnCredentialWSResponse:
-      type: object
-      description: Response containing the updated Rhombus Secure CSN credential.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_accessgrant_DeleteLocationAccessGrantWSRequest:
-      type: object
-      description: Request to delete a location access grant.
-      properties:
-        accessGrantUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Group_FindAllUsersForOrgGroupWSRequest:
-      type: object
-      description: Request to find all users for an organization group.
+      description: Request to find location access revocations by group.
       properties:
         groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Group_AddUsersToOrgGroupWSResponse:
-      type: object
-      description: Response for adding users to an organization group.
-      properties:
-        groupMembers:
-          type:
-          - array
-          - 'null'
-          description: Users added to the group successfully from the original request
-          items:
-            $ref: '#/components/schemas/OrgGroupMemberType'
-    Accesscontrol_credentials_GetStandardCsnCredentialDetailsWSRequest:
-      type: object
-      description: Request to get standard CSN credential details.
-      properties:
-        credentialUuid:
           type:
           - string
           - 'null'
@@ -3608,24 +2355,80 @@ components:
             example: AAAAAAAAAAAAAAAAAAAAAA
       required:
       - name
-    RhombusSecureMobileFeatureSetting:
-      type:
-      - object
-      - 'null'
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        status:
-          $ref: '#/components/schemas/RhombusSecureMobileFeatureSettingStatusEnum'
-        value:
-          type:
-          - string
-          - 'null'
-    Group_RemoveUsersFromOrgGroupWSResponse:
+    Accesscontrol_accessgrant_CreateAccessGrantWSRequest:
       type: object
-      description: Response indicating successful removal of users from an organization group.
+      description: Request to create a location access grant.
+      properties:
+        accessGrant:
+          $ref: '#/components/schemas/LocationAccessGrantType'
+    Accesscontrol_credentials_FindAccessControlCredentialByUserWSRequest:
+      type: object
+      description: Request to find access control credentials by user.
+      properties:
+        filter:
+          $ref: '#/components/schemas/CredentialQueryFilter'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByDoorLabelWSRequest:
+      type: object
+      description: Request to find location access grants by door label.
+      properties:
+        doorLabelId:
+          type:
+          - string
+          - 'null'
+          description: Door label identifier
+          example: door_label_123
+    Accesscontrol_credentials_CreateRhombusSecureCsnCredentialWSRequest:
+      type: object
+      description: Request to create a Rhombus Secure CSN credential.
+      properties:
+        credentialValue:
+          type:
+          - string
+          - 'null'
+          description: Credential value
+          example: '123456789'
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End date in epoch seconds (exclusive)
+          example: 1672531200
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in epoch seconds (inclusive)
+          example: 1640995200
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Group_FindOrgGroupsByOrgWSRequest:
+      type: object
+      description: Request to find organization groups by organization.
+    Accesscontrol_credentials_GetStandardCsnCredentialDetailsWSRequest:
+      type: object
+      description: Request to get standard CSN credential details.
+      properties:
+        credentialUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     AccessControlCredentialType:
       type: object
       description: Credentials assigned to the pass.
@@ -3739,138 +2542,41 @@ components:
           - 'null'
         workflowStatus:
           $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_Create35BitCorp1000StdCredentialWSResponse:
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledElevatorLandingWSRequest:
       type: object
+      description: Request to find location access revocations by access controlled elevator landing.
+      properties:
+        accessControlledElevatorLandingUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_CreateStandardCsnCredentialWSResponse:
+      type: object
+      description: Response for standard CSN credential creation.
       properties:
         credential:
           $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_FindAccessControlCredentialByUsersWSResponse:
+    Accesscontrol_credentials_FindCredentialHistoryByCredentialValueWSResponse:
       type: object
-      description: Response containing access control credentials mapped by user UUIDs.
+      description: Response containing credential history found by credential value.
       properties:
-        userCredentialsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of user UUIDs to their associated access control credentials
-            items:
-              $ref: '#/components/schemas/AccessControlCredentialType'
-          description: Map of user UUIDs to their associated access control credentials
-    StandardCsnType:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        assigneeType:
-          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
-        assigneeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedAccessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lastUsedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedLocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lowercaseHexValue:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        managedCredUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        note:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        value:
-          type:
-          - string
-          - 'null'
-        workflowStatus:
-          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByUserWSResponse:
-      type: object
-      description: Response containing location access revocations for a user.
-      properties:
-        accessRevocations:
+        credentials:
           type:
           - array
           - 'null'
-          description: List of location access revocations
+          description: List of credential history records
           items:
-            $ref: '#/components/schemas/LocationAccessRevocationType'
-    Wiegand64BitRawCredentialType:
+            $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_accessrevocation_UpdateAccessRevocationWSRequest:
+      type: object
+      description: Request to update a location access revocation.
+      properties:
+        accessRevocation:
+          $ref: '#/components/schemas/LocationAccessRevocationType'
+    WiegandH10302Credential:
       type:
       - object
       - 'null'
@@ -3882,119 +2588,6 @@ components:
             - integer
             - 'null'
             format: int64
-          format:
-            $ref: '#/components/schemas/WiegandFormatEnumType'
-      properties:
-        assigneeType:
-          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
-        assigneeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedAccessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lastUsedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedLocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lowercaseHexValue:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        managedCredUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        note:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        value:
-          type:
-          - string
-          - 'null'
-        workflowStatus:
-          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    WiegandD10202Credential:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          cardNumber:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          facilityCode:
-            type:
-            - integer
-            - 'null'
-            format: int32
           format:
             $ref: '#/components/schemas/WiegandFormatEnumType'
           nonParityValue:
@@ -4095,11 +2688,23 @@ components:
           - 'null'
         workflowStatus:
           $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledElevatorLandingWSRequest:
+    Accesscontrol_credentials_GetRhombusSecureCsnCredentialDetailsWSResponse:
       type: object
-      description: Request to find location access revocations by access controlled elevator landing.
+      description: Response containing Rhombus Secure CSN credential details.
       properties:
-        accessControlledElevatorLandingUuid:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_credentials_UpdateRhombusSecureCsnCredentialWSResponse:
+      type: object
+      description: Response containing the updated Rhombus Secure CSN credential.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Group_FindOrgGroupMembershipsByUserWSRequest:
+      type: object
+      description: Request to find organization group memberships by user.
+      properties:
+        userUuid:
           type:
           - string
           - 'null'
@@ -4219,9 +2824,442 @@ components:
           - 'null'
         workflowStatus:
           $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_credentials_FindAccessControlCredentialByUserWSResponse:
+    Accesscontrol_UnlockAccessControlledDoorEnumType:
+      type: string
+      description: Enumeration of possible errors when unlocking an access controlled door.
+      enum:
+      - FAILED_SENDING_ACU_UNLOCK_REQUEST
+      - DOOR_NOT_CONFIGURED_WITH_LOCK
+      - ACD_LICENSE_UNASSIGNED_OR_EXPIRED
+    Accesscontrol_credentials_FindAccessControlCredentialByUsersWSResponse:
       type: object
-      description: Response containing access control credentials found for a specific user.
+      description: Response containing access control credentials mapped by user UUIDs.
+      properties:
+        userCredentialsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of user UUIDs to their associated access control credentials
+            items:
+              $ref: '#/components/schemas/AccessControlCredentialType'
+          description: Map of user UUIDs to their associated access control credentials
+    Accesscontrol_credentials_SuspendAccessControlCredentialWSResponse:
+      type: object
+      description: Response containing the suspended access control credential details.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Group_FindOrgGroupsByNamePrefixWSResponse:
+      type: object
+      description: Response containing organization groups found by name prefix.
+      properties:
+        groups:
+          type:
+          - array
+          - 'null'
+          description: List of organization groups found by name prefix
+          items:
+            $ref: '#/components/schemas/OrgGroupType'
+    Accesscontrol_credentials_SuspendAccessControlCredentialWSRequest:
+      type: object
+      description: Request to suspend an access control credential.
+      properties:
+        credentialUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    CredentialQueryFilter:
+      type: object
+      description: Filter criteria for finding credential history
+      properties:
+        credTypeFilter:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AccessControlCredentialEnumType'
+          uniqueItems: true
+        lastUsedAccessControlledDoorUuidFilter:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        lastUsedAfterFilter:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedBeforeFilter:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuidFilter:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        workflowStatusFilter:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+          uniqueItems: true
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByOrgWSResponse:
+      type: object
+      description: Response containing location access grants for an organization.
+      properties:
+        accessGrants:
+          type:
+          - array
+          - 'null'
+          description: List of location access grants
+          items:
+            $ref: '#/components/schemas/LocationAccessGrantType'
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationAndUserWSResponse:
+      type: object
+      description: Response containing location access grants for a location and user.
+      properties:
+        accessGrants:
+          type:
+          - array
+          - 'null'
+          description: List of location access grants
+          items:
+            $ref: '#/components/schemas/LocationAccessGrantType'
+    Accesscontrol_credentials_BaseUnlockAccessControlledDoorWSResponse:
+      type:
+      - object
+      - 'null'
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/Accesscontrol_UnlockAccessControlledDoorSuccessWSResponse'
+      - $ref: '#/components/schemas/Accesscontrol_UnlockAccessControlledDoorErrorWSResponse'
+      properties:
+        type:
+          $ref: '#/components/schemas/BasicResponseEnumType'
+    LocationAccessGrantType:
+      type: object
+      description: The access grant to update
+      properties:
+        accessControlledDoorUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        accessControlledElevatorLandingUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        doorLabelIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        groupUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        locationGuestPassUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        mode:
+          $ref: '#/components/schemas/AccessGrantModeEnum'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sortKey:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        storedInS3:
+          type:
+          - boolean
+          - 'null'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_CreateWiegandH10301CredentialWSResponse:
+      type: object
+      description: Response for H10301 Wiegand credential creation.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_credentials_CreateWiegandH10301CredentialWSRequest:
+      type: object
+      description: Request to create a H10301 Wiegand credential.
+      properties:
+        cardNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Card number
+          example: 456789
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End date in epoch seconds (exclusive)
+          example: 1672531200
+        facilityCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Facility code
+          example: 123
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in epoch seconds (inclusive)
+          example: 1640995200
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByDoorLabelWSResponse:
+      type: object
+      description: Response containing location access grants for a door label.
+      properties:
+        accessGrants:
+          type:
+          - array
+          - 'null'
+          description: List of location access grants
+          items:
+            $ref: '#/components/schemas/LocationAccessGrantType'
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByAccessControlledDoorWSRequest:
+      type: object
+      description: Request to find location access grants by access controlled door.
+      properties:
+        accessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    SecureTokenAlgorithmEnum:
+      type: string
+      enum:
+      - AN10922_AES128
+    Accesscontrol_credentials_FindAccessControlCredentialByGuestPassWSRequest:
+      type: object
+      description: Request to find access control credentials by guest pass.
+      properties:
+        filter:
+          $ref: '#/components/schemas/CredentialQueryFilter'
+        guestPassUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_CreateWiegand64BitRawCredentialWSRequest:
+      type: object
+      description: Request to create a 64-bit raw Wiegand credential.
+      properties:
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End date in epoch seconds (exclusive)
+          example: 1672531200
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in epoch seconds (inclusive)
+          example: 1640995200
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        value:
+          type:
+          - string
+          - 'null'
+          description: Credential value
+          example: '1234567890123456'
+    Group_FindOrgGroupMembershipsByUserWSResponse:
+      type: object
+      description: Response containing organization group memberships for a user.
+      properties:
+        userGroupMemberships:
+          type:
+          - array
+          - 'null'
+          description: List of user group memberships
+          items:
+            $ref: '#/components/schemas/OrgGroupMemberType'
+    Accesscontrol_accessrevocation_GetLocationAccessRevocationWSRequest:
+      type: object
+      description: Request to get a location access revocation by UUID.
+      properties:
+        accessRevocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Group_FindOrgGroupsByUserMembershipWSRequest:
+      type: object
+      description: Request to find organization groups by user membership.
+      properties:
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByGroupWSResponse:
+      type: object
+      description: Response containing location access grants for a group.
+      properties:
+        accessGrants:
+          type:
+          - array
+          - 'null'
+          description: List of location access grants
+          items:
+            $ref: '#/components/schemas/LocationAccessGrantType'
+    Group_DeleteOrgGroupWSRequest:
+      type: object
+      description: Request to delete an organization group.
+      properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_FindAccessControlCredentialByOrgWSResponse:
+      type: object
+      description: Response containing access control credentials found for an organization.
       properties:
         credentials:
           type:
@@ -4230,11 +3268,35 @@ components:
           description: List of access control credentials
           items:
             $ref: '#/components/schemas/AccessControlCredentialType'
-    PinCredential:
+    Accesscontrol_credentials_GetAccessControlCredentialDetailsWSResponse:
+      type: object
+      description: Response containing an access control credential's details, including sensitive fields.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    WiegandD10202Credential:
       type:
       - object
       - 'null'
-      allOf: []
+      allOf:
+      - type: object
+        properties:
+          cardNumber:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          facilityCode:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          format:
+            $ref: '#/components/schemas/WiegandFormatEnumType'
+          nonParityValue:
+            type:
+            - string
+            - 'null'
       properties:
         assigneeType:
           $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
@@ -4329,228 +3391,12 @@ components:
           - 'null'
         workflowStatus:
           $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_UnlockAccessControlledDoorEnumType:
-      type: string
-      description: Enumeration of possible errors when unlocking an access controlled door.
-      enum:
-      - FAILED_SENDING_ACU_UNLOCK_REQUEST
-      - DOOR_NOT_CONFIGURED_WITH_LOCK
-      - ACD_LICENSE_UNASSIGNED_OR_EXPIRED
-    OrgGroupMemberType:
+    Group_UpdateOrgGroupWSResponse:
       type: object
-      description: List of user group memberships
+      description: Response containing the updated organization group.
       properties:
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/OrgGroupEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_GetAccessControlCredentialDetailsWSRequest:
-      type: object
-      description: Request to get an access control credential's details, including sensitive fields, by UUID.
-      properties:
-        credentialUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-      required:
-      - credentialUuid
-    Accesscontrol_credentials_GetAccessControlCredentialDetailsWSResponse:
-      type: object
-      description: Response containing an access control credential's details, including sensitive fields.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Group_AddUsersToOrgGroupWSRequest:
-      type: object
-      description: Request to add users to an organization group.
-      properties:
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuids:
-          type:
-          - array
-          - 'null'
-          description: List of user UUIDs to add to the group
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_CreateAccessControlCredentialByHexValueAndTypeWSRequest:
-      type: object
-      description: Request to create an access control credential by hex value and type.
-      properties:
-        credentialType:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End date in epoch seconds (exclusive)
-          example: 1672531200
-        hexValue:
-          type:
-          - string
-          - 'null'
-          description: Hex value of the credential
-          example: 1234567890ABCDEF
-        littleEndian:
-          type:
-          - boolean
-          - 'null'
-          description: Only needed when creating Wiegand credentials
-        numValueBits:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Only needed when creating Wiegand credentials
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start date in epoch seconds (inclusive)
-          example: 1640995200
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_CreateStandardCsnCredentialWSResponse:
-      type: object
-      description: Response for standard CSN credential creation.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_CreateWiegandH10304CredentialWSRequest:
-      type: object
-      description: Request to create a H10304 Wiegand credential.
-      properties:
-        cardNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Card number
-          example: 456789
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End date in epoch seconds (exclusive)
-          example: 1672531200
-        facilityCode:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Facility code
-          example: 123
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start date in epoch seconds (inclusive)
-          example: 1640995200
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Group_FindOrgGroupsByUserMembershipWSRequest:
-      type: object
-      description: Request to find organization groups by user membership.
-      properties:
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_UnsuspendAccessControlCredentialWSRequest:
-      type: object
-      description: Request to unsuspend an access control credential.
-      properties:
-        credentialUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessrevocation_DeleteLocationAccessRevocationWSResponse:
-      type: object
-      description: Response for location access revocation deletion.
-    Accesscontrol_UnlockAccessControlledDoorWSRequest:
-      type: object
-      description: Request to unlock an access controlled door.
-      properties:
-        accessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByGroupWSResponse:
-      type: object
-      description: Response containing location access revocations for a group.
-      properties:
-        accessRevocations:
-          type:
-          - array
-          - 'null'
-          description: List of location access revocations
-          items:
-            $ref: '#/components/schemas/LocationAccessRevocationType'
+        group:
+          $ref: '#/components/schemas/OrgGroupType'
     Accesscontrol_credentials_CreateWiegandCredentialWSRequest:
       type: object
       description: Request to create a Wiegand credential.
@@ -4612,32 +3458,139 @@ components:
           example: '123456789'
         wiegandFormat:
           $ref: '#/components/schemas/WiegandFormatEnumType'
-    Accesscontrol_credentials_BaseUnlockAccessControlledDoorWSResponse:
-      type:
-      - object
-      - 'null'
-      discriminator:
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/Accesscontrol_UnlockAccessControlledDoorSuccessWSResponse'
-      - $ref: '#/components/schemas/Accesscontrol_UnlockAccessControlledDoorErrorWSResponse'
-      properties:
-        type:
-          $ref: '#/components/schemas/BasicResponseEnumType'
-    Accesscontrol_credentials_FindCredentialHistoryByCredentialValueWSResponse:
+    Accesscontrol_credentials_FindAccessControlCredentialByUsersWSRequest:
       type: object
-      description: Response containing credential history found by credential value.
+      description: Request to find access control credentials by multiple users.
       properties:
-        credentials:
+        filter:
+          $ref: '#/components/schemas/CredentialQueryFilter'
+        userUuids:
           type:
           - array
           - 'null'
-          description: List of credential history records
+          description: Set of user UUIDs to search for
           items:
-            $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_GetStandardCsnCredentialDetailsWSResponse:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+    OrgGroupType:
       type: object
-      description: Response containing standard CSN credential details.
+      description: Guest management host group
+      properties:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        description:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/OrgGroupEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_AssignAccessControlCredentialWSResponse:
+      type: object
+      description: Response for assigning an access control credential to a user.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_accessrevocation_CreateAccessRevocationWSResponse:
+      type: object
+      description: Response for location access revocation creation.
+      properties:
+        accessRevocation:
+          $ref: '#/components/schemas/LocationAccessRevocationType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        expiredACDLicensesDoorUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of expired ACD license door UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        unassignedACDLicensesDoorUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of unassigned ACD license door UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Accesscontrol_credentials_CreateWiegandCredentialWSResponse:
+      type: object
+      description: Response for Wiegand credential creation.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    WiegandFormatEnumType:
+      type: string
+      enum:
+      - H10301
+      - D10202
+      - H10304
+      - H10302
+      - HID_CORP1000_STD_35
+      - HID_CORP1000_STD_48
+      - WIEGAND_64BIT_RAW
+      - CUSTOM
+    Accesscontrol_Create35BitCorp1000StdCredentialWSResponse:
+      type: object
       properties:
         credential:
           $ref: '#/components/schemas/AccessControlCredentialType'
@@ -4652,76 +3605,50 @@ components:
           description: List of group members
           items:
             $ref: '#/components/schemas/OrgGroupMemberType'
-    Group_UpdateOrgGroupWSResponse:
+    Accesscontrol_credentials_UnsuspendAccessControlCredentialWSRequest:
       type: object
-      description: Response containing the updated organization group.
+      description: Request to unsuspend an access control credential.
       properties:
-        group:
-          $ref: '#/components/schemas/OrgGroupType'
+        credentialUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Accesscontrol_credentials_CreateWiegandH10304CredentialWSResponse:
       type: object
       description: Response for H10304 Wiegand credential creation.
       properties:
         credential:
           $ref: '#/components/schemas/AccessControlCredentialType'
-    AccessControlCredentialWorkflowStatusEnumType:
-      type: string
-      enum:
-      - ACTIVE
-      - UNASSIGNED
-      - SUSPENDED
-      - REVOKED
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByOrgWSResponse:
-      type: object
-      description: Response containing location access revocations for an organization.
-      properties:
-        accessRevocations:
-          type:
-          - array
-          - 'null'
-          description: List of location access revocations
-          items:
-            $ref: '#/components/schemas/LocationAccessRevocationType'
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByDoorLabelWSResponse:
-      type: object
-      description: Response containing location access revocations for a door label.
-      properties:
-        accessRevocations:
-          type:
-          - array
-          - 'null'
-          description: List of location access revocations
-          items:
-            $ref: '#/components/schemas/LocationAccessRevocationType'
-    Accesscontrol_credentials_CreateRhombusSecureCsnCredentialWSResponse:
-      type: object
-      description: Response for Rhombus Secure CSN credential creation.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_DeleteUnassignedAccessControlCredentialWSResponse:
-      type: object
-      description: Response indicating successful deletion of an unassigned access control credential.
-    Accesscontrol_credentials_UpdateWiegandCredentialWSResponse:
-      type: object
-      description: Response containing the updated Wiegand credential.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_CreateWiegandD10202CredentialWSResponse:
-      type: object
-      description: Response for D10202 Wiegand credential creation.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    QrCodeStaticCredential:
+    CustomCredential:
       type:
       - object
       - 'null'
       allOf:
       - type: object
         properties:
-          formatVersion:
+          bitGroupValues:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - integer
+              - 'null'
+              format: int64
+          customFormatName:
+            type:
+            - string
+            - 'null'
+          format:
+            $ref: '#/components/schemas/WiegandFormatEnumType'
+          naturalId:
+            type:
+            - string
+            - 'null'
+          numBits:
             type:
             - integer
             - 'null'
@@ -4820,15 +3747,26 @@ components:
           - 'null'
         workflowStatus:
           $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_credentials_RevokeAccessControlCredentialWSResponse:
+    Group_FindOrgGroupsByExactNameWSResponse:
       type: object
-      description: Response containing the revoked access control credential details.
+      description: Response containing organization group found by exact name.
       properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Group_RemoveUsersFromOrgGroupWSRequest:
+        group:
+          $ref: '#/components/schemas/OrgGroupType'
+    Group_FindOrgGroupsByOrgWSResponse:
       type: object
-      description: Request to remove users from an organization group.
+      description: Response containing organization groups found by organization.
+      properties:
+        groups:
+          type:
+          - array
+          - 'null'
+          description: List of organization groups found by organization
+          items:
+            $ref: '#/components/schemas/OrgGroupType'
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByGroupWSRequest:
+      type: object
+      description: Request to find location access grants by group.
       properties:
         groupUuid:
           type:
@@ -4837,29 +3775,203 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuids:
+    Wiegand64BitRawCredentialType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          cardNumber:
+            type:
+            - integer
+            - 'null'
+            format: int64
+          format:
+            $ref: '#/components/schemas/WiegandFormatEnumType'
+      properties:
+        assigneeType:
+          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
+        assigneeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedAccessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastUsedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lowercaseHexValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        managedCredUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        note:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        value:
+          type:
+          - string
+          - 'null'
+        workflowStatus:
+          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+    Accesscontrol_credentials_FindCredentialHistoryByCredentialHexValueWSResponse:
+      type: object
+      description: Response containing credential history found by credential hex value.
+      properties:
+        credentials:
           type:
           - array
           - 'null'
-          description: List of user UUIDs to remove from the group
+          description: List of credential history records
           items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_CreateWiegandH10302CredentialWSRequest:
+            $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_credentials_FindAccessControlCredentialByGuestPassWSResponse:
       type: object
-      description: Request to create a H10302 Wiegand credential.
+      description: Response containing access control credentials found for a specific guest pass.
+      properties:
+        credentials:
+          type:
+          - array
+          - 'null'
+          description: List of access control credentials
+          items:
+            $ref: '#/components/schemas/AccessControlCredentialType'
+    Group_FindOrgGroupsByExactNameWSRequest:
+      type: object
+      description: Request to find organization groups by exact name.
+      properties:
+        groupName:
+          type:
+          - string
+          - 'null'
+          description: Case insensitive name of the group to find, if it exists
+          example: Engineering Team
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByGroupWSResponse:
+      type: object
+      description: Response containing location access revocations for a group.
+      properties:
+        accessRevocations:
+          type:
+          - array
+          - 'null'
+          description: List of location access revocations
+          items:
+            $ref: '#/components/schemas/LocationAccessRevocationType'
+    Accesscontrol_credentials_FindAccessControlCredentialByUserWSResponse:
+      type: object
+      description: Response containing access control credentials found for a specific user.
+      properties:
+        credentials:
+          type:
+          - array
+          - 'null'
+          description: List of access control credentials
+          items:
+            $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_accessgrant_GetLocationAccessGrantWSRequest:
+      type: object
+      description: Request to get a location access grant by UUID.
+      properties:
+        accessGrantUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_UpdateStandardCsnCredentialWSResponse:
+      type: object
+      description: Response containing the updated standard CSN credential.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_Create35BitCorp1000StdCredentialWSRequest:
+      type: object
+      description: Request to create an HID Corp1000 Standard 35 Bit credential.
       properties:
         cardNumber:
           type:
           - integer
           - 'null'
           format: int64
-          description: Card number (35-bit, no facility code)
+          description: Card number
           example: 456789
+        companyId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Company Id
+          example: 123
         endDateEpochSecExclusive:
           type:
           - integer
@@ -4881,28 +3993,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByUserWSRequest:
+    Accesscontrol_credentials_DeleteUnassignedAccessControlCredentialWSResponse:
       type: object
-      description: Request to find location access revocations by user.
-      properties:
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_DeleteAccessControlCredentialWSRequest:
-      type: object
-      description: Request to delete an access control credential.
-      properties:
-        credentialUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+      description: Response indicating successful deletion of an unassigned access control credential.
     RhombusSecureMobileType:
       type:
       - object
@@ -5048,19 +4141,120 @@ components:
           - 'null'
         workflowStatus:
           $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_credentials_DeleteUnassignedAccessControlCredentialWSRequest:
+    Accesscontrol_credentials_UpdateWiegandCredentialWSResponse:
       type: object
-      description: Request to delete an unassigned access control credential.
+      description: Response containing the updated Wiegand credential.
       properties:
-        credentialHexValue:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    StandardCsnType:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        assigneeType:
+          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
+        assigneeUuid:
           type:
           - string
           - 'null'
-          description: Hex value of the credential to delete
-          example: 1234567890ABCDEF
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByDoorLabelWSResponse:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedAccessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastUsedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lowercaseHexValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        managedCredUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        note:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        value:
+          type:
+          - string
+          - 'null'
+        workflowStatus:
+          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+    Accesscontrol_credentials_GetStandardCsnCredentialDetailsWSResponse:
       type: object
-      description: Response containing location access grants for a door label.
+      description: Response containing standard CSN credential details.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByUserWSResponse:
+      type: object
+      description: Response containing location access grants for a user.
       properties:
         accessGrants:
           type:
@@ -5069,33 +4263,140 @@ components:
           description: List of location access grants
           items:
             $ref: '#/components/schemas/LocationAccessGrantType'
-    MobileTokenOSEnum:
-      type: string
-      enum:
-      - IOS
-      - ANDROID
-    Group_FindOrgGroupsByNamePrefixWSResponse:
+    Accesscontrol_credentials_FindCredentialHistoryByCredentialHexValueWSRequest:
       type: object
-      description: Response containing organization groups found by name prefix.
+      description: Request to find credential history by credential hex value.
       properties:
-        groups:
+        credentialHexValue:
+          type:
+          - string
+          - 'null'
+          description: Hex value of the credential to search for
+          example: 1234567890ABCDEF
+        filter:
+          $ref: '#/components/schemas/CredentialQueryFilter'
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledElevatorLandingWSResponse:
+      type: object
+      description: Response containing location access revocations for an access controlled elevator landing.
+      properties:
+        accessRevocations:
           type:
           - array
           - 'null'
-          description: List of organization groups found by name prefix
+          description: List of location access revocations
           items:
-            $ref: '#/components/schemas/OrgGroupType'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationAndUserWSRequest:
+            $ref: '#/components/schemas/LocationAccessRevocationType'
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledDoorWSRequest:
       type: object
-      description: Request to find location access grants by location and user.
+      description: Request to find location access revocations by access controlled door.
       properties:
-        locationUuid:
+        accessControlledDoorUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_accessrevocation_DeleteLocationAccessRevocationWSResponse:
+      type: object
+      description: Response for location access revocation deletion.
+    Accesscontrol_credentials_RevokeAccessControlCredentialWSResponse:
+      type: object
+      description: Response containing the revoked access control credential details.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByAccessControlledElevatorLandingWSRequest:
+      type: object
+      description: Request to find location access grants by access controlled elevator landing.
+      properties:
+        accessControlledElevatorLandingUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_UpdateRhombusSecureCsnCredentialWSRequest:
+      type: object
+      description: Request to update a Rhombus Secure CSN credential.
+      properties:
+        credentialUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Accesscontrol_accessgrant_GetLocationAccessGrantWSResponse:
+      type: object
+      description: Response containing a location access grant.
+      properties:
+        accessGrant:
+          $ref: '#/components/schemas/LocationAccessGrantType'
+    Group_FindOrgGroupsByNamePrefixWSRequest:
+      type: object
+      description: Request to find organization groups by name prefix.
+      properties:
+        groupNamePrefix:
+          type:
+          - string
+          - 'null'
+          description: Name prefix to search for groups
+          example: Eng
+    Accesscontrol_accessgrant_DeleteLocationAccessGrantWSRequest:
+      type: object
+      description: Request to delete a location access grant.
+      properties:
+        accessGrantUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_Create48BitCorp1000StdCredentialWSRequest:
+      type: object
+      description: Request to create an HID Corp1000 Standard 48 Bit credential.
+      properties:
+        cardNumber:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Card number
+          example: 456789
+        companyId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Company Id
+          example: 123
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End date in epoch seconds (exclusive)
+          example: 1672531200
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in epoch seconds (inclusive)
+          example: 1640995200
         userUuid:
           type:
           - string
@@ -5103,10 +4404,85 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByUserWSRequest:
-      type: object
-      description: Request to find location access grants by user.
+    PinCredential:
+      type:
+      - object
+      - 'null'
+      allOf: []
       properties:
+        assigneeType:
+          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
+        assigneeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedAccessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastUsedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lowercaseHexValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        managedCredUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        note:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
         userUuid:
           type:
           - string
@@ -5114,11 +4490,24 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationWSRequest:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        value:
+          type:
+          - string
+          - 'null'
+        workflowStatus:
+          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+    Accesscontrol_UnlockAccessControlledDoorWSRequest:
       type: object
-      description: Request to find location access grants by location.
+      description: Request to unlock an access controlled door.
       properties:
-        locationUuid:
+        accessControlledDoorUuid:
           type:
           - string
           - 'null'
@@ -5156,87 +4545,217 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    SecureTokenAlgorithmEnum:
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByOrgWSRequest:
+      type: object
+      description: Request to find location access revocations by organization.
+    MobileTokenOSEnum:
       type: string
       enum:
-      - AN10922_AES128
-    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByGroupWSRequest:
+      - IOS
+      - ANDROID
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByOrgWSRequest:
       type: object
-      description: Request to find location access revocations by group.
+      description: Request to find location access grants by organization.
+    Accesscontrol_credentials_FindCredentialHistoryByCredentialValueWSRequest:
+      type: object
+      description: Request to find credential history by credential value.
       properties:
-        groupUuid:
+        credentialType:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        credentialValue:
+          type:
+          - string
+          - 'null'
+          description: Credential value to search for
+          example: '123456789'
+        filter:
+          $ref: '#/components/schemas/CredentialQueryFilter'
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationWSRequest:
+      type: object
+      description: Request to find location access grants by location.
+      properties:
+        locationUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByAccessControlledDoorWSRequest:
+    Accesscontrol_credentials_UpdateWiegandCredentialWSRequest:
       type: object
-      description: Request to find location access grants by access controlled door.
+      description: Request to update a Wiegand credential.
       properties:
-        accessControlledDoorUuid:
+        credentialUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    RhombusSecureMobileFeature:
-      type:
-      - object
-      - 'null'
-      properties:
-        settings:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RhombusSecureMobileFeatureSetting'
-        status:
-          $ref: '#/components/schemas/RhombusSecureMobileFeatureStatusEnum'
-    Group_DeleteOrgGroupWSRequest:
-      type: object
-      description: Request to delete an organization group.
-      properties:
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_UnsuspendAccessControlCredentialWSResponse:
-      type: object
-      description: Response containing the unsuspended access control credential details.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_AssignAccessControlCredentialWSResponse:
-      type: object
-      description: Response for assigning an access control credential to a user.
-      properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_credentials_CreateWiegand64BitRawCredentialWSRequest:
-      type: object
-      description: Request to create a 64-bit raw Wiegand credential.
-      properties:
         endDateEpochSecExclusive:
           type:
           - integer
           - 'null'
           format: int64
-          description: End date in epoch seconds (exclusive)
-          example: 1672531200
         startDateEpochSecInclusive:
           type:
           - integer
           - 'null'
           format: int64
-          description: Start date in epoch seconds (inclusive)
-          example: 1640995200
+    RhombusSecureMobileFeatureSetting:
+      type:
+      - object
+      - 'null'
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/RhombusSecureMobileFeatureSettingStatusEnum'
+        value:
+          type:
+          - string
+          - 'null'
+    Accesscontrol_credentials_UpdateStandardCsnCredentialWSRequest:
+      type: object
+      description: Request to update a standard CSN credential.
+      properties:
+        credentialUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByAccessControlledDoorWSResponse:
+      type:
+      - object
+      - 'null'
+      description: Response containing location access grants for an access controlled door.
+      properties:
+        accessGrants:
+          type:
+          - array
+          - 'null'
+          description: List of location access grants
+          items:
+            $ref: '#/components/schemas/LocationAccessGrantType'
+    WiegandH10304Credential:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          cardNumber:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          facilityCode:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          format:
+            $ref: '#/components/schemas/WiegandFormatEnumType'
+          nonParityValue:
+            type:
+            - string
+            - 'null'
+      properties:
+        assigneeType:
+          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
+        assigneeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedAccessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastUsedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lowercaseHexValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        managedCredUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        note:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
         userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
           type:
           - string
           - 'null'
@@ -5247,29 +4766,106 @@ components:
           type:
           - string
           - 'null'
-          description: Credential value
-          example: '1234567890123456'
-    RhombusSecureMobileFeatureStatusEnum:
+        workflowStatus:
+          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+    AccessGrantModeEnum:
       type: string
       enum:
-      - OPT_OUT
-      - UNAVAILABLE
-      - OPTIMAL
-      - INHIBITED
-      - UNKNOWN
-    OrgGroupType:
+      - GUEST_PASS_INDIVIDUAL
+      - DEFAULT
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByUserWSRequest:
       type: object
-      description: Guest management host group
+      description: Request to find location access grants by user.
       properties:
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_AssignAccessControlCredentialWSRequest:
+      type: object
+      description: Request to assign an access control credential to a user.
+      properties:
+        credentialHexValue:
+          type:
+          - string
+          - 'null'
+          description: Hex value of the credential
+          example: 1234567890ABCDEF
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Group_FindAllUsersForOrgGroupWSRequest:
+      type: object
+      description: Request to find all users for an organization group.
+      properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LocationAccessRevocationType:
+      type: object
+      description: The access revocation to update
+      properties:
+        accessControlledDoorUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        accessControlledElevatorLandingUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
         createdAtMillis:
           type:
           - integer
           - 'null'
           format: int64
-        description:
+        doorLabelIds:
           type:
-          - string
+          - array
           - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+          uniqueItems: true
+        groupUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
         locationUuid:
           type:
           - string
@@ -5288,13 +4884,39 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/OrgGroupEnumType'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sortKey:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        storedInS3:
+          type:
+          - boolean
+          - 'null'
         updatedAtMillis:
           type:
           - integer
           - 'null'
           format: int64
+        userUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
         uuid:
           type:
           - string
@@ -5302,24 +4924,578 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_Create48BitCorp1000StdWSResponse:
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByDoorLabelWSResponse:
       type: object
+      description: Response containing location access revocations for a door label.
       properties:
-        credential:
-          $ref: '#/components/schemas/AccessControlCredentialType'
-    Group_CreateOrgGroupWSResponse:
-      type: object
-      description: Response for organization group creation.
-      properties:
-        group:
-          $ref: '#/components/schemas/OrgGroupType'
-        groupMembers:
+        accessRevocations:
           type:
           - array
           - 'null'
-          description: List of group members if optionally added when creating the group
+          description: List of location access revocations
           items:
-            $ref: '#/components/schemas/OrgGroupMemberType'
+            $ref: '#/components/schemas/LocationAccessRevocationType'
+    RhombusSecureCsnType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          algorithm:
+            $ref: '#/components/schemas/SecureTokenAlgorithmEnum'
+          baseKeyIdentifier:
+            type:
+            - integer
+            - 'null'
+            format: int32
+      properties:
+        assigneeType:
+          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
+        assigneeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedAccessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastUsedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lowercaseHexValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        managedCredUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        note:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        value:
+          type:
+          - string
+          - 'null'
+        workflowStatus:
+          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+    Accesscontrol_credentials_CreateWiegand64BitRawCredentialWSResponse:
+      type: object
+      description: Response for 64-bit raw Wiegand credential creation.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_credentials_UnsuspendAccessControlCredentialWSResponse:
+      type: object
+      description: Response containing the unsuspended access control credential details.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_credentials_CreateWiegandH10304CredentialWSRequest:
+      type: object
+      description: Request to create a H10304 Wiegand credential.
+      properties:
+        cardNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Card number
+          example: 456789
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End date in epoch seconds (exclusive)
+          example: 1672531200
+        facilityCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Facility code
+          example: 123
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in epoch seconds (inclusive)
+          example: 1640995200
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    QrCodeStaticCredential:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          formatVersion:
+            type:
+            - integer
+            - 'null'
+            format: int32
+      properties:
+        assigneeType:
+          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
+        assigneeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedAccessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastUsedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lowercaseHexValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        managedCredUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        note:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        value:
+          type:
+          - string
+          - 'null'
+        workflowStatus:
+          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+    Group_DeleteOrgGroupWSResponse:
+      type: object
+      description: Response indicating successful deletion of an organization group.
+    Accesscontrol_accessgrant_UpdateAccessGrantWSRequest:
+      type: object
+      description: Request to update a location access grant.
+      properties:
+        accessGrant:
+          $ref: '#/components/schemas/LocationAccessGrantType'
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByUserWSResponse:
+      type: object
+      description: Response containing location access revocations for a user.
+      properties:
+        accessRevocations:
+          type:
+          - array
+          - 'null'
+          description: List of location access revocations
+          items:
+            $ref: '#/components/schemas/LocationAccessRevocationType'
+    Accesscontrol_credentials_FindAccessControlCredentialByOrgWSRequest:
+      type: object
+      description: Request to find access control credentials by organization.
+      properties:
+        filter:
+          $ref: '#/components/schemas/CredentialQueryFilter'
+    Accesscontrol_accessrevocation_CreateAccessRevocationWSRequest:
+      type: object
+      description: Request to create a location access revocation.
+      properties:
+        accessRevocation:
+          $ref: '#/components/schemas/LocationAccessRevocationType'
+    Accesscontrol_accessgrant_DeleteLocationAccessGrantWSResponse:
+      type: object
+      description: Response for location access grant deletion.
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationWSResponse:
+      type: object
+      description: Response containing location access grants for a location.
+      properties:
+        accessGrants:
+          type:
+          - array
+          - 'null'
+          description: List of location access grants
+          items:
+            $ref: '#/components/schemas/LocationAccessGrantType'
+    Accesscontrol_credentials_FindCredentialHistoryByUserWSRequest:
+      type: object
+      description: Request to find credential history by user.
+      properties:
+        filter:
+          $ref: '#/components/schemas/CredentialQueryFilter'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Wiegand35BitCorp1000Credential:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          cardNumber:
+            type:
+            - integer
+            - 'null'
+            format: int64
+          companyId:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          format:
+            $ref: '#/components/schemas/WiegandFormatEnumType'
+      properties:
+        assigneeType:
+          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
+        assigneeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedAccessControlledDoorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastUsedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        lastUsedLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lowercaseHexValue:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        managedCredUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        note:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        value:
+          type:
+          - string
+          - 'null'
+        workflowStatus:
+          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
+    Accesscontrol_credentials_DeleteUnassignedAccessControlCredentialWSRequest:
+      type: object
+      description: Request to delete an unassigned access control credential.
+      properties:
+        credentialHexValue:
+          type:
+          - string
+          - 'null'
+          description: Hex value of the credential to delete
+          example: 1234567890ABCDEF
+    Accesscontrol_credentials_DeleteAccessControlCredentialWSRequest:
+      type: object
+      description: Request to delete an access control credential.
+      properties:
+        credentialUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Group_FindOrgGroupsByUserMembershipWSResponse:
+      type: object
+      description: Response containing organization groups found by user membership.
+      properties:
+        groups:
+          type:
+          - array
+          - 'null'
+          description: List of organization groups found by user membership
+          items:
+            $ref: '#/components/schemas/OrgGroupType'
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByOrgWSResponse:
+      type: object
+      description: Response containing location access revocations for an organization.
+      properties:
+        accessRevocations:
+          type:
+          - array
+          - 'null'
+          description: List of location access revocations
+          items:
+            $ref: '#/components/schemas/LocationAccessRevocationType'
+    Accesscontrol_credentials_GetRhombusSecureCsnCredentialDetailsWSRequest:
+      type: object
+      description: Request to get Rhombus Secure CSN credential details.
+      properties:
+        credentialUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByAccessControlledDoorWSResponse:
+      type: object
+      description: Response containing location access revocations for an access controlled door.
+      properties:
+        accessRevocations:
+          type:
+          - array
+          - 'null'
+          description: List of location access revocations
+          items:
+            $ref: '#/components/schemas/LocationAccessRevocationType'
+    Accesscontrol_accessgrant_UpdateAccessGrantWSResponse:
+      type: object
+      description: Response for location access grant update.
+      properties:
+        accessGrant:
+          $ref: '#/components/schemas/LocationAccessGrantType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        expiredACDLicensesDoorUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of expired ACD license door UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        unassignedACDLicensesDoorUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of unassigned ACD license door UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    AccessControlCredentialWorkflowStatusEnumType:
+      type: string
+      enum:
+      - ACTIVE
+      - UNASSIGNED
+      - SUSPENDED
+      - REVOKED
+    RhombusSecureMobileFeatureStatusEnum:
+      type: string
+      enum:
+      - OPT_OUT
+      - UNAVAILABLE
+      - OPTIMAL
+      - INHIBITED
+      - UNKNOWN
     WiegandH10301CredentialType:
       type:
       - object
@@ -5437,346 +5613,91 @@ components:
           - 'null'
         workflowStatus:
           $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_credentials_UpdateStandardCsnCredentialWSRequest:
+    Accesscontrol_accessrevocation_UpdateAccessRevocationWSResponse:
       type: object
-      description: Request to update a standard CSN credential.
-      properties:
-        credentialUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Group_FindOrgGroupMembershipsByUserWSResponse:
-      type: object
-      description: Response containing organization group memberships for a user.
-      properties:
-        userGroupMemberships:
-          type:
-          - array
-          - 'null'
-          description: List of user group memberships
-          items:
-            $ref: '#/components/schemas/OrgGroupMemberType'
-    LocationAccessGrantType:
-      type: object
-      description: The access grant to update
-      properties:
-        accessControlledDoorUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        accessControlledElevatorLandingUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        doorLabelIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-          uniqueItems: true
-        groupUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        locationGuestPassUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        mode:
-          $ref: '#/components/schemas/AccessGrantModeEnum'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        sortKey:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        storedInS3:
-          type:
-          - boolean
-          - 'null'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_SuspendAccessControlCredentialWSRequest:
-      type: object
-      description: Request to suspend an access control credential.
-      properties:
-        credentialUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Group_FindOrgGroupsByExactNameWSRequest:
-      type: object
-      description: Request to find organization groups by exact name.
-      properties:
-        groupName:
-          type:
-          - string
-          - 'null'
-          description: Case insensitive name of the group to find, if it exists
-          example: Engineering Team
-    Group_FindOrgGroupsByUserMembershipWSResponse:
-      type: object
-      description: Response containing organization groups found by user membership.
-      properties:
-        groups:
-          type:
-          - array
-          - 'null'
-          description: List of organization groups found by user membership
-          items:
-            $ref: '#/components/schemas/OrgGroupType'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationAndUserWSResponse:
-      type: object
-      description: Response containing location access grants for a location and user.
-      properties:
-        accessGrants:
-          type:
-          - array
-          - 'null'
-          description: List of location access grants
-          items:
-            $ref: '#/components/schemas/LocationAccessGrantType'
-    Accesscontrol_credentials_FindAccessControlCredentialByOrgWSResponse:
-      type: object
-      description: Response containing access control credentials found for an organization.
-      properties:
-        credentials:
-          type:
-          - array
-          - 'null'
-          description: List of access control credentials
-          items:
-            $ref: '#/components/schemas/AccessControlCredentialType'
-    Accesscontrol_accessrevocation_CreateAccessRevocationWSRequest:
-      type: object
-      description: Request to create a location access revocation.
+      description: Response for location access revocation update operation.
       properties:
         accessRevocation:
           $ref: '#/components/schemas/LocationAccessRevocationType'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByOrgWSRequest:
-      type: object
-      description: Request to find location access grants by organization.
-    Accesscontrol_credentials_FindCredentialHistoryByCredentialValueWSRequest:
-      type: object
-      description: Request to find credential history by credential value.
-      properties:
-        credentialType:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        credentialValue:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          description: Credential value to search for
-          example: '123456789'
-        filter:
-          $ref: '#/components/schemas/CredentialQueryFilter'
-    CustomCredential:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          bitGroupValues:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              type:
-              - integer
-              - 'null'
-              format: int64
-          customFormatName:
+        expiredACDLicensesDoorUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of expired ACD license door UUIDs
+          items:
             type:
             - string
             - 'null'
-          format:
-            $ref: '#/components/schemas/WiegandFormatEnumType'
-          naturalId:
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        unassignedACDLicensesDoorUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of unassigned ACD license door UUIDs
+          items:
             type:
             - string
             - 'null'
-          numBits:
-            type:
-            - integer
-            - 'null'
-            format: int32
-      properties:
-        assigneeType:
-          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
-        assigneeUuid:
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        warningMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdAtMillis:
+    Accesscontrol_credentials_CreateWiegandH10302CredentialWSResponse:
+      type: object
+      description: Response for H10302 Wiegand credential creation.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_credentials_DeleteAccessControlCredentialWSResponse:
+      type: object
+      description: Response indicating successful deletion of an access control credential.
+    Accesscontrol_credentials_CreateWiegandD10202CredentialWSRequest:
+      type: object
+      description: Request to create a D10202 Wiegand credential.
+      properties:
+        cardNumber:
           type:
           - integer
           - 'null'
-          format: int64
+          format: int32
+          description: Card number
+          example: 456789
         endDateEpochSecExclusive:
           type:
           - integer
           - 'null'
           format: int64
-        lastUsedAccessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lastUsedAtMillis:
+          description: End date in epoch seconds (exclusive)
+          example: 1672531200
+        facilityCode:
           type:
           - integer
           - 'null'
-          format: int64
-        lastUsedLocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lowercaseHexValue:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        managedCredUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        note:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+          format: int32
+          description: Facility code
+          example: 123
         startDateEpochSecInclusive:
           type:
           - integer
           - 'null'
           format: int64
-        type:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
+          description: Start date in epoch seconds (inclusive)
+          example: 1640995200
         userUuid:
           type:
           - string
@@ -5784,39 +5705,17 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
+    Accesscontrol_credentials_RevokeAccessControlCredentialWSRequest:
+      type: object
+      description: Request to revoke an access control credential.
+      properties:
+        credentialUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        value:
-          type:
-          - string
-          - 'null'
-        workflowStatus:
-          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Group_FindOrgGroupsByOrgWSResponse:
-      type: object
-      description: Response containing organization groups found by organization.
-      properties:
-        groups:
-          type:
-          - array
-          - 'null'
-          description: List of organization groups found by organization
-          items:
-            $ref: '#/components/schemas/OrgGroupType'
-    Group_DeleteOrgGroupWSResponse:
-      type: object
-      description: Response indicating successful deletion of an organization group.
-    Accesscontrol_accessgrant_UpdateAccessGrantWSRequest:
-      type: object
-      description: Request to update a location access grant.
-      properties:
-        accessGrant:
-          $ref: '#/components/schemas/LocationAccessGrantType'
     Accesscontrol_credentials_UpdateRhombusSecureMobileCredentialWSRequest:
       type: object
       description: Request to update a Rhombus Secure mobile credential.
@@ -5838,23 +5737,34 @@ components:
           - integer
           - 'null'
           format: int64
-    Accesscontrol_credentials_RevokeAccessControlCredentialWSRequest:
+    Accesscontrol_credentials_FindCredentialHistoryByUserWSResponse:
       type: object
-      description: Request to revoke an access control credential.
+      description: Response containing credential history found for a specific user.
       properties:
-        credentialUuid:
+        credentials:
           type:
-          - string
+          - array
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_credentials_FindCredentialHistoryByUserWSRequest:
+          description: List of credential history records
+          items:
+            $ref: '#/components/schemas/AccessControlCredentialType'
+    Group_CreateOrgGroupWSResponse:
       type: object
-      description: Request to find credential history by user.
+      description: Response for organization group creation.
       properties:
-        filter:
-          $ref: '#/components/schemas/CredentialQueryFilter'
+        group:
+          $ref: '#/components/schemas/OrgGroupType'
+        groupMembers:
+          type:
+          - array
+          - 'null'
+          description: List of group members if optionally added when creating the group
+          items:
+            $ref: '#/components/schemas/OrgGroupMemberType'
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByUserWSRequest:
+      type: object
+      description: Request to find location access revocations by user.
+      properties:
         userUuid:
           type:
           - string
@@ -5862,6 +5772,29 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Group_UpdateOrgGroupWSRequest:
+      type: object
+      description: Request to update an organization group.
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: New description for the group
+          example: Updated software engineering team members
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: New name for the group
+          example: Updated Engineering Team
     Accesscontrol_accessgrant_CreateAccessGrantWSResponse:
       type: object
       description: Response containing the created location access grant.
@@ -5906,94 +5839,17 @@ components:
           type:
           - string
           - 'null'
-    RhombusSecureCsnType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          algorithm:
-            $ref: '#/components/schemas/SecureTokenAlgorithmEnum'
-          baseKeyIdentifier:
-            type:
-            - integer
-            - 'null'
-            format: int32
+    Accesscontrol_accessgrant_FindLocationAccessGrantsByLocationAndUserWSRequest:
+      type: object
+      description: Request to find location access grants by location and user.
       properties:
-        assigneeType:
-          $ref: '#/components/schemas/AccessControlCredentialAssigneeTypeEnum'
-        assigneeUuid:
+        locationUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        endDateEpochSecExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedAccessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lastUsedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        lastUsedLocationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lowercaseHexValue:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-        managedCredUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        note:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startDateEpochSecInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          $ref: '#/components/schemas/AccessControlCredentialEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
         userUuid:
           type:
           - string
@@ -6001,22 +5857,14 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        value:
-          type:
-          - string
-          - 'null'
-        workflowStatus:
-          $ref: '#/components/schemas/AccessControlCredentialWorkflowStatusEnumType'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByDoorLabelWSRequest:
+    OrgGroupEnumType:
+      type: string
+      enum:
+      - RHOMBUS_ACCESS_CONTROL
+      - GUEST_MANAGEMENT_HOST
+    Accesscontrol_accessrevocation_FindLocationAccessRevocationsByDoorLabelWSRequest:
       type: object
-      description: Request to find location access grants by door label.
+      description: Request to find location access revocations by door label.
       properties:
         doorLabelId:
           type:
@@ -6035,23 +5883,175 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_accessgrant_GetLocationAccessGrantWSResponse:
+    Accesscontrol_credentials_CreateAccessControlCredentialByHexValueAndTypeWSResponse:
       type: object
-      description: Response containing a location access grant.
+      description: Response for access control credential creation by hex value and type.
       properties:
-        accessGrant:
-          $ref: '#/components/schemas/LocationAccessGrantType'
-    Accesscontrol_accessgrant_FindLocationAccessGrantsByAccessControlledElevatorLandingWSRequest:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Group_AddUsersToOrgGroupWSRequest:
       type: object
-      description: Request to find location access grants by access controlled elevator landing.
+      description: Request to add users to an organization group.
       properties:
-        accessControlledElevatorLandingUuid:
+        groupUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuids:
+          type:
+          - array
+          - 'null'
+          description: List of user UUIDs to add to the group
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_credentials_CreateRhombusSecureCsnCredentialWSResponse:
+      type: object
+      description: Response for Rhombus Secure CSN credential creation.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    RhombusSecureMobileFeatureSettingStatusEnum:
+      type: string
+      enum:
+      - OPTIMAL
+      - INHIBITED
+    Accesscontrol_accessrevocation_GetLocationAccessRevocationWSResponse:
+      type: object
+      description: Response containing a location access revocation.
+      properties:
+        accessRevocation:
+          $ref: '#/components/schemas/LocationAccessRevocationType'
+    RhombusSecureMobileFeature:
+      type:
+      - object
+      - 'null'
+      properties:
+        settings:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusSecureMobileFeatureSetting'
+        status:
+          $ref: '#/components/schemas/RhombusSecureMobileFeatureStatusEnum'
+    Accesscontrol_credentials_UpdateRhombusSecureMobileCredentialWSResponse:
+      type: object
+      description: Response containing the updated Rhombus Secure mobile credential.
+      properties:
+        credential:
+          $ref: '#/components/schemas/AccessControlCredentialType'
+    Accesscontrol_UnlockAccessControlledDoorErrorWSResponse:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          errorType:
+            $ref: '#/components/schemas/Accesscontrol_UnlockAccessControlledDoorEnumType'
+      description: Error response for unlock access controlled door operation.
+      properties:
+        type:
+          $ref: '#/components/schemas/BasicResponseEnumType'
+    Accesscontrol_UnlockAccessControlledDoorSuccessWSResponse:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      description: Success response for unlock access controlled door operation.
+      properties:
+        type:
+          $ref: '#/components/schemas/BasicResponseEnumType'
+    BasicResponseEnumType:
+      type: string
+      enum:
+      - ERROR
+      - SUCCESS
+    AccessControlCredentialAssigneeTypeEnum:
+      type: string
+      enum:
+      - USER
+      - GUEST_PASS
+    Accesscontrol_credentials_CreateAccessControlCredentialByHexValueAndTypeWSRequest:
+      type: object
+      description: Request to create an access control credential by hex value and type.
+      properties:
+        credentialType:
+          $ref: '#/components/schemas/AccessControlCredentialEnumType'
+        endDateEpochSecExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End date in epoch seconds (exclusive)
+          example: 1672531200
+        hexValue:
+          type:
+          - string
+          - 'null'
+          description: Hex value of the credential
+          example: 1234567890ABCDEF
+        littleEndian:
+          type:
+          - boolean
+          - 'null'
+          description: Only needed when creating Wiegand credentials
+        numValueBits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Only needed when creating Wiegand credentials
+        startDateEpochSecInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in epoch seconds (inclusive)
+          example: 1640995200
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Group_AddUsersToOrgGroupWSResponse:
+      type: object
+      description: Response for adding users to an organization group.
+      properties:
+        groupMembers:
+          type:
+          - array
+          - 'null'
+          description: Users added to the group successfully from the original request
+          items:
+            $ref: '#/components/schemas/OrgGroupMemberType'
+    AccessControlCredentialEnumType:
+      type: string
+      enum:
+      - STANDARD_CSN
+      - RHOMBUS_SECURE_CSN
+      - RHOMBUS_SECURE_MOBILE
+      - APPLE_WALLET_DESFIRE
+      - PIN_CODE
+      - WIEGAND_H10301
+      - WIEGAND_H10304
+      - WIEGAND_H10302
+      - WIEGAND_D10202
+      - WIEGAND_64BIT_RAW
+      - HID_CORP1000_STD_35
+      - HID_CORP1000_STD_48
+      - QR_CODE_STATIC
+      - CUSTOM
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

@@ -139,58 +139,10 @@ paths:
       - TvOs Config Webservice
 components:
   schemas:
-    TvOsConfigType:
+    Tvos_UpdateTvOsConfigWsResponse:
       type: object
-      description: tvOs configuration to update
+      description: Response object for updating a tvOs configuration.
       properties:
-        limitedVideoWallUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Tvos_UpdateTvOsConfigWsRequest:
-      type: object
-      description: Request object for updating a tvOs configuration.
-      properties:
-        config:
-          $ref: '#/components/schemas/TvOsConfigType'
-    Tvos_GetTvOsConfigWsRequest:
-      type: object
-      description: Request object for getting a specific tvOs configuration.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Tvos_GetTvOsConfigWsResponse:
-      type: object
-      description: Response object containing a specific tvOs configuration.
-      properties:
-        config:
-          $ref: '#/components/schemas/TvOsConfigType'
         error:
           type:
           - boolean
@@ -203,13 +155,12 @@ components:
           type:
           - string
           - 'null'
-    Tvos_GetTvOsConfigsForOrgWsRequest:
+    Tvos_GetTvOsConfigWsResponse:
       type: object
-      description: Request object for getting all tvOs configurations for the organization.
-    Tvos_UpdateTvOsConfigWsResponse:
-      type: object
-      description: Response object for updating a tvOs configuration.
+      description: Response object containing a specific tvOs configuration.
       properties:
+        config:
+          $ref: '#/components/schemas/TvOsConfigType'
         error:
           type:
           - boolean
@@ -245,6 +196,55 @@ components:
           type:
           - string
           - 'null'
+    Tvos_GetTvOsConfigsForOrgWsRequest:
+      type: object
+      description: Request object for getting all tvOs configurations for the organization.
+    Tvos_UpdateTvOsConfigWsRequest:
+      type: object
+      description: Request object for updating a tvOs configuration.
+      properties:
+        config:
+          $ref: '#/components/schemas/TvOsConfigType'
+    TvOsConfigType:
+      type: object
+      description: tvOs configuration to update
+      properties:
+        limitedVideoWallUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Tvos_GetTvOsConfigWsRequest:
+      type: object
+      description: Request object for getting a specific tvOs configuration.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

@@ -139,54 +139,11 @@ paths:
       - ClaimKey Webservice
 components:
   schemas:
-    License_claimkey_GetClaimKeyWSResponse:
+    License_claimkey_FindClaimKeysByOrgWSRequest:
       type: object
       properties:
-        claimKey:
-          $ref: '#/components/schemas/BaseClaimKey'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    License_claimkey_FindClaimKeysByOrgWSResponse:
-      type: object
-      properties:
-        claimKeys:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BaseClaimKey'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    License_claimkey_GetClaimKeyWSRequest:
-      type: object
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+        claimKeySearchFilter:
+          $ref: '#/components/schemas/ClaimKeySearchFilter'
     License_claimkey_FindClaimKeysByClientOrgWSResponse:
       type: object
       properties:
@@ -208,18 +165,11 @@ components:
           type:
           - string
           - 'null'
-    License_claimkey_FindClaimKeysByClientOrgWSRequest:
-      type: object
-      properties:
-        claimKeySearchFilter:
-          $ref: '#/components/schemas/ClaimKeySearchFilter'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClaimKeyTypeEnum:
+      type: string
+      enum:
+      - NEW
+      - RENEWAL
     ClaimKeyReturnEvent:
       type: object
       properties:
@@ -237,38 +187,89 @@ components:
           - string
           - 'null'
           format: date-time
-    ClaimKeyExpirationEmailStateEnum:
+    License_claimkey_GetClaimKeyWSResponse:
+      type: object
+      properties:
+        claimKey:
+          $ref: '#/components/schemas/BaseClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ClaimKeyStateEnum:
       type: string
       enum:
-      - NINETY_DAY_EMAIL_SUCCEEDED
-      - NINETY_DAY_EMAIL_FAILED
-      - SIXTY_DAY_EMAIL_SUCCEEDED
-      - SIXTY_DAY_EMAIL_FAILED
-      - FOURTY_FIVE_DAY_EMAIL_SUCCEEDED
-      - FOURTY_FIVE_DAY_EMAIL_FAILED
-      - THIRTY_DAY_EMAIL_SUCCEEDED
-      - THIRTY_DAY_EMAIL_FAILED
-      - TWENTY_ONE_DAY_EMAIL_SUCCEEDED
-      - TWENTY_ONE_DAY_EMAIL_FAILED
-      - FOURTEEN_DAY_EMAIL_SUCCEEDED
-      - FOURTEEN_DAY_EMAIL_FAILED
-      - TEN_DAY_EMAIL_SUCCEEDED
-      - TEN_DAY_EMAIL_FAILED
-      - FIVE_DAY_EMAIL_SUCCEEDED
-      - FIVE_DAY_EMAIL_FAILED
-      - FOUR_DAY_EMAIL_SUCCEEDED
-      - FOUR_DAY_EMAIL_FAILED
-      - THREE_DAY_EMAIL_SUCCEEDED
-      - THREE_DAY_EMAIL_FAILED
-      - TWO_DAY_EMAIL_SUCCEEDED
-      - TWO_DAY_EMAIL_FAILED
-      - ONE_DAY_EMAIL_SUCCEEDED
-      - ONE_DAY_EMAIL_FAILED
-      - ZERO_DAY_EMAIL_SUCCEEDED
-      - ZERO_DAY_EMAIL_FAILED
-      - GRACE_PERIOD_EMAILS_IN_PROGRESS
-      - GRACE_PERIOD_EMAILS_COMPLETED
-      - UNKNOWN
+      - CREATED
+      - CLAIMING_PENDING
+      - CLAIMING_IN_PROGRESS
+      - CLAIMING_FAILED
+      - CLAIMED
+      - EXPIRED_UNCLAIMED
+      - EXPIRED
+      - RETURNED
+      - RENEWED
+    ClaimKeySearchFilter:
+      type: object
+      properties:
+        excludeUnclaimed:
+          type:
+          - boolean
+          - 'null'
+        excludedStates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimKeyStateEnum'
+          uniqueItems: true
+        includedStates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClaimKeyStateEnum'
+          uniqueItems: true
+    License_claimkey_FindClaimKeysByClientOrgWSRequest:
+      type: object
+      properties:
+        claimKeySearchFilter:
+          $ref: '#/components/schemas/ClaimKeySearchFilter'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_claimkey_FindClaimKeysByOrgWSResponse:
+      type: object
+      properties:
+        claimKeys:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BaseClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     BaseClaimKey:
       type: object
       discriminator:
@@ -353,49 +354,48 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    ClaimKeySearchFilter:
+    License_claimkey_GetClaimKeyWSRequest:
       type: object
       properties:
-        excludeUnclaimed:
+        uuid:
           type:
-          - boolean
+          - string
           - 'null'
-        excludedStates:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClaimKeyStateEnum'
-          uniqueItems: true
-        includedStates:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClaimKeyStateEnum'
-          uniqueItems: true
-    ClaimKeyStateEnum:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClaimKeyExpirationEmailStateEnum:
       type: string
       enum:
-      - CREATED
-      - CLAIMING_PENDING
-      - CLAIMING_IN_PROGRESS
-      - CLAIMING_FAILED
-      - CLAIMED
-      - EXPIRED_UNCLAIMED
-      - EXPIRED
-      - RETURNED
-      - RENEWED
-    License_claimkey_FindClaimKeysByOrgWSRequest:
-      type: object
-      properties:
-        claimKeySearchFilter:
-          $ref: '#/components/schemas/ClaimKeySearchFilter'
-    ClaimKeyTypeEnum:
-      type: string
-      enum:
-      - NEW
-      - RENEWAL
+      - NINETY_DAY_EMAIL_SUCCEEDED
+      - NINETY_DAY_EMAIL_FAILED
+      - SIXTY_DAY_EMAIL_SUCCEEDED
+      - SIXTY_DAY_EMAIL_FAILED
+      - FOURTY_FIVE_DAY_EMAIL_SUCCEEDED
+      - FOURTY_FIVE_DAY_EMAIL_FAILED
+      - THIRTY_DAY_EMAIL_SUCCEEDED
+      - THIRTY_DAY_EMAIL_FAILED
+      - TWENTY_ONE_DAY_EMAIL_SUCCEEDED
+      - TWENTY_ONE_DAY_EMAIL_FAILED
+      - FOURTEEN_DAY_EMAIL_SUCCEEDED
+      - FOURTEEN_DAY_EMAIL_FAILED
+      - TEN_DAY_EMAIL_SUCCEEDED
+      - TEN_DAY_EMAIL_FAILED
+      - FIVE_DAY_EMAIL_SUCCEEDED
+      - FIVE_DAY_EMAIL_FAILED
+      - FOUR_DAY_EMAIL_SUCCEEDED
+      - FOUR_DAY_EMAIL_FAILED
+      - THREE_DAY_EMAIL_SUCCEEDED
+      - THREE_DAY_EMAIL_FAILED
+      - TWO_DAY_EMAIL_SUCCEEDED
+      - TWO_DAY_EMAIL_FAILED
+      - ONE_DAY_EMAIL_SUCCEEDED
+      - ONE_DAY_EMAIL_FAILED
+      - ZERO_DAY_EMAIL_SUCCEEDED
+      - ZERO_DAY_EMAIL_FAILED
+      - GRACE_PERIOD_EMAILS_IN_PROGRESS
+      - GRACE_PERIOD_EMAILS_COMPLETED
+      - UNKNOWN
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

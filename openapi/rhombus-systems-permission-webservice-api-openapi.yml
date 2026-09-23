@@ -370,245 +370,12 @@ paths:
       - Permission Webservice
 components:
   schemas:
-    Permission_GetPartnerPermissionGroupWSResponse:
-      type: object
-      description: Response object containing partner permission groups and client permission group mappings.
-      properties:
-        clientPermissionGroupMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/UserPermissionGroupType'
-          description: Map of client UUIDs to their permission group types
-        clientPermissionsGroupMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/UserPermissionGroupType'
-          writeOnly: true
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        groupMembership:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of permission group UUIDs to list of user UUIDs in each group
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-          description: Map of permission group UUIDs to list of user UUIDs in each group
-        permissionGroups:
-          type:
-          - array
-          - 'null'
-          description: List of partner permission groups
-          items:
-            $ref: '#/components/schemas/PartnerUserPermissionGroupType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_CreatePermissionGroupWSResponse:
-      type: object
-      description: Response object containing the UUID of the created permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_UpdatePartnerPermissionGroupWSRequest:
-      type: object
-      description: Request object for updating an existing partner permission group.
-      properties:
-        partnerPermissionGroup:
-          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
-    Permission_UpdatePermissionGroupWSRequest:
-      type: object
-      description: Request object for updating an existing permission group.
-      properties:
-        userPermissionGroup:
-          $ref: '#/components/schemas/UserPermissionGroupType'
-    Permission_GetPermissionsForCurrentPartnerWSResponse:
-      type: object
-      description: Response object containing partner permission information including functionality lists, client permissions, and group details.
-      properties:
-        assignablePermissionGroups:
-          type:
-          - array
-          - 'null'
-          description: Set of partner permission group UUIDs the user can assign to other users
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clientFunctionalityList:
-          type:
-          - array
-          - 'null'
-          description: List of client functionalities the user has access to
-          items:
-            $ref: '#/components/schemas/FunctionalityEnum'
-        clientPermissionMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PartnerPermissionEnum'
-          description: Map of client UUIDs to partner permission levels
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        functionalityList:
-          type:
-          - array
-          - 'null'
-          description: List of partner functionalities the user has access to
-          items:
-            $ref: '#/components/schemas/PartnerFunctionalityEnum'
-        permissionGroupName:
-          type:
-          - string
-          - 'null'
-          description: Name of the partner user's permission group
-          example: Partner Administrator
-        superAdmin:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the partner user has super admin privileges
-          example: false
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_CreatePartnerPermissionGroupWSResponse:
-      type: object
-      description: Response object containing the UUID of the created partner permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_DeletePartnerPermissionGroupWSResponse:
-      type: object
-      description: Response object for deleting a partner permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_DeletePermissionGroupWSResponse:
-      type: object
-      description: Response object for deleting a permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    FunctionalityEnum:
+    PermissionEnum:
       type: string
       enum:
-      - DEVICE_ADMINISTRATION
-      - ORG_ADMINISTRATION
-      - AUTH_ADMINISTRATION
-      - FIRMWARE_ADMINISTRATION
-      - DOOR_ACCESS_ADMINISTRATION
-      - CAMERA_ADMINISTRATION
-      - REGISTER_DEVICES
-      - DELETE_DEVICES
-      - LOCATION_ADMINISTRATION
-      - POLICY_ADMINISTRATION
-      - USER_ADMINISTRATION
-      - REPORT_ADMINISTRATION
-      - NOTIFICATION_ADMINISTRATION
-      - LICENSE_ADMINISTRATION
-      - RECEIVE_EMAILS
-      - MANAGE_FACES
-      - MANAGE_LICENSEPLATES
-      - API_ADMINISTRATION
-      - INTEGRATION_ADMINISTRATION
-      - DATA_EXFILTRATION
-      - ALERT_MONITORING_ADMINISTRATION
-      - ALERT_MONITORING_VIEWONLY
-      - ALERT_MONITORING_OPERATOR
-      - GUEST_MANAGEMENT_ADMINISTRATION
-      - GUEST_MANAGEMENT_VIEWONLY
-      - CLIP_MANAGEMENT
-      - VIEW_SAVED_VIDEO
-      - VIEW_AND_MANAGE_SAVED_VIDEO
-      - CLLM_ADMINISTRATION
-      - UNKNOWN
+      - READONLY
+      - ADMIN
+      - LIVEONLY
     Permission_GetPermissionGroupsWSResponse:
       type: object
       description: Response object containing permission groups and membership information for the organization.
@@ -666,6 +433,355 @@ components:
           type:
           - string
           - 'null'
+    Permission_GetPermissionGroupsWSRequest:
+      type: object
+      description: Request object for getting all permission groups in the organization.
+    FunctionalityEnum:
+      type: string
+      enum:
+      - DEVICE_ADMINISTRATION
+      - ORG_ADMINISTRATION
+      - AUTH_ADMINISTRATION
+      - FIRMWARE_ADMINISTRATION
+      - DOOR_ACCESS_ADMINISTRATION
+      - CAMERA_ADMINISTRATION
+      - REGISTER_DEVICES
+      - DELETE_DEVICES
+      - LOCATION_ADMINISTRATION
+      - POLICY_ADMINISTRATION
+      - USER_ADMINISTRATION
+      - REPORT_ADMINISTRATION
+      - NOTIFICATION_ADMINISTRATION
+      - LICENSE_ADMINISTRATION
+      - RECEIVE_EMAILS
+      - MANAGE_FACES
+      - MANAGE_LICENSEPLATES
+      - API_ADMINISTRATION
+      - INTEGRATION_ADMINISTRATION
+      - DATA_EXFILTRATION
+      - ALERT_MONITORING_ADMINISTRATION
+      - ALERT_MONITORING_VIEWONLY
+      - ALERT_MONITORING_OPERATOR
+      - GUEST_MANAGEMENT_ADMINISTRATION
+      - GUEST_MANAGEMENT_VIEWONLY
+      - CLIP_MANAGEMENT
+      - VIEW_SAVED_VIDEO
+      - VIEW_AND_MANAGE_SAVED_VIDEO
+      - CLLM_ADMINISTRATION
+      - UNKNOWN
+    Permission_UpdatePermissionGroupWSRequest:
+      type: object
+      description: Request object for updating an existing permission group.
+      properties:
+        userPermissionGroup:
+          $ref: '#/components/schemas/UserPermissionGroupType'
+    Permission_CreatePermissionGroupWSRequest:
+      type: object
+      description: Request object for creating a new permission group.
+      properties:
+        userPermissionGroup:
+          $ref: '#/components/schemas/UserPermissionGroupType'
+    Permission_GetPartnerPermissionGroupsWSRequest:
+      type: object
+      description: Request object for getting partner permission groups for the organization.
+    Permission_CreatePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object containing the UUID of the created partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PartnerUserPermissionGroupType:
+      type: object
+      description: Updated partner permission group configuration
+      properties:
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clientAssignablePermissionGroupsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+            uniqueItems: true
+        clientFunctionalityList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        clientPermissionMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PartnerPermissionEnum'
+        description:
+          type:
+          - string
+          - 'null'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PartnerFunctionalityEnum'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Permission_GetPermissionsForCurrentPartnerWSRequest:
+      type: object
+      description: Request object for getting permissions for the current partner user.
+    Permission_DeletePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for deleting a partner permission group.
+      properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Permission_DeletePermissionGroupWSResponse:
+      type: object
+      description: Response object for deleting a permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_GetPermissionsForCurrentUserWSResponse:
+      type: object
+      description: Response object containing comprehensive permission information for the current user including functionality, device, location, and granular access maps.
+      properties:
+        accessControlLocationAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: Map of access control location UUIDs to permission levels
+        accessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: 'Deprecated: Map of device UUIDs to permission levels (use deviceAccessMap instead)'
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          description: Set of permission group UUIDs the user can assign to other users
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        componentCompositeGranularAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/PermissionEnum'
+            description: Map of component composite UUIDs to granular functionality permission maps. Functionality keys are LocationFunctionality values (normalized from ComponentCompositeFunctionality via ComponentCompositeFunctionality#getLocationFunctionality).
+          description: Map of component composite UUIDs to granular functionality permission maps. Functionality keys are LocationFunctionality values (normalized from ComponentCompositeFunctionality via ComponentCompositeFunctionality#getLocationFunctionality).
+        deviceAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: Map of device UUIDs to permission levels
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        installer:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user has installer privileges
+          example: false
+        locationAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PermissionEnum'
+          description: Map of location UUIDs to permission levels
+        locationGranularAccessMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/PermissionEnum'
+            description: Map of location UUIDs to granular functionality permission maps
+          description: Map of location UUIDs to granular functionality permission maps
+        permissionGroupName:
+          type:
+          - string
+          - 'null'
+          description: Name of the user's permission group
+          example: Administrator
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the user has super admin privileges
+          example: false
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_UpdatePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object for updating a partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_GetPermissionsForCurrentUserWSRequest:
+      type: object
+      description: Request object for getting permissions for the current user.
+    Permission_CreatePermissionGroupWSResponse:
+      type: object
+      description: Response object containing the UUID of the created permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_CreatePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for creating a new partner permission group.
+      properties:
+        partnerPermissionGroup:
+          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
+    Permission_UpdatePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for updating an existing partner permission group.
+      properties:
+        partnerPermissionGroup:
+          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
+    PartnerPermissionEnum:
+      type: string
+      enum:
+      - DEFAULT
+      - CUSTOM
     UserPermissionGroupType:
       type: object
       description: Updated permission group configuration
@@ -790,9 +906,122 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Permission_GetPermissionsForCurrentPartnerWSRequest:
+    Permission_GetPermissionsForCurrentPartnerWSResponse:
       type: object
-      description: Request object for getting permissions for the current partner user.
+      description: Response object containing partner permission information including functionality lists, client permissions, and group details.
+      properties:
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          description: Set of partner permission group UUIDs the user can assign to other users
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clientFunctionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of client functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        clientPermissionMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PartnerPermissionEnum'
+          description: Map of client UUIDs to partner permission levels
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of partner functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/PartnerFunctionalityEnum'
+        permissionGroupName:
+          type:
+          - string
+          - 'null'
+          description: Name of the partner user's permission group
+          example: Partner Administrator
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the partner user has super admin privileges
+          example: false
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_GetPartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object containing partner permission groups and client permission group mappings.
+      properties:
+        clientPermissionGroupMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserPermissionGroupType'
+          description: Map of client UUIDs to their permission group types
+        clientPermissionsGroupMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserPermissionGroupType'
+          writeOnly: true
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        groupMembership:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of permission group UUIDs to list of user UUIDs in each group
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          description: Map of permission group UUIDs to list of user UUIDs in each group
+        permissionGroups:
+          type:
+          - array
+          - 'null'
+          description: List of partner permission groups
+          items:
+            $ref: '#/components/schemas/PartnerUserPermissionGroupType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Permission_DeletePermissionGroupWSRequest:
       type: object
       description: Request object for deleting a permission group.
@@ -804,262 +1033,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    PermissionEnum:
-      type: string
-      enum:
-      - READONLY
-      - ADMIN
-      - LIVEONLY
-    PartnerUserPermissionGroupType:
-      type: object
-      description: Updated partner permission group configuration
-      properties:
-        assignablePermissionGroups:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clientAssignablePermissionGroupsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-            uniqueItems: true
-        clientFunctionalityList:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FunctionalityEnum'
-        clientPermissionMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PartnerPermissionEnum'
-        description:
-          type:
-          - string
-          - 'null'
-        functionalityList:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PartnerFunctionalityEnum'
-        mutable:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        superAdmin:
-          type:
-          - boolean
-          - 'null'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Permission_GetPermissionsForCurrentUserWSResponse:
-      type: object
-      description: Response object containing comprehensive permission information for the current user including functionality, device, location, and granular access maps.
-      properties:
-        accessControlLocationAccessMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PermissionEnum'
-          description: Map of access control location UUIDs to permission levels
-        accessMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PermissionEnum'
-          description: 'Deprecated: Map of device UUIDs to permission levels (use deviceAccessMap instead)'
-        assignablePermissionGroups:
-          type:
-          - array
-          - 'null'
-          description: Set of permission group UUIDs the user can assign to other users
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        componentCompositeGranularAccessMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/PermissionEnum'
-            description: Map of component composite UUIDs to granular functionality permission maps. Functionality keys are LocationFunctionality values (normalized from ComponentCompositeFunctionality via ComponentCompositeFunctionality#getLocationFunctionality).
-          description: Map of component composite UUIDs to granular functionality permission maps. Functionality keys are LocationFunctionality values (normalized from ComponentCompositeFunctionality via ComponentCompositeFunctionality#getLocationFunctionality).
-        deviceAccessMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PermissionEnum'
-          description: Map of device UUIDs to permission levels
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        functionalityList:
-          type:
-          - array
-          - 'null'
-          description: List of functionalities the user has access to
-          items:
-            $ref: '#/components/schemas/FunctionalityEnum'
-        installer:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the user has installer privileges
-          example: false
-        locationAccessMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PermissionEnum'
-          description: Map of location UUIDs to permission levels
-        locationGranularAccessMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/PermissionEnum'
-            description: Map of location UUIDs to granular functionality permission maps
-          description: Map of location UUIDs to granular functionality permission maps
-        permissionGroupName:
-          type:
-          - string
-          - 'null'
-          description: Name of the user's permission group
-          example: Administrator
-        superAdmin:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the user has super admin privileges
-          example: false
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_CreatePartnerPermissionGroupWSRequest:
-      type: object
-      description: Request object for creating a new partner permission group.
-      properties:
-        partnerPermissionGroup:
-          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
-    Permission_CreatePermissionGroupWSRequest:
-      type: object
-      description: Request object for creating a new permission group.
-      properties:
-        userPermissionGroup:
-          $ref: '#/components/schemas/UserPermissionGroupType'
-    Permission_GetPartnerPermissionGroupsWSRequest:
-      type: object
-      description: Request object for getting partner permission groups for the organization.
-    Permission_GetPermissionsForCurrentUserWSRequest:
-      type: object
-      description: Request object for getting permissions for the current user.
-    Permission_GetPermissionGroupsWSRequest:
-      type: object
-      description: Request object for getting all permission groups in the organization.
-    Permission_UpdatePermissionGroupWSResponse:
-      type: object
-      description: Response object for updating a permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_DeletePartnerPermissionGroupWSRequest:
-      type: object
-      description: Request object for deleting a partner permission group.
-      properties:
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Permission_UpdatePartnerPermissionGroupWSResponse:
-      type: object
-      description: Response object for updating a partner permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     PartnerFunctionalityEnum:
       type: string
       enum:
@@ -1080,11 +1053,38 @@ components:
       - DATA_EXFILTRATION
       - CLIP_MANAGEMENT
       - UNKNOWN
-    PartnerPermissionEnum:
-      type: string
-      enum:
-      - DEFAULT
-      - CUSTOM
+    Permission_UpdatePermissionGroupWSResponse:
+      type: object
+      description: Response object for updating a permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_DeletePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object for deleting a partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

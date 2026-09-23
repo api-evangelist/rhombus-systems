@@ -337,16 +337,63 @@ paths:
       - Scene Query Webservice
 components:
   schemas:
-    Trigger:
+    Scenequery_CreatePromptConfigurationWSResponse:
       type: object
+      description: Response object for creating a prompt configuration.
       properties:
-        activity:
-          $ref: '#/components/schemas/TriggerActivityEnum'
-        value:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-    ConnectAudioDeviceToMobileAppActionType:
+        promptConfiguration:
+          $ref: '#/components/schemas/PromptConfigurationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RegionPolygonType:
+      type: object
+      properties:
+        coordinates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionCoordinateType'
+    PromptTypeEnum:
+      type: string
+      enum:
+      - COUNT
+      - PERCENT
+      - BOOLEAN
+      - TEXT
+    Scenequery_UpdatePromptConfigurationWSRequest:
+      type: object
+      description: Request object for updating a prompt configuration.
+      properties:
+        promptConfiguration:
+          $ref: '#/components/schemas/PromptConfigurationType'
+    Scenequery_DeletePromptConfigurationWSResponse:
+      type: object
+      description: Response object for deleting a prompt configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ConnectAudioDeviceToPhoneNumberActionType:
       type: object
       properties:
         audioDeviceUuid:
@@ -365,33 +412,26 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        targetUserUuids:
+        optionalGreeting:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    PointType:
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+    Trigger:
       type: object
       properties:
-        x:
+        activity:
+          $ref: '#/components/schemas/TriggerActivityEnum'
+        value:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-        y:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Scenequery_AdHocPromptWSRequest:
+    Scenequery_OptimizationContextType:
       type: object
-      description: Request object for adhoc prompt.
+      description: Context for prompt optimization including the camera frame, original prompt, and expected answer.
       properties:
         deviceFacetUuid:
           type:
@@ -400,26 +440,44 @@ components:
           format: DeviceFacetUuid
           description: RUUID with optional appended facet information
           example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        promptUuid:
+        expectedAnswer:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+          description: Expected answer the prompt should produce
+        optionalContext:
+          type:
+          - string
+          - 'null'
+          description: Optional additional context for the optimization
+        originalAnswer:
+          type:
+          - string
+          - 'null'
+          description: Original answer produced by the LLM (must be a boolean, number, or percentage)
+        originalPrompt:
+          type:
+          - string
+          - 'null'
+          description: Original prompt that was used
+        region:
+          $ref: '#/components/schemas/Scenequery_RegionPolygonType'
         timestampMs:
           type:
           - integer
           - 'null'
           format: int64
-          description: Timestamp in milliseconds for the trigger
-          example: 1640995200000
-    AccessStateOverrideExpirationStrategyEnum:
-      type: string
-      enum:
-      - TIME_DELAY
-      - TIME_OF_DAY_LOCAL
-      - NONE
+          description: Timestamp in milliseconds for the camera frame to use
+    Scenequery_RegionPolygonType:
+      type: object
+      description: Optional region polygon to crop the camera frame
+      properties:
+        coordinates:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Scenequery_RegionCoordinateType'
     Scenequery_GetPromptConfigurationWSResponse:
       type: object
       description: Response object for getting a prompt configuration.
@@ -438,62 +496,19 @@ components:
           type:
           - string
           - 'null'
-    ChangeComponentCompositeAccessStateActionType:
+    RemoteDoorUnlockActionType:
       type: object
       properties:
-        accessState:
-          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
-        alwaysCreateOverrideIfNoFirstIn:
-          type:
-          - boolean
-          - 'null'
-        componentCompositeUuid:
+        doorId:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        expirationStrategy:
-          $ref: '#/components/schemas/AccessStateOverrideExpirationStrategyEnum'
-        expireTimeDelaySeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        expireTimeOfDayLocalSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        useFirstInRulesIfPossible:
-          type:
-          - boolean
-          - 'null'
-        version:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          readOnly: true
-    Scenequery_UpdatePromptConfigurationWSResponse:
-      type: object
-      description: Response object for updating a prompt configuration.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        placeId:
           type:
           - string
           - 'null'
-        promptConfiguration:
-          $ref: '#/components/schemas/PromptConfigurationType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+        system:
+          $ref: '#/components/schemas/RemoteDoorUnlockSystemEnum'
     ReportLookbackTypeEnum:
       type: string
       enum:
@@ -501,95 +516,6 @@ components:
       - PREVIOUS_DAY
       - PREVIOUS_WEEK
       - PREVIOUS_MONTH
-    EnableDisableAudioRecordActionType:
-      type: object
-      properties:
-        audioDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        enable:
-          type:
-          - boolean
-          - 'null'
-    IntegrationNotificationActionType:
-      type: object
-      properties:
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        notificationEntity:
-          type:
-          - string
-          - 'null'
-        notificationTarget:
-          type:
-          - string
-          - 'null'
-    NoOpAction:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    CheckCondition:
-      type:
-      - object
-      - 'null'
-      properties:
-        operator:
-          $ref: '#/components/schemas/OPERATOREnum'
-        value:
-          type:
-          - string
-          - 'null'
-    OPERATOREnum:
-      type: string
-      enum:
-      - GT
-      - LT
-      - LTE
-      - GTE
-      - EQ
-      - CONTAINS
-    SensorValType:
-      type: object
-      properties:
-        sensorBoolean:
-          type:
-          - boolean
-          - 'null'
-        sensorDouble:
-          type:
-          - number
-          - 'null'
-          format: double
-        sensorLong:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    CreateAlarmTriggerTypeEnum:
-      type: string
-      enum:
-      - PANIC_BUTTON
-      - ALARM_INTEGRATION
-    ComponentRelayOutputTypeEnum:
-      type: string
-      enum:
-      - TRANSIENT
-      - STEADY
     ActivityEnum:
       type: string
       enum:
@@ -813,31 +739,155 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    CancelLoopingAudioPlaybackActionType:
+    ToastCheckInfo:
       type: object
       properties:
-        _audioDevices:
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+    CustomRuleAction:
+      type: object
+      properties:
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+    ChangeComponentCompositeAccessStateActionType:
+      type: object
+      properties:
+        accessState:
+          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
+        alwaysCreateOverrideIfNoFirstIn:
+          type:
+          - boolean
+          - 'null'
+        componentCompositeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        expirationStrategy:
+          $ref: '#/components/schemas/AccessStateOverrideExpirationStrategyEnum'
+        expireTimeDelaySeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        expireTimeOfDayLocalSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        useFirstInRulesIfPossible:
+          type:
+          - boolean
+          - 'null'
+        version:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+    CreateAlarmTriggerTypeEnum:
+      type: string
+      enum:
+      - PANIC_BUTTON
+      - ALARM_INTEGRATION
+    ComponentRelayOutputTypeEnum:
+      type: string
+      enum:
+      - TRANSIENT
+      - STEADY
+    AccessControlledDoorStateEnumType:
+      type: string
+      enum:
+      - UNLOCKED
+      - ACCESS_CONTROLLED
+    ScheduledAction:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/RuleActionType'
+        backoffMinutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        backoffSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    Pose:
+      type: object
+      properties:
+        orientation:
           type:
           - array
           - 'null'
           items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        audioDevices:
+            type: number
+            format: double
+            description: Serialized as [x, y, z, w]
+          maxItems: 4
+          minItems: 4
+        position:
           type:
           - array
           - 'null'
           items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+            type: number
+            format: double
+            description: Serialized as [x, y, z]
+          maxItems: 3
+          minItems: 3
     RuleActionType:
       type: object
       description: The action to take when this lockdown rule is triggered.
@@ -936,296 +986,6 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/WebhookActionType'
-    ToastOrderIdType:
-      type: object
-      properties:
-        employeeName:
-          type:
-          - string
-          - 'null'
-        guid:
-          type:
-          - string
-          - 'null'
-        locationName:
-          type:
-          - string
-          - 'null'
-        restaurantName:
-          type:
-          - string
-          - 'null'
-        toastCheckInfo:
-          $ref: '#/components/schemas/ToastCheckInfo'
-    ActivateLocationLockdownActionType:
-      type: object
-      properties:
-        locationLockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    CustomRuleAction:
-      type: object
-      properties:
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        path:
-          type:
-          - string
-          - 'null'
-    ExampleImage:
-      type: object
-      properties:
-        image:
-          type:
-          - string
-          - 'null'
-        imageUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        label:
-          type:
-          - string
-          - 'null'
-    GenericRelayStateEnumType:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - UNKNOWN
-    AudioPlaybackActionType:
-      type: object
-      properties:
-        audioClipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        audioGateways:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        loopDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Scenequery_CreatePromptConfigurationWSResponse:
-      type: object
-      description: Response object for creating a prompt configuration.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        promptConfiguration:
-          $ref: '#/components/schemas/PromptConfigurationType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Scenequery_FindAllPromptConfigurationsWSResponse:
-      type: object
-      description: Response object for finding all prompt configurations.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        promptConfigurations:
-          type:
-          - array
-          - 'null'
-          description: List of all prompt configurations
-          items:
-            $ref: '#/components/schemas/PromptConfigurationType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Scenequery_UpdatePromptConfigurationWSRequest:
-      type: object
-      description: Request object for updating a prompt configuration.
-      properties:
-        promptConfiguration:
-          $ref: '#/components/schemas/PromptConfigurationType'
-    CameraConfiguration:
-      type: object
-      properties:
-        cameraUuid:
-          type:
-          - string
-          - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        checkConditionOverride:
-          $ref: '#/components/schemas/CheckCondition'
-        exampleImages:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ExampleImage'
-        promptExtension:
-          type:
-          - string
-          - 'null'
-        promptOverride:
-          type:
-          - string
-          - 'null'
-        region:
-          $ref: '#/components/schemas/RegionPolygonType'
-        scheduledActions:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ScheduledAction'
-    ReportLookbackUnitEnum:
-      type: string
-      enum:
-      - HOURS
-      - DAYS
-      - WEEKS
-    Scenequery_SelectiveUpdatePromptConfigurationWSRequest:
-      type: object
-      description: Request object for selectively updating a prompt configuration.
-      properties:
-        active:
-          type:
-          - boolean
-          - 'null'
-          description: Optional active status for the prompt configuration
-        cameraConfigurations:
-          type:
-          - array
-          - 'null'
-          description: List of camera configurations for the prompt
-          items:
-            $ref: '#/components/schemas/CameraConfiguration'
-        checkCondition:
-          $ref: '#/components/schemas/CheckCondition'
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description for the prompt configuration
-        minuteTriggerRate:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Optional minute trigger rate for the configuration
-        name:
-          type:
-          - string
-          - 'null'
-          description: Optional name for the prompt configuration
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        prompt:
-          type:
-          - string
-          - 'null'
-          description: Optional prompt text for the configuration
-        promptType:
-          $ref: '#/components/schemas/Scenequery_PromptType'
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        shortName:
-          type:
-          - string
-          - 'null'
-          description: Optional short name for the prompt configuration
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ActivityEventData:
-      type: object
-      properties:
-        activities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-        boundingBoxes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClipBoundingBoxType'
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Scenequery_FindAllPromptConfigurationsWSRequest:
-      type: object
-      description: Request object for finding all prompt configurations.
     TriggerComponentRelayActionType:
       type: object
       properties:
@@ -1263,105 +1023,25 @@ components:
           - 'null'
           format: int32
           readOnly: true
-    DeviceTypeEnum:
+    GenericRelayStateEnumType:
       type: string
       enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
+      - ACTIVE
+      - INACTIVE
       - UNKNOWN
-    Scenequery_ChatMessageType:
-      type: object
-      description: A single chat message with a role and text content.
-      properties:
-        role:
-          type:
-          - string
-          - 'null'
-          description: Role of the message sender (user or model)
-        text:
-          type:
-          - string
-          - 'null'
-          description: Text content of the message
-    PromptTypeEnum:
+    OPERATOREnum:
       type: string
       enum:
-      - COUNT
-      - PERCENT
-      - BOOLEAN
-      - TEXT
-    NavigationTypeEnum:
-      type: string
-      enum:
-      - ROUTE
-      - PATROL
-      - WAYPOINT
-      - POSE
-    Scenequery_PromptOptimizationChatWSResponse:
-      type: object
-      description: Response object for prompt optimization chat.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        explanation:
-          type:
-          - string
-          - 'null'
-          description: Explanation of the optimization
-        optimizedPrompt:
-          type:
-          - string
-          - 'null'
-          description: The optimized prompt
-        questionForUser:
-          type:
-          - string
-          - 'null'
-          description: Follow-up question for the user, if any
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Scenequery_PromptOptimizationChatWSRequest:
-      type: object
-      description: Request object for prompt optimization chat.
-      properties:
-        context:
-          $ref: '#/components/schemas/Scenequery_OptimizationContextType'
-        currentMessage:
-          type:
-          - string
-          - 'null'
-          description: Current user message
-        history:
-          type:
-          - array
-          - 'null'
-          description: Chat history messages
-          items:
-            $ref: '#/components/schemas/Scenequery_ChatMessageType'
-    EmailAuditLogExportActionType:
+      - GT
+      - LT
+      - LTE
+      - GTE
+      - EQ
+      - CONTAINS
+    CancelLoopingAudioPlaybackActionType:
       type: object
       properties:
-        includeActions:
+        _audioDevices:
           type:
           - array
           - 'null'
@@ -1369,20 +1049,10 @@ components:
             type:
             - string
             - 'null'
-        includeApiInvocation:
-          type:
-          - boolean
-          - 'null'
-        lookbackCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lookbackType:
-          $ref: '#/components/schemas/ReportLookbackTypeEnum'
-        lookbackUnit:
-          $ref: '#/components/schemas/ReportLookbackUnitEnum'
-        recipientEmails:
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        audioDevices:
           type:
           - array
           - 'null'
@@ -1390,163 +1060,9 @@ components:
             type:
             - string
             - 'null'
-        timezoneId:
-          type:
-          - string
-          - 'null'
-    ConnectAudioDeviceToPhoneNumberActionType:
-      type: object
-      properties:
-        audioDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        doorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        optionalGreeting:
-          type:
-          - string
-          - 'null'
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-    SceneQueryReportEvent:
-      type: object
-      description: Scene query report event from the triggered prompt
-      properties:
-        checkCondition:
-          type:
-          - boolean
-          - 'null'
-        image:
-          type:
-          - string
-          - 'null'
-        imageOffsets:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - integer
-            - 'null'
-            format: int32
-        prompt:
-          type:
-          - string
-          - 'null'
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        value:
-          type:
-          - string
-          - 'null'
-    Scenequery_TriggerPromptWSResponse:
-      type: object
-      description: Response object for triggering a prompt.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        event:
-          $ref: '#/components/schemas/SceneQueryReportEvent'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ThirdPartyAudioPlaybackActionType:
-      type: object
-      properties:
-        audioFileName:
-          type:
-          - string
-          - 'null'
-        ipAddress:
-          type:
-          - string
-          - 'null'
-        loopDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        password:
-          type:
-          - string
-          - 'null'
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        proxyDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        username:
-          type:
-          - string
-          - 'null'
-    RobotActionTypeEnum:
-      type: string
-      enum:
-      - DEPLOY
-      - UNKNOWN
-    RobotAction:
-      type: object
-      discriminator:
-        mapping:
-          DEPLOY: '#/components/schemas/DeployRobotAction'
-          UNKNOWN: '#/components/schemas/NoOpAction'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/DeployRobotAction'
-      - $ref: '#/components/schemas/NoOpAction'
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    Scenequery_RegionCoordinateType:
-      type: object
-      properties:
-        x:
-          type:
-          - number
-          - 'null'
-          format: float
-        y:
-          type:
-          - number
-          - 'null'
-          format: float
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
     IntegrationCommandActionType:
       type: object
       properties:
@@ -1561,22 +1077,103 @@ components:
           format: int32
         integration:
           $ref: '#/components/schemas/IntegrationEnum'
-    EmergencyContact:
+    RobotActionTypeEnum:
+      type: string
+      enum:
+      - DEPLOY
+      - UNKNOWN
+    DeployRobotAction:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          mapUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          navType:
+            $ref: '#/components/schemas/NavigationTypeEnum'
+          pose:
+            $ref: '#/components/schemas/Pose'
+          routeUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          waypointUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    CheckCondition:
+      type:
+      - object
+      - 'null'
+      properties:
+        operator:
+          $ref: '#/components/schemas/OPERATOREnum'
+        value:
+          type:
+          - string
+          - 'null'
+    WebhookActionType:
       type: object
       properties:
-        name:
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        oauthClientId:
           type:
           - string
           - 'null'
-          description: The name of the emergency contact.
-        phoneNumber:
+        oauthClientSecret:
           type:
           - string
           - 'null'
-          description: The phone number for this emergency contact.
-      required:
-      - name
-      - phoneNumber
+        oauthGrantType:
+          type:
+          - string
+          - 'null'
+        oauthScope:
+          type:
+          - string
+          - 'null'
+        oauthUrl:
+          type:
+          - string
+          - 'null'
+        webhookSecret:
+          type:
+          - string
+          - 'null'
+        webhookUrl:
+          type:
+          - string
+          - 'null'
     ClipBoundingBoxType:
       type: object
       properties:
@@ -1683,503 +1280,30 @@ components:
           type:
           - string
           - 'null'
-    RegionCoordinateType:
+    Scenequery_CreatePromptConfigurationWSRequest:
+      type: object
+      description: Request object for creating a prompt configuration.
+      properties:
+        promptConfiguration:
+          $ref: '#/components/schemas/PromptConfigurationType'
+    Scenequery_FindAllPromptConfigurationsWSRequest:
+      type: object
+      description: Request object for finding all prompt configurations.
+    ExampleImage:
       type: object
       properties:
-        x:
+        image:
           type:
-          - number
+          - string
           - 'null'
-          format: float
-        y:
-          type:
-          - number
-          - 'null'
-          format: float
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
-    ToastCheckInfo:
-      type: object
-      properties:
-        totalAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-    Scenequery_GetPromptConfigurationWSRequest:
-      type: object
-      description: Request object for getting a prompt configuration.
-      properties:
-        promptUuid:
+        imageUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    ThirdPartyStrobeSirenActionType:
-      type: object
-      properties:
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ipAddress:
-          type:
-          - string
-          - 'null'
-        lightColors:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        lightIntensity:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        lightPattern:
-          type:
-          - string
-          - 'null'
-        lightSpeed:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        password:
-          type:
-          - string
-          - 'null'
-        profileName:
-          type:
-          - string
-          - 'null'
-        proxyDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        sirenIntensity:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        sirenPattern:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-    Scenequery_SelectiveUpdatePromptConfigurationWSResponse:
-      type: object
-      description: Response object for selectively updating a prompt configuration.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    WebhookActionType:
-      type: object
-      properties:
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        oauthClientId:
-          type:
-          - string
-          - 'null'
-        oauthClientSecret:
-          type:
-          - string
-          - 'null'
-        oauthGrantType:
-          type:
-          - string
-          - 'null'
-        oauthScope:
-          type:
-          - string
-          - 'null'
-        oauthUrl:
-          type:
-          - string
-          - 'null'
-        webhookSecret:
-          type:
-          - string
-          - 'null'
-        webhookUrl:
-          type:
-          - string
-          - 'null'
-    Scenequery_RegionPolygonType:
-      type: object
-      description: Optional region polygon to crop the camera frame
-      properties:
-        coordinates:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Scenequery_RegionCoordinateType'
-    ScheduledAction:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/RuleActionType'
-        backoffMinutes:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        backoffSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ruleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    RemoteDoorUnlockSystemEnum:
-      type: string
-      enum:
-      - BRIVO
-      - OPENPATH
-      - KISI
-      - PLACEOS
-      - GENEA
-      - PDK
-      - INNER_RANGE
-      - RHOMBUS
-      - HONEYWELL_ELEMENTS
-      - UNKNOWN
-    Scenequery_OptimizationContextType:
-      type: object
-      description: Context for prompt optimization including the camera frame, original prompt, and expected answer.
-      properties:
-        deviceFacetUuid:
-          type:
-          - string
-          - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        expectedAnswer:
-          type:
-          - string
-          - 'null'
-          description: Expected answer the prompt should produce
-        optionalContext:
-          type:
-          - string
-          - 'null'
-          description: Optional additional context for the optimization
-        originalAnswer:
-          type:
-          - string
-          - 'null'
-          description: Original answer produced by the LLM (must be a boolean, number, or percentage)
-        originalPrompt:
-          type:
-          - string
-          - 'null'
-          description: Original prompt that was used
-        region:
-          $ref: '#/components/schemas/Scenequery_RegionPolygonType'
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp in milliseconds for the camera frame to use
-    Scenequery_DeletePromptConfigurationWSRequest:
-      type: object
-      description: Request object for deleting a prompt configuration.
-      properties:
-        promptUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Scenequery_PromptType:
-      type: string
-      description: Optional prompt type for the configuration
-      enum:
-      - COUNT
-      - PERCENT
-      - BOOLEAN
-      - TEXT
-    DeployRobotAction:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          mapUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          navType:
-            $ref: '#/components/schemas/NavigationTypeEnum'
-          pose:
-            $ref: '#/components/schemas/Pose'
-          routeUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          waypointUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    IntegrationEnum:
-      type: string
-      enum:
-      - AVIGILON_ALTA
-      - BOULEVARD
-      - BRIVO
-      - BUTTERFLY_MX
-      - DEVICE_INTEGRATION
-      - DICE
-      - ENVOY
-      - FLIC
-      - GENEA
-      - GOOGLE
-      - HONEYWELL_ELEMENTS
-      - GUEST_MANAGEMENT
-      - INFORMACAST
-      - INNER_RANGE
-      - KISI
-      - LUMEO
-      - MICROSOFT_TEAMS
-      - OMNIALERT
-      - OPENAI
-      - OPENTECH_ALLIANCE
-      - PIMLOC
-      - PLACE_OS
-      - PRODATAKEY
-      - SHELLY
-      - TOAST
-      - WEBHOOKS
-      - ZAPIER
-      - RAPTOR
-      - NINEONEONE_CELLULAR
-      - SLACK
-      - APERIO
-      - PAR_POS
-      - HONEYWELL_ONGUARD
-      - HONEYWELL_NETBOX
-      - SIGNATURE_API
-      - UNKNOWN
-    Pose:
-      type: object
-      properties:
-        orientation:
-          type:
-          - array
-          - 'null'
-          items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z, w]
-          maxItems: 4
-          minItems: 4
-        position:
-          type:
-          - array
-          - 'null'
-          items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z]
-          maxItems: 3
-          minItems: 3
-    AMSirenSettingsType:
-      type: object
-      properties:
-        audioGateways:
-          type:
-          - array
-          - 'null'
-          description: UUIDs of audio gateways used to play this siren.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The duration (in seconds) to loop the clip audio for the siren.
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The number of times to play the clip audio for the siren.
-      required:
-      - audioGateways
-      - clipUuid
-    TriggerActivityEnum:
-      type: string
-      enum:
-      - MOTION_HUMAN
-      - VISUAL_TAMPER
-      - MOTION
-      - FACE_ALERT
-      - POSE_ANOMALOUS
-      - MOTION_CAR
-      - LICENSEPLATE_ALERT
-      - HELMET_MISSING
-      - MASK_MISSING
-      - TAMPER
-      - PEOPLECOUNT_HIGH
-      - GUN_DETECT_EVENT
-      - HUMAN_ENTER
-      - HUMAN_EXIT
-      - CAR_ENTER
-      - CAR_EXIT
-      - AC_DB_TRIGGERED
-      - LOITER_HUMAN
-      - RECURRING_INTERVAL
-    AccessControlledDoorStateEnumType:
-      type: string
-      enum:
-      - UNLOCKED
-      - ACCESS_CONTROLLED
-    CustomLLMActionType:
-      type: object
-      properties:
-        deviceActivityEvents:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ActivityEventData'
-        deviceFacetUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        promptUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Scenequery_AdHocPromptWSResponse:
-      type: object
-      description: Response object for triggering a prompt.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        event:
-          $ref: '#/components/schemas/SceneQueryReportEvent'
-        warningMsg:
+        label:
           type:
           - string
           - 'null'
@@ -2257,6 +1381,105 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    EmailAuditLogExportActionType:
+      type: object
+      properties:
+        includeActions:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        includeApiInvocation:
+          type:
+          - boolean
+          - 'null'
+        lookbackCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lookbackType:
+          $ref: '#/components/schemas/ReportLookbackTypeEnum'
+        lookbackUnit:
+          $ref: '#/components/schemas/ReportLookbackUnitEnum'
+        recipientEmails:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        timezoneId:
+          type:
+          - string
+          - 'null'
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Scenequery_TriggerPromptWSResponse:
+      type: object
+      description: Response object for triggering a prompt.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        event:
+          $ref: '#/components/schemas/SceneQueryReportEvent'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Scenequery_ChatMessageType:
+      type: object
+      description: A single chat message with a role and text content.
+      properties:
+        role:
+          type:
+          - string
+          - 'null'
+          description: Role of the message sender (user or model)
+        text:
+          type:
+          - string
+          - 'null'
+          description: Text content of the message
+    EnableDisableAudioRecordActionType:
+      type: object
+      properties:
+        audioDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        enable:
+          type:
+          - boolean
+          - 'null'
     CreateAlarmActionType:
       type: object
       properties:
@@ -2316,22 +1539,9 @@ components:
           pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
         triggerType:
           $ref: '#/components/schemas/CreateAlarmTriggerTypeEnum'
-    RemoteDoorUnlockActionType:
+    Scenequery_AdHocPromptWSResponse:
       type: object
-      properties:
-        doorId:
-          type:
-          - string
-          - 'null'
-        placeId:
-          type:
-          - string
-          - 'null'
-        system:
-          $ref: '#/components/schemas/RemoteDoorUnlockSystemEnum'
-    Scenequery_DeletePromptConfigurationWSResponse:
-      type: object
-      description: Response object for deleting a prompt configuration.
+      description: Response object for triggering a prompt.
       properties:
         error:
           type:
@@ -2341,10 +1551,401 @@ components:
           type:
           - string
           - 'null'
+        event:
+          $ref: '#/components/schemas/SceneQueryReportEvent'
         warningMsg:
           type:
           - string
           - 'null'
+    ThirdPartyAudioPlaybackActionType:
+      type: object
+      properties:
+        audioFileName:
+          type:
+          - string
+          - 'null'
+        ipAddress:
+          type:
+          - string
+          - 'null'
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        password:
+          type:
+          - string
+          - 'null'
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        proxyDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        username:
+          type:
+          - string
+          - 'null'
+    Scenequery_AdHocPromptWSRequest:
+      type: object
+      description: Request object for adhoc prompt.
+      properties:
+        deviceFacetUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds for the trigger
+          example: 1640995200000
+    ThirdPartyStrobeSirenActionType:
+      type: object
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ipAddress:
+          type:
+          - string
+          - 'null'
+        lightColors:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        lightIntensity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        lightPattern:
+          type:
+          - string
+          - 'null'
+        lightSpeed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        password:
+          type:
+          - string
+          - 'null'
+        profileName:
+          type:
+          - string
+          - 'null'
+        proxyDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sirenIntensity:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sirenPattern:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+    Scenequery_SelectiveUpdatePromptConfigurationWSRequest:
+      type: object
+      description: Request object for selectively updating a prompt configuration.
+      properties:
+        active:
+          type:
+          - boolean
+          - 'null'
+          description: Optional active status for the prompt configuration
+        cameraConfigurations:
+          type:
+          - array
+          - 'null'
+          description: List of camera configurations for the prompt
+          items:
+            $ref: '#/components/schemas/CameraConfiguration'
+        checkCondition:
+          $ref: '#/components/schemas/CheckCondition'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description for the prompt configuration
+        minuteTriggerRate:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Optional minute trigger rate for the configuration
+        name:
+          type:
+          - string
+          - 'null'
+          description: Optional name for the prompt configuration
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        prompt:
+          type:
+          - string
+          - 'null'
+          description: Optional prompt text for the configuration
+        promptType:
+          $ref: '#/components/schemas/Scenequery_PromptType'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        shortName:
+          type:
+          - string
+          - 'null'
+          description: Optional short name for the prompt configuration
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AccessStateOverrideExpirationStrategyEnum:
+      type: string
+      enum:
+      - TIME_DELAY
+      - TIME_OF_DAY_LOCAL
+      - NONE
+    IntegrationNotificationActionType:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        notificationEntity:
+          type:
+          - string
+          - 'null'
+        notificationTarget:
+          type:
+          - string
+          - 'null'
+    NavigationTypeEnum:
+      type: string
+      enum:
+      - ROUTE
+      - PATROL
+      - WAYPOINT
+      - POSE
+    Scenequery_PromptType:
+      type: string
+      description: Optional prompt type for the configuration
+      enum:
+      - COUNT
+      - PERCENT
+      - BOOLEAN
+      - TEXT
+    Scenequery_RegionCoordinateType:
+      type: object
+      properties:
+        x:
+          type:
+          - number
+          - 'null'
+          format: float
+        y:
+          type:
+          - number
+          - 'null'
+          format: float
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    Scenequery_UpdatePromptConfigurationWSResponse:
+      type: object
+      description: Response object for updating a prompt configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        promptConfiguration:
+          $ref: '#/components/schemas/PromptConfigurationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PointType:
+      type: object
+      properties:
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    Scenequery_FindAllPromptConfigurationsWSResponse:
+      type: object
+      description: Response object for finding all prompt configurations.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        promptConfigurations:
+          type:
+          - array
+          - 'null'
+          description: List of all prompt configurations
+          items:
+            $ref: '#/components/schemas/PromptConfigurationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    AMSirenSettingsType:
+      type: object
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          description: UUIDs of audio gateways used to play this siren.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The duration (in seconds) to loop the clip audio for the siren.
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of times to play the clip audio for the siren.
+      required:
+      - audioGateways
+      - clipUuid
+    AudioPlaybackActionType:
+      type: object
+      properties:
+        audioClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
     Scenequery_TriggerPromptWSRequest:
       type: object
       description: Request object for triggering a prompt.
@@ -2388,21 +1989,420 @@ components:
           format: int64
           description: Timestamp in milliseconds for the trigger
           example: 1640995200000
-    Scenequery_CreatePromptConfigurationWSRequest:
-      type: object
-      description: Request object for creating a prompt configuration.
-      properties:
-        promptConfiguration:
-          $ref: '#/components/schemas/PromptConfigurationType'
-    RegionPolygonType:
+    EmergencyContact:
       type: object
       properties:
-        coordinates:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the emergency contact.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for this emergency contact.
+      required:
+      - name
+      - phoneNumber
+    RemoteDoorUnlockSystemEnum:
+      type: string
+      enum:
+      - BRIVO
+      - OPENPATH
+      - KISI
+      - PLACEOS
+      - GENEA
+      - PDK
+      - INNER_RANGE
+      - RHOMBUS
+      - HONEYWELL_ELEMENTS
+      - UNKNOWN
+    TriggerActivityEnum:
+      type: string
+      enum:
+      - MOTION_HUMAN
+      - VISUAL_TAMPER
+      - MOTION
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - MOTION_CAR
+      - LICENSEPLATE_ALERT
+      - HELMET_MISSING
+      - MASK_MISSING
+      - TAMPER
+      - PEOPLECOUNT_HIGH
+      - GUN_DETECT_EVENT
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - AC_DB_TRIGGERED
+      - LOITER_HUMAN
+      - RECURRING_INTERVAL
+    NoOpAction:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    SceneQueryReportEvent:
+      type: object
+      description: Scene query report event from the triggered prompt
+      properties:
+        checkCondition:
+          type:
+          - boolean
+          - 'null'
+        image:
+          type:
+          - string
+          - 'null'
+        imageOffsets:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/RegionCoordinateType'
+            type:
+            - integer
+            - 'null'
+            format: int32
+        prompt:
+          type:
+          - string
+          - 'null'
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        value:
+          type:
+          - string
+          - 'null'
+    ActivateLocationLockdownActionType:
+      type: object
+      properties:
+        locationLockdownPlanUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Scenequery_SelectiveUpdatePromptConfigurationWSResponse:
+      type: object
+      description: Response object for selectively updating a prompt configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RobotAction:
+      type: object
+      discriminator:
+        mapping:
+          DEPLOY: '#/components/schemas/DeployRobotAction'
+          UNKNOWN: '#/components/schemas/NoOpAction'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/DeployRobotAction'
+      - $ref: '#/components/schemas/NoOpAction'
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    Scenequery_PromptOptimizationChatWSResponse:
+      type: object
+      description: Response object for prompt optimization chat.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        explanation:
+          type:
+          - string
+          - 'null'
+          description: Explanation of the optimization
+        optimizedPrompt:
+          type:
+          - string
+          - 'null'
+          description: The optimized prompt
+        questionForUser:
+          type:
+          - string
+          - 'null'
+          description: Follow-up question for the user, if any
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Scenequery_DeletePromptConfigurationWSRequest:
+      type: object
+      description: Request object for deleting a prompt configuration.
+      properties:
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ConnectAudioDeviceToMobileAppActionType:
+      type: object
+      properties:
+        audioDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        doorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        targetUserUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    CustomLLMActionType:
+      type: object
+      properties:
+        deviceActivityEvents:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ActivityEventData'
+        deviceFacetUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    CameraConfiguration:
+      type: object
+      properties:
+        cameraUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        checkConditionOverride:
+          $ref: '#/components/schemas/CheckCondition'
+        exampleImages:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ExampleImage'
+        promptExtension:
+          type:
+          - string
+          - 'null'
+        promptOverride:
+          type:
+          - string
+          - 'null'
+        region:
+          $ref: '#/components/schemas/RegionPolygonType'
+        scheduledActions:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ScheduledAction'
+    ActivityEventData:
+      type: object
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ReportLookbackUnitEnum:
+      type: string
+      enum:
+      - HOURS
+      - DAYS
+      - WEEKS
+    Scenequery_GetPromptConfigurationWSRequest:
+      type: object
+      description: Request object for getting a prompt configuration.
+      properties:
+        promptUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Scenequery_PromptOptimizationChatWSRequest:
+      type: object
+      description: Request object for prompt optimization chat.
+      properties:
+        context:
+          $ref: '#/components/schemas/Scenequery_OptimizationContextType'
+        currentMessage:
+          type:
+          - string
+          - 'null'
+          description: Current user message
+        history:
+          type:
+          - array
+          - 'null'
+          description: Chat history messages
+          items:
+            $ref: '#/components/schemas/Scenequery_ChatMessageType'
+    RegionCoordinateType:
+      type: object
+      properties:
+        x:
+          type:
+          - number
+          - 'null'
+          format: float
+        y:
+          type:
+          - number
+          - 'null'
+          format: float
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

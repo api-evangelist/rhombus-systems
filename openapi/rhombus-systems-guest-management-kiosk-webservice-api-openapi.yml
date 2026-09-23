@@ -73,6 +73,28 @@ paths:
       - Guest Management Kiosk Webservice
 components:
   schemas:
+    ConnectionStatusEnum:
+      type: string
+      enum:
+      - ONLINE
+      - OFFLINE
+      - UNKNOWN
+    Kiosk_UpdateKioskResponse:
+      type: object
+      description: Response object for updating kiosk settings.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     KioskSelectiveUpdate:
       type: object
       description: Selective update information for the kiosk
@@ -164,28 +186,6 @@ components:
       properties:
         kioskUpdate:
           $ref: '#/components/schemas/KioskSelectiveUpdate'
-    ConnectionStatusEnum:
-      type: string
-      enum:
-      - ONLINE
-      - OFFLINE
-      - UNKNOWN
-    Kiosk_UpdateKioskResponse:
-      type: object
-      description: Response object for updating kiosk settings.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

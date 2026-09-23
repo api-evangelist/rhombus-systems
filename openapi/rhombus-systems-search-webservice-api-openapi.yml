@@ -173,6 +173,288 @@ paths:
       - Search Webservice
 components:
   schemas:
+    Search_SearchSimilarObjectEmbeddingsWSRequest:
+      type: object
+      description: Request object for searching similar object embeddings.
+      properties:
+        includeVector:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: Whether to include the embedding vector in the response.
+        maxNumResults:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Optional number of results to return. Setting to larger numbers will increase latency.
+        model:
+          $ref: '#/components/schemas/ObjectSearchModelEnum'
+        objectTypeFilter:
+          type:
+          - array
+          - 'null'
+          description: Optional object type filter to narrow results to only vehicles or only humans.
+          items:
+            type:
+            - string
+            - 'null'
+            enum:
+            - MOTION_HUMAN
+            - MOTION_CAR
+        queryDeviceUuids:
+          type:
+          - array
+          - 'null'
+          description: Optional list of device uuids to filter result set on.
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        queryEndTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in epoch milliseconds. Results returned will have occurred before this time.
+        queryStartTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in epoch milliseconds. Results returned will have occurred after this time.
+        regionFilter:
+          type:
+          - array
+          - 'null'
+          description: Optional region filter to return results only if they overlap with the supplied region. This is a list of perymyriad points defining a polygon. The first and last elements must be the same to make a connected polygon. For example, a triangle should have 4 points defined in this list.
+          items:
+            type:
+            - array
+            - 'null'
+            description: Permyriad point [x, y]
+            items:
+              type:
+              - integer
+              - 'null'
+              format: int32
+              description: Permyriad point [x, y]
+        searchEmbeddingId:
+          type:
+          - string
+          - 'null'
+          description: The id of the embedding event you want to find similar objects to. Typically this is obtained from a previous text search result.
+        similarityThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Optional threshold applied to filter returned results, set as a float in [0.0, 1.0].
+      required:
+      - model
+      - queryEndTimeMs
+      - queryStartTimeMs
+      - searchEmbeddingId
+    Search_SearchObjectsByColorWSResponse:
+      type: object
+      description: Response object for searching objects by color.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        objects:
+          type:
+          - array
+          - 'null'
+          description: List of objects matching the color search criteria
+          items:
+            $ref: '#/components/schemas/FootageBoundingBoxType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    GenericObjectEmbedding:
+      type: object
+      properties:
+        b:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: bounding box - bottom permyriad
+        clipEndMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        embedding:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - number
+            - 'null'
+            format: float
+        embeddingId:
+          type:
+          - string
+          - 'null'
+        isMatch:
+          type:
+          - string
+          - 'null'
+          description: 'Match confidence for the query: "YES", "MAYBE", or "NO". Set on CHARON model results; null for CLIP.'
+        l:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: bounding box - left permyriad
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        model:
+          $ref: '#/components/schemas/ObjectSearchModelEnum'
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        objectType:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        r:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: bounding box - right permyriad
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        t:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: bounding box - top permyriad
+        thumbnailLocation:
+          type:
+          - string
+          - 'null'
+        thumbnailUri:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    Search_SearchObjectsByColorWSRequest:
+      type: object
+      description: Request object for searching objects by color.
+      properties:
+        colorFilter:
+          type:
+          - array
+          - 'null'
+          description: Set of colors to filter by
+          items:
+            $ref: '#/components/schemas/ColorEnum'
+          uniqueItems: true
+        deviceFilter:
+          type:
+          - array
+          - 'null'
+          description: List of device facet UUIDs to filter by
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for the search period
+          example: 1640998800000
+        objectTypeFilter:
+          type:
+          - array
+          - 'null'
+          description: Set of activity types to filter by
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the search period
+          example: 1640995200000
+    ObjectSearchModelEnum:
+      type: string
+      description: Model used for embeddings. The streaming variant of this search accepts only "CHARON".
+      enum:
+      - CLIP_512
+      - CHARON
     ColorEnum:
       type: string
       description: Set of colors to filter by
@@ -280,105 +562,29 @@ components:
       - queryEndTimeMs
       - queryStartTimeMs
       - searchText
-    PointType:
+    Search_SearchLicensePlatesWSResponse:
       type: object
+      description: Response object for searching license plates.
       properties:
-        x:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        y:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Search_SearchSimilarObjectEmbeddingsWSRequest:
-      type: object
-      description: Request object for searching similar object embeddings.
-      properties:
-        includeVector:
+        error:
           type:
           - boolean
           - 'null'
-          default: false
-          description: Whether to include the embedding vector in the response.
-        maxNumResults:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Optional number of results to return. Setting to larger numbers will increase latency.
-        model:
-          $ref: '#/components/schemas/ObjectSearchModelEnum'
-        objectTypeFilter:
-          type:
-          - array
-          - 'null'
-          description: Optional object type filter to narrow results to only vehicles or only humans.
-          items:
-            type:
-            - string
-            - 'null'
-            enum:
-            - MOTION_HUMAN
-            - MOTION_CAR
-        queryDeviceUuids:
-          type:
-          - array
-          - 'null'
-          description: Optional list of device uuids to filter result set on.
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        queryEndTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in epoch milliseconds. Results returned will have occurred before this time.
-        queryStartTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in epoch milliseconds. Results returned will have occurred after this time.
-        regionFilter:
-          type:
-          - array
-          - 'null'
-          description: Optional region filter to return results only if they overlap with the supplied region. This is a list of perymyriad points defining a polygon. The first and last elements must be the same to make a connected polygon. For example, a triangle should have 4 points defined in this list.
-          items:
-            type:
-            - array
-            - 'null'
-            description: Permyriad point [x, y]
-            items:
-              type:
-              - integer
-              - 'null'
-              format: int32
-              description: Permyriad point [x, y]
-        searchEmbeddingId:
+        errorMsg:
           type:
           - string
           - 'null'
-          description: The id of the embedding event you want to find similar objects to. Typically this is obtained from a previous text search result.
-        similarityThreshold:
+        vehicleEvents:
           type:
-          - number
+          - array
           - 'null'
-          format: float
-          description: Optional threshold applied to filter returned results, set as a float in [0.0, 1.0].
-      required:
-      - model
-      - queryEndTimeMs
-      - queryStartTimeMs
-      - searchEmbeddingId
+          description: List of vehicle events matching the search criteria
+          items:
+            $ref: '#/components/schemas/VehicleEventSearchHitType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     VehicleEventSearchHitType:
       type: object
       description: List of vehicle events matching the search criteria
@@ -470,84 +676,6 @@ components:
           type:
           - string
           - 'null'
-    Search_SearchLicensePlatesWSResponse:
-      type: object
-      description: Response object for searching license plates.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        vehicleEvents:
-          type:
-          - array
-          - 'null'
-          description: List of vehicle events matching the search criteria
-          items:
-            $ref: '#/components/schemas/VehicleEventSearchHitType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ObjectSearchModelEnum:
-      type: string
-      description: Model used for embeddings. The streaming variant of this search accepts only "CHARON".
-      enum:
-      - CLIP_512
-      - CHARON
-    Search_SearchLicensePlatesWSRequest:
-      type: object
-      description: Request object for searching license plates.
-      properties:
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device facet UUIDs to search in
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        endTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for the search period
-          example: 1640998800000
-        forcedFuzziness:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Forced fuzziness level for the search (deprecated)
-          example: 2
-        fuzzy:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to use fuzzy search
-          example: true
-        licensePlate:
-          type:
-          - string
-          - 'null'
-          description: License plate number to search for
-          example: ABC123
-        startTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for the search period
-          example: 1640995200000
     FootageBoundingBoxType:
       type: object
       description: List of shared footage bounding boxes
@@ -690,23 +818,15 @@ components:
       - r
       - t
       - ts
-    Search_SearchObjectsByColorWSRequest:
+    Search_SearchLicensePlatesWSRequest:
       type: object
-      description: Request object for searching objects by color.
+      description: Request object for searching license plates.
       properties:
-        colorFilter:
+        deviceUuids:
           type:
           - array
           - 'null'
-          description: Set of colors to filter by
-          items:
-            $ref: '#/components/schemas/ColorEnum'
-          uniqueItems: true
-        deviceFilter:
-          type:
-          - array
-          - 'null'
-          description: List of device facet UUIDs to filter by
+          description: List of device facet UUIDs to search in
           items:
             type:
             - string
@@ -714,45 +834,39 @@ components:
             format: DeviceFacetUuid
             description: RUUID with optional appended facet information
             example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        endTimeMs:
+        endTime:
           type:
           - integer
           - 'null'
           format: int64
           description: End time in milliseconds for the search period
           example: 1640998800000
-        objectTypeFilter:
+        forcedFuzziness:
           type:
-          - array
+          - integer
           - 'null'
-          description: Set of activity types to filter by
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        startTimeMs:
+          format: int32
+          description: Forced fuzziness level for the search (deprecated)
+          example: 2
+        fuzzy:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to use fuzzy search
+          example: true
+        licensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate number to search for
+          example: ABC123
+        startTime:
           type:
           - integer
           - 'null'
           format: int64
           description: Start time in milliseconds for the search period
           example: 1640995200000
-    SensorValType:
-      type: object
-      properties:
-        sensorBoolean:
-          type:
-          - boolean
-          - 'null'
-        sensorDouble:
-          type:
-          - number
-          - 'null'
-          format: double
-        sensorLong:
-          type:
-          - integer
-          - 'null'
-          format: int64
     ActivityEnum:
       type: string
       enum:
@@ -976,56 +1090,6 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    ToastOrderIdType:
-      type: object
-      properties:
-        employeeName:
-          type:
-          - string
-          - 'null'
-        guid:
-          type:
-          - string
-          - 'null'
-        locationName:
-          type:
-          - string
-          - 'null'
-        restaurantName:
-          type:
-          - string
-          - 'null'
-        toastCheckInfo:
-          $ref: '#/components/schemas/ToastCheckInfo'
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
-    GenericObjectEmbeddingMatch:
-      type: object
-      description: List of similar object embedding matches
-      properties:
-        distance:
-          type:
-          - number
-          - 'null'
-          format: float
-        embedding:
-          $ref: '#/components/schemas/GenericObjectEmbedding'
-        matchedEmbeddingId:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     ToastCheckInfo:
       type: object
       properties:
@@ -1067,129 +1131,65 @@ components:
           type:
           - string
           - 'null'
-    GenericObjectEmbedding:
+    PointType:
       type: object
       properties:
-        b:
+        x:
           type:
           - integer
           - 'null'
           format: int32
-          description: bounding box - bottom permyriad
-        clipEndMs:
+        y:
           type:
           - integer
           - 'null'
-          format: int64
-        deviceUuid:
+          format: int32
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    GenericObjectEmbeddingMatch:
+      type: object
+      description: List of similar object embedding matches
+      properties:
+        distance:
           type:
-          - string
+          - number
           - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          format: float
         embedding:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - number
-            - 'null'
-            format: float
-        embeddingId:
-          type:
-          - string
-          - 'null'
-        isMatch:
-          type:
-          - string
-          - 'null'
-          description: 'Match confidence for the query: "YES", "MAYBE", or "NO". Set on CHARON model results; null for CLIP.'
-        l:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: bounding box - left permyriad
-        locationUuid:
+          $ref: '#/components/schemas/GenericObjectEmbedding'
+        matchedEmbeddingId:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        model:
-          $ref: '#/components/schemas/ObjectSearchModelEnum'
-        objectId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        objectType:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        r:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: bounding box - right permyriad
-        stableTrackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        t:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: bounding box - top permyriad
-        thumbnailLocation:
-          type:
-          - string
-          - 'null'
-        thumbnailUri:
-          type:
-          - string
-          - 'null'
-        timestamp:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Search_SearchObjectsByColorWSResponse:
+    SensorValType:
       type: object
-      description: Response object for searching objects by color.
       properties:
-        error:
+        sensorBoolean:
           type:
           - boolean
           - 'null'
-        errorMsg:
+        sensorDouble:
           type:
-          - string
+          - number
           - 'null'
-        objects:
+          format: double
+        sensorLong:
           type:
-          - array
+          - integer
           - 'null'
-          description: List of objects matching the color search criteria
-          items:
-            $ref: '#/components/schemas/FootageBoundingBoxType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+          format: int64
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

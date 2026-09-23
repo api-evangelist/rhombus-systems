@@ -172,9 +172,98 @@ paths:
       - Occupancy Webservice
 components:
   schemas:
-    Sensor_GetSensorPresenceWindowsWSResponse:
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    Occupancysensor_MotionSensorHealthEnum:
+      type: string
+      description: Motion sensor health status.
+      enum:
+      - RED
+      - GREEN
+    OccupancyStateEnum:
+      type: string
+      enum:
+      - VACANT
+      - MOVEMENT
+      - OCCUPIED
+    TimeWindowSeconds:
       type: object
-      description: Response object containing stored video information for a sensor.
+      description: List of uptime windows for the device
+      properties:
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Occupancysensor_MotionSensorHealthDetailsEnum:
+      type: string
+      description: Detailed motion sensor health status.
+      enum:
+      - NO_HEARTBEAT
+      - FIRMWARE_BEHIND
+      - NONE
+    Occupancysensor_UpdateOccupancySensorDetailsWSResponse:
+      type: object
+      description: Response object for updating occupancy sensor details.
       properties:
         error:
           type:
@@ -184,30 +273,42 @@ components:
           type:
           - string
           - 'null'
-        presenceWindows:
-          type:
-          - array
-          - 'null'
-          description: List of presence windows for the sensor
-          items:
-            $ref: '#/components/schemas/TimeWindowSeconds'
         warningMsg:
           type:
           - string
           - 'null'
-    OccupancyStatusEnum:
-      type: string
-      description: Current occupancy status of the sensor
-      enum:
-      - VACANT
-      - MOVEMENT
-      - OCCUPIED
-    Occupancysensor_MotionSensorHealthEnum:
-      type: string
-      description: Motion sensor health status.
-      enum:
-      - RED
-      - GREEN
+    Occupancysensor_GetOccupancyEventsForSensorWSRequest:
+      type: object
+      description: Request object for getting occupancy events for a specific sensor.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created after this timestamp (milliseconds since epoch)
+          example: 1640908800000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created before this timestamp (milliseconds since epoch)
+          example: 1640995200000
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of events to return
+          example: 100
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     OccupancyEventType:
       type: object
       description: List of occupancy events for the sensor
@@ -293,183 +394,6 @@ components:
           - integer
           - 'null'
           format: int64
-    Occupancysensor_MinimalOccupancySensorStateType:
-      type: object
-      description: Minimal state information for occupancy sensors including health, location, and sensor data.
-      properties:
-        associatedCameras:
-          type:
-          - array
-          - 'null'
-          description: List of associated camera device facet UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        batteryPercent:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Battery percentage of the sensor
-          example: 85
-        closestBaseStation:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        firmwareVersion:
-          type:
-          - string
-          - 'null'
-          description: Firmware version of the sensor
-          example: 1.2.3
-        floorNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Floor number where the sensor is located
-          example: 2
-        health:
-          $ref: '#/components/schemas/Occupancysensor_MotionSensorHealthEnum'
-        healthDetails:
-          $ref: '#/components/schemas/Occupancysensor_MotionSensorHealthDetailsEnum'
-        hwVariation:
-          $ref: '#/components/schemas/HardwareVariationEnum'
-        lastSeenSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp when the sensor was last seen (seconds since epoch)
-          example: 1640995200
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latitude coordinate of the sensor location
-          example: 37.7749
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Longitude coordinate of the sensor location
-          example: -122.4194
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the occupancy sensor
-          example: Conference Room Sensor
-        normalizedLux:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Normalized lux value (0-1) matching human perception of lighting transitions
-          example: 0.75
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        rawLux:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Raw lux value from the sensor
-          example: 500
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        serialNumber:
-          type:
-          - string
-          - 'null'
-          description: Serial number of the occupancy sensor
-          example: RH123456789
-        signalStrength:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Signal strength of the sensor
-          example: -45
-        status:
-          $ref: '#/components/schemas/OccupancyStatusEnum'
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-    Occupancysensor_UpdateOccupancySensorDetailsWSResponse:
-      type: object
-      description: Response object for updating occupancy sensor details.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Occupancysensor_GetOccupancyEventsForSensorWSResponse:
-      type: object
-      description: Response object containing occupancy events for a specific sensor.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        events:
-          type:
-          - array
-          - 'null'
-          description: List of occupancy events for the sensor
-          items:
-            $ref: '#/components/schemas/OccupancyEventType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     Occupancysensor_UpdateOccupancySensorDetailsWSRequest:
       type: object
       description: Request object for updating occupancy sensor details with selective update flags.
@@ -618,29 +542,193 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    OccupancyStateEnum:
-      type: string
-      enum:
-      - VACANT
-      - MOVEMENT
-      - OCCUPIED
+    Occupancysensor_MinimalOccupancySensorStateType:
+      type: object
+      description: Minimal state information for occupancy sensors including health, location, and sensor data.
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device facet UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        batteryPercent:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Battery percentage of the sensor
+          example: 85
+        closestBaseStation:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+          description: Firmware version of the sensor
+          example: 1.2.3
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the sensor is located
+          example: 2
+        health:
+          $ref: '#/components/schemas/Occupancysensor_MotionSensorHealthEnum'
+        healthDetails:
+          $ref: '#/components/schemas/Occupancysensor_MotionSensorHealthDetailsEnum'
+        hwVariation:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        lastSeenSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp when the sensor was last seen (seconds since epoch)
+          example: 1640995200
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the sensor location
+          example: 37.7749
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the sensor location
+          example: -122.4194
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the occupancy sensor
+          example: Conference Room Sensor
+        normalizedLux:
+          type:
+          - number
+          - 'null'
+          format: float
+          description: Normalized lux value (0-1) matching human perception of lighting transitions
+          example: 0.75
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rawLux:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Raw lux value from the sensor
+          example: 500
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the occupancy sensor
+          example: RH123456789
+        signalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Signal strength of the sensor
+          example: -45
+        status:
+          $ref: '#/components/schemas/OccupancyStatusEnum'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Sensor_GetSensorPresenceWindowsWSResponse:
+      type: object
+      description: Response object containing stored video information for a sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        presenceWindows:
+          type:
+          - array
+          - 'null'
+          description: List of presence windows for the sensor
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Occupancysensor_GetOccupancyEventsForSensorWSResponse:
+      type: object
+      description: Response object containing occupancy events for a specific sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of occupancy events for the sensor
+          items:
+            $ref: '#/components/schemas/OccupancyEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Occupancysensor_GetMinimalOccupancySensorStatesWSRequest:
       type: object
       description: Request object for getting minimal occupancy sensor states for all sensors in organization.
-    TimeWindowSeconds:
-      type: object
-      description: List of uptime windows for the device
-      properties:
-        durationSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
     Sensor_GetSensorPresenceWindowsWSRequest:
       type: object
       description: Request object for retrieving stored video information for a sensor.
@@ -666,101 +754,6 @@ components:
           format: int64
           description: Start time in seconds for the presence window query
           example: 1640995200
-    Occupancysensor_GetOccupancyEventsForSensorWSRequest:
-      type: object
-      description: Request object for getting occupancy events for a specific sensor.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Filter events created after this timestamp (milliseconds since epoch)
-          example: 1640908800000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Filter events created before this timestamp (milliseconds since epoch)
-          example: 1640995200000
-        limit:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Maximum number of events to return
-          example: 100
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    HardwareVariationEnum:
-      type: string
-      enum:
-      - RASPBERRY_PI_3
-      - CAMERA_R1
-      - CAMERA_R2
-      - CAMERA_R2_LONG_RANGE
-      - CAMERA_R2_180
-      - CAMERA_R3
-      - CAMERA_R4
-      - CAMERA_R100
-      - CAMERA_R120
-      - CAMERA_R170
-      - CAMERA_R200
-      - CAMERA_R500
-      - CAMERA_R510
-      - CAMERA_R520
-      - CAMERA_R600
-      - SENSOR_ASSET_TAG_T1
-      - SENSOR_DOOR_D1
-      - SENSOR_DOOR_D20
-      - SENSOR_ENVIRONMENTAL_E1
-      - SENSOR_ENVIRONMENTAL_E15
-      - SENSOR_ENVIRONMENTAL_E2
-      - SENSOR_MOTION_M1
-      - SENSOR_MOTION_M15
-      - GATEWAY_A1
-      - GATEWAY_A100
-      - GATEWAY_ENVIRONMENTAL_E50
-      - CAMERA_R220
-      - CAMERA_R230
-      - CAMERA_R36S
-      - CAMERA_R410
-      - CAMERA_R540
-      - CAMERA_R545
-      - BADGE_READER_DR1
-      - BADGE_READER_DR40
-      - BADGE_READER_DR20
-      - DOOR_CONTROLLER_DC1
-      - DOOR_CONTROLLER_DC20
-      - DOOR_CONTROLLER_DC10
-      - ETHERNET_TESTER_ET1
-      - IO_BOARD_TB1
-      - BLE_BUTTON_B10
-      - BLE_BUTTON_B15
-      - CAMERA_THIRD_PARTY_RELAY
-      - CAMERA_THIRD_PARTY_NVR
-      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
-      - NVR_N100
-      - CAMERA_R130
-      - NVR_N500
-      - CAMERA_R150
-      - ROBOT_RC1
-      - CAMERA_R210
-      - CAMERA_R650
-      - UNSPECIFIED
-    Occupancysensor_MotionSensorHealthDetailsEnum:
-      type: string
-      description: Detailed motion sensor health status.
-      enum:
-      - NO_HEARTBEAT
-      - FIRMWARE_BEHIND
-      - NONE
     Occupancysensor_GetMinimalOccupancySensorStatesWSResponse:
       type: object
       description: Response object containing minimal occupancy sensor states for all sensors in organization.
@@ -784,6 +777,13 @@ components:
           type:
           - string
           - 'null'
+    OccupancyStatusEnum:
+      type: string
+      description: Current occupancy status of the sensor
+      enum:
+      - VACANT
+      - MOVEMENT
+      - OCCUPIED
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

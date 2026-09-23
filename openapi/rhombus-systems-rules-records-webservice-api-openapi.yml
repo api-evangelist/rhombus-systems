@@ -139,146 +139,57 @@ paths:
       - Rules Records Webservice
 components:
   schemas:
-    AlertActionRecordType:
+    VisionLLMEventRecordType:
       type: object
       properties:
-        policyAlertUuid:
+        deviceFacetUuid:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        status:
-          $ref: '#/components/schemas/AlertActionStatusEnum'
-    CancelLoopingAudioPlaybackActionRecordType:
-      type: object
-      properties:
-        statusMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/AudioGatewayStatusEnum'
-    Rules_records_DeleteRulesEventRecordWSRequest:
-      type: object
-      description: Request object for deleting a rules event record.
-      properties:
-        uuid:
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        fullResponse:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    RulesEventRecordType:
-      type: object
-      description: List of rules event records
-      properties:
-        activatedLocationLockdownRecord:
-          $ref: '#/components/schemas/ActivateLocationLockdownActionRecordType'
-        alertActionRecord:
-          $ref: '#/components/schemas/AlertActionRecordType'
-        alertMonitoringEventRecords:
+        parsedAffirmativeResponse:
           type:
-          - array
+          - boolean
           - 'null'
-          items:
-            $ref: '#/components/schemas/AlertMonitoringEventRecordType'
-        audioPlaybackActionRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AudioPlaybackActionRecordType'
-        cancelLoopingAudioPlaybackActionRecordType:
-          $ref: '#/components/schemas/CancelLoopingAudioPlaybackActionRecordType'
-        changeComponentCompositeAccessStateRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChangeComponentCompositeAccessStateRecordType'
-        createAlarmRecord:
-          $ref: '#/components/schemas/CreateAlarmActionRecordType'
-        deviceEventRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DeviceEventRecordType'
-        enableDisableAudioRecordActionRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EnableDisableAudioRecordActionRecordType'
-        integrationActionStatuses:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationActionStatusEnum'
-        liveNotificationActionRecord:
-          $ref: '#/components/schemas/LiveNotificationActionRecordType'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        ruleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledEventRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ScheduledEventRecordType'
-        triggerComponentRelayRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TriggerComponentRelayActionRecordType'
-        triggeredTimestampMs:
+        timestampMs:
           type:
           - integer
           - 'null'
           format: int64
-        unlockDoorActionRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/UnlockDoorActionRecordType'
-        uuid:
+        userPrompt:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        visionLLMEventRecords:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/VisionLLMEventRecordType'
-        webhookActionStatuses:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - boolean
-            - 'null'
+    IntegrationActionStatusEnum:
+      type: string
+      enum:
+      - SUCCESS
+      - ERROR
+      - BACKOFF
+      - IGNORED
+      - UNKNOWN
+    ComponentRelayOutputTypeEnum:
+      type: string
+      enum:
+      - TRANSIENT
+      - STEADY
+    AccessControlledDoorStateEnumType:
+      type: string
+      enum:
+      - UNLOCKED
+      - ACCESS_CONTROLLED
+    AlertMonitoringRulesEventTypeEnum:
+      type: string
+      enum:
+      - ALARM_CREATED
+      - ALARM_CANCELED
+      - UNKNOWN
     CreateAlarmActionRecordType:
       type: object
       properties:
@@ -308,255 +219,17 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    LiveNotificationActionRecordType:
+    Rules_records_DeleteRulesEventRecordWSResponse:
+      type: object
+      description: Response object for deleting a rules event record.
+    ScheduledEventRecordType:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/LiveNotificationActionStatusEnum'
-    AlertMonitoringEventRecordType:
-      type: object
-      properties:
-        alertMonitoringEventType:
-          $ref: '#/components/schemas/AlertMonitoringRulesEventTypeEnum'
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        threatCaseUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
         timestampMs:
           type:
           - integer
           - 'null'
           format: int64
-    Rules_records_GetRulesEventRecordsWSResponse:
-      type: object
-      description: Response object for getting rules event records.
-      properties:
-        rulesEventRecords:
-          type:
-          - array
-          - 'null'
-          description: List of rules event records
-          items:
-            $ref: '#/components/schemas/RulesEventRecordType'
-    Rules_records_GetRulesEventRecordsWSRequest:
-      type: object
-      description: Request object for getting rules event records.
-      properties:
-        associatedUuids:
-          type:
-          - array
-          - 'null'
-          description: Associated uuids for devices, components, locations and componenet composites. **Optional, can be null.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        endTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time for the query period
-          example: 1640998800000
-        startTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time for the query period
-          example: 1640995200000
-    TriggerComponentRelayActionRecordType:
-      type: object
-      properties:
-        componentUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        outputType:
-          $ref: '#/components/schemas/ComponentRelayOutputTypeEnum'
-        overrideRelayDurationMs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        overrideRelayDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ownerDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        state:
-          $ref: '#/components/schemas/GenericRelayStateEnumType'
-        succeeded:
-          type:
-          - boolean
-          - 'null'
-    ChangeComponentCompositeAccessStateRecordType:
-      type: object
-      properties:
-        accessState:
-          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
-        componentCompositeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        madeChange:
-          type:
-          - boolean
-          - 'null'
-        succeeded:
-          type:
-          - boolean
-          - 'null'
-        usedFirstIn:
-          type:
-          - boolean
-          - 'null'
-        willExpireAtMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    AudioPlaybackActionRecordType:
-      type: object
-      properties:
-        audioClipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        audioGatewayStatuses:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/AudioGatewayStatusEnum'
-    AlertActionStatusEnum:
-      type: string
-      enum:
-      - SUCCESS
-      - ERROR
-      - PAUSED
-      - IGNORED
-      - MUTED
-      - BACKOFF
-      - UNKNOWN
-    IntegrationActionStatusEnum:
-      type: string
-      enum:
-      - SUCCESS
-      - ERROR
-      - BACKOFF
-      - IGNORED
-      - UNKNOWN
-    EnableDisableAudioRecordActionRecordType:
-      type: object
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        enable:
-          type:
-          - boolean
-          - 'null'
-        succeeded:
-          type:
-          - boolean
-          - 'null'
-    ActivateLocationLockdownActionRecordType:
-      type: object
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        succeeded:
-          type:
-          - boolean
-          - 'null'
-    Rules_records_GetLatestRulesEventRecordsWSResponse:
-      type: object
-      description: Response object for getting latest rules event records.
-      properties:
-        rulesEventRecords:
-          type:
-          - array
-          - 'null'
-          description: List of latest rules event records
-          items:
-            $ref: '#/components/schemas/RulesEventRecordType'
-    AudioGatewayStatusEnum:
-      type: string
-      enum:
-      - SUCCESS
-      - ERROR
-      - BACKOFF
-      - IGNORED
-      - INITIATED
-      - SUBMITTED
-      - UNKNOWN
-    LiveNotificationActionStatusEnum:
-      type: string
-      enum:
-      - SUCCESS
-      - ERROR
-      - IGNORED
-      - MUTED
-      - BACKOFF
-      - UNKNOWN
     DeviceEventRecordType:
       type: object
       properties:
@@ -622,37 +295,58 @@ components:
           - integer
           - 'null'
           format: int64
-    AccessControlledDoorStateEnumType:
+    AudioGatewayStatusEnum:
       type: string
       enum:
-      - UNLOCKED
-      - ACCESS_CONTROLLED
-    DeviceTypeEnum:
-      type: string
-      enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
+      - SUCCESS
+      - ERROR
+      - BACKOFF
+      - IGNORED
+      - INITIATED
+      - SUBMITTED
       - UNKNOWN
-    Rules_records_DeleteRulesEventRecordWSResponse:
-      type: object
-      description: Response object for deleting a rules event record.
-    ComponentRelayOutputTypeEnum:
+    GenericRelayStateEnumType:
       type: string
       enum:
-      - TRANSIENT
-      - STEADY
+      - ACTIVE
+      - INACTIVE
+      - UNKNOWN
+    AlertMonitoringEventRecordType:
+      type: object
+      properties:
+        alertMonitoringEventType:
+          $ref: '#/components/schemas/AlertMonitoringRulesEventTypeEnum'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        threatCaseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
     Rules_records_GetLatestRulesEventRecordsWSRequest:
       type: object
       description: Request object for getting latest rules event records.
@@ -683,62 +377,67 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    HardwareVariationEnum:
+    AlertActionStatusEnum:
       type: string
       enum:
-      - RASPBERRY_PI_3
-      - CAMERA_R1
-      - CAMERA_R2
-      - CAMERA_R2_LONG_RANGE
-      - CAMERA_R2_180
-      - CAMERA_R3
-      - CAMERA_R4
-      - CAMERA_R100
-      - CAMERA_R120
-      - CAMERA_R170
-      - CAMERA_R200
-      - CAMERA_R500
-      - CAMERA_R510
-      - CAMERA_R520
-      - CAMERA_R600
-      - SENSOR_ASSET_TAG_T1
-      - SENSOR_DOOR_D1
-      - SENSOR_DOOR_D20
-      - SENSOR_ENVIRONMENTAL_E1
-      - SENSOR_ENVIRONMENTAL_E15
-      - SENSOR_ENVIRONMENTAL_E2
-      - SENSOR_MOTION_M1
-      - SENSOR_MOTION_M15
-      - GATEWAY_A1
-      - GATEWAY_A100
-      - GATEWAY_ENVIRONMENTAL_E50
-      - CAMERA_R220
-      - CAMERA_R230
-      - CAMERA_R36S
-      - CAMERA_R410
-      - CAMERA_R540
-      - CAMERA_R545
-      - BADGE_READER_DR1
-      - BADGE_READER_DR40
-      - BADGE_READER_DR20
-      - DOOR_CONTROLLER_DC1
-      - DOOR_CONTROLLER_DC20
-      - DOOR_CONTROLLER_DC10
-      - ETHERNET_TESTER_ET1
-      - IO_BOARD_TB1
-      - BLE_BUTTON_B10
-      - BLE_BUTTON_B15
-      - CAMERA_THIRD_PARTY_RELAY
-      - CAMERA_THIRD_PARTY_NVR
-      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
-      - NVR_N100
-      - CAMERA_R130
-      - NVR_N500
-      - CAMERA_R150
-      - ROBOT_RC1
-      - CAMERA_R210
-      - CAMERA_R650
-      - UNSPECIFIED
+      - SUCCESS
+      - ERROR
+      - PAUSED
+      - IGNORED
+      - MUTED
+      - BACKOFF
+      - UNKNOWN
+    Rules_records_DeleteRulesEventRecordWSRequest:
+      type: object
+      description: Request object for deleting a rules event record.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Rules_records_GetRulesEventRecordsWSResponse:
+      type: object
+      description: Response object for getting rules event records.
+      properties:
+        rulesEventRecords:
+          type:
+          - array
+          - 'null'
+          description: List of rules event records
+          items:
+            $ref: '#/components/schemas/RulesEventRecordType'
+    Rules_records_GetLatestRulesEventRecordsWSResponse:
+      type: object
+      description: Response object for getting latest rules event records.
+      properties:
+        rulesEventRecords:
+          type:
+          - array
+          - 'null'
+          description: List of latest rules event records
+          items:
+            $ref: '#/components/schemas/RulesEventRecordType'
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
     ActivityEnum:
       type: string
       enum:
@@ -962,53 +661,118 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    AlertMonitoringRulesEventTypeEnum:
-      type: string
-      enum:
-      - ALARM_CREATED
-      - ALARM_CANCELED
-      - UNKNOWN
-    ScheduledEventRecordType:
+    Rules_records_GetRulesEventRecordsWSRequest:
       type: object
+      description: Request object for getting rules event records.
       properties:
-        timestampMs:
+        associatedUuids:
+          type:
+          - array
+          - 'null'
+          description: Associated uuids for devices, components, locations and componenet composites. **Optional, can be null.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        endTime:
           type:
           - integer
           - 'null'
           format: int64
-    VisionLLMEventRecordType:
+          description: End time for the query period
+          example: 1640998800000
+        startTime:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time for the query period
+          example: 1640995200000
+    LiveNotificationActionRecordType:
       type: object
       properties:
-        deviceFacetUuid:
+        status:
+          $ref: '#/components/schemas/LiveNotificationActionStatusEnum'
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    ActivateLocationLockdownActionRecordType:
+      type: object
+      properties:
+        locationUuid:
           type:
           - string
           - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        fullResponse:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lockdownPlanUuid:
           type:
           - string
           - 'null'
-        parsedAffirmativeResponse:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        succeeded:
           type:
           - boolean
           - 'null'
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        userPrompt:
-          type:
-          - string
-          - 'null'
-    GenericRelayStateEnumType:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - UNKNOWN
     UnlockDoorActionRecordType:
       type: object
       properties:
@@ -1028,6 +792,242 @@ components:
           type:
           - string
           - 'null'
+    AudioPlaybackActionRecordType:
+      type: object
+      properties:
+        audioClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        audioGatewayStatuses:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/AudioGatewayStatusEnum'
+    CancelLoopingAudioPlaybackActionRecordType:
+      type: object
+      properties:
+        statusMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/AudioGatewayStatusEnum'
+    AlertActionRecordType:
+      type: object
+      properties:
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/AlertActionStatusEnum'
+    ChangeComponentCompositeAccessStateRecordType:
+      type: object
+      properties:
+        accessState:
+          $ref: '#/components/schemas/AccessControlledDoorStateEnumType'
+        componentCompositeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        madeChange:
+          type:
+          - boolean
+          - 'null'
+        succeeded:
+          type:
+          - boolean
+          - 'null'
+        usedFirstIn:
+          type:
+          - boolean
+          - 'null'
+        willExpireAtMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    RulesEventRecordType:
+      type: object
+      description: List of rules event records
+      properties:
+        activatedLocationLockdownRecord:
+          $ref: '#/components/schemas/ActivateLocationLockdownActionRecordType'
+        alertActionRecord:
+          $ref: '#/components/schemas/AlertActionRecordType'
+        alertMonitoringEventRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AlertMonitoringEventRecordType'
+        audioPlaybackActionRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioPlaybackActionRecordType'
+        cancelLoopingAudioPlaybackActionRecordType:
+          $ref: '#/components/schemas/CancelLoopingAudioPlaybackActionRecordType'
+        changeComponentCompositeAccessStateRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeComponentCompositeAccessStateRecordType'
+        createAlarmRecord:
+          $ref: '#/components/schemas/CreateAlarmActionRecordType'
+        deviceEventRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DeviceEventRecordType'
+        enableDisableAudioRecordActionRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EnableDisableAudioRecordActionRecordType'
+        integrationActionStatuses:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationActionStatusEnum'
+        liveNotificationActionRecord:
+          $ref: '#/components/schemas/LiveNotificationActionRecordType'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledEventRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ScheduledEventRecordType'
+        triggerComponentRelayRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TriggerComponentRelayActionRecordType'
+        triggeredTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        unlockDoorActionRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UnlockDoorActionRecordType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        visionLLMEventRecords:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VisionLLMEventRecordType'
+        webhookActionStatuses:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+    EnableDisableAudioRecordActionRecordType:
+      type: object
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        enable:
+          type:
+          - boolean
+          - 'null'
+        succeeded:
+          type:
+          - boolean
+          - 'null'
+    TriggerComponentRelayActionRecordType:
+      type: object
+      properties:
+        componentUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        outputType:
+          $ref: '#/components/schemas/ComponentRelayOutputTypeEnum'
+        overrideRelayDurationMs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        overrideRelayDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ownerDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        state:
+          $ref: '#/components/schemas/GenericRelayStateEnumType'
+        succeeded:
+          type:
+          - boolean
+          - 'null'
+    LiveNotificationActionStatusEnum:
+      type: string
+      enum:
+      - SUCCESS
+      - ERROR
+      - IGNORED
+      - MUTED
+      - BACKOFF
+      - UNKNOWN
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

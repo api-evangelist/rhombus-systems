@@ -172,6 +172,47 @@ paths:
       - Face Recognition Event Webservice
 components:
   schemas:
+    Facerecognition_faceevent_DeleteFaceEventWSRequest:
+      type: object
+      description: Request object for deleting a face event.
+      properties:
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_faceevent_GetFaceEventWSRequest:
+      type: object
+      description: Request object for retrieving a specific face event by UUID.
+      properties:
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DynamoPageRequest:
+      type: object
+      description: Pagination request for retrieving policy alerts. Page size must be between 1 and 1000.
+      properties:
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+        maxPageSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Facerecognition_faceevent_GetFaceEventWSResponse:
+      type: object
+      description: Response object containing a specific face event.
+      properties:
+        faceEvent:
+          $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEvent'
     TimestampFilter:
       type: object
       description: Optional filter by an event timestamp. If not specified, the filter defaults to the last 7 days.
@@ -188,19 +229,170 @@ components:
           - 'null'
           format: date-time
           description: Start of the date range (inclusive).
-    DynamoPageRequest:
+    Facerecognition_faceevent_FindFaceEventsByOrgWSResponse:
       type: object
-      description: Pagination request for retrieving policy alerts. Page size must be between 1 and 1000.
+      description: Response object containing face events for an organization with pagination information.
       properties:
+        faceEvents:
+          type:
+          - array
+          - 'null'
+          description: List of face events matching the search criteria
+          items:
+            $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEvent'
         lastEvaluatedKey:
           type:
           - string
           - 'null'
-        maxPageSize:
+          description: Pagination key for retrieving the next page of results
+          example: next_page_key_123
+    Facerecognition_faceevent_ExternalPersonMatch:
+      type: object
+      description: Person match information for face recognition events with confidence scoring.
+      properties:
+        confidence:
           type:
-          - integer
+          - number
           - 'null'
-          format: int32
+          format: float
+          description: Match confidence level expressed as a value in range[0,1]
+          example: 0.95
+        faceId:
+          type:
+          - string
+          - 'null'
+          description: Face ID associated with the person match
+          example: face_12345
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the person matched
+          example: John Doe
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Facerecognition_faceevent_ExternalFaceEventSearchFilter:
+      type: object
+      description: Search filter for face events with embedding presence filtering.
+      properties:
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: Optional filter by a set of devices.
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        faceNameContains:
+          type:
+          - string
+          - 'null'
+          description: Optional filter by name substring. The face event is a match if its face name contains the specified value. The search will only be performed if the provided value is at least 3 characters long after trimming leading and trailing spaces. If both faceNameContains and faceNames are specified, faceNameContains takes a precedence.
+        faceNames:
+          type:
+          - array
+          - 'null'
+          description: Optional filter by people names.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Optional filter by people names.
+        hasEmbedding:
+          type:
+          - boolean
+          - 'null'
+          description: Optional filter by the presence or absence of an embedding.
+        hasName:
+          type:
+          - boolean
+          - 'null'
+          description: Optional filter by the presence or absence of a person name.
+        labels:
+          type:
+          - array
+          - 'null'
+          description: Optional filter by labels.
+          items:
+            type:
+            - string
+            - 'null'
+            description: Optional filter by labels.
+        locationUuids:
+          type:
+          - array
+          - 'null'
+          description: Optional filter by a set of locations.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        personUuids:
+          type:
+          - array
+          - 'null'
+          description: Optional filter by a set of people.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        timestampFilter:
+          $ref: '#/components/schemas/TimestampFilter'
+    Facerecognition_faceevent_UpdateFaceEventWSResponse:
+      type: object
+      description: Response object for updating a face event.
+      properties:
+        faceEvent:
+          $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEvent'
+    Facerecognition_faceevent_DeleteFaceEventWSResponse:
+      type: object
+      description: Response object for deleting a face event.
+    Facerecognition_faceevent_FindFaceEventsByOrgWSRequest:
+      type: object
+      description: Request object for finding face events by organization with search filtering and pagination.
+      properties:
+        pageRequest:
+          $ref: '#/components/schemas/DynamoPageRequest'
+        searchFilter:
+          $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEventSearchFilter'
+    Facerecognition_faceevent_UpdateFaceEventWSRequest:
+      type: object
+      description: Request object for updating a face event with person association information.
+      properties:
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        personName:
+          type:
+          - string
+          - 'null'
+          description: Name of the person associated with the face event. Ignored if person UUID matches to one of the top person matches.
+        personUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Facerecognition_faceevent_ExternalFaceEvent:
       type: object
       description: External face event object containing face recognition data with person matches, embeddings, and metadata.
@@ -299,198 +491,6 @@ components:
           items:
             $ref: '#/components/schemas/Facerecognition_faceevent_ExternalPersonMatch'
         uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_faceevent_UpdateFaceEventWSRequest:
-      type: object
-      description: Request object for updating a face event with person association information.
-      properties:
-        eventUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        personName:
-          type:
-          - string
-          - 'null'
-          description: Name of the person associated with the face event. Ignored if person UUID matches to one of the top person matches.
-        personUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_faceevent_UpdateFaceEventWSResponse:
-      type: object
-      description: Response object for updating a face event.
-      properties:
-        faceEvent:
-          $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEvent'
-    Facerecognition_faceevent_FindFaceEventsByOrgWSRequest:
-      type: object
-      description: Request object for finding face events by organization with search filtering and pagination.
-      properties:
-        pageRequest:
-          $ref: '#/components/schemas/DynamoPageRequest'
-        searchFilter:
-          $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEventSearchFilter'
-    Facerecognition_faceevent_ExternalPersonMatch:
-      type: object
-      description: Person match information for face recognition events with confidence scoring.
-      properties:
-        confidence:
-          type:
-          - number
-          - 'null'
-          format: float
-          description: Match confidence level expressed as a value in range[0,1]
-          example: 0.95
-        faceId:
-          type:
-          - string
-          - 'null'
-          description: Face ID associated with the person match
-          example: face_12345
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the person matched
-          example: John Doe
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_faceevent_FindFaceEventsByOrgWSResponse:
-      type: object
-      description: Response object containing face events for an organization with pagination information.
-      properties:
-        faceEvents:
-          type:
-          - array
-          - 'null'
-          description: List of face events matching the search criteria
-          items:
-            $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEvent'
-        lastEvaluatedKey:
-          type:
-          - string
-          - 'null'
-          description: Pagination key for retrieving the next page of results
-          example: next_page_key_123
-    Facerecognition_faceevent_ExternalFaceEventSearchFilter:
-      type: object
-      description: Search filter for face events with embedding presence filtering.
-      properties:
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: Optional filter by a set of devices.
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        faceNameContains:
-          type:
-          - string
-          - 'null'
-          description: Optional filter by name substring. The face event is a match if its face name contains the specified value. The search will only be performed if the provided value is at least 3 characters long after trimming leading and trailing spaces. If both faceNameContains and faceNames are specified, faceNameContains takes a precedence.
-        faceNames:
-          type:
-          - array
-          - 'null'
-          description: Optional filter by people names.
-          items:
-            type:
-            - string
-            - 'null'
-            description: Optional filter by people names.
-        hasEmbedding:
-          type:
-          - boolean
-          - 'null'
-          description: Optional filter by the presence or absence of an embedding.
-        hasName:
-          type:
-          - boolean
-          - 'null'
-          description: Optional filter by the presence or absence of a person name.
-        labels:
-          type:
-          - array
-          - 'null'
-          description: Optional filter by labels.
-          items:
-            type:
-            - string
-            - 'null'
-            description: Optional filter by labels.
-        locationUuids:
-          type:
-          - array
-          - 'null'
-          description: Optional filter by a set of locations.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        personUuids:
-          type:
-          - array
-          - 'null'
-          description: Optional filter by a set of people.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        timestampFilter:
-          $ref: '#/components/schemas/TimestampFilter'
-    Facerecognition_faceevent_GetFaceEventWSResponse:
-      type: object
-      description: Response object containing a specific face event.
-      properties:
-        faceEvent:
-          $ref: '#/components/schemas/Facerecognition_faceevent_ExternalFaceEvent'
-    Facerecognition_faceevent_GetFaceEventWSRequest:
-      type: object
-      description: Request object for retrieving a specific face event by UUID.
-      properties:
-        eventUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Facerecognition_faceevent_DeleteFaceEventWSResponse:
-      type: object
-      description: Response object for deleting a face event.
-    Facerecognition_faceevent_DeleteFaceEventWSRequest:
-      type: object
-      description: Request object for deleting a face event.
-      properties:
-        eventUuid:
           type:
           - string
           - 'null'

@@ -271,150 +271,6 @@ paths:
       - Upload Webservice
 components:
   schemas:
-    MessageBodyWorkers:
-      type:
-      - object
-      - 'null'
-    FormDataContentDisposition:
-      type: object
-      properties:
-        creationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        fileName:
-          type:
-          - string
-          - 'null'
-        modificationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        name:
-          type:
-          - string
-          - 'null'
-        parameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        readDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        size:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          type:
-          - string
-          - 'null'
-    ParameterizedHeader:
-      type:
-      - object
-      - 'null'
-      properties:
-        parameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        value:
-          type:
-          - string
-          - 'null'
-    MultiPart:
-      type:
-      - object
-      - 'null'
-      properties:
-        bodyParts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BodyPart'
-        contentDisposition:
-          $ref: '#/components/schemas/ContentDisposition'
-        entity:
-          type:
-          - object
-          - 'null'
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          properties:
-            empty:
-              type:
-              - boolean
-              - 'null'
-        mediaType:
-          $ref: '#/components/schemas/MediaType'
-        messageBodyWorkers:
-          $ref: '#/components/schemas/MessageBodyWorkers'
-        parameterizedHeaders:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ParameterizedHeader'
-          properties:
-            empty:
-              type:
-              - boolean
-              - 'null'
-        providers:
-          $ref: '#/components/schemas/Providers'
-    StatusType:
-      type:
-      - object
-      - 'null'
-      properties:
-        family:
-          $ref: '#/components/schemas/JakartaFamilyEnum'
-        reasonPhrase:
-          type:
-          - string
-          - 'null'
-        statusCode:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    JakartaFamilyEnum:
-      type: string
-      enum:
-      - INFORMATIONAL
-      - SUCCESSFUL
-      - REDIRECTION
-      - CLIENT_ERROR
-      - SERVER_ERROR
-      - OTHER
     Link:
       type:
       - object
@@ -455,56 +311,16 @@ components:
           format: uri
         uriBuilder:
           $ref: '#/components/schemas/UriBuilder'
-    Providers:
+    EntityTag:
       type:
       - object
       - 'null'
-    MediaType:
-      type: object
       properties:
-        charset:
-          type:
-          - object
-          - 'null'
-          properties:
-            registered:
-              type:
-              - boolean
-              - 'null'
-        concrete:
-          type:
-          - boolean
-          - 'null'
-        parameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        qualityValue:
-          type:
-          - number
-          - 'null'
-          format: double
-        subtype:
+        value:
           type:
           - string
           - 'null'
-        subtypeSuffix:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        wildcardSubtype:
-          type:
-          - boolean
-          - 'null'
-        wildcardType:
+        weak:
           type:
           - boolean
           - 'null'
@@ -559,44 +375,139 @@ components:
           $ref: '#/components/schemas/MultiPart'
         providers:
           $ref: '#/components/schemas/Providers'
-    NewCookie:
+    FormDataMultiPart:
       type:
       - object
       - 'null'
       properties:
-        comment:
+        bodyParts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fields:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/FormDataBodyPart'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+    FormDataBodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        content:
+          type:
+          - object
+          - 'null'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fileName:
           type:
           - string
           - 'null'
-        domain:
+        formDataContentDisposition:
+          $ref: '#/components/schemas/FormDataContentDisposition'
+        headers:
           type:
-          - string
+          - object
           - 'null'
-        expiry:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        httpOnly:
-          type:
-          - boolean
-          - 'null'
-        maxAge:
-          type:
-          - integer
-          - 'null'
-          format: int32
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
         name:
           type:
           - string
           - 'null'
-        path:
+        parameterizedHeaders:
           type:
-          - string
+          - object
           - 'null'
-        sameSite:
-          $ref: '#/components/schemas/JakartaSameSiteEnum'
-        secure:
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+        simple:
           type:
           - boolean
           - 'null'
@@ -604,7 +515,67 @@ components:
           type:
           - string
           - 'null'
-        version:
+    MediaType:
+      type: object
+      properties:
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        concrete:
+          type:
+          - boolean
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        qualityValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        subtype:
+          type:
+          - string
+          - 'null'
+        subtypeSuffix:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        wildcardSubtype:
+          type:
+          - boolean
+          - 'null'
+        wildcardType:
+          type:
+          - boolean
+          - 'null'
+    StatusType:
+      type:
+      - object
+      - 'null'
+      properties:
+        family:
+          $ref: '#/components/schemas/JakartaFamilyEnum'
+        reasonPhrase:
+          type:
+          - string
+          - 'null'
+        statusCode:
           type:
           - integer
           - 'null'
@@ -615,62 +586,6 @@ components:
       - NONE
       - LAX
       - STRICT
-    ContentDisposition:
-      type: object
-      properties:
-        attachment:
-          type:
-          - boolean
-          - 'null'
-        charset:
-          type:
-          - object
-          - 'null'
-          properties:
-            registered:
-              type:
-              - boolean
-              - 'null'
-        creationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        filename:
-          type:
-          - string
-          - 'null'
-        formData:
-          type:
-          - boolean
-          - 'null'
-        inline:
-          type:
-          - boolean
-          - 'null'
-        modificationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        name:
-          type:
-          - string
-          - 'null'
-        readDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        size:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          type:
-          - string
-          - 'null'
     Response:
       type:
       - object
@@ -864,97 +779,15 @@ components:
               type:
               - boolean
               - 'null'
+    Providers:
+      type:
+      - object
+      - 'null'
     UriBuilder:
       type:
       - object
       - 'null'
-    EntityTag:
-      type:
-      - object
-      - 'null'
-      properties:
-        value:
-          type:
-          - string
-          - 'null'
-        weak:
-          type:
-          - boolean
-          - 'null'
-    FormDataBodyPart:
-      type:
-      - object
-      - 'null'
-      properties:
-        content:
-          type:
-          - object
-          - 'null'
-        contentDisposition:
-          $ref: '#/components/schemas/ContentDisposition'
-        entity:
-          type:
-          - object
-          - 'null'
-        fileName:
-          type:
-          - string
-          - 'null'
-        formDataContentDisposition:
-          $ref: '#/components/schemas/FormDataContentDisposition'
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          properties:
-            empty:
-              type:
-              - boolean
-              - 'null'
-        mediaType:
-          $ref: '#/components/schemas/MediaType'
-        messageBodyWorkers:
-          $ref: '#/components/schemas/MessageBodyWorkers'
-        name:
-          type:
-          - string
-          - 'null'
-        parameterizedHeaders:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ParameterizedHeader'
-          properties:
-            empty:
-              type:
-              - boolean
-              - 'null'
-        parent:
-          $ref: '#/components/schemas/MultiPart'
-        providers:
-          $ref: '#/components/schemas/Providers'
-        simple:
-          type:
-          - boolean
-          - 'null'
-        value:
-          type:
-          - string
-          - 'null'
-    FormDataMultiPart:
+    MultiPart:
       type:
       - object
       - 'null'
@@ -971,16 +804,6 @@ components:
           type:
           - object
           - 'null'
-        fields:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/FormDataBodyPart'
         headers:
           type:
           - object
@@ -1017,10 +840,187 @@ components:
               type:
               - boolean
               - 'null'
-        parent:
-          $ref: '#/components/schemas/MultiPart'
         providers:
           $ref: '#/components/schemas/Providers'
+    MessageBodyWorkers:
+      type:
+      - object
+      - 'null'
+    FormDataContentDisposition:
+      type: object
+      properties:
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        fileName:
+          type:
+          - string
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    JakartaFamilyEnum:
+      type: string
+      enum:
+      - INFORMATIONAL
+      - SUCCESSFUL
+      - REDIRECTION
+      - CLIENT_ERROR
+      - SERVER_ERROR
+      - OTHER
+    ParameterizedHeader:
+      type:
+      - object
+      - 'null'
+      properties:
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+    NewCookie:
+      type:
+      - object
+      - 'null'
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        domain:
+          type:
+          - string
+          - 'null'
+        expiry:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        httpOnly:
+          type:
+          - boolean
+          - 'null'
+        maxAge:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+        sameSite:
+          $ref: '#/components/schemas/JakartaSameSiteEnum'
+        secure:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    ContentDisposition:
+      type: object
+      properties:
+        attachment:
+          type:
+          - boolean
+          - 'null'
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        filename:
+          type:
+          - string
+          - 'null'
+        formData:
+          type:
+          - boolean
+          - 'null'
+        inline:
+          type:
+          - boolean
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
