@@ -565,45 +565,12 @@ paths:
       - License Webservice
 components:
   schemas:
-    LicenseToUnassignEmailStateEnum:
-      type: string
-      enum:
-      - INITIAL_EMAIL_SUCCEEDED
-      - INITIAL_EMAIL_FAILED
-      - FIFTEEN_DAY_WARNING_EMAIL_SUCCEEDED
-      - FIFTEEN_DAY_WARNING_EMAIL_FAILED
-      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_SUCCEEDED
-      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_FAILED
-      - UNKNOWN
-    License_AssignGuestManagementLicenseWSRequest:
+    License_AssignDeviceLicenseWSResponse:
       type: object
-      description: Request object for assigning guest management license.
+      description: Response object for assigning or unassigning a device license.
       properties:
-        licenseUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetGuestManagementLicensesForClientOrgWSRequest:
-      type: object
-      description: Request object for getting list of guest management licenses available for a client organization.
-      properties:
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceLicense:
+          $ref: '#/components/schemas/DeviceLicenseType'
     BaseLicenseType:
       type: object
       description: List of licenses found by claim key
@@ -672,6 +639,74 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    LicenseToUnassignEmailStateEnum:
+      type: string
+      enum:
+      - INITIAL_EMAIL_SUCCEEDED
+      - INITIAL_EMAIL_FAILED
+      - FIFTEEN_DAY_WARNING_EMAIL_SUCCEEDED
+      - FIFTEEN_DAY_WARNING_EMAIL_FAILED
+      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_SUCCEEDED
+      - FOURTY_EIGHT_HOUR_WARNING_EMAIL_FAILED
+      - UNKNOWN
+    License_GetACUDoorLicensesWSRequest:
+      type: object
+      description: Request object for getting list of access controlled door licenses available in organization.
+    License_GetDeviceLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of device licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DeviceLicenseFamilyEnum:
+      type: string
+      enum:
+      - CAMERA
+      - CAMERA_MS
+      - VIDEO_INTERCOM
+      - AUDIO_GATEWAY
+      - ENVIRONMENTAL_SENSOR
+      - ENVIRONMENTAL_GATEWAY
+    License_GetGuestManagementLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of guest management licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetLicensesWSRequest:
+      type: object
+      description: Request object for getting list of add-on licenses available in organization.
+      properties:
+        optionalDeviceTypeFilter:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+    License_AssignDeviceLicenseWSRequest:
+      type: object
+      description: Request object for assigning or unassigning a device license.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     License_GetLicensesWSResponse:
       type: object
       description: Response object containing list of add-on licenses available in organization.
@@ -695,64 +730,6 @@ components:
           type:
           - string
           - 'null'
-    License_GetAlertMonitoringLicensesWSRequest:
-      type: object
-      description: Request object for getting list of alert monitoring licenses available in organization.
-    License_AssignDeviceLicenseWSResponse:
-      type: object
-      description: Response object for assigning or unassigning a device license.
-      properties:
-        deviceLicense:
-          $ref: '#/components/schemas/DeviceLicenseType'
-    License_GetACUDoorLicensesWSRequest:
-      type: object
-      description: Request object for getting list of access controlled door licenses available in organization.
-    License_GetGuestManagementLicensesForClientOrgWSResponse:
-      type: object
-      description: Response object containing list of guest management licenses available for a client organization.
-      properties:
-        guestManagementLicenses:
-          type:
-          - array
-          - 'null'
-          description: List of guest management licenses available for the client organization
-          items:
-            $ref: '#/components/schemas/GuestManagementLicenseType'
-    License_GetAlertMonitoringLicensesForClientOrgWSResponse:
-      type: object
-      description: Response object containing list of alert monitoring licenses available for a client organization.
-      properties:
-        alertMonitoringLicenses:
-          type:
-          - array
-          - 'null'
-          description: List of alert monitoring licenses available for the client organization
-          items:
-            $ref: '#/components/schemas/AlertMonitoringLicenseType'
-    License_AssignACUDoorLicenseWSRequest:
-      type: object
-      description: Request object for assigning ACU door license.
-      properties:
-        doorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        licenseUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_AssignACUDoorLicenseWSResponse:
-      type: object
-      description: Response object for assigning ACU door license.
-      properties:
-        acuDoorLicense:
-          $ref: '#/components/schemas/ACUDoorLicenseType'
     ProductTypeEnum:
       type: string
       enum:
@@ -762,397 +739,9 @@ components:
       - GUEST_MANAGEMENT
       - LICENSE_USAGE
       - UNKNOWN
-    License_AssignLicenseWSRequest:
+    License_GetGuestManagementLicensesWSRequest:
       type: object
-      description: Request object for assigning an add-on license to a device.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        licenseUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetAlertMonitoringLicensesForClientOrgWSRequest:
-      type: object
-      description: Request object for getting list of alert monitoring licenses available for a client organization.
-      properties:
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_AssignLicenseWSResponse:
-      type: object
-      description: Response object for assigning an add-on license to a device.
-      properties:
-        licenseUsage:
-          $ref: '#/components/schemas/LicenseUsageType'
-    License_GetLicensesForClientOrgWSResponse:
-      type: object
-      description: Response object containing list of licenses available for a client organization.
-      properties:
-        licenses:
-          type:
-          - array
-          - 'null'
-          description: List of licenses available for the client organization
-          items:
-            $ref: '#/components/schemas/LicenseUsageType'
-    AddOnLicenseEnum:
-      type: string
-      enum:
-      - CLOUD_ARCHIVING
-      - PERCEPTION
-      - POSE
-      - BEHAVIOR
-      - VEHICLE
-      - PEOPLE
-      - PPE
-      - PEOPLE_ANALYTICS
-      - UNKNOWN
-    LicenseFeature:
-      type: object
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-    LicenseUsageType:
-      type: object
-      description: List of licenses available for the client organization
-      properties:
-        addOnLicenseType:
-          $ref: '#/components/schemas/AddOnLicenseEnum'
-        additionalPerceptionFeatures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PerceptionTypeEnum'
-          uniqueItems: true
-        claimKeyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        cloudArchiveDays:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        createdOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        firstAssignedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        license:
-          $ref: '#/components/schemas/AddOnLicenseEnum'
-        licenseFamily:
-          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
-        licenseToUnassignEmailState:
-          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
-        maxDeleteDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        perceptionTypes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PerceptionTypeEnum'
-          uniqueItems: true
-        priorClaimKeyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        productCode:
-          type:
-          - string
-          - 'null'
-        productType:
-          $ref: '#/components/schemas/ProductTypeEnum'
-        state:
-          $ref: '#/components/schemas/LicenseStateEnum'
-        trial:
-          type:
-          - boolean
-          - 'null'
-        updatedOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    PerceptionTypeEnum:
-      type: string
-      enum:
-      - PEOPLE_COUNTING
-      - FACE_COUNTING_UNIQUE
-      - FACE_COUNTING_NONUNIQUE
-      - ENGAGMENT_COUNTING
-      - FACE_RECOGNITION
-      - LICENSEPLATE_RECOGNITION
-      - VEHICLE_COUNTING
-      - OCCUPANCY_COUNTING
-      - UNKNOWN
-    License_AssignGuestManagementLicenseWSResponse:
-      type: object
-      description: Response object for assigning guest management license.
-      properties:
-        guestManagementLicense:
-          $ref: '#/components/schemas/GuestManagementLicenseType'
-    DeviceLicenseFamilyEnum:
-      type: string
-      enum:
-      - CAMERA
-      - CAMERA_MS
-      - VIDEO_INTERCOM
-      - AUDIO_GATEWAY
-      - ENVIRONMENTAL_SENSOR
-      - ENVIRONMENTAL_GATEWAY
-    DeviceTypeEnum:
-      type: string
-      enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
-      - UNKNOWN
-    ACUDoorLicenseType:
-      type: object
-      description: List of access controlled door licenses available for the client organization
-      properties:
-        claimKeyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        doorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        firstAssignedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        licenseToUnassignEmailState:
-          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
-        maxDeleteDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        priorClaimKeyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        productCode:
-          type:
-          - string
-          - 'null'
-        productType:
-          $ref: '#/components/schemas/ProductTypeEnum'
-        state:
-          $ref: '#/components/schemas/LicenseStateEnum'
-        trial:
-          type:
-          - boolean
-          - 'null'
-        updatedOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    LicenseEnum:
-      type: string
-      enum:
-      - STARTER
-      - STANDARD
-      - ENTERPRISE
-      - LEGACY
-    License_FindAssignedLicensesByLocationWSResponse:
-      type: object
-      description: Response object containing licenses assigned to a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        licenses:
-          type:
-          - array
-          - 'null'
-          description: List of licenses assigned to the location
-          items:
-            $ref: '#/components/schemas/BaseLicenseType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    License_GetLicensesForClientOrgWSRequest:
-      type: object
-      description: Request object for getting list of licenses available for a client organization.
-      properties:
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetDeviceLicensesWSResponse:
-      type: object
-      description: Response object containing list of device licenses available in organization.
-      properties:
-        deviceLicenses:
-          type:
-          - array
-          - 'null'
-          description: List of device licenses available in the organization
-          items:
-            $ref: '#/components/schemas/DeviceLicenseType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    License_GetAlertMonitoringLicensesWSResponse:
-      type: object
-      description: Response object containing list of alert monitoring licenses available in organization.
-      properties:
-        alertMonitoringLicenses:
-          type:
-          - array
-          - 'null'
-          description: List of alert monitoring licenses available in the organization
-          items:
-            $ref: '#/components/schemas/AlertMonitoringLicenseType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    License_FindAssignedLicensesByLocationWSRequest:
-      type: object
-      description: Request object for finding licenses assigned to a location.
-      properties:
-        includeSubLocations:
-          type:
-          - boolean
-          - 'null'
-          default: true
-          description: Whether to also include licenses assigned to sub locations of the location
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+      description: Request object for getting list of guest management licenses available in organization.
     GuestManagementLicenseType:
       type: object
       description: List of guest management licenses available for the client organization
@@ -1228,9 +817,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetDeviceLicensesForClientOrgWSRequest:
+    License_GetAlertMonitoringLicensesForClientOrgWSRequest:
       type: object
-      description: Request object for getting list of device licenses available for a client organization.
+      description: Request object for getting list of alert monitoring licenses available for a client organization.
       properties:
         orgUuid:
           type:
@@ -1239,37 +828,15 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetDeviceLicensesForClientOrgWSResponse:
+    License_AssignGuestManagementLicenseWSResponse:
       type: object
-      description: Response object containing list of device licenses available for a client organization.
+      description: Response object for assigning guest management license.
       properties:
-        deviceLicenses:
-          type:
-          - array
-          - 'null'
-          description: List of device licenses available for the client organization
-          items:
-            $ref: '#/components/schemas/DeviceLicenseType'
-    License_GetLicensesWSRequest:
+        guestManagementLicense:
+          $ref: '#/components/schemas/GuestManagementLicenseType'
+    ACUDoorLicenseType:
       type: object
-      description: Request object for getting list of add-on licenses available in organization.
-      properties:
-        optionalDeviceTypeFilter:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-    License_GetACUDoorLicensesForClientOrgWSResponse:
-      type: object
-      description: Response object containing list of access controlled door licenses available for a client organization.
-      properties:
-        acuDoorLicenses:
-          type:
-          - array
-          - 'null'
-          description: List of access controlled door licenses available for the client organization
-          items:
-            $ref: '#/components/schemas/ACUDoorLicenseType'
-    DeviceLicenseType:
-      type: object
-      description: List of device licenses available for the client organization
+      description: List of access controlled door licenses available for the client organization
       properties:
         claimKeyUuid:
           type:
@@ -1283,33 +850,20 @@ components:
           - string
           - 'null'
           format: date-time
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        deviceUuid:
+        doorUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        features:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/LicenseFeature'
-          uniqueItems: true
         firstAssignedDate:
           type:
           - string
           - 'null'
           format: date-time
-        licenseFamily:
-          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
         licenseToUnassignEmailState:
           $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
-        licenseType:
-          $ref: '#/components/schemas/LicenseEnum'
         maxDeleteDate:
           type:
           - string
@@ -1353,70 +907,17 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetACUDoorLicensesWSResponse:
+    License_GetACUDoorLicensesForClientOrgWSResponse:
       type: object
-      description: Response object containing list of access controlled door licenses available in organization.
+      description: Response object containing list of access controlled door licenses available for a client organization.
       properties:
         acuDoorLicenses:
           type:
           - array
           - 'null'
-          description: List of access controlled door licenses available in the organization
+          description: List of access controlled door licenses available for the client organization
           items:
             $ref: '#/components/schemas/ACUDoorLicenseType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    License_GetACUDoorLicensesForClientOrgWSRequest:
-      type: object
-      description: Request object for getting list of access controlled door licenses available for a client organization.
-      properties:
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetGuestManagementLicensesWSRequest:
-      type: object
-      description: Request object for getting list of guest management licenses available in organization.
-    License_AssignDeviceLicenseWSRequest:
-      type: object
-      description: Request object for assigning or unassigning a device license.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        licenseUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    LicenseStateEnum:
-      type: string
-      enum:
-      - CLAIMED
-      - RENEWED
-      - PENDING_RETURN
-      - NOT_RENEWED
-      - EXPIRED
-      - PERMANENTLY_EXPIRED
     AlertMonitoringLicenseType:
       type: object
       description: List of alert monitoring licenses available for the client organization
@@ -1549,36 +1050,58 @@ components:
           - integer
           - 'null'
           format: int32
-    License_GetDeviceLicensesWSRequest:
+    License_GetGuestManagementLicensesForClientOrgWSResponse:
       type: object
-      description: Request object for getting list of device licenses available in organization.
+      description: Response object containing list of guest management licenses available for a client organization.
       properties:
-        optionalDeviceTypeFilter:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-    License_AssignAlertMonitoringLicenseWSRequest:
+        guestManagementLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of guest management licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/GuestManagementLicenseType'
+    License_GetACUDoorLicensesWSResponse:
       type: object
-      description: Request object for assigning alert monitoring license.
+      description: Response object containing list of access controlled door licenses available in organization.
       properties:
-        licenseUuid:
+        acuDoorLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of access controlled door licenses available in the organization
+          items:
+            $ref: '#/components/schemas/ACUDoorLicenseType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuid:
+        warningMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_AssignAlertMonitoringLicenseWSResponse:
-      type: object
-      description: Response object for assigning alert monitoring license.
-      properties:
-        alertMonitoringLicense:
-          $ref: '#/components/schemas/AlertMonitoringLicenseType'
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
     License_GetGuestManagementLicensesWSResponse:
       type: object
       description: Response object containing list of guest management licenses available in organization.
@@ -1602,6 +1125,483 @@ components:
           type:
           - string
           - 'null'
+    LicenseStateEnum:
+      type: string
+      enum:
+      - CLAIMED
+      - RENEWED
+      - PENDING_RETURN
+      - NOT_RENEWED
+      - EXPIRED
+      - PERMANENTLY_EXPIRED
+    License_FindAssignedLicensesByLocationWSRequest:
+      type: object
+      description: Request object for finding licenses assigned to a location.
+      properties:
+        includeSubLocations:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Whether to also include licenses assigned to sub locations of the location
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignACUDoorLicenseWSRequest:
+      type: object
+      description: Request object for assigning ACU door license.
+      properties:
+        doorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignLicenseWSRequest:
+      type: object
+      description: Request object for assigning an add-on license to a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LicenseUsageType:
+      type: object
+      description: List of licenses available for the client organization
+      properties:
+        addOnLicenseType:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        additionalPerceptionFeatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        cloudArchiveDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        license:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        perceptionTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LicenseEnum:
+      type: string
+      enum:
+      - STARTER
+      - STANDARD
+      - ENTERPRISE
+      - LEGACY
+    PerceptionTypeEnum:
+      type: string
+      enum:
+      - PEOPLE_COUNTING
+      - FACE_COUNTING_UNIQUE
+      - FACE_COUNTING_NONUNIQUE
+      - ENGAGMENT_COUNTING
+      - FACE_RECOGNITION
+      - LICENSEPLATE_RECOGNITION
+      - VEHICLE_COUNTING
+      - OCCUPANCY_COUNTING
+      - UNKNOWN
+    LicenseFeature:
+      type: object
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    License_AssignAlertMonitoringLicenseWSResponse:
+      type: object
+      description: Response object for assigning alert monitoring license.
+      properties:
+        alertMonitoringLicense:
+          $ref: '#/components/schemas/AlertMonitoringLicenseType'
+    DeviceLicenseType:
+      type: object
+      description: List of device licenses available for the client organization
+      properties:
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        features:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+          uniqueItems: true
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        licenseType:
+          $ref: '#/components/schemas/LicenseEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignLicenseWSResponse:
+      type: object
+      description: Response object for assigning an add-on license to a device.
+      properties:
+        licenseUsage:
+          $ref: '#/components/schemas/LicenseUsageType'
+    AddOnLicenseEnum:
+      type: string
+      enum:
+      - CLOUD_ARCHIVING
+      - PERCEPTION
+      - POSE
+      - BEHAVIOR
+      - VEHICLE
+      - PEOPLE
+      - PPE
+      - PEOPLE_ANALYTICS
+      - UNKNOWN
+    License_GetAlertMonitoringLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of alert monitoring licenses available for a client organization.
+      properties:
+        alertMonitoringLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of alert monitoring licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/AlertMonitoringLicenseType'
+    License_GetDeviceLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of device licenses available for a client organization.
+      properties:
+        deviceLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of device licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/DeviceLicenseType'
+    License_AssignAlertMonitoringLicenseWSRequest:
+      type: object
+      description: Request object for assigning alert monitoring license.
+      properties:
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_AssignGuestManagementLicenseWSRequest:
+      type: object
+      description: Request object for assigning guest management license.
+      properties:
+        licenseUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    License_GetDeviceLicensesWSResponse:
+      type: object
+      description: Response object containing list of device licenses available in organization.
+      properties:
+        deviceLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of device licenses available in the organization
+          items:
+            $ref: '#/components/schemas/DeviceLicenseType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetAlertMonitoringLicensesWSRequest:
+      type: object
+      description: Request object for getting list of alert monitoring licenses available in organization.
+    License_GetAlertMonitoringLicensesWSResponse:
+      type: object
+      description: Response object containing list of alert monitoring licenses available in organization.
+      properties:
+        alertMonitoringLicenses:
+          type:
+          - array
+          - 'null'
+          description: List of alert monitoring licenses available in the organization
+          items:
+            $ref: '#/components/schemas/AlertMonitoringLicenseType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of licenses available for a client organization.
+      properties:
+        licenses:
+          type:
+          - array
+          - 'null'
+          description: List of licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/LicenseUsageType'
+    License_AssignACUDoorLicenseWSResponse:
+      type: object
+      description: Response object for assigning ACU door license.
+      properties:
+        acuDoorLicense:
+          $ref: '#/components/schemas/ACUDoorLicenseType'
+    License_FindAssignedLicensesByLocationWSResponse:
+      type: object
+      description: Response object containing licenses assigned to a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        licenses:
+          type:
+          - array
+          - 'null'
+          description: List of licenses assigned to the location
+          items:
+            $ref: '#/components/schemas/BaseLicenseType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetDeviceLicensesWSRequest:
+      type: object
+      description: Request object for getting list of device licenses available in organization.
+      properties:
+        optionalDeviceTypeFilter:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+    License_GetACUDoorLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of access controlled door licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

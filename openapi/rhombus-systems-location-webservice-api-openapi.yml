@@ -469,49 +469,9 @@ paths:
       - Location Webservice
 components:
   schemas:
-    Location_GetLocationsWSRequest:
+    Location_UpdateLocationWSResponse:
       type: object
-      description: Request object for getting list of locations in organization.
-      properties:
-        subLocationsIncluded:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to include sub-locations in the response
-          example: false
-    Location_GeoCodeWSResponse:
-      type: object
-      description: Response object containing the latitude and longitude of an address.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latitude coordinate of the address
-          example: 38.8977
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Longitude coordinate of the address
-          example: -77.0365
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Location_DeleteLocationWSResponse:
-      type: object
-      description: Response object for removing a location.
+      description: Response object for updating a location.
       properties:
         error:
           type:
@@ -525,149 +485,20 @@ components:
           type:
           - string
           - 'null'
-    Location_CreateLocationWSRequest:
+    Location_RemoveLocationLabelWSRequest:
       type: object
-      description: Request object for creating a location.
+      description: Request object for removing a label from a location.
       properties:
-        location:
-          $ref: '#/components/schemas/LocationType'
-        parentLocationUuid:
+        label:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Location_GetLocationWSResponse:
-      type: object
-      description: Response object containing location information.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+          description: Label to remove from the location
+        locationIdentifier:
           type:
           - string
           - 'null'
-        location:
-          $ref: '#/components/schemas/LocationType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Location_GetLocationWSRequest:
-      type: object
-      description: Request object for getting location by ID.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        subLocationsRequired:
-          type:
-          - boolean
-          - 'null'
-          description: Whether sub-locations are required in the response
-          example: false
-      required:
-      - locationUuid
-    Location_GetLocationsByGeoResponse:
-      type: object
-      description: Response object containing list of locations given latitude and longitude.
-      properties:
-        locations:
-          type:
-          - array
-          - 'null'
-          description: Collection of locations found at the specified coordinates
-          items:
-            $ref: '#/components/schemas/LocationType'
-    Location_GetLocationsWSResponse:
-      type: object
-      description: Response object containing list of locations in organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        locations:
-          type:
-          - array
-          - 'null'
-          description: List of locations in the organization
-          items:
-            $ref: '#/components/schemas/LocationType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Location_RemoveLocationLabelWSResponse:
-      type: object
-      description: Response object for removing a label from a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Location_GetLocationLabelsForOrgWSResponse:
-      type: object
-      description: Response object containing all location labels for an organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        locationLabels:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of location name or location id to label set
-            items:
-              type:
-              - string
-              - 'null'
-              description: Map of location name or location id to label set
-            uniqueItems: true
-          description: Map of location name or location id to label set
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Location_DeleteLocationWSRequest:
-      type: object
-      description: Request object for removing a location.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+          description: Location identifier (name or ID)
     FloorPlanType:
       type: object
       properties:
@@ -717,6 +548,43 @@ components:
           - number
           - 'null'
           format: double
+    Location_GetLocationWSRequest:
+      type: object
+      description: Request object for getting location by ID.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        subLocationsRequired:
+          type:
+          - boolean
+          - 'null'
+          description: Whether sub-locations are required in the response
+          example: false
+      required:
+      - locationUuid
+    Location_GetLocationsBySubLocationsHierarchyKeyWSResponse:
+      type: object
+      description: Response object containing nested locations by subLocationHierarchyKey.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        location:
+          $ref: '#/components/schemas/LocationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Location_GeoCodeWSRequest:
       type: object
       description: Request object for getting the latitude and longitude of an address.
@@ -727,24 +595,38 @@ components:
           - 'null'
           description: Address to geocode
           example: 1600 Pennsylvania Avenue NW, Washington, DC
-    Location_GetLocationsByGeoRequest:
+    Location_GetLocationLabelsForOrgWSResponse:
       type: object
-      description: Request object for getting list of locations given latitude and longitude.
+      description: Response object containing all location labels for an organization.
       properties:
-        latitude:
+        error:
           type:
-          - number
+          - boolean
           - 'null'
-          format: double
-          description: Latitude coordinate
-          example: 37.7749
-        longitude:
+        errorMsg:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-          description: Longitude coordinate
-          example: -122.4194
+        locationLabels:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location name or location id to label set
+            items:
+              type:
+              - string
+              - 'null'
+              description: Map of location name or location id to label set
+            uniqueItems: true
+          description: Map of location name or location id to label set
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Location_SelectiveUpdateLocationWSRequest:
       type: object
       description: Request object for selectively updating a location.
@@ -848,15 +730,104 @@ components:
               format: int32
       required:
       - locationUuid
+    Location_GeoCodeWSResponse:
+      type: object
+      description: Response object containing the latitude and longitude of an address.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the address
+          example: 38.8977
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the address
+          example: -77.0365
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationsWSRequest:
+      type: object
+      description: Request object for getting list of locations in organization.
+      properties:
+        subLocationsIncluded:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to include sub-locations in the response
+          example: false
+    Location_CreateLocationWSRequest:
+      type: object
+      description: Request object for creating a location.
+      properties:
+        location:
+          $ref: '#/components/schemas/LocationType'
+        parentLocationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Location_SelectiveUpdateLocationWSResponse:
+      type:
+      - object
+      - 'null'
+      description: Response object for selectively updating a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Location_UpdateLocationWSRequest:
       type: object
       description: 'Request object for updating a location. NOTE: This will replace old settings meaning if you leave a field blank it will be overrode to blank. For selective field updates use the endpoint /selectiveUpdateLocation.'
       properties:
         location:
           $ref: '#/components/schemas/LocationType'
-    Location_AddLocationLabelWSResponse:
+    Location_GetLocationsByGeoRequest:
       type: object
-      description: Response object for adding a label to a location.
+      description: Request object for getting list of locations given latitude and longitude.
+      properties:
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate
+          example: 37.7749
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate
+          example: -122.4194
+    Location_DeleteLocationWSResponse:
+      type: object
+      description: Response object for removing a location.
       properties:
         error:
           type:
@@ -884,6 +855,60 @@ components:
           - string
           - 'null'
           description: Location identifier (name or ID)
+    Location_GetLocationsBySubLocationsHierarchyKeyWSRequest:
+      type: object
+      description: Request object for getting nested locations by subLocationHierarchyKey.
+      properties:
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Location_GetLocationsByGeoResponse:
+      type: object
+      description: Response object containing list of locations given latitude and longitude.
+      properties:
+        locations:
+          type:
+          - array
+          - 'null'
+          description: Collection of locations found at the specified coordinates
+          items:
+            $ref: '#/components/schemas/LocationType'
+    Location_AddLocationLabelWSResponse:
+      type: object
+      description: Response object for adding a label to a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_DeleteLocationWSRequest:
+      type: object
+      description: Request object for removing a location.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     LocationType:
       type: object
       description: Location information to update
@@ -961,91 +986,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Location_RemoveLocationLabelWSRequest:
-      type: object
-      description: Request object for removing a label from a location.
-      properties:
-        label:
-          type:
-          - string
-          - 'null'
-          description: Label to remove from the location
-        locationIdentifier:
-          type:
-          - string
-          - 'null'
-          description: Location identifier (name or ID)
-    Location_GetLocationsBySubLocationsHierarchyKeyWSResponse:
-      type: object
-      description: Response object containing nested locations by subLocationHierarchyKey.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        location:
-          $ref: '#/components/schemas/LocationType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Location_GetLocationsBySubLocationsHierarchyKeyWSRequest:
-      type: object
-      description: Request object for getting nested locations by subLocationHierarchyKey.
-      properties:
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
     Location_GetLocationLabelsForOrgWSRequest:
       type: object
       description: Request object for getting all location labels for an organization.
-    Location_UpdateLocationWSResponse:
-      type: object
-      description: Response object for updating a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Location_SelectiveUpdateLocationWSResponse:
-      type:
-      - object
-      - 'null'
-      description: Response object for selectively updating a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     Location_CreateLocationWSResponse:
       type: object
       description: Response object for creating a location.
@@ -1065,6 +1008,63 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationWSResponse:
+      type: object
+      description: Response object containing location information.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        location:
+          $ref: '#/components/schemas/LocationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_RemoveLocationLabelWSResponse:
+      type: object
+      description: Response object for removing a label from a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Location_GetLocationsWSResponse:
+      type: object
+      description: Response object containing list of locations in organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locations:
+          type:
+          - array
+          - 'null'
+          description: List of locations in the organization
+          items:
+            $ref: '#/components/schemas/LocationType'
         warningMsg:
           type:
           - string

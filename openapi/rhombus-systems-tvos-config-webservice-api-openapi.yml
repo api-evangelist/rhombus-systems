@@ -139,72 +139,15 @@ paths:
       - TvOs Config Webservice
 components:
   schemas:
-    Tvos_UpdateTvOsConfigWsResponse:
-      type: object
-      description: Response object for updating a tvOs configuration.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Tvos_GetTvOsConfigWsResponse:
-      type: object
-      description: Response object containing a specific tvOs configuration.
-      properties:
-        config:
-          $ref: '#/components/schemas/TvOsConfigType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Tvos_GetTvOsConfigsForOrgWsResponse:
-      type: object
-      description: Response object containing all tvOs configurations for the organization.
-      properties:
-        configs:
-          type:
-          - array
-          - 'null'
-          description: List of tvOs configurations for the organization
-          items:
-            $ref: '#/components/schemas/TvOsConfigType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Tvos_GetTvOsConfigsForOrgWsRequest:
-      type: object
-      description: Request object for getting all tvOs configurations for the organization.
     Tvos_UpdateTvOsConfigWsRequest:
       type: object
       description: Request object for updating a tvOs configuration.
       properties:
         config:
           $ref: '#/components/schemas/TvOsConfigType'
+    Tvos_GetTvOsConfigsForOrgWsRequest:
+      type: object
+      description: Request object for getting all tvOs configurations for the organization.
     TvOsConfigType:
       type: object
       description: tvOs configuration to update
@@ -245,6 +188,63 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Tvos_GetTvOsConfigsForOrgWsResponse:
+      type: object
+      description: Response object containing all tvOs configurations for the organization.
+      properties:
+        configs:
+          type:
+          - array
+          - 'null'
+          description: List of tvOs configurations for the organization
+          items:
+            $ref: '#/components/schemas/TvOsConfigType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Tvos_GetTvOsConfigWsResponse:
+      type: object
+      description: Response object containing a specific tvOs configuration.
+      properties:
+        config:
+          $ref: '#/components/schemas/TvOsConfigType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Tvos_UpdateTvOsConfigWsResponse:
+      type: object
+      description: Response object for updating a tvOs configuration.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

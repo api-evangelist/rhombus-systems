@@ -105,25 +105,6 @@ paths:
       - Door Controller Webservice
 components:
   schemas:
-    Doorcontroller_UpdateDoorControllerDetailsWSResponse:
-      type: object
-      description: Response object for updating details for a door controller.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Doorcontroller_RegisterDiscoveredRhombusReaderWSResponse:
-      type: object
-      description: Response object for registering a Rhombus reader discovered by a door controller.
     Doorcontroller_UpdateDoorControllerDetailsWSRequest:
       type: object
       description: Request object for updating details for a door controller.
@@ -202,6 +183,9 @@ components:
           example: AAAAAAAAAAAAAAAAAAAAAA
       required:
       - uuid
+    Doorcontroller_RegisterDiscoveredRhombusReaderWSResponse:
+      type: object
+      description: Response object for registering a Rhombus reader discovered by a door controller.
     Doorcontroller_RegisterDiscoveredRhombusReaderWSRequest:
       type: object
       description: Request object for registering a Rhombus reader discovered by a door controller.
@@ -233,6 +217,22 @@ components:
           - 'null'
           description: Serial number of the discovered Rhombus reader
           example: RR-12345678
+    Doorcontroller_UpdateDoorControllerDetailsWSResponse:
+      type: object
+      description: Response object for updating details for a door controller.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

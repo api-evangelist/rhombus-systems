@@ -304,54 +304,11 @@ paths:
       - User Metadata Webservice
 components:
   schemas:
-    User_metadata_DeleteUserMetadataFieldTemplateWSResponse:
+    User_metadata_CreateUserMetadataFieldTemplateWSRequest:
       type: object
       properties:
         template:
           $ref: '#/components/schemas/UserMetadataFieldTemplate'
-    User_metadata_CreateUserMetadataFieldTemplateWSResponse:
-      type: object
-      properties:
-        template:
-          $ref: '#/components/schemas/UserMetadataFieldTemplate'
-    User_metadata_FindUserMetadataFieldsWSResponse:
-      type: object
-      properties:
-        templateMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/UserMetadataFieldTemplate'
-        userFieldValueMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/UserMetadataField'
-    User_metadata_SaveUserMetadataFieldsWSRequest:
-      type: object
-      properties:
-        fieldValueMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    User_metadata_UpdateUserMetadataFieldTemplateWSRequest:
-      type: object
-      properties:
-        selectiveUpdate:
-          $ref: '#/components/schemas/UserMetadataFieldTemplateSelectiveUpdate'
     UserMetadataFieldTemplateSelectiveUpdate:
       type: object
       properties:
@@ -395,35 +352,51 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    User_metadata_UpdateUserMetadataFieldTemplateWSResponse:
+    UserMetadataFieldTemplate:
       type: object
       properties:
-        template:
-          $ref: '#/components/schemas/UserMetadataFieldTemplate'
-    User_metadata_FindUserMetadataFieldTemplatesWSResponse:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        fieldName:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scimFieldName:
+          type:
+          - string
+          - 'null'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_metadata_FindUserMetadataFieldsWSRequest:
       type: object
       properties:
-        templateMap:
+        userUuid:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/UserMetadataFieldTemplate'
-    User_metadata_SaveUserMetadataFieldsWSResponse:
-      type: object
-      properties:
-        templateMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/UserMetadataFieldTemplate'
-        userFieldValueMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/UserMetadataField'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     User_metadata_DeleteUserMetadataFieldWSRequest:
       type: object
       properties:
@@ -441,11 +414,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    User_metadata_DeleteUserMetadataFieldWSResponse:
-      type: object
-      properties:
-        field:
-          $ref: '#/components/schemas/UserMetadataField'
     UserMetadataField:
       type: object
       properties:
@@ -484,16 +452,42 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    User_metadata_FindUserMetadataFieldsWSRequest:
+    User_metadata_DeleteUserMetadataFieldTemplateWSResponse:
       type: object
       properties:
-        userUuid:
+        template:
+          $ref: '#/components/schemas/UserMetadataFieldTemplate'
+    User_metadata_SaveUserMetadataFieldsWSResponse:
+      type: object
+      properties:
+        templateMap:
           type:
-          - string
+          - object
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataFieldTemplate'
+        userFieldValueMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataField'
+    User_metadata_UpdateUserMetadataFieldTemplateWSRequest:
+      type: object
+      properties:
+        selectiveUpdate:
+          $ref: '#/components/schemas/UserMetadataFieldTemplateSelectiveUpdate'
+    User_metadata_FindUserMetadataFieldTemplatesWSRequest:
+      type: object
+    User_metadata_FindUserMetadataFieldTemplatesWSResponse:
+      type: object
+      properties:
+        templateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataFieldTemplate'
     User_metadata_FindAllUserMetadataFieldsByOrgWSResponse:
       type: object
       properties:
@@ -513,40 +507,50 @@ components:
             - 'null'
             additionalProperties:
               $ref: '#/components/schemas/UserMetadataField'
-    User_metadata_CreateUserMetadataFieldTemplateWSRequest:
+    User_metadata_FindAllUserMetadataFieldsByOrgWSRequest:
+      type: object
+    User_metadata_FindUserMetadataFieldsWSResponse:
+      type: object
+      properties:
+        templateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataFieldTemplate'
+        userFieldValueMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserMetadataField'
+    User_metadata_CreateUserMetadataFieldTemplateWSResponse:
       type: object
       properties:
         template:
           $ref: '#/components/schemas/UserMetadataFieldTemplate'
-    UserMetadataFieldTemplate:
+    User_metadata_UpdateUserMetadataFieldTemplateWSResponse:
       type: object
       properties:
-        createdAtMillis:
+        template:
+          $ref: '#/components/schemas/UserMetadataFieldTemplate'
+    User_metadata_DeleteUserMetadataFieldWSResponse:
+      type: object
+      properties:
+        field:
+          $ref: '#/components/schemas/UserMetadataField'
+    User_metadata_SaveUserMetadataFieldsWSRequest:
+      type: object
+      properties:
+        fieldValueMap:
           type:
-          - integer
+          - object
           - 'null'
-          format: int64
-        fieldName:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scimFieldName:
-          type:
-          - string
-          - 'null'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        uuid:
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        userUuid:
           type:
           - string
           - 'null'
@@ -563,10 +567,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    User_metadata_FindAllUserMetadataFieldsByOrgWSRequest:
-      type: object
-    User_metadata_FindUserMetadataFieldTemplatesWSRequest:
-      type: object
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

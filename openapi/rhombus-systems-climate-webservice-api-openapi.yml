@@ -436,17 +436,20 @@ paths:
       - Climate Webservice
 components:
   schemas:
-    Climate_RebootEnvironmentalGatewayWSRequest:
+    TimeWindowSeconds:
       type: object
-      description: Request to reboot an environmental gateway.
+      description: List of uptime windows for the device
       properties:
-        environmentalGatewayUuid:
+        durationSeconds:
           type:
-          - string
+          - integer
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
     PmSensorType:
       type: object
       properties:
@@ -525,59 +528,86 @@ components:
           - number
           - 'null'
           format: float
-    Climate_GetMinimalEnvironmentalGatewayStatesWSRequest:
+    DeviceStatusEnum:
+      type: string
+      enum:
+      - RED
+      - ORANGE
+      - YELLOW
+      - GREEN
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    Common_devices_RebootDeviceWSResponse_RebootResult:
+      type: string
+      description: Result of the reboot operation
+      enum:
+      - REBOOT_SENT
+      - DEVICE_OFFLINE
+    Climate_GetMinimalClimateStatesWSResponse:
       type: object
-      description: Request to retrieve minimal environmental gateway states.
-    PressureSensorType:
-      type: object
+      description: Response containing minimal climate state information for environmental sensors.
       properties:
-        pressure:
+        climateStates:
           type:
-          - number
+          - array
           - 'null'
-          format: float
-        tempC:
-          type:
-          - number
-          - 'null'
-          format: float
-        timestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    MetaDataLocationType:
-      type: object
-      properties:
-        region:
-          type:
-          - string
-          - 'null'
-    ToastOrderIdType:
-      type: object
-      properties:
-        employeeName:
-          type:
-          - string
-          - 'null'
-        guid:
-          type:
-          - string
-          - 'null'
-        locationName:
-          type:
-          - string
-          - 'null'
-        restaurantName:
-          type:
-          - string
-          - 'null'
-        toastCheckInfo:
-          $ref: '#/components/schemas/ToastCheckInfo'
-    Climate_UpdateEnvironmentalGatewayDetailsWSResponse:
-      type: object
-      description: Response indicating the result of updating environmental gateway details.
-      properties:
+          description: List of minimal climate state information
+          items:
+            $ref: '#/components/schemas/Climate_MinimalClimateStateType'
         error:
           type:
           - boolean
@@ -586,157 +616,6 @@ components:
           type:
           - string
           - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Climate_UpdateClimateSensorDetailsWSRequest:
-      type: object
-      description: Request to update details for an environmental sensor.
-      properties:
-        associatedCameras:
-          type:
-          - array
-          - 'null'
-          description: List of associated camera device facet UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        associatedCamerasUpdated:
-          type:
-          - boolean
-          - 'null'
-        deleted:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the environmental sensor is deleted
-          example: false
-        deletedUpdated:
-          type:
-          - boolean
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the environmental sensor
-          example: Temperature and humidity sensor in main office
-        descriptionUpdated:
-          type:
-          - boolean
-          - 'null'
-        floorNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Floor number where the environmental sensor is located
-          example: 1
-        floorNumberUpdated:
-          type:
-          - boolean
-          - 'null'
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latitude coordinate of the environmental sensor
-          example: 37.7749
-        latitudeUpdated:
-          type:
-          - boolean
-          - 'null'
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuidUpdated:
-          type:
-          - boolean
-          - 'null'
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Longitude coordinate of the environmental sensor
-          example: -122.4194
-        longitudeUpdated:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the environmental sensor
-          example: Main Office Sensor
-        nameUpdated:
-          type:
-          - boolean
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        policyUuidUpdated:
-          type:
-          - boolean
-          - 'null'
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        subLocationsHierarchyKeyUpdated:
-          type:
-          - boolean
-          - 'null'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Sensor_GetSensorPresenceWindowsWSResponse:
-      type: object
-      description: Response object containing stored video information for a sensor.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        presenceWindows:
-          type:
-          - array
-          - 'null'
-          description: List of presence windows for the sensor
-          items:
-            $ref: '#/components/schemas/TimeWindowSeconds'
         warningMsg:
           type:
           - string
@@ -759,250 +638,114 @@ components:
           type:
           - string
           - 'null'
-    Climate_GetClimateSensorConfigWSResponse:
+    Climate_GetMinimalEnvironmentalGatewayStatesWSRequest:
       type: object
-      description: Response containing configuration for an environmental sensor.
-      properties:
-        config:
-          $ref: '#/components/schemas/IClimateUserConfig'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Climate_GetClimateEventsForSensorWSResponse:
+      description: Request to retrieve minimal environmental gateway states.
+    FormaSensorType:
       type: object
-      description: Response containing climate events for an environmental sensor.
       properties:
-        climateEvents:
-          type:
-          - array
-          - 'null'
-          description: List of climate events for the sensor
-          items:
-            $ref: '#/components/schemas/ClimateEventType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Climate_GetEventsForEnvironmentalGatewayWSResponse:
-      type: object
-      description: Response containing events for an environmental gateway.
-      properties:
-        events:
-          type:
-          - array
-          - 'null'
-          description: List of climate events for the environmental gateway
-          items:
-            $ref: '#/components/schemas/E50ClimateEventType'
-        lastEvaluatedKey:
-          type:
-          - string
-          - 'null'
-    ClipSeekPointV2Type:
-      type: object
-      description: List of seek points for the clip
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        alert:
-          type:
-          - boolean
-          - 'null'
-        customActivityColor:
-          $ref: '#/components/schemas/FootageSeekPointColorEnum'
-        customActivityDescription:
-          type:
-          - string
-          - 'null'
-        customActivityDisplayName:
-          type:
-          - string
-          - 'null'
-        dcao:
-          type:
-          - boolean
-          - 'null'
-        dwelling:
-          type:
-          - boolean
-          - 'null'
-        faceName:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        inMotion:
-          type:
-          - boolean
-          - 'null'
-        licensePlate:
-          type:
-          - string
-          - 'null'
-        loudness:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        pose:
-          type:
-          - string
-          - 'null'
-        relativeSecond:
+        ch2oPpb:
           type:
           - number
           - 'null'
           format: float
-        sensorValType:
-          $ref: '#/components/schemas/SensorValType'
-        stableTrackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        toastOrderIdInfo:
-          $ref: '#/components/schemas/ToastOrderIdType'
-        tu:
-          type:
-          - string
-          - 'null'
-        unidentifiedFaceId:
-          type:
-          - string
-          - 'null'
-        vehicleName:
-          type:
-          - string
-          - 'null'
-    ClipSeekPointType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        alert:
-          type:
-          - boolean
-          - 'null'
-        bottom:
+        relHumid:
           type:
           - number
           - 'null'
           format: float
-        faceName:
-          type:
-          - string
-          - 'null'
-        keypointsV2:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PointType'
-        left:
+        tempC:
           type:
           - number
           - 'null'
           format: float
-        licensePlate:
-          type:
-          - string
-          - 'null'
-        pose:
-          type:
-          - string
-          - 'null'
-        relativeSecond:
-          type:
-          - number
-          - 'null'
-          format: float
-        right:
-          type:
-          - number
-          - 'null'
-          format: float
-        top:
-          type:
-          - number
-          - 'null'
-          format: float
-        unidentifiedFaceId:
-          type:
-          - string
-          - 'null'
-        vehicleName:
-          type:
-          - string
-          - 'null'
-    Climate_GetMinimalEnvironmentalGatewayStatesWSResponse:
-      type: object
-      description: Response containing minimal environmental gateway states.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        lastEvaluatedKey:
-          type:
-          - string
-          - 'null'
-        minimalEnvironmentalGatewayStates:
-          type:
-          - array
-          - 'null'
-          description: List of minimal environmental gateway states
-          items:
-            $ref: '#/components/schemas/Climate_MinimalEnvironmentalGatewayStateType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    DeviceStatusEnum:
-      type: string
-      enum:
-      - RED
-      - ORANGE
-      - YELLOW
-      - GREEN
-    TimeWindowSeconds:
-      type: object
-      description: List of uptime windows for the device
-      properties:
-        durationSeconds:
+        timestampSec:
           type:
           - integer
           - 'null'
           format: int64
-        startSeconds:
+    Co2SensorType:
+      type: object
+      properties:
+        co2Ppm:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        relHumid:
+          type:
+          - number
+          - 'null'
+          format: float
+        tempC:
+          type:
+          - number
+          - 'null'
+          format: float
+        timestampSec:
           type:
           - integer
           - 'null'
           format: int64
+    LeakProbeType:
+      type: object
+      properties:
+        adcMv:
+          type:
+          - number
+          - 'null'
+          format: float
+        adcRaw:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        leakDetected:
+          type:
+          - boolean
+          - 'null'
+        moistDetected:
+          type:
+          - boolean
+          - 'null'
+        present:
+          type:
+          - boolean
+          - 'null'
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Climate_GetEnvironmentalGatewayShadowsWSResponse:
+      type: object
+      description: Response containing environmental gateway shadows.
+      properties:
+        environmentalGatewayShadows:
+          type:
+          - array
+          - 'null'
+          description: List of environmental gateway shadows
+          items:
+            $ref: '#/components/schemas/EnvironmentalGatewayShadowType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Common_devices_RebootDeviceWSResponse:
+      type: object
+      description: Response indicating the result of rebooting a device.
+      properties:
+        result:
+          $ref: '#/components/schemas/Common_devices_RebootDeviceWSResponse_RebootResult'
     E50ClimateEventType:
       type: object
       description: List of climate events for the environmental gateway
@@ -1087,24 +830,90 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Climate_GetEventsForEnvironmentalGatewayWSRequest:
+    ClipSeekPointV2Type:
       type: object
-      description: Request to retrieve events for an environmental gateway.
+      description: List of seek points for the clip
       properties:
-        createdAfterMs:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        alert:
+          type:
+          - boolean
+          - 'null'
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
+          type:
+          - string
+          - 'null'
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+        dcao:
+          type:
+          - boolean
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        faceName:
+          type:
+          - string
+          - 'null'
+        id:
           type:
           - integer
           - 'null'
-          format: int64
-          description: Timestamp in milliseconds after which events should be retrieved
-          example: 1640991600000
-        createdBeforeMs:
+          format: int32
+        inMotion:
+          type:
+          - boolean
+          - 'null'
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        loudness:
           type:
           - integer
           - 'null'
-          format: int64
-          description: Timestamp in milliseconds before which events should be retrieved
-          example: 1640995200000
+          format: int32
+        pose:
+          type:
+          - string
+          - 'null'
+        relativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toastOrderIdInfo:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        tu:
+          type:
+          - string
+          - 'null'
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    Climate_DeleteEnvironmentalGatewayWSRequest:
+      type: object
+      description: Request to delete an environmental gateway.
+      properties:
         deviceUuid:
           type:
           - string
@@ -1112,21 +921,209 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        lastEvaluatedKey:
+        mummify:
           type:
-          - string
+          - boolean
           - 'null'
-        maxPageSize:
+          description: Whether to mummify the gateway instead of deleting it
+          example: false
+    IClimateUserConfig:
+      type: object
+      description: Climate sensor configuration
+      properties:
+        accelerometer_change_tamper_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        accelerometer_disabled:
+          type:
+          - boolean
+          - 'null'
+        alert_window_minutes:
           type:
           - integer
           - 'null'
           format: int32
-          description: Maximum number of results to return per page
-          example: 50
-    Climate_GetClimateSensorConfigWSRequest:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        lastModified:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pressure_switch_tamper_disabled:
+          type:
+          - boolean
+          - 'null'
+        smoke_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        thc_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        vape_ai_threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    Climate_UpdateEnvironmentalGatewayDetailsWSRequest:
       type: object
-      description: Request to retrieve configuration for an environmental sensor.
+      description: Request to update details for an environmental gateway.
       properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device facet UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        associatedCamerasUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the associated cameras have been updated
+          example: false
+        deleted:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the environmental gateway is deleted
+          example: false
+        deletedUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the deleted status has been updated
+          example: false
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the environmental gateway
+          example: Environmental monitoring gateway in main office
+        descriptionUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the description has been updated
+          example: false
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the environmental gateway is located
+          example: 1
+        floorNumberUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the floor number has been updated
+          example: false
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the environmental gateway
+          example: 37.7749
+        latitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the latitude has been updated
+          example: false
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the location UUID has been updated
+          example: false
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the environmental gateway
+          example: -122.4194
+        longitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the longitude has been updated
+          example: false
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the environmental gateway
+          example: Main Office Gateway
+        nameUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the name has been updated
+          example: false
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the policy UUID has been updated
+          example: false
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the sub-locations hierarchy key has been updated
+          example: false
         uuid:
           type:
           - string
@@ -1134,55 +1131,409 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Common_devices_RebootDeviceWSResponse:
+    Sensor_GetSensorPresenceWindowsWSResponse:
       type: object
-      description: Response indicating the result of rebooting a device.
+      description: Response object containing stored video information for a sensor.
       properties:
-        result:
-          $ref: '#/components/schemas/Common_devices_RebootDeviceWSResponse_RebootResult'
-    Climate_GetClimateEventsForSensorWSRequest:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        presenceWindows:
+          type:
+          - array
+          - 'null'
+          description: List of presence windows for the sensor
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ActivityEnum:
+      type: string
+      enum:
+      - SOUND_LOUD
+      - SOUND_GUN_SHOT
+      - TAMPER
+      - VISUAL_TAMPER
+      - MOTION_TAMPER
+      - MOTION
+      - MOTION_HUMAN
+      - MOTION_CAR
+      - MOTION_ANIMAL
+      - FACE
+      - FACE_IDENTIFIED
+      - FACE_UNIDENTIFIED
+      - FACE_BLACKLISTED
+      - FACE_ALERT
+      - POSE_ANOMALOUS
+      - POSE_FALL
+      - LICENSEPLATE
+      - LICENSEPLATE_IDENTIFIED
+      - LICENSEPLATE_UNIDENTIFIED
+      - LICENSEPLATE_ALERT
+      - LICENSEPLATE_BLACKLISTED
+      - LICENSEPLATE_TRUSTED
+      - PEOPLECOUNT_HIGH
+      - PEOPLECOUNT_HIGH_RESET
+      - PEOPLECOUNT_LOW
+      - PEOPLECOUNT_LOW_RESET
+      - HUMAN_ENTER
+      - HUMAN_EXIT
+      - CAR_ENTER
+      - CAR_EXIT
+      - TEMPERATURE_EXCEEDED_HIGH
+      - TEMPERATURE_EXCEEDED_LOW
+      - HUMIDITY_EXCEEDED_HIGH
+      - HUMIDITY_EXCEEDED_LOW
+      - PM25_EXCEEDED_HIGH
+      - TVOC_EXCEEDED_HIGH
+      - ETOH_EXCEEDED_HIGH
+      - IAQ_EXCEEDED_HIGH
+      - CO2_EXCEEDED_HIGH
+      - CO2_EXCEEDED_LOW
+      - PROBE_TEMPERATURE_EXCEEDED_HIGH
+      - PROBE_TEMPERATURE_EXCEEDED_LOW
+      - PROBE_DISCONNECTED
+      - PROBE_CONNECTED
+      - HEAT_INDEX_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_HIGH
+      - PRESSURE_EXCEEDED_LOW
+      - PM10_EXCEEDED_HIGH
+      - PM40_EXCEEDED_HIGH
+      - PM100_EXCEEDED_HIGH
+      - VOC_IDX_EXCEEDED_HIGH
+      - NOX_IDX_EXCEEDED_HIGH
+      - FORMALDEHYDE_EXCEEDED_HIGH
+      - CARBON_MONOXIDE_EXCEEDED_HIGH
+      - AQI_EXCEEDED_HIGH
+      - DOOR_AJAR
+      - DOOR_OPENED
+      - DOOR_CLOSED
+      - BUTTON_SINGLE_PRESSED
+      - BUTTON_DOUBLE_PRESSED
+      - BUTTON_LONG_PRESSED
+      - TAG_ARRIVED
+      - TAG_DEPARTED
+      - TAG_MOVED
+      - TAG_POSITIONING_CHANGED
+      - TAG_BOUNDARY_INGRESS
+      - TAG_BOUNDARY_EGRESS
+      - TAG_PANIC
+      - BADGE_AUTHORIZED
+      - BADGE_UNAUTHORIZED
+      - BADGE_UNAUTHORIZED_V2
+      - BADGE_AJAR
+      - BADGE_MANUAL
+      - BADGE_FORCED_OPEN
+      - BADGE_LOCKDOWN
+      - BADGE_REQUEST_TO_EXIT
+      - BADGE_DURESS
+      - BADGE_SECURITY_BREACH
+      - BADGE_TAMPER
+      - BADGE_FACE_MISMATCH
+      - POS_ORDER
+      - GUN_DETECT_EVENT
+      - IOT_SOUND_AGGRESSION
+      - IOT_SOUND_HELP
+      - IOT_AIR_CO
+      - IOT_AIR_CO2
+      - IOT_AIR_MASKING
+      - IOT_AIR_THC
+      - IOT_AIR_VAPE
+      - IOT_AIR_VOC
+      - IOT_AIR_TEMP
+      - IOT_TAMPER
+      - IOT_GUNSHOT
+      - IOT_BUTTON_SINGLE_CLICK
+      - IOT_BUTTON_DOUBLE_CLICK
+      - IOT_BUTTON_HOLD
+      - IOT_PANIC_BUTTON_TRIGGERED
+      - AUDIO_SOUND_SIGNIFICANT
+      - AUDIO_SOUND_LOUD
+      - AUDIO_SOUND_ABUSIVE
+      - AUDIO_SOUND_GREETING
+      - AUDIO_SOUND_HELP
+      - AUDIO_SOUND_GUN
+      - AUDIO_SOUND_GLASS_BREAK
+      - AUDIO_SOUND_ALARM_SMOKE_FIRE
+      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
+      - AUDIO_SOUND_SIREN
+      - CLIMATE_VOC
+      - CLIMATE_VAPE
+      - CLIMATE_SMOKE
+      - CLIMATE_THC
+      - CLIMATE_CO2
+      - CLIMATE_ETOH
+      - CLIMATE_PM25
+      - CLIMATE_IAQ
+      - CLIMATE_LEAK
+      - SOUND_AGGRESSION
+      - SOUND_HELP
+      - AIR_CO
+      - AIR_CO2
+      - AIR_MASKING
+      - AIR_THC
+      - AIR_VAPE
+      - AIR_VOC
+      - MASK_MISSING
+      - HELMET_MISSING
+      - GLOVES_MISSING
+      - PIR_OCCUPIED
+      - PIR_MOVEMENT
+      - PIR_VACANT
+      - CUSTOM
+      - VISITOR_ARRIVED
+      - VISITOR_DEPARTED
+      - AC_DR_CONNECTED
+      - AC_DR_DISCONNECTED
+      - AC_DPI_DOOR_OPEN
+      - AC_DPI_DOOR_CLOSED
+      - AC_DPI_DOOR_AJAR
+      - AC_DPI_DOOR_FORCED_OPEN
+      - AC_DSR_UNLOCKED
+      - AC_DSR_LOCKED
+      - AC_DB_TRIGGERED
+      - AC_PANIC_BUTTON_TRIGGERED
+      - AC_REMOTE_UNLOCK
+      - AC_BADGE_AUTHORIZED
+      - AC_BADGE_UNAUTHORIZED
+      - AC_BADGE_FACE_MISMATCH
+      - AC_LOCKDOWN_ACTIVATED
+      - AC_LOCKDOWN_DEACTIVATED
+      - AC_TAMPER_PROX
+      - AC_TAMPER_ACCEL
+      - AC_TAMPER_SWITCH
+      - AC_GR_ACTIVE
+      - AC_GR_INACTIVE
+      - AC_GI_ACTIVE
+      - AC_GI_INACTIVE
+      - AC_REX_ACTIVE
+      - AC_REX_INACTIVE
+      - AC_APERIO_DEVICE_DISCONNECTED
+      - AC_APERIO_DEVICE_CONNECTED
+      - AC_APERIO_DEVICE_REBOOT
+      - AC_APERIO_DEVICE_TAMPER
+      - AC_APERIO_LOW_BATTERY
+      - AC_APERIO_FLAT_BATTERY
+      - AC_APERIO_OK_BATTERY
+      - POWER_SWITCH_BATTERY
+      - POWER_SWITCH_PRIMARY
+      - AI_SEARCH_MATCH
+      - CUSTOM_LLM_BOOLEAN_TRUE
+      - CUSTOM_LLM_BOOLEAN_FALSE
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
+      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
+      - ALM_AUTHORITIES_CONTACTED
+      - ALM_MONITORING_ENABLED
+      - ALM_MONITORING_DISABLED
+      - ALM_MONITORING_SETTINGS_CHANGE
+      - ALM_THREAT_CASE_CLOSED
+      - ALM_THREAT_DETECTED
+      - ALM_MONITORING_EVENT_DETECTED
+      - ROBOT_DOG_DETECTED
+      - ROBOT_ARRIVED_AT_WAYPOINT
+      - ROBOT_ARRIVED_AT_POSE
+      - ROBOT_WAITING_AT_POSE
+      - ROBOT_MANUAL_CMD_VEL
+      - ROBOT_MANUAL_ACTION
+      - ROBOT_MANUAL_POSTURE
+      - ROBOT_NAVIGATE_TO_POSE_START
+      - ROBOT_NAVIGATE_TO_POSE_END
+      - ROBOT_NAVIGATE_TO_HOME_START
+      - ROBOT_NAVIGATE_TO_HOME_END
+      - ROBOT_NAVIGATE_TO_WAYPOINT_START
+      - ROBOT_NAVIGATE_TO_WAYPOINT_END
+      - ROBOT_ROUTE_RUN_START
+      - ROBOT_ROUTE_RUN_END
+      - ROBOT_LOW_BATTERY_DOCKING
+      - ROBOT_IDLE_DOCKING
+      - ROBOT_EMERGENCY
+      - LOITER_HUMAN
+      - REID_HUMAN
+      - INACTIVITY_HUMAN
+      - INACTIVITY_CAR
+      - ONGUARD_BADGE_AUTHORIZED
+      - ONGUARD_BADGE_ANOMALY
+      - ONGUARD_NO_ENTRY_MADE
+      - ELEMENTS_BADGE_AUTHORIZED
+      - ELEMENTS_BADGE_ANOMALY
+      - ELEMENTS_NO_ENTRY_MADE
+      - NETBOX_BADGE_AUTHORIZED
+      - NETBOX_BADGE_ANOMALY
+      - NETBOX_NO_ENTRY_MADE
+      - THERMAL_TEMPERATURE_ALARM
+      - THERMAL_TEMPERATURE_WARNING
+      - THERMAL_FIRE_DETECTED
+      - THERMAL_SMOKING_DETECTED
+      - THERMAL_FIRE_VERIFIED
+      - THERMAL_HEAT_NO_THREAT
+      - THERMAL_VISUAL_HOTSPOT
+      - THERMAL_VISUAL_HEAT_RISE
+      - THERMAL_VISUAL_WARM_BODY
+      - UNKNOWN
+    Climate_RebootEnvironmentalGatewayWSRequest:
       type: object
-      description: Request to retrieve climate events for an environmental sensor.
+      description: Request to reboot an environmental gateway.
       properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp in milliseconds after which events should be retrieved
-          example: 1640991600000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp in milliseconds before which events should be retrieved
-          example: 1640995200000
-        limit:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Maximum number of events to return
-          example: 100
-        sensorUuid:
+        environmentalGatewayUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Climate_GetEnvironmentalGatewayShadowsWSResponse:
+    Sensor_GetSensorPresenceWindowsWSRequest:
       type: object
-      description: Response containing environmental gateway shadows.
+      description: Request object for retrieving stored video information for a sensor.
       properties:
-        environmentalGatewayShadows:
+        deviceUuid:
           type:
-          - array
+          - string
           - 'null'
-          description: List of environmental gateway shadows
-          items:
-            $ref: '#/components/schemas/EnvironmentalGatewayShadowType'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds for the presence window query
+          example: 3600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the presence window query
+          example: 1640995200
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    ClipBoundingBoxType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        alert:
+          type:
+          - boolean
+          - 'null'
+        bottom:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: float
+        croppedImageLocator:
+          type:
+          - string
+          - 'null'
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
+          type:
+          - string
+          - 'null'
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        faceName:
+          type:
+          - string
+          - 'null'
+        inMotion:
+          type:
+          - boolean
+          - 'null'
+        keypointsV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PointType'
+        left:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pose:
+          type:
+          - string
+          - 'null'
+        relativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        right:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toastOrderIdInfo:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        top:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    Climate_UpdateEnvironmentalGatewayDetailsWSResponse:
+      type: object
+      description: Response indicating the result of updating environmental gateway details.
+      properties:
         error:
           type:
           - boolean
@@ -1195,6 +1546,17 @@ components:
           type:
           - string
           - 'null'
+    Climate_GetClimateSensorConfigWSRequest:
+      type: object
+      description: Request to retrieve configuration for an environmental sensor.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     EnvironmentalGatewayShadowType:
       type: object
       description: List of environmental gateway shadows
@@ -1368,24 +1730,78 @@ components:
           - integer
           - 'null'
           format: int32
-    IClimateUserConfig:
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    DeviceHealthStatusDetailsEnum:
+      type: string
+      enum:
+      - DISCONNECTED
+      - FIRMWARE_BEHIND
+      - NOT_RECORDING
+      - LINK_SPEED_LOW
+      - MALFUNCTIONING_MODULES
+      - CALIBRATING
+      - DELAYED
+      - NONE
+    MetaDataLocationType:
       type: object
-      description: Climate sensor configuration
       properties:
-        accelerometer_change_tamper_threshold:
+        region:
+          type:
+          - string
+          - 'null'
+    Climate_GetMinimalClimateStatesWSRequest:
+      type: object
+      description: Request to retrieve minimal climate state information for all environmental sensors.
+    Climate_ClimateHealthDetailsEnum:
+      type: string
+      description: Detailed health status enumeration for climate sensors.
+      enum:
+      - FIRMWARE_BEHIND
+      - NO_HEARTBEAT
+      - NONE
+    ToastCheckInfo:
+      type: object
+      properties:
+        totalAmount:
           type:
           - number
           - 'null'
-          format: float
-        accelerometer_disabled:
-          type:
-          - boolean
-          - 'null'
-        alert_window_minutes:
+          format: double
+    Climate_GetEventsForEnvironmentalGatewayWSRequest:
+      type: object
+      description: Request to retrieve events for an environmental gateway.
+      properties:
+        createdAfterMs:
           type:
           - integer
           - 'null'
-          format: int32
+          format: int64
+          description: Timestamp in milliseconds after which events should be retrieved
+          example: 1640991600000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds before which events should be retrieved
+          example: 1640995200000
         deviceUuid:
           type:
           - string
@@ -1393,110 +1809,23 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        lastModified:
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+        maxPageSize:
           type:
           - integer
           - 'null'
-          format: int64
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        pressure_switch_tamper_disabled:
-          type:
-          - boolean
-          - 'null'
-        smoke_ai_threshold:
-          type:
-          - number
-          - 'null'
-          format: float
-        thc_ai_threshold:
-          type:
-          - number
-          - 'null'
-          format: float
-        vape_ai_threshold:
-          type:
-          - number
-          - 'null'
-          format: float
-    Climate_GetMinimalClimateStatesWSResponse:
-      type: object
-      description: Response containing minimal climate state information for environmental sensors.
-      properties:
-        climateStates:
-          type:
-          - array
-          - 'null'
-          description: List of minimal climate state information
-          items:
-            $ref: '#/components/schemas/Climate_MinimalClimateStateType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    FormaSensorType:
-      type: object
-      properties:
-        ch2oPpb:
-          type:
-          - number
-          - 'null'
-          format: float
-        relHumid:
-          type:
-          - number
-          - 'null'
-          format: float
-        tempC:
-          type:
-          - number
-          - 'null'
-          format: float
-        timestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    WebResponseStatusEnum:
+          format: int32
+          description: Maximum number of results to return per page
+          example: 50
+    Climate_ClimateHealthEnum:
       type: string
-      description: Status of the unregister operation
+      description: Health status enumeration for climate sensors.
       enum:
-      - BASIC_AUTH_FAILED
-      - PASSWORD_MISMATCH
-      - SAME_PASSWORD
-      - USER_EXISTS
-      - USER_NOT_FOUND
-      - DEVICE_NOT_FOUND
-      - POLICY_NOT_FOUND
-      - LOCATION_NOT_FOUND
-      - ORG_NOT_FOUND
-      - BAD_INPUT
-      - SUCCESS
-      - PASSWORD_TOO_SHORT
-    AirQualityIndexPollutantEnum:
-      type: string
-      description: Primary pollutant affecting air quality index
-      enum:
-      - OZONE
-      - PM2P5
-      - PM10P0
-      - CO
-      - NO2
-      - SO2
-      - UNKNOWN
+      - GREEN
+      - RED
     E50DerivedValuesType:
       type: object
       properties:
@@ -1577,44 +1906,268 @@ components:
           - number
           - 'null'
           format: float
-    Climate_ClimateHealthEnum:
-      type: string
-      description: Health status enumeration for climate sensors.
-      enum:
-      - GREEN
-      - RED
-    Sensor_GetSensorPresenceWindowsWSRequest:
+    ClimateEventType:
       type: object
-      description: Request object for retrieving stored video information for a sensor.
+      description: List of climate events for the sensor
       properties:
-        deviceUuid:
+        alertActivities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        baseStationUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        batteryPercentage:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        bleDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        bleRssi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        closeBaseStations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        co2:
+          type:
+          - number
+          - 'null'
+          format: float
+        ethanol:
+          type:
+          - number
+          - 'null'
+          format: float
+        heatIndexDegF:
+          type:
+          - number
+          - 'null'
+          format: double
+        heatIndexRangeWarning:
+          $ref: '#/components/schemas/HeatIndexRangeWarningEnum'
+        humidity:
+          type:
+          - number
+          - 'null'
+          format: float
+        iaq:
+          type:
+          - number
+          - 'null'
+          format: float
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pm25:
+          type:
+          - number
+          - 'null'
+          format: float
+        probeTempC:
+          type:
+          - number
+          - 'null'
+          format: float
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        tampered:
+          type:
+          - boolean
+          - 'null'
+        temp:
+          type:
+          - number
+          - 'null'
+          format: float
+        thcDetected:
+          type:
+          - boolean
+          - 'null'
+        thcPercent:
+          type:
+          - number
+          - 'null'
+          format: float
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        tvoc:
+          type:
+          - number
+          - 'null'
+          format: float
+        vapeSmokeDetected:
+          type:
+          - boolean
+          - 'null'
+        vapeSmokePercent:
+          type:
+          - number
+          - 'null'
+          format: float
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    ClipMetaDataType:
+      type: object
+      properties:
+        activitySeekPoints:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - number
+              - 'null'
+              format: float
+        activitySeekPointsV2:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipSeekPointType'
+        activitySeekPointsV3:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipSeekPointV2Type'
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        clipLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
         durationSec:
           type:
           - integer
           - 'null'
-          format: int64
-          description: Duration in seconds for the presence window query
-          example: 3600
-        startTimeSec:
+          format: int32
+        mGrids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        soundSignificantLufs:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - integer
+            - 'null'
+            format: int32
+        startTime:
           type:
           - integer
           - 'null'
           format: int64
-          description: Start time in seconds for the presence window query
-          example: 1640995200
-    Climate_ClimateHealthDetailsEnum:
-      type: string
-      description: Detailed health status enumeration for climate sensors.
-      enum:
-      - FIRMWARE_BEHIND
-      - NO_HEARTBEAT
-      - NONE
+        thumbnailLocation:
+          $ref: '#/components/schemas/MetaDataLocationType'
+        thumbnailLocationV2:
+          type:
+          - string
+          - 'null'
+    Climate_GetMinimalEnvironmentalGatewayStatesWSResponse:
+      type: object
+      description: Response containing minimal environmental gateway states.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+        minimalEnvironmentalGatewayStates:
+          type:
+          - array
+          - 'null'
+          description: List of minimal environmental gateway states
+          items:
+            $ref: '#/components/schemas/Climate_MinimalEnvironmentalGatewayStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Climate_UpdateClimateSensorDetailsWSResponse:
       type: object
       description: Response indicating the result of updating environmental sensor details.
@@ -1631,154 +2184,59 @@ components:
           type:
           - string
           - 'null'
-    Climate_UpdateEnvironmentalGatewayDetailsWSRequest:
+    Climate_GetClimateSensorConfigWSResponse:
       type: object
-      description: Request to update details for an environmental gateway.
+      description: Response containing configuration for an environmental sensor.
       properties:
-        associatedCameras:
-          type:
-          - array
-          - 'null'
-          description: List of associated camera device facet UUIDs
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        associatedCamerasUpdated:
+        config:
+          $ref: '#/components/schemas/IClimateUserConfig'
+        error:
           type:
           - boolean
           - 'null'
-          description: Whether the associated cameras have been updated
-          example: false
-        deleted:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the environmental gateway is deleted
-          example: false
-        deletedUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the deleted status has been updated
-          example: false
-        description:
+        errorMsg:
           type:
           - string
           - 'null'
-          description: Description of the environmental gateway
-          example: Environmental monitoring gateway in main office
-        descriptionUpdated:
+        warningMsg:
           type:
-          - boolean
+          - string
           - 'null'
-          description: Whether the description has been updated
-          example: false
-        floorNumber:
+    Climate_GetClimateEventsForSensorWSRequest:
+      type: object
+      description: Request to retrieve climate events for an environmental sensor.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds after which events should be retrieved
+          example: 1640991600000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds before which events should be retrieved
+          example: 1640995200000
+        limit:
           type:
           - integer
           - 'null'
           format: int32
-          description: Floor number where the environmental gateway is located
-          example: 1
-        floorNumberUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the floor number has been updated
-          example: false
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Latitude coordinate of the environmental gateway
-          example: 37.7749
-        latitudeUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the latitude has been updated
-          example: false
-        locationUuid:
+          description: Maximum number of events to return
+          example: 100
+        sensorUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuidUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the location UUID has been updated
-          example: false
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Longitude coordinate of the environmental gateway
-          example: -122.4194
-        longitudeUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the longitude has been updated
-          example: false
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the environmental gateway
-          example: Main Office Gateway
-        nameUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the name has been updated
-          example: false
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        policyUuidUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the policy UUID has been updated
-          example: false
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        subLocationsHierarchyKeyUpdated:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the sub-locations hierarchy key has been updated
-          example: false
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+    Climate_GetEnvironmentalGatewayShadowsWSRequest:
+      type: object
+      description: Request to retrieve environmental gateway shadows.
     Climate_MinimalEnvironmentalGatewayStateType:
       type: object
       description: Minimal environmental gateway state information.
@@ -2159,674 +2617,22 @@ components:
           format: float
           description: Volatile Organic Compounds index
           example: 125.5
-    COSensorType:
-      type: object
-      properties:
-        adcRaw:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        adcVoltage:
-          type:
-          - number
-          - 'null'
-          format: double
-        coConcentration:
-          type:
-          - number
-          - 'null'
-          format: double
-        timestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    TempProbeType:
-      type: object
-      properties:
-        adcMv:
-          type:
-          - number
-          - 'null'
-          format: float
-        adcRaw:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        present:
-          type:
-          - boolean
-          - 'null'
-        tempC:
-          type:
-          - number
-          - 'null'
-          format: float
-        timestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    DeviceTypeEnum:
+    WebResponseStatusEnum:
       type: string
+      description: Status of the unregister operation
       enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
-      - UNKNOWN
-    DeviceHealthStatusDetailsEnum:
-      type: string
-      enum:
-      - DISCONNECTED
-      - FIRMWARE_BEHIND
-      - NOT_RECORDING
-      - LINK_SPEED_LOW
-      - MALFUNCTIONING_MODULES
-      - CALIBRATING
-      - DELAYED
-      - NONE
-    Climate_GetMinimalClimateStatesWSRequest:
-      type: object
-      description: Request to retrieve minimal climate state information for all environmental sensors.
-    ClimateEventType:
-      type: object
-      description: List of climate events for the sensor
-      properties:
-        alertActivities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-        baseStationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        batteryPercentage:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        bleDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        bleRssi:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        closeBaseStations:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        co2:
-          type:
-          - number
-          - 'null'
-          format: float
-        ethanol:
-          type:
-          - number
-          - 'null'
-          format: float
-        heatIndexDegF:
-          type:
-          - number
-          - 'null'
-          format: double
-        heatIndexRangeWarning:
-          $ref: '#/components/schemas/HeatIndexRangeWarningEnum'
-        humidity:
-          type:
-          - number
-          - 'null'
-          format: float
-        iaq:
-          type:
-          - number
-          - 'null'
-          format: float
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        pm25:
-          type:
-          - number
-          - 'null'
-          format: float
-        probeTempC:
-          type:
-          - number
-          - 'null'
-          format: float
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        tampered:
-          type:
-          - boolean
-          - 'null'
-        temp:
-          type:
-          - number
-          - 'null'
-          format: float
-        thcDetected:
-          type:
-          - boolean
-          - 'null'
-        thcPercent:
-          type:
-          - number
-          - 'null'
-          format: float
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        tvoc:
-          type:
-          - number
-          - 'null'
-          format: float
-        vapeSmokeDetected:
-          type:
-          - boolean
-          - 'null'
-        vapeSmokePercent:
-          type:
-          - number
-          - 'null'
-          format: float
-    ActivityEnum:
-      type: string
-      enum:
-      - SOUND_LOUD
-      - SOUND_GUN_SHOT
-      - TAMPER
-      - VISUAL_TAMPER
-      - MOTION_TAMPER
-      - MOTION
-      - MOTION_HUMAN
-      - MOTION_CAR
-      - MOTION_ANIMAL
-      - FACE
-      - FACE_IDENTIFIED
-      - FACE_UNIDENTIFIED
-      - FACE_BLACKLISTED
-      - FACE_ALERT
-      - POSE_ANOMALOUS
-      - POSE_FALL
-      - LICENSEPLATE
-      - LICENSEPLATE_IDENTIFIED
-      - LICENSEPLATE_UNIDENTIFIED
-      - LICENSEPLATE_ALERT
-      - LICENSEPLATE_BLACKLISTED
-      - LICENSEPLATE_TRUSTED
-      - PEOPLECOUNT_HIGH
-      - PEOPLECOUNT_HIGH_RESET
-      - PEOPLECOUNT_LOW
-      - PEOPLECOUNT_LOW_RESET
-      - HUMAN_ENTER
-      - HUMAN_EXIT
-      - CAR_ENTER
-      - CAR_EXIT
-      - TEMPERATURE_EXCEEDED_HIGH
-      - TEMPERATURE_EXCEEDED_LOW
-      - HUMIDITY_EXCEEDED_HIGH
-      - HUMIDITY_EXCEEDED_LOW
-      - PM25_EXCEEDED_HIGH
-      - TVOC_EXCEEDED_HIGH
-      - ETOH_EXCEEDED_HIGH
-      - IAQ_EXCEEDED_HIGH
-      - CO2_EXCEEDED_HIGH
-      - CO2_EXCEEDED_LOW
-      - PROBE_TEMPERATURE_EXCEEDED_HIGH
-      - PROBE_TEMPERATURE_EXCEEDED_LOW
-      - PROBE_DISCONNECTED
-      - PROBE_CONNECTED
-      - HEAT_INDEX_EXCEEDED_HIGH
-      - PRESSURE_EXCEEDED_HIGH
-      - PRESSURE_EXCEEDED_LOW
-      - PM10_EXCEEDED_HIGH
-      - PM40_EXCEEDED_HIGH
-      - PM100_EXCEEDED_HIGH
-      - VOC_IDX_EXCEEDED_HIGH
-      - NOX_IDX_EXCEEDED_HIGH
-      - FORMALDEHYDE_EXCEEDED_HIGH
-      - CARBON_MONOXIDE_EXCEEDED_HIGH
-      - AQI_EXCEEDED_HIGH
-      - DOOR_AJAR
-      - DOOR_OPENED
-      - DOOR_CLOSED
-      - BUTTON_SINGLE_PRESSED
-      - BUTTON_DOUBLE_PRESSED
-      - BUTTON_LONG_PRESSED
-      - TAG_ARRIVED
-      - TAG_DEPARTED
-      - TAG_MOVED
-      - TAG_POSITIONING_CHANGED
-      - TAG_BOUNDARY_INGRESS
-      - TAG_BOUNDARY_EGRESS
-      - TAG_PANIC
-      - BADGE_AUTHORIZED
-      - BADGE_UNAUTHORIZED
-      - BADGE_UNAUTHORIZED_V2
-      - BADGE_AJAR
-      - BADGE_MANUAL
-      - BADGE_FORCED_OPEN
-      - BADGE_LOCKDOWN
-      - BADGE_REQUEST_TO_EXIT
-      - BADGE_DURESS
-      - BADGE_SECURITY_BREACH
-      - BADGE_TAMPER
-      - BADGE_FACE_MISMATCH
-      - POS_ORDER
-      - GUN_DETECT_EVENT
-      - IOT_SOUND_AGGRESSION
-      - IOT_SOUND_HELP
-      - IOT_AIR_CO
-      - IOT_AIR_CO2
-      - IOT_AIR_MASKING
-      - IOT_AIR_THC
-      - IOT_AIR_VAPE
-      - IOT_AIR_VOC
-      - IOT_AIR_TEMP
-      - IOT_TAMPER
-      - IOT_GUNSHOT
-      - IOT_BUTTON_SINGLE_CLICK
-      - IOT_BUTTON_DOUBLE_CLICK
-      - IOT_BUTTON_HOLD
-      - IOT_PANIC_BUTTON_TRIGGERED
-      - AUDIO_SOUND_SIGNIFICANT
-      - AUDIO_SOUND_LOUD
-      - AUDIO_SOUND_ABUSIVE
-      - AUDIO_SOUND_GREETING
-      - AUDIO_SOUND_HELP
-      - AUDIO_SOUND_GUN
-      - AUDIO_SOUND_GLASS_BREAK
-      - AUDIO_SOUND_ALARM_SMOKE_FIRE
-      - AUDIO_SOUND_ALARM_CARBON_MONOXIDE
-      - AUDIO_SOUND_SIREN
-      - CLIMATE_VOC
-      - CLIMATE_VAPE
-      - CLIMATE_SMOKE
-      - CLIMATE_THC
-      - CLIMATE_CO2
-      - CLIMATE_ETOH
-      - CLIMATE_PM25
-      - CLIMATE_IAQ
-      - CLIMATE_LEAK
-      - SOUND_AGGRESSION
-      - SOUND_HELP
-      - AIR_CO
-      - AIR_CO2
-      - AIR_MASKING
-      - AIR_THC
-      - AIR_VAPE
-      - AIR_VOC
-      - MASK_MISSING
-      - HELMET_MISSING
-      - GLOVES_MISSING
-      - PIR_OCCUPIED
-      - PIR_MOVEMENT
-      - PIR_VACANT
-      - CUSTOM
-      - VISITOR_ARRIVED
-      - VISITOR_DEPARTED
-      - AC_DR_CONNECTED
-      - AC_DR_DISCONNECTED
-      - AC_DPI_DOOR_OPEN
-      - AC_DPI_DOOR_CLOSED
-      - AC_DPI_DOOR_AJAR
-      - AC_DPI_DOOR_FORCED_OPEN
-      - AC_DSR_UNLOCKED
-      - AC_DSR_LOCKED
-      - AC_DB_TRIGGERED
-      - AC_PANIC_BUTTON_TRIGGERED
-      - AC_REMOTE_UNLOCK
-      - AC_BADGE_AUTHORIZED
-      - AC_BADGE_UNAUTHORIZED
-      - AC_BADGE_FACE_MISMATCH
-      - AC_LOCKDOWN_ACTIVATED
-      - AC_LOCKDOWN_DEACTIVATED
-      - AC_TAMPER_PROX
-      - AC_TAMPER_ACCEL
-      - AC_TAMPER_SWITCH
-      - AC_GR_ACTIVE
-      - AC_GR_INACTIVE
-      - AC_GI_ACTIVE
-      - AC_GI_INACTIVE
-      - AC_REX_ACTIVE
-      - AC_REX_INACTIVE
-      - AC_APERIO_DEVICE_DISCONNECTED
-      - AC_APERIO_DEVICE_CONNECTED
-      - AC_APERIO_DEVICE_REBOOT
-      - AC_APERIO_DEVICE_TAMPER
-      - AC_APERIO_LOW_BATTERY
-      - AC_APERIO_FLAT_BATTERY
-      - AC_APERIO_OK_BATTERY
-      - POWER_SWITCH_BATTERY
-      - POWER_SWITCH_PRIMARY
-      - AI_SEARCH_MATCH
-      - CUSTOM_LLM_BOOLEAN_TRUE
-      - CUSTOM_LLM_BOOLEAN_FALSE
-      - CUSTOM_LLM_THRESHOLD_EXCEEDED_LOW
-      - CUSTOM_LLM_THRESHOLD_EXCEEDED_HIGH
-      - ALM_AUTHORITIES_CONTACTED
-      - ALM_MONITORING_ENABLED
-      - ALM_MONITORING_DISABLED
-      - ALM_MONITORING_SETTINGS_CHANGE
-      - ALM_THREAT_CASE_CLOSED
-      - ALM_THREAT_DETECTED
-      - ALM_MONITORING_EVENT_DETECTED
-      - ROBOT_DOG_DETECTED
-      - ROBOT_ARRIVED_AT_WAYPOINT
-      - ROBOT_ARRIVED_AT_POSE
-      - ROBOT_WAITING_AT_POSE
-      - ROBOT_MANUAL_CMD_VEL
-      - ROBOT_MANUAL_ACTION
-      - ROBOT_MANUAL_POSTURE
-      - ROBOT_NAVIGATE_TO_POSE_START
-      - ROBOT_NAVIGATE_TO_POSE_END
-      - ROBOT_NAVIGATE_TO_HOME_START
-      - ROBOT_NAVIGATE_TO_HOME_END
-      - ROBOT_NAVIGATE_TO_WAYPOINT_START
-      - ROBOT_NAVIGATE_TO_WAYPOINT_END
-      - ROBOT_ROUTE_RUN_START
-      - ROBOT_ROUTE_RUN_END
-      - ROBOT_LOW_BATTERY_DOCKING
-      - ROBOT_IDLE_DOCKING
-      - ROBOT_EMERGENCY
-      - LOITER_HUMAN
-      - REID_HUMAN
-      - INACTIVITY_HUMAN
-      - INACTIVITY_CAR
-      - ONGUARD_BADGE_AUTHORIZED
-      - ONGUARD_BADGE_ANOMALY
-      - ONGUARD_NO_ENTRY_MADE
-      - ELEMENTS_BADGE_AUTHORIZED
-      - ELEMENTS_BADGE_ANOMALY
-      - ELEMENTS_NO_ENTRY_MADE
-      - NETBOX_BADGE_AUTHORIZED
-      - NETBOX_BADGE_ANOMALY
-      - NETBOX_NO_ENTRY_MADE
-      - THERMAL_TEMPERATURE_ALARM
-      - THERMAL_TEMPERATURE_WARNING
-      - THERMAL_FIRE_DETECTED
-      - THERMAL_SMOKING_DETECTED
-      - THERMAL_FIRE_VERIFIED
-      - THERMAL_HEAT_NO_THREAT
-      - THERMAL_VISUAL_HOTSPOT
-      - THERMAL_VISUAL_HEAT_RISE
-      - THERMAL_VISUAL_WARM_BODY
-      - UNKNOWN
-    ToastCheckInfo:
-      type: object
-      properties:
-        totalAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-    ClipBoundingBoxType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        alert:
-          type:
-          - boolean
-          - 'null'
-        bottom:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        confidence:
-          type:
-          - number
-          - 'null'
-          format: float
-        croppedImageLocator:
-          type:
-          - string
-          - 'null'
-        customActivityColor:
-          $ref: '#/components/schemas/FootageSeekPointColorEnum'
-        customActivityDescription:
-          type:
-          - string
-          - 'null'
-        customActivityDisplayName:
-          type:
-          - string
-          - 'null'
-        dwelling:
-          type:
-          - boolean
-          - 'null'
-        faceName:
-          type:
-          - string
-          - 'null'
-        inMotion:
-          type:
-          - boolean
-          - 'null'
-        keypointsV2:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PointType'
-        left:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        licensePlate:
-          type:
-          - string
-          - 'null'
-        loudness:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        objectId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        pose:
-          type:
-          - string
-          - 'null'
-        relativeSecond:
-          type:
-          - number
-          - 'null'
-          format: float
-        right:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        sensorValType:
-          $ref: '#/components/schemas/SensorValType'
-        stableTrackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        toastOrderIdInfo:
-          $ref: '#/components/schemas/ToastOrderIdType'
-        top:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        unidentifiedFaceId:
-          type:
-          - string
-          - 'null'
-        vehicleName:
-          type:
-          - string
-          - 'null'
-    DeviceOrientationEnum:
-      type: string
-      enum:
-      - CEILING
-      - FLOOR
-      - WALL
-      - WALL_CROOKED
-      - INDETERMINATE
-    HeatIndexRangeWarningEnum:
-      type: string
-      description: Heat index range warning status
-      enum:
-      - HEAT_INDEX_OK
-      - HEAT_INDEX_WARNING
-      - HEAT_INDEX_UNSUPPORTED
-    Climate_GetEnvironmentalGatewayShadowsWSRequest:
-      type: object
-      description: Request to retrieve environmental gateway shadows.
-    PointType:
-      type: object
-      properties:
-        x:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        y:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    HardwareVariationEnum:
-      type: string
-      enum:
-      - RASPBERRY_PI_3
-      - CAMERA_R1
-      - CAMERA_R2
-      - CAMERA_R2_LONG_RANGE
-      - CAMERA_R2_180
-      - CAMERA_R3
-      - CAMERA_R4
-      - CAMERA_R100
-      - CAMERA_R120
-      - CAMERA_R170
-      - CAMERA_R200
-      - CAMERA_R500
-      - CAMERA_R510
-      - CAMERA_R520
-      - CAMERA_R600
-      - SENSOR_ASSET_TAG_T1
-      - SENSOR_DOOR_D1
-      - SENSOR_DOOR_D20
-      - SENSOR_ENVIRONMENTAL_E1
-      - SENSOR_ENVIRONMENTAL_E15
-      - SENSOR_ENVIRONMENTAL_E2
-      - SENSOR_MOTION_M1
-      - SENSOR_MOTION_M15
-      - GATEWAY_A1
-      - GATEWAY_A100
-      - GATEWAY_ENVIRONMENTAL_E50
-      - CAMERA_R220
-      - CAMERA_R230
-      - CAMERA_R36S
-      - CAMERA_R410
-      - CAMERA_R540
-      - CAMERA_R545
-      - BADGE_READER_DR1
-      - BADGE_READER_DR40
-      - BADGE_READER_DR20
-      - DOOR_CONTROLLER_DC1
-      - DOOR_CONTROLLER_DC20
-      - DOOR_CONTROLLER_DC10
-      - ETHERNET_TESTER_ET1
-      - IO_BOARD_TB1
-      - BLE_BUTTON_B10
-      - BLE_BUTTON_B15
-      - CAMERA_THIRD_PARTY_RELAY
-      - CAMERA_THIRD_PARTY_NVR
-      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
-      - NVR_N100
-      - CAMERA_R130
-      - NVR_N500
-      - CAMERA_R150
-      - ROBOT_RC1
-      - CAMERA_R210
-      - CAMERA_R650
-      - UNSPECIFIED
-    Climate_DeleteEnvironmentalGatewayWSRequest:
-      type: object
-      description: Request to delete an environmental gateway.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        mummify:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to mummify the gateway instead of deleting it
-          example: false
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - SAME_PASSWORD
+      - USER_EXISTS
+      - USER_NOT_FOUND
+      - DEVICE_NOT_FOUND
+      - POLICY_NOT_FOUND
+      - LOCATION_NOT_FOUND
+      - ORG_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
     Climate_MinimalClimateStateType:
       type: object
       description: Minimal climate state information for environmental sensors.
@@ -3047,24 +2853,20 @@ components:
           format: float
           description: Vape percentage measurement
           example: 2.1
-    Common_devices_RebootDeviceWSResponse_RebootResult:
-      type: string
-      description: Result of the reboot operation
-      enum:
-      - REBOOT_SENT
-      - DEVICE_OFFLINE
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
-    LeakProbeType:
+    PointType:
+      type: object
+      properties:
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    TempProbeType:
       type: object
       properties:
         adcMv:
@@ -3077,101 +2879,77 @@ components:
           - integer
           - 'null'
           format: int64
-        leakDetected:
-          type:
-          - boolean
-          - 'null'
-        moistDetected:
-          type:
-          - boolean
-          - 'null'
         present:
           type:
           - boolean
           - 'null'
+        tempC:
+          type:
+          - number
+          - 'null'
+          format: float
         timestampSec:
           type:
           - integer
           - 'null'
           format: int64
-    ClipMetaDataType:
+    Climate_GetEventsForEnvironmentalGatewayWSResponse:
       type: object
+      description: Response containing events for an environmental gateway.
       properties:
-        activitySeekPoints:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - number
-              - 'null'
-              format: float
-        activitySeekPointsV2:
+        events:
           type:
           - array
           - 'null'
+          description: List of climate events for the environmental gateway
           items:
-            $ref: '#/components/schemas/ClipSeekPointType'
-        activitySeekPointsV3:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClipSeekPointV2Type'
-        boundingBoxes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClipBoundingBoxType'
-        clipLocation:
-          $ref: '#/components/schemas/MetaDataLocationType'
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        mGrids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        soundSignificantLufs:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - integer
-            - 'null'
-            format: int32
-        startTime:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        thumbnailLocation:
-          $ref: '#/components/schemas/MetaDataLocationType'
-        thumbnailLocationV2:
+            $ref: '#/components/schemas/E50ClimateEventType'
+        lastEvaluatedKey:
           type:
           - string
           - 'null'
-    Co2SensorType:
+    Climate_GetClimateEventsForSensorWSResponse:
+      type: object
+      description: Response containing climate events for an environmental sensor.
+      properties:
+        climateEvents:
+          type:
+          - array
+          - 'null'
+          description: List of climate events for the sensor
+          items:
+            $ref: '#/components/schemas/ClimateEventType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    HeatIndexRangeWarningEnum:
+      type: string
+      description: Heat index range warning status
+      enum:
+      - HEAT_INDEX_OK
+      - HEAT_INDEX_WARNING
+      - HEAT_INDEX_UNSUPPORTED
+    DeviceOrientationEnum:
+      type: string
+      enum:
+      - CEILING
+      - FLOOR
+      - WALL
+      - WALL_CROOKED
+      - INDETERMINATE
+    PressureSensorType:
       type: object
       properties:
-        co2Ppm:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        relHumid:
+        pressure:
           type:
           - number
           - 'null'
@@ -3181,6 +2959,100 @@ components:
           - number
           - 'null'
           format: float
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    AirQualityIndexPollutantEnum:
+      type: string
+      description: Primary pollutant affecting air quality index
+      enum:
+      - OZONE
+      - PM2P5
+      - PM10P0
+      - CO
+      - NO2
+      - SO2
+      - UNKNOWN
+    ClipSeekPointType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        alert:
+          type:
+          - boolean
+          - 'null'
+        bottom:
+          type:
+          - number
+          - 'null'
+          format: float
+        faceName:
+          type:
+          - string
+          - 'null'
+        keypointsV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PointType'
+        left:
+          type:
+          - number
+          - 'null'
+          format: float
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        pose:
+          type:
+          - string
+          - 'null'
+        relativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        right:
+          type:
+          - number
+          - 'null'
+          format: float
+        top:
+          type:
+          - number
+          - 'null'
+          format: float
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    COSensorType:
+      type: object
+      properties:
+        adcRaw:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        adcVoltage:
+          type:
+          - number
+          - 'null'
+          format: double
+        coConcentration:
+          type:
+          - number
+          - 'null'
+          format: double
         timestampSec:
           type:
           - integer
@@ -3203,6 +3075,134 @@ components:
           - integer
           - 'null'
           format: int64
+    Climate_UpdateClimateSensorDetailsWSRequest:
+      type: object
+      description: Request to update details for an environmental sensor.
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          description: List of associated camera device facet UUIDs
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        associatedCamerasUpdated:
+          type:
+          - boolean
+          - 'null'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the environmental sensor is deleted
+          example: false
+        deletedUpdated:
+          type:
+          - boolean
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the environmental sensor
+          example: Temperature and humidity sensor in main office
+        descriptionUpdated:
+          type:
+          - boolean
+          - 'null'
+        floorNumber:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Floor number where the environmental sensor is located
+          example: 1
+        floorNumberUpdated:
+          type:
+          - boolean
+          - 'null'
+        latitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Latitude coordinate of the environmental sensor
+          example: 37.7749
+        latitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        locationUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+        longitude:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Longitude coordinate of the environmental sensor
+          example: -122.4194
+        longitudeUpdated:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the environmental sensor
+          example: Main Office Sensor
+        nameUpdated:
+          type:
+          - boolean
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        policyUuidUpdated:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        subLocationsHierarchyKeyUpdated:
+          type:
+          - boolean
+          - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

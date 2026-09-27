@@ -106,40 +106,68 @@ paths:
       - Event Search Webservice
 components:
   schemas:
-    Eventsearch_GetCameraOrDoorbellCameraSeekpointsWSResponse:
+    Common_devices_GetSeekpointsWSRequest:
       type: object
-      description: Response object containing seekpoints from camera or doorbell camera events.
+      description: General seekpoints search request parameters
       properties:
-        combinedSeekpoints:
+        deviceUuid:
           type:
-          - array
+          - string
           - 'null'
-          description: List of combined seekpoints from camera or doorbell camera events
-          items:
-            $ref: '#/components/schemas/Eventsearch_CombinedSeekPointType'
-        error:
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        includeAnyMotion:
           type:
           - boolean
           - 'null'
-        errorMsg:
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Event_SearchMotionGridWithActivitiesWSRequest:
+      type: object
+      description: Request object for searching motion grid data with activity information.
+      properties:
+        deviceUuid:
           type:
           - string
           - 'null'
-        warningMsg:
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endTimeUtcSecs:
           type:
-          - string
+          - integer
           - 'null'
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
+          format: int64
+          description: End time as a UNIX timestamp in seconds
+          example: 1641081600
+        searchCells:
+          type:
+          - array
+          - 'null'
+          description: List of motion grid cells to include in the search
+          items:
+            $ref: '#/components/schemas/Event_FrontendCell'
+        startTimeUtcSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time as a UNIX timestamp in seconds
+          example: 1640995200
+      required:
+      - deviceUuid
+      - endTimeUtcSecs
+      - searchCells
+      - startTimeUtcSecs
     ColorEnum:
       type: string
       description: Set of colors to filter by
@@ -155,173 +183,27 @@ components:
       - RED
       - YELLOW
       - UNKNOWN
-    Eventsearch_CombinedSeekPointType:
+    Component_FindComponentSeekPointsByAccessControlledDoorWSRequest:
       type: object
-      description: Combined seekpoint type containing information from various event sources including timestamps, activities, and metadata.
+      description: Component seekpoints search for access controlled door
       properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        cameraUuid:
+        accessControlledDoorUuid:
           type:
           - string
           - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        cardholderName:
-          type:
-          - string
-          - 'null'
-          description: Cardholder (badge holder) name for OnGuard integration seekpoints
-          example: Jane Doe
-        customActivityColor:
-          $ref: '#/components/schemas/FootageSeekPointColorEnum'
-        customActivityDescription:
-          type:
-          - string
-          - 'null'
-          description: Custom description for the activity
-          example: A person was detected in the camera view
-        customActivityDisplayName:
-          type:
-          - string
-          - 'null'
-          description: Custom display name for the activity
-          example: Person Detected
-        dwelling:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the detected person is dwelling/loitering
-        faceName:
-          type:
-          - string
-          - 'null'
-          description: Name of the face detected in this seekpoint
-          example: John Doe
-        licensePlate:
-          type:
-          - string
-          - 'null'
-          description: License plate detected in this seekpoint
-          example: ABC123
-        objectId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Object ID for tracking purposes
-          example: 12345
-        originalEvent:
-          type:
-          - object
-          - 'null'
-          description: Original event object that generated this seekpoint
-        regionMatchTimestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp in milliseconds of the earliest motion evidence inside the searched region for this seekpoint. Only populated when the request includes searchCells and this seekpoint matched the region. May trail timestampMs, which reflects the start of the underlying motion event rather than when the region was entered.
-          example: 1640995215000
-        seekpointEndTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for the seekpoint duration
-          example: 1640995300000
-        seekpointStartTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for the seekpoint duration
-          example: 1640995200000
-        stableTrackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Stable track ID for re-identification across track segments
-          example: 42
-        thumbnailUrl:
-          type:
-          - string
-          - 'null'
-          description: URL to the thumbnail image for this seekpoint
-          example: https://example.com/thumbnail.jpg
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp in milliseconds when the seekpoint occurred
-          example: 1640995200000
-        unidentifiedFaceId:
-          type:
-          - string
-          - 'null'
-          description: ID for unidentified faces
-          example: face_12345
-    Eventsearch_GetEventSeekpointsWSRequest:
-      type: object
-      description: Request object for retrieving event seekpoints with various search criteria and filtering options.
-      properties:
-        activitySet:
-          type:
-          - array
-          - 'null'
-          description: Set of activity types to filter seekpoints by
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        componentSeekPointsByAccessControlledDoorWSRequest:
-          $ref: '#/components/schemas/Component_FindComponentSeekPointsByAccessControlledDoorWSRequest'
-        componentSeekPointsByAccessControlledDoorsWSRequest:
-          $ref: '#/components/schemas/Component_FindComponentSeekPointsByAccessControlledDoorsWSRequest'
-        componentSeekPointsByOwnerDeviceWSRequest:
-          $ref: '#/components/schemas/Component_FindComponentSeekPointsByOwnerDeviceWSRequest'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         durationSec:
           type:
           - integer
           - 'null'
           format: int32
-          description: Duration in seconds for the search window
-          example: 3600
-        searchColorAndVehicleByColorWSRequest:
-          $ref: '#/components/schemas/Eventsearch_SearchClothingAndVehicleByColorWSRequest'
-        searchMotionGridWithActivitiesWSRequest:
-          $ref: '#/components/schemas/Event_SearchMotionGridWithActivitiesWSRequest'
-        seekpointsWSRequest:
-          $ref: '#/components/schemas/Common_devices_GetSeekpointsWSRequest'
-        startTimeSec:
+        startTimeSecEpochExclusive:
           type:
           - integer
           - 'null'
           format: int64
-          description: Start time in seconds for the search window
-          example: 1640995200
-        videoFootageWSRequest:
-          $ref: '#/components/schemas/Eventsearch_VideoFootageWSRequest'
-    Event_FrontendCell:
-      type: object
-      description: Represents a cell in the motion grid with column and row coordinates.
-      properties:
-        col:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Column coordinate of the cell
-          example: 5
-        row:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Row coordinate of the cell
-          example: 3
     ActivityEnum:
       type: string
       enum:
@@ -545,10 +427,16 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    Event_SearchMotionGridWithActivitiesWSRequest:
+    Common_devices_GetCameraOrDoorbellCameraSeekpointsWSRequest:
       type: object
-      description: Request object for searching motion grid data with activity information.
       properties:
+        activitySet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
         deviceUuid:
           type:
           - string
@@ -556,32 +444,203 @@ components:
           format: DeviceFacetUuid
           description: RUUID with optional appended facet information
           example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        endTimeUtcSecs:
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        includeAnyMotion:
+          type:
+          - boolean
+          - 'null'
+        seekpointDurationIntervalSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        startTimeSec:
           type:
           - integer
           - 'null'
           format: int64
-          description: End time as a UNIX timestamp in seconds
-          example: 1641081600
-        searchCells:
+    Eventsearch_GetEventSeekpointsWSRequest:
+      type: object
+      description: Request object for retrieving event seekpoints with various search criteria and filtering options.
+      properties:
+        activitySet:
           type:
           - array
           - 'null'
-          description: List of motion grid cells to include in the search
+          description: Set of activity types to filter seekpoints by
           items:
-            $ref: '#/components/schemas/Event_FrontendCell'
-        startTimeUtcSecs:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        componentSeekPointsByAccessControlledDoorWSRequest:
+          $ref: '#/components/schemas/Component_FindComponentSeekPointsByAccessControlledDoorWSRequest'
+        componentSeekPointsByAccessControlledDoorsWSRequest:
+          $ref: '#/components/schemas/Component_FindComponentSeekPointsByAccessControlledDoorsWSRequest'
+        componentSeekPointsByOwnerDeviceWSRequest:
+          $ref: '#/components/schemas/Component_FindComponentSeekPointsByOwnerDeviceWSRequest'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the search window
+          example: 3600
+        searchColorAndVehicleByColorWSRequest:
+          $ref: '#/components/schemas/Eventsearch_SearchClothingAndVehicleByColorWSRequest'
+        searchMotionGridWithActivitiesWSRequest:
+          $ref: '#/components/schemas/Event_SearchMotionGridWithActivitiesWSRequest'
+        seekpointsWSRequest:
+          $ref: '#/components/schemas/Common_devices_GetSeekpointsWSRequest'
+        startTimeSec:
           type:
           - integer
           - 'null'
           format: int64
-          description: Start time as a UNIX timestamp in seconds
+          description: Start time in seconds for the search window
           example: 1640995200
-      required:
-      - deviceUuid
-      - endTimeUtcSecs
-      - searchCells
-      - startTimeUtcSecs
+        videoFootageWSRequest:
+          $ref: '#/components/schemas/Eventsearch_VideoFootageWSRequest'
+    Component_FindComponentSeekPointsByAccessControlledDoorsWSRequest:
+      type: object
+      description: Component seekpoints search for access controlled doors
+      properties:
+        accessControlledDoorUuidList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sortResponse:
+          type:
+          - boolean
+          - 'null'
+        startTimeSecEpochExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Eventsearch_CombinedSeekPointType:
+      type: object
+      description: Combined seekpoint type containing information from various event sources including timestamps, activities, and metadata.
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        cameraUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        cardholderName:
+          type:
+          - string
+          - 'null'
+          description: Cardholder (badge holder) name for OnGuard integration seekpoints
+          example: Jane Doe
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
+          type:
+          - string
+          - 'null'
+          description: Custom description for the activity
+          example: A person was detected in the camera view
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+          description: Custom display name for the activity
+          example: Person Detected
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the detected person is dwelling/loitering
+        faceName:
+          type:
+          - string
+          - 'null'
+          description: Name of the face detected in this seekpoint
+          example: John Doe
+        licensePlate:
+          type:
+          - string
+          - 'null'
+          description: License plate detected in this seekpoint
+          example: ABC123
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Object ID for tracking purposes
+          example: 12345
+        originalEvent:
+          type:
+          - object
+          - 'null'
+          description: Original event object that generated this seekpoint
+        regionMatchTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds of the earliest motion evidence inside the searched region for this seekpoint. Only populated when the request includes searchCells and this seekpoint matched the region. May trail timestampMs, which reflects the start of the underlying motion event rather than when the region was entered.
+          example: 1640995215000
+        seekpointEndTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for the seekpoint duration
+          example: 1640995300000
+        seekpointStartTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for the seekpoint duration
+          example: 1640995200000
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Stable track ID for re-identification across track segments
+          example: 42
+        thumbnailUrl:
+          type:
+          - string
+          - 'null'
+          description: URL to the thumbnail image for this seekpoint
+          example: https://example.com/thumbnail.jpg
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds when the seekpoint occurred
+          example: 1640995200000
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+          description: ID for unidentified faces
+          example: face_12345
     Eventsearch_VideoFootageWSRequest:
       type: object
       description: Request object for video footage search with camera selection and multi-camera options.
@@ -631,27 +690,6 @@ components:
           - 'null'
           description: Whether to use multi-camera search functionality
           example: true
-    Component_FindComponentSeekPointsByOwnerDeviceWSRequest:
-      type: object
-      description: Component seekpoints search for owner device
-      properties:
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ownerDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startTimeSecEpochExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
     Eventsearch_SearchClothingAndVehicleByColorWSRequest:
       type: object
       description: Request object for searching clothing and vehicle events by color with time and device filtering.
@@ -698,35 +736,79 @@ components:
           items:
             $ref: '#/components/schemas/ColorEnum'
           uniqueItems: true
-    Component_FindComponentSeekPointsByAccessControlledDoorsWSRequest:
+    Component_FindComponentSeekPointsByOwnerDeviceWSRequest:
       type: object
-      description: Component seekpoints search for access controlled doors
+      description: Component seekpoints search for owner device
       properties:
-        accessControlledDoorUuidList:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
         durationSec:
           type:
           - integer
           - 'null'
           format: int32
-        sortResponse:
+        ownerDeviceUuid:
           type:
-          - boolean
+          - string
           - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         startTimeSecEpochExclusive:
           type:
           - integer
           - 'null'
           format: int64
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    Event_FrontendCell:
+      type: object
+      description: Represents a cell in the motion grid with column and row coordinates.
+      properties:
+        col:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Column coordinate of the cell
+          example: 5
+        row:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Row coordinate of the cell
+          example: 3
+    Eventsearch_GetCameraOrDoorbellCameraSeekpointsWSResponse:
+      type: object
+      description: Response object containing seekpoints from camera or doorbell camera events.
+      properties:
+        combinedSeekpoints:
+          type:
+          - array
+          - 'null'
+          description: List of combined seekpoints from camera or doorbell camera events
+          items:
+            $ref: '#/components/schemas/Eventsearch_CombinedSeekPointType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Eventsearch_GetEventSeekpointsWSResponse:
       type: object
       description: Response object containing combined seekpoints from various event sources.
@@ -750,88 +832,6 @@ components:
           type:
           - string
           - 'null'
-    Component_FindComponentSeekPointsByAccessControlledDoorWSRequest:
-      type: object
-      description: Component seekpoints search for access controlled door
-      properties:
-        accessControlledDoorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        startTimeSecEpochExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Common_devices_GetSeekpointsWSRequest:
-      type: object
-      description: General seekpoints search request parameters
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        durationSecs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        includeAnyMotion:
-          type:
-          - boolean
-          - 'null'
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Common_devices_GetCameraOrDoorbellCameraSeekpointsWSRequest:
-      type: object
-      properties:
-        activitySet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        durationSecs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        includeAnyMotion:
-          type:
-          - boolean
-          - 'null'
-        seekpointDurationIntervalSecs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

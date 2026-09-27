@@ -73,6 +73,24 @@ paths:
       - Internal Webservice
 components:
   schemas:
+    Internal_SendShipmentShippedEmailWSRequest:
+      type: object
+      description: Request object for sending shipment shipped email notification.
+      properties:
+        salesforceOppId:
+          type:
+          - string
+          - 'null'
+          description: Salesforce opportunity ID for the shipment email
+          example: 0061234567890ABC
+    CustomerShipmentEmailStateEnum:
+      type: string
+      enum:
+      - SHIPPING_CONFIRMATION_SUCCESS
+      - SHIPPING_CONFIRMATION_FAILURE
+      - SHIPPING_SHIPPED_SUCCESS
+      - SHIPPING_SHIPPED_FAILURE
+      - UNKNOWN
     Internal_ShipmentEmailWSResponse:
       type: object
       description: Response object for shipment email operations.
@@ -103,24 +121,6 @@ components:
           type:
           - string
           - 'null'
-    Internal_SendShipmentShippedEmailWSRequest:
-      type: object
-      description: Request object for sending shipment shipped email notification.
-      properties:
-        salesforceOppId:
-          type:
-          - string
-          - 'null'
-          description: Salesforce opportunity ID for the shipment email
-          example: 0061234567890ABC
-    CustomerShipmentEmailStateEnum:
-      type: string
-      enum:
-      - SHIPPING_CONFIRMATION_SUCCESS
-      - SHIPPING_CONFIRMATION_FAILURE
-      - SHIPPING_SHIPPED_SUCCESS
-      - SHIPPING_SHIPPED_FAILURE
-      - UNKNOWN
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

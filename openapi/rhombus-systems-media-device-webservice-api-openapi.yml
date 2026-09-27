@@ -73,29 +73,6 @@ paths:
       - Media Device Webservice
 components:
   schemas:
-    Mediadevice_GetBulkMediaDeviceDetailsWSResponse:
-      type: object
-      description: Response object containing media information for video-supporting media devices.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        mediaDeviceDetails:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/Mediadevice_MediaDeviceDetailsType'
-          description: Map of device facet UUIDs to their media device details
-        warningMsg:
-          type:
-          - string
-          - 'null'
     DeviceTypeEnum:
       type: string
       enum:
@@ -352,6 +329,29 @@ components:
       - CAMERA_R210
       - CAMERA_R650
       - UNSPECIFIED
+    Mediadevice_GetBulkMediaDeviceDetailsWSResponse:
+      type: object
+      description: Response object containing media information for video-supporting media devices.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        mediaDeviceDetails:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Mediadevice_MediaDeviceDetailsType'
+          description: Map of device facet UUIDs to their media device details
+        warningMsg:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

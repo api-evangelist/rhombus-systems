@@ -272,17 +272,6 @@ components:
       required:
       - a
       - ts
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
     Sensor_GetFootageSensorSeekpointsForLocationWSRequest:
       type: object
       description: Request object for getting sensor seekpoints for a location.
@@ -308,29 +297,14 @@ components:
           format: int64
           description: Start time in seconds for the query period
           example: 1640995200
-    Sensor_GetFootageSensorSeekpointsForCameraWSResponse:
+    ToastCheckInfo:
       type: object
-      description: Response object for getting sensor seekpoints for a camera.
       properties:
-        error:
+        totalAmount:
           type:
-          - boolean
+          - number
           - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        seekPoints:
-          type:
-          - array
-          - 'null'
-          description: List of sensor seekpoints for the camera
-          items:
-            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+          format: double
     ActivityEnum:
       type: string
       enum:
@@ -554,35 +528,6 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    ToastOrderIdType:
-      type: object
-      properties:
-        employeeName:
-          type:
-          - string
-          - 'null'
-        guid:
-          type:
-          - string
-          - 'null'
-        locationName:
-          type:
-          - string
-          - 'null'
-        restaurantName:
-          type:
-          - string
-          - 'null'
-        toastCheckInfo:
-          $ref: '#/components/schemas/ToastCheckInfo'
-    ToastCheckInfo:
-      type: object
-      properties:
-        totalAmount:
-          type:
-          - number
-          - 'null'
-          format: double
     Sensor_FootageSensorSeekPointDisplayType:
       type: object
       description: Display type for sensor seekpoints with sensor name information.
@@ -725,31 +670,50 @@ components:
       required:
       - a
       - ts
-    Sensor_GetFootageSensorSeekpointsForSensorWSRequest:
+    Sensor_GetFootageSensorSeekpointsForCameraWSResponse:
       type: object
-      description: Request object for getting sensor seekpoints for a specific sensor.
+      description: Response object for getting sensor seekpoints for a camera.
       properties:
-        durationSec:
+        error:
           type:
-          - integer
+          - boolean
           - 'null'
-          format: int32
-          description: Duration in seconds for the query period
-          example: 3600
-        sensorUuid:
+        errorMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startTimeSec:
+        seekPoints:
           type:
-          - integer
+          - array
           - 'null'
-          format: int64
-          description: Start time in seconds for the query period
-          example: 1640995200
+          description: List of sensor seekpoints for the camera
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
+          type:
+          - string
+          - 'null'
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
     Sensor_GetFootageSensorSeekpointsForCameraWSRequest:
       type: object
       description: Request object for getting sensor seekpoints for a camera.
@@ -775,46 +739,17 @@ components:
           format: int64
           description: Start time in seconds for the query period
           example: 1640995200
-    SensorValType:
-      type: object
-      properties:
-        sensorBoolean:
-          type:
-          - boolean
-          - 'null'
-        sensorDouble:
-          type:
-          - number
-          - 'null'
-          format: double
-        sensorLong:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Sensor_GetFootageSensorSeekpointsForLocationWSResponse:
-      type: object
-      description: Response object for getting sensor seekpoints for a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        seekPoints:
-          type:
-          - array
-          - 'null'
-          description: List of sensor seekpoints for the location
-          items:
-            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
     Sensor_GetFootageSensorSeekpointsForSensorWSResponse:
       type: object
       description: Response object for getting sensor seekpoints for a specific sensor.
@@ -845,6 +780,71 @@ components:
           type:
           - string
           - 'null'
+    Sensor_GetFootageSensorSeekpointsForSensorWSRequest:
+      type: object
+      description: Request object for getting sensor seekpoints for a specific sensor.
+      properties:
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds for the query period
+          example: 3600
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the query period
+          example: 1640995200
+    Sensor_GetFootageSensorSeekpointsForLocationWSResponse:
+      type: object
+      description: Response object for getting sensor seekpoints for a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        seekPoints:
+          type:
+          - array
+          - 'null'
+          description: List of sensor seekpoints for the location
+          items:
+            $ref: '#/components/schemas/Sensor_FootageSensorSeekPointDisplayType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

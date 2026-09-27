@@ -51,10 +51,12 @@ tags:
 - IoT Sensors
 - Cloud Video Management
 - Alarm Monitoring
-- Computer-Vision
+- Computer Vision
 - Building Management
 - Security Cameras
 - Company
+- Real-Time
+- A2A
 tags_raw:
 - Physical Security
 - Video Surveillance
@@ -66,6 +68,9 @@ tags_raw:
 - Building Management
 - Security Cameras
 - Company
+- Computer-Vision
+- Real-Time
+- A2A
 apis:
 - aid: rhombus-systems:rhombus-systems-console-websocket-api
   name: Rhombus Console WebSocket API
@@ -1117,3 +1122,10 @@ x-coverage:
     9727 API catalog, an A2A agent card, an MCP server card and a four-document llms.txt family were all
     fetched anonymously from Rhombus's own hosts.
   checked: '2026-08-26'
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://www.rhombus.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3.0"
+  control: 404

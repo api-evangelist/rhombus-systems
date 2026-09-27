@@ -768,15 +768,107 @@ paths:
       - Partner Webservice
 components:
   schemas:
-    RegionPolygonType:
+    RegionOfInterestGroupTypeEnum:
+      type: string
+      description: Represents type of activity regions in the group. Defaults to 'Activity'.
+      enum:
+      - ACTIVITY
+      - REPORTING
+      - CROSSING
+    Partner_GetClientDevicesWSResponse:
       type: object
+      description: Response object containing devices for a specific client organization.
       properties:
-        coordinates:
+        devices:
           type:
           - array
           - 'null'
+          description: List of devices with partner-specific details
           items:
-            $ref: '#/components/schemas/RegionCoordinateType'
+            $ref: '#/components/schemas/Partner_DeviceWithPartnerDetailsType'
+    UserStatusEnumType:
+      type: string
+      enum:
+      - JOINED
+      - PENDING
+      - INACTIVE
+      - UNKNOWN
+    Partner_ConnectionCountType:
+      type: object
+      description: Device connection count information for partner clients.
+      properties:
+        connectedCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of connected devices
+          example: 45
+        operationalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of operational devices
+          example: 42
+        totalCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Total number of devices
+          example: 50
+    Partner_GetClientSummaryInfoWSResponse:
+      type: object
+      description: Response object containing client summary information including account owner, device status, and settings.
+      properties:
+        accountOwner:
+          $ref: '#/components/schemas/WrappedRhombusOrgUserType'
+        clientDeviceStatusMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Partner_ConnectionCountType'
+          description: Map of device types to their connection status counts
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        licenseV2Enabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether license V2 is enabled for the client
+          example: true
+        locationCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of locations for the client
+          example: 3
+        manuallySendLicenseExpirationEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether manual license expiration email sending is enabled
+          example: false
+        recentPolicyAlertCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of recent policy alerts
+          example: 5
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Partner_GetListOfControlledHardwareResponse:
       type: object
       description: Response object containing list of controlled hardware.
@@ -788,68 +880,6 @@ components:
           description: List of controlled hardware
           items:
             $ref: '#/components/schemas/Partner_UnregisteredControlledHardwareType'
-    ApiClientTypeEnum:
-      type: string
-      enum:
-      - PARTNER_DEVELOPER
-      - DEVELOPER
-      - INTERNAL_SALESFORCE
-      - TVOS
-      - WINDOWS
-      - LINUX
-      - KIOSK
-      - KEYPAD
-      - SQUARE
-      - KISI
-      - OPENPATH
-      - TOAST
-      - BOULEVARD
-      - BRIVO
-      - EXECUTABLE
-      - HALO
-      - SALTO
-      - BUTTERFLYMX
-      - GENEA
-      - PRODATAKEY
-      - ENVOY
-      - AMT
-      - PIMLOC
-      - PLACEOS
-      - OMNIALERT
-      - FLIC
-      - SHELLY_DEVICE_EVENT
-      - NINEONEONECELLULAR
-      - HONEYWELL_ELEMENTS
-      - HONEYWELL_ONGUARD
-      - HONEYWELL_NETBOX
-      - TRITON
-      - CHATBOT
-      - SIGNATURE_API
-      - INCOMING_WEBHOOK
-      - UNKNOWN
-    CameraPTZConfigType:
-      type: object
-      properties:
-        offset_x_percent:
-          type:
-          - number
-          - 'null'
-          format: float
-        offset_y_percent:
-          type:
-          - number
-          - 'null'
-          format: float
-        rotation:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        size_percent:
-          type:
-          - number
-          - 'null'
-          format: float
     Partner_ReassignDeviceOrgWSRequest:
       type: object
       description: Request object for reassigning devices from one organization to another.
@@ -881,108 +911,78 @@ components:
       required:
       - sourceOrgUuid
       - targetOrgUuid
-    Partner_CustomizeClientDeviceWSRequest:
-      type: object
-      description: Request object for customizing client device settings and configurations.
-      properties:
-        clientDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        clientOrgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        configUpdate:
-          $ref: '#/components/schemas/Device_config_userconfig_IExternalUpdateableAudioVideoUserConfig'
-        customizations:
-          $ref: '#/components/schemas/Partner_ClientDeviceCustomizationsType'
-    FisheyeDisplayModeEnum:
-      type: string
-      enum:
-      - RAW
-      - IMMERSIVE
-      - TILES
-      - RAW_PANO
-    CameraMotorConfigType:
+    CameraHumanLoiteringSettingsType:
       type: object
       properties:
-        af_enabled:
-          type:
-          - boolean
-          - 'null'
-        af_region:
-          $ref: '#/components/schemas/PermyriadRect'
-        focus:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        pan_degrees:
-          type:
-          - number
-          - 'null'
-          format: float
-        piris:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        pt_speed:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        tilt_degrees:
-          type:
-          - number
-          - 'null'
-          format: float
-        zoom:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    License_GetLicensesForClientOrgWSResponse:
-      type: object
-      description: Response object containing list of licenses available for a client organization.
-      properties:
-        licenses:
+        roi:
           type:
           - array
           - 'null'
-          description: List of licenses available for the client organization
           items:
-            $ref: '#/components/schemas/LicenseUsageType'
-    AddOnLicenseEnum:
-      type: string
-      enum:
-      - CLOUD_ARCHIVING
-      - PERCEPTION
-      - POSE
-      - BEHAVIOR
-      - VEHICLE
-      - PEOPLE
-      - PPE
-      - PEOPLE_ANALYTICS
-      - UNKNOWN
-    LicenseFeature:
+            $ref: '#/components/schemas/RegionPolygonType'
+    Partner_CreatePartnerClientWSRequest:
       type: object
+      description: Request object for creating a new partner client account.
       properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        name:
+        clientContactEmail:
           type:
           - string
           - 'null'
+          description: Email address of the client contact person
+          example: john.smith@acme.com
+        clientContactName:
+          type:
+          - string
+          - 'null'
+          description: Name of the client contact person
+          example: John Smith
+        clientOrgName:
+          type:
+          - string
+          - 'null'
+          description: Name of the client organization
+          example: Acme Corporation
+        suppressWelcomeEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to suppress sending welcome email to the client
+          example: false
+    Integration_GetApiTokensWSResponse:
+      type: object
+      description: Response object containing API tokens.
+      properties:
+        apiTokens:
+          type:
+          - array
+          - 'null'
+          description: List of API tokens
+          items:
+            $ref: '#/components/schemas/ApiTokenType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ProductTypeEnum:
+      type: string
+      enum:
+      - DEVICE
+      - ALERT_MONITORING
+      - ACCESS_CONTROL
+      - GUEST_MANAGEMENT
+      - LICENSE_USAGE
+      - UNKNOWN
+    Partner_GetListOfAllClientDevicesRequest:
+      type: object
+      description: Request object for getting list of all client devices.
     ActivityEnum:
       type: string
       enum:
@@ -1206,10 +1206,208 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    License_GetLicensesForClientOrgWSRequest:
+    Partner_GetListOfAllClientDevicesResponse:
       type: object
-      description: Request object for getting list of licenses available for a client organization.
+      description: Response object containing list of all client devices.
       properties:
+        listOfAllClientDevices:
+          type:
+          - array
+          - 'null'
+          description: List of all client devices
+          items:
+            $ref: '#/components/schemas/DeviceTypeV2'
+    Partner_GetPartnerClientsWSRequest:
+      type: object
+      description: Request object for getting all partner clients.
+    CameraMotorConfigType:
+      type: object
+      properties:
+        af_enabled:
+          type:
+          - boolean
+          - 'null'
+        af_region:
+          $ref: '#/components/schemas/PermyriadRect'
+        focus:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pan_degrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        piris:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pt_speed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        tilt_degrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        zoom:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Partner_GetPartnerClientsStatusMapWSResponse:
+      type: object
+      description: Response object containing partner clients status map with device connection counts.
+      properties:
+        clientDeviceStatusMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/Partner_ConnectionCountType'
+            description: Map of client UUIDs to device type connection counts
+          description: Map of client UUIDs to device type connection counts
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ApiClientTypeEnum:
+      type: string
+      enum:
+      - PARTNER_DEVELOPER
+      - DEVELOPER
+      - INTERNAL_SALESFORCE
+      - TVOS
+      - WINDOWS
+      - LINUX
+      - KIOSK
+      - KEYPAD
+      - SQUARE
+      - KISI
+      - OPENPATH
+      - TOAST
+      - BOULEVARD
+      - BRIVO
+      - EXECUTABLE
+      - HALO
+      - SALTO
+      - BUTTERFLYMX
+      - GENEA
+      - PRODATAKEY
+      - ENVOY
+      - AMT
+      - PIMLOC
+      - PLACEOS
+      - OMNIALERT
+      - FLIC
+      - SHELLY_DEVICE_EVENT
+      - NINEONEONECELLULAR
+      - HONEYWELL_ELEMENTS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - TRITON
+      - CHATBOT
+      - SIGNATURE_API
+      - INCOMING_WEBHOOK
+      - UNKNOWN
+    CameraMeteringConfigType:
+      type: object
+      properties:
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        table:
+          type:
+          - string
+          - 'null'
+    WrappedRhombusOrgUserType:
+      type: object
+      description: List of users in the organization
+      properties:
+        accessibleRhombusApps:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusAppEnum'
+          uniqueItems: true
+        accountOwner:
+          type:
+          - boolean
+          - 'null'
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        changePasswordOnLogin:
+          type:
+          - boolean
+          - 'null'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        emailCaseSensitive:
+          type:
+          - string
+          - 'null'
+        emailVerified:
+          type:
+          - boolean
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
+          - 'null'
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+        mfaTokenType:
+          $ref: '#/components/schemas/MfaTokenTypeEnum'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUserCustomizationFlags:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
         orgUuid:
           type:
           - string
@@ -1217,6 +1415,64 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        passwordSet:
+          type:
+          - boolean
+          - 'null'
+        restrictToAllowedLoginIps:
+          type:
+          - boolean
+          - 'null'
+        rhombusUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/UserStatusEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ShippedItemType:
+      type:
+      - object
+      - 'null'
+      properties:
+        partNumber:
+          type:
+          - string
+          - 'null'
+        quantityShipped:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        serialNumber:
+          type:
+          - string
+          - 'null'
+    CameraDewarpModeEnum:
+      type: string
+      enum:
+      - NO_TRANSFORM
+      - NORMAL
+      - PANORAMA
+      - SUB_REGION
+      - VERTICAL_PANORAMA
+      - TRANSVERSE_MERCATOR
+      - MERCATOR
+      - EQUIRECTANGULAR
     Partner_DeviceWithPartnerDetailsType:
       type: object
       description: Device information with partner-specific details including control and reassignment status.
@@ -1235,33 +1491,68 @@ components:
           - 'null'
           description: Whether the device can be reassigned to another organization
           example: true
-    ApiTokenApplicationType:
+    LicenseFeature:
       type: object
       properties:
-        authType:
-          $ref: '#/components/schemas/ApiTokenAuthTypeEnum'
-        authenticationTokenHash:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        name:
           type:
           - string
           - 'null'
-        clientDetails:
+    OperationStatus:
+      type: object
+      description: Map of device serial numbers to their reassignment operation status
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+        status:
+          $ref: '#/components/schemas/StatusTypeEnum'
+    Partner_ReassignDeviceOrgWSResponse:
+      type: object
+      description: Response object containing the status of device reassignment operations.
+      properties:
+        statuses:
           type:
           - object
           - 'null'
           additionalProperties:
-            type:
-            - string
-            - 'null'
-        clientType:
-          $ref: '#/components/schemas/ApiClientTypeEnum'
-        csr:
+            $ref: '#/components/schemas/OperationStatus'
+          description: Map of device serial numbers to their reassignment operation status
+    License_GetLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of licenses available for a client organization.
+      properties:
+        licenses:
           type:
-          - string
+          - array
           - 'null'
-        displayName:
+          description: List of licenses available for the client organization
+          items:
+            $ref: '#/components/schemas/LicenseUsageType'
+    RegionPolygonType:
+      type: object
+      properties:
+        coordinates:
           type:
-          - string
+          - array
           - 'null'
+          items:
+            $ref: '#/components/schemas/RegionCoordinateType'
+    Partner_UpdateManuallySendLicenseExpirationEmailWSRequest:
+      type: object
+      description: Request object for updating manual license expiration email settings for an organization.
+      properties:
+        manuallySendLicenseExpirationEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to manually send license expiration emails
+          example: true
         orgUuid:
           type:
           - string
@@ -1269,20 +1560,280 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        permissionGroupUuid:
+    RegionCoordinateType:
+      type: object
+      properties:
+        x:
+          type:
+          - number
+          - 'null'
+          format: float
+        y:
+          type:
+          - number
+          - 'null'
+          format: float
+    Partner_ClientCustomizationsType:
+      type: object
+      description: Client-specific customization settings for partner management.
+      properties:
+        forceLowBandwidthOnAllCameras:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to force low bandwidth on all cameras
+          example: false
+        inactivityTimeout:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Inactivity timeout in minutes
+          example: 30
+    RhombusAppEnum:
+      type: string
+      enum:
+      - PARTNER
+      - CONSOLE
+      - RHOMBUS_KEY
+      - UNKNOWN
+    Partner_GetShipmentsWSResponse:
+      type: object
+      description: Response object containing client shipments within the specified time range.
+      properties:
+        customerShipmentList:
+          type:
+          - array
+          - 'null'
+          description: List of customer shipments
+          items:
+            $ref: '#/components/schemas/CustomerShipmentType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ApiTokenAuthTypeEnum:
+      type: string
+      description: Authentication type for the API token
+      enum:
+      - API_TOKEN
+      - CERT
+    Partner_UnregisteredControlledHardwareType:
+      type: object
+      description: Information about unregistered controlled hardware available for partner registration.
+      properties:
+        deviceModel:
+          $ref: '#/components/schemas/HardwareVariationEnum'
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        macAddress:
+          type:
+          - string
+          - 'null'
+          description: MAC address of the hardware device
+          example: 00:11:22:33:44:55
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the hardware device
+          example: RH123456789
+    Partner_GetShipmentsWSRequest:
+      type: object
+      description: Request object for getting client shipments within a time range.
+      properties:
+        clientOrgUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        tokenUuid:
+        endTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time for shipment search (seconds since epoch)
+          example: 1640995200
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time for shipment search (seconds since epoch)
+          example: 1640908800
+    DeviceTypeEnum:
+      type: string
+      enum:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    CustomerShipmentEmailStateEnum:
+      type: string
+      enum:
+      - SHIPPING_CONFIRMATION_SUCCESS
+      - SHIPPING_CONFIRMATION_FAILURE
+      - SHIPPING_SHIPPED_SUCCESS
+      - SHIPPING_SHIPPED_FAILURE
+      - UNKNOWN
+    Partner_CustomizeClientWSRequest:
+      type: object
+      description: Request object for customizing client settings and configurations.
+      properties:
+        clientOrgUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
+    LicenseStateEnum:
+      type: string
+      enum:
+      - CLAIMED
+      - RENEWED
+      - PENDING_RETURN
+      - NOT_RENEWED
+      - EXPIRED
+      - PERMANENTLY_EXPIRED
+    PerceptionTypeEnum:
+      type: string
+      enum:
+      - PEOPLE_COUNTING
+      - FACE_COUNTING_UNIQUE
+      - FACE_COUNTING_NONUNIQUE
+      - ENGAGMENT_COUNTING
+      - FACE_RECOGNITION
+      - LICENSEPLATE_RECOGNITION
+      - VEHICLE_COUNTING
+      - OCCUPANCY_COUNTING
+      - UNKNOWN
+    Integration_GetApiTokenApplicationsWSRequest:
+      type: object
+    Integration_GetApiTokenApplicationsWSResponse:
+      type: object
+      properties:
+        applications:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ApiTokenApplicationType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PermyriadRect:
+      type: object
+      properties:
+        h:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        w:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        x:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Integration_RevokeApiTokenWSResponse:
+      type: object
+      description: Response object for revoking an API token.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_RegisterDealWSRequest:
+      type: object
+      description: Request object for registering a deal with partner details.
+      properties:
+        details:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+            description: Map of deal details with key-value pairs
+          description: Map of deal details with key-value pairs
+    Partner_CustomizeClientDeviceWSRequest:
+      type: object
+      description: Request object for customizing client device settings and configurations.
+      properties:
+        clientDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        configUpdate:
+          $ref: '#/components/schemas/Device_config_userconfig_IExternalUpdateableAudioVideoUserConfig'
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientDeviceCustomizationsType'
     Device_config_userconfig_IExternalUpdateableAudioVideoUserConfig:
       type: object
       description: Audio/video user configuration update
@@ -1778,129 +2329,238 @@ components:
           - integer
           - 'null'
           format: int32
-    Partner_GetClientSummaryInfoWSResponse:
+    CameraPTZConfigType:
       type: object
-      description: Response object containing client summary information including account owner, device status, and settings.
       properties:
-        accountOwner:
-          $ref: '#/components/schemas/WrappedRhombusOrgUserType'
-        clientDeviceStatusMap:
+        offset_x_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+        offset_y_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+        rotation:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        size_percent:
+          type:
+          - number
+          - 'null'
+          format: float
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
+    LEDModeEnum:
+      type: string
+      enum:
+      - LED_OFF
+      - LED_RED_SOLID
+      - LED_GREEN_SOLID
+      - LED_ORANGE_SOLID
+      - LED_RED_BLINK
+      - LED_GREEN_BLINK
+      - LED_ORANGE_BLINK
+      - LED_NORMAL
+    RegionOfInterestGroup:
+      type: object
+      properties:
+        inclusive:
+          type:
+          - boolean
+          - 'null'
+          description: If true, regions in this group include specified activities. If false, regions in this group exclude specified activities.
+        regionsOfInterest:
+          type:
+          - array
+          - 'null'
+          description: Regions of interest that belong to the group. Group must have at least one region specified.
+          items:
+            $ref: '#/components/schemas/RegionOfInterest'
+        type:
+          $ref: '#/components/schemas/RegionOfInterestGroupTypeEnum'
+    ApiTokenType:
+      type: object
+      description: List of API tokens
+      properties:
+        allowedRequetsPerSecond:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        authType:
+          $ref: '#/components/schemas/ApiTokenAuthTypeEnum'
+        authenticationTokenHash:
+          type:
+          - string
+          - 'null'
+        cert:
+          type:
+          - string
+          - 'null'
+        certFingerprint:
+          type:
+          - string
+          - 'null'
+        clientDetails:
           type:
           - object
           - 'null'
           additionalProperties:
-            $ref: '#/components/schemas/Partner_ConnectionCountType'
-          description: Map of device types to their connection status counts
-        error:
+            type:
+            - string
+            - 'null'
+        clientType:
+          $ref: '#/components/schemas/ApiClientTypeEnum'
+        csr:
+          type:
+          - string
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        hashed:
           type:
           - boolean
           - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        licenseV2Enabled:
-          type:
-          - boolean
-          - 'null'
-          description: Whether license V2 is enabled for the client
-          example: true
-        locationCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Number of locations for the client
-          example: 3
-        manuallySendLicenseExpirationEmailEnabled:
-          type:
-          - boolean
-          - 'null'
-          description: Whether manual license expiration email sending is enabled
-          example: false
-        recentPolicyAlertCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Number of recent policy alerts
-          example: 5
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Partner_UnregisteredControlledHardwareType:
-      type: object
-      description: Information about unregistered controlled hardware available for partner registration.
-      properties:
-        deviceModel:
-          $ref: '#/components/schemas/HardwareVariationEnum'
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        macAddress:
-          type:
-          - string
-          - 'null'
-          description: MAC address of the hardware device
-          example: 00:11:22:33:44:55
-        serialNumber:
-          type:
-          - string
-          - 'null'
-          description: Serial number of the hardware device
-          example: RH123456789
-    Partner_DeleteClientWebResponse:
-      type: object
-      description: Response object for deleting a partner client account.
-    Org_CreatePendingRegistrationResponse:
-      type: object
-      description: Response object for creating pending hardware registration.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    WeeklyMinuteIntervalType:
-      type: object
-      properties:
-        minuteOfWeekStart:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        minuteOfWeekStop:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Partner_GetClientSummaryInfoWSRequest:
-      type: object
-      description: Request object for getting client summary information.
-      properties:
-        clientOrgUuid:
+        orgUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    LicenseStateEnum:
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        restrictToAllowedIps:
+          type:
+          - boolean
+          - 'null'
+        tokenUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    DeviceLicenseFamilyEnum:
       type: string
       enum:
-      - CLAIMED
-      - RENEWED
-      - PENDING_RETURN
-      - NOT_RENEWED
-      - EXPIRED
-      - PERMANENTLY_EXPIRED
+      - CAMERA
+      - CAMERA_MS
+      - VIDEO_INTERCOM
+      - AUDIO_GATEWAY
+      - ENVIRONMENTAL_SENSOR
+      - ENVIRONMENTAL_GATEWAY
+    Org_CreatePendingRegistrationRequest:
+      type: object
+      description: Request object for creating pending hardware registration.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the hardware device
+          example: RH123456789
+        wifiPsk:
+          type:
+          - array
+          - 'null'
+          description: WiFi pre-shared key for the device
+          items:
+            type:
+            - string
+            - 'null'
+            format: byte
+            description: WiFi pre-shared key for the device
+        wifiSsid:
+          type:
+          - string
+          - 'null'
+          description: WiFi SSID for the device
+          example: Office_WiFi
+    StatusTypeEnum:
+      type: string
+      enum:
+      - SUCCESS
+      - FAILURE
     Partner_PartnerClientWebType:
       type: object
       description: Partner client information including organization details and device counts.
@@ -2000,13 +2660,448 @@ components:
           format: int32
           description: Total number of proximity sensors
           example: 5
-    RegionOfInterestGroupTypeEnum:
+    MfaTokenTypeEnum:
       type: string
-      description: Represents type of activity regions in the group. Defaults to 'Activity'.
       enum:
-      - ACTIVITY
-      - REPORTING
-      - CROSSING
+      - EMAIL
+      - SMS
+      - VIRTUAL_MFA
+      - FIDO
+    Partner_DeleteClientWebRequest:
+      type: object
+      description: Request object for deleting a partner client account.
+      properties:
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Partner_GetListOfControlledHardwareRequest:
+      type: object
+      description: Request object for getting list of controlled hardware.
+    Partner_CustomizeClientWSResponse:
+      type: object
+      description: Response object containing the applied client customization settings.
+      properties:
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_GetPartnerClientsStatusMapWSRequest:
+      type: object
+      description: Request object for getting partner clients status map.
+    DewarpedView:
+      type: object
+      properties:
+        aspectRatio:
+          $ref: '#/components/schemas/AspectRatio'
+        pitchDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        rollDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+        verticalFieldOfViewDegrees:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        yawDegrees:
+          type:
+          - number
+          - 'null'
+          format: float
+    License_GetLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    InactivityObjectTypeEnum:
+      type: string
+      enum:
+      - HUMAN
+      - VEHICLE
+    LicenseUsageType:
+      type: object
+      description: List of licenses available for the client organization
+      properties:
+        addOnLicenseType:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        additionalPerceptionFeatures:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        cloudArchiveDays:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        license:
+          $ref: '#/components/schemas/AddOnLicenseEnum'
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        perceptionTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PerceptionTypeEnum'
+          uniqueItems: true
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LicenseEnum:
+      type: string
+      enum:
+      - STARTER
+      - STANDARD
+      - ENTERPRISE
+      - LEGACY
+    Partner_RegisterDealWSResponse:
+      type: object
+      description: Response object containing the result of registering a deal.
+      properties:
+        clients:
+          type:
+          - array
+          - 'null'
+          description: List of partner clients associated with the registered deal
+          items:
+            $ref: '#/components/schemas/Partner_PartnerClientWebType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_DeleteClientWebResponse:
+      type: object
+      description: Response object for deleting a partner client account.
+    CustomerShipmentStateEnum:
+      type: string
+      enum:
+      - CREATED
+      - SHIPPED
+      - DELIVERED
+      - RETURN_REGISTERED
+      - RETURN_SENT
+      - RETURN_DELIVERED
+      - COMPLETE
+      - UNKNOWN
+    Partner_CustomizeClientDeviceWSResponse:
+      type: object
+      description: Response object containing the applied client device customization settings.
+      properties:
+        customizations:
+          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Partner_ClientDeviceCustomizationsType:
+      type: object
+      description: Client device-specific customization settings for partner management.
+      properties:
+        forceLowBandwidthOnAllCameras:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to force low bandwidth on all cameras
+          example: false
+        inactivityTimeout:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Inactivity timeout in minutes
+          example: 30
+    DeviceLicenseType:
+      type: object
+      description: List of device licenses available for the client organization
+      properties:
+        claimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        createdOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        features:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LicenseFeature'
+          uniqueItems: true
+        firstAssignedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        licenseFamily:
+          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
+        licenseToUnassignEmailState:
+          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
+        licenseType:
+          $ref: '#/components/schemas/LicenseEnum'
+        maxDeleteDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        priorClaimKeyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        productCode:
+          type:
+          - string
+          - 'null'
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+        state:
+          $ref: '#/components/schemas/LicenseStateEnum'
+        trial:
+          type:
+          - boolean
+          - 'null'
+        updatedOn:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    RegionConfigType:
+      type:
+      - object
+      - 'null'
+      properties:
+        inverted:
+          type:
+          - boolean
+          - 'null'
+        polygons:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RegionPolygonType'
+    AddOnLicenseEnum:
+      type: string
+      enum:
+      - CLOUD_ARCHIVING
+      - PERCEPTION
+      - POSE
+      - BEHAVIOR
+      - VEHICLE
+      - PEOPLE
+      - PPE
+      - PEOPLE_ANALYTICS
+      - UNKNOWN
+    FisheyeDisplayModeEnum:
+      type: string
+      enum:
+      - RAW
+      - IMMERSIVE
+      - TILES
+      - RAW_PANO
+    CustomerShipmentCategoryEnum:
+      type: string
+      enum:
+      - RMA
+      - PURCHASE_ORDER
+      - TRIAL
+      - UNKNOWN
+    Partner_GetClientSummaryInfoWSRequest:
+      type: object
+      description: Request object for getting client summary information.
+      properties:
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    UploadTargetEnum:
+      type: string
+      enum:
+      - '0'
+      - '1'
+      - '2'
+    AspectRatio:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    License_claimkey_GetClaimKeysForPartnerOrgWSResponse:
+      type: object
+      description: Response object containing the claim keys belonging to the authenticated partner organization.
+      properties:
+        claimKeys:
+          type:
+          - array
+          - 'null'
+          description: List of claim keys belonging to the partner organization
+          items:
+            $ref: '#/components/schemas/PartnerOrgClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     RegionOfInterest:
       type: object
       description: Regions of interest that belong to the group. Group must have at least one region specified.
@@ -2032,6 +3127,24 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    FrontendEqualizerSettings:
+      type: object
+      properties:
+        frequency:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        gain:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        q:
+          type:
+          - integer
+          - 'null'
+          format: int32
     LicenseToUnassignEmailStateEnum:
       type: string
       enum:
@@ -2042,23 +3155,128 @@ components:
       - FOURTY_EIGHT_HOUR_WARNING_EMAIL_SUCCEEDED
       - FOURTY_EIGHT_HOUR_WARNING_EMAIL_FAILED
       - UNKNOWN
-    LEDModeEnum:
+    CameraInactivitySettingsType:
+      type: object
+      properties:
+        object_type:
+          $ref: '#/components/schemas/InactivityObjectTypeEnum'
+        roi:
+          $ref: '#/components/schemas/RegionPolygonType'
+        threshold_ms:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    CameraMountingDirectionEnum:
       type: string
       enum:
-      - LED_OFF
-      - LED_RED_SOLID
-      - LED_GREEN_SOLID
-      - LED_ORANGE_SOLID
-      - LED_RED_BLINK
-      - LED_GREEN_BLINK
-      - LED_ORANGE_BLINK
-      - LED_NORMAL
-    Partner_CustomizeClientWSResponse:
+      - DOWN
+      - UP
+      - SIDEWAYS
+      - UNKNOWN
+    Partner_PartnerWebResponseStatusEnum:
+      type: string
+      description: Status responses for partner web operations.
+      enum:
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - USER_EXISTS
+      - CLIENT_EXISTS
+      - USER_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
+    Partner_CreatePartnerClientWSResponse:
       type: object
-      description: Response object containing the applied client customization settings.
+      description: Response object containing the result of creating a partner client account.
       properties:
-        customizations:
-          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
+        clientOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        responseStatus:
+          $ref: '#/components/schemas/Partner_PartnerWebResponseStatusEnum'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_GetDeviceLicensesForClientOrgWSRequest:
+      type: object
+      description: Request object for getting list of device licenses available for a client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WeeklyMinuteIntervalType:
+      type: object
+      properties:
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Device_config_settings_ExternalVideoResolution:
+      type: object
+      properties:
+        height:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        width:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Partner_GetPartnerClientsWSResponse:
+      type: object
+      description: Response object containing list of partner clients.
+      properties:
+        clients:
+          type:
+          - array
+          - 'null'
+          description: List of partner clients
+          items:
+            $ref: '#/components/schemas/Partner_PartnerClientWebType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Integration_GetPartnerApiTokensWSRequest:
+      type: object
+    Partner_UpdateManuallySendLicenseExpirationEmailWSResponse:
+      type: object
+      description: Response object for updating manual license expiration email settings.
+      properties:
         error:
           type:
           - boolean
@@ -2215,26 +3433,66 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    ApiTokenType:
+    Org_CreatePendingRegistrationResponse:
       type: object
-      description: List of API tokens
+      description: Response object for creating pending hardware registration.
       properties:
-        allowedRequetsPerSecond:
+        error:
           type:
-          - integer
+          - boolean
           - 'null'
-          format: int32
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_claimkey_GetClaimKeysForPartnerOrgWSRequest:
+      type: object
+      description: Request object for getting the claim keys belonging to the authenticated partner organization.
+    Partner_GetClientDevicesWSRequest:
+      type: object
+      description: Request object for getting devices for a specific client organization.
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    SalesforceLicenseStartDateTimeAndEndDateTime:
+      type:
+      - object
+      - 'null'
+      properties:
+        contractEndDateTime:
+          type:
+          - string
+          - 'null'
+        contractStartDateTime:
+          type:
+          - string
+          - 'null'
+    Integration_RevokeApiTokenWSRequest:
+      type: object
+      description: Request object for revoking an API token.
+      properties:
+        tokenUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ApiTokenApplicationType:
+      type: object
+      properties:
         authType:
           $ref: '#/components/schemas/ApiTokenAuthTypeEnum'
         authenticationTokenHash:
-          type:
-          - string
-          - 'null'
-        cert:
-          type:
-          - string
-          - 'null'
-        certFingerprint:
           type:
           - string
           - 'null'
@@ -2256,10 +3514,6 @@ components:
           type:
           - string
           - 'null'
-        hashed:
-          type:
-          - boolean
-          - 'null'
         orgUuid:
           type:
           - string
@@ -2274,10 +3528,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        restrictToAllowedIps:
-          type:
-          - boolean
-          - 'null'
         tokenUuid:
           type:
           - string
@@ -2285,567 +3535,53 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Partner_ConnectionCountType:
+    PartnerOrgClaimKey:
       type: object
-      description: Device connection count information for partner clients.
+      description: List of claim keys belonging to the partner organization
       properties:
-        connectedCount:
+        accountAdminId:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-          description: Number of connected devices
-          example: 45
-        operationalCount:
+        accountName:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-          description: Number of operational devices
-          example: 42
-        totalCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Total number of devices
-          example: 50
-    Partner_GetClientDevicesWSResponse:
-      type: object
-      description: Response object containing devices for a specific client organization.
-      properties:
-        devices:
-          type:
-          - array
-          - 'null'
-          description: List of devices with partner-specific details
-          items:
-            $ref: '#/components/schemas/Partner_DeviceWithPartnerDetailsType'
-    DewarpedView:
-      type: object
-      properties:
-        aspectRatio:
-          $ref: '#/components/schemas/AspectRatio'
-        pitchDegrees:
-          type:
-          - number
-          - 'null'
-          format: float
-        rollDegrees:
-          type:
-          - number
-          - 'null'
-          format: float
-        verticalFieldOfViewDegrees:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        yawDegrees:
-          type:
-          - number
-          - 'null'
-          format: float
-    CameraDewarpModeEnum:
-      type: string
-      enum:
-      - NO_TRANSFORM
-      - NORMAL
-      - PANORAMA
-      - SUB_REGION
-      - VERTICAL_PANORAMA
-      - TRANSVERSE_MERCATOR
-      - MERCATOR
-      - EQUIRECTANGULAR
-    License_claimkey_GetClaimKeysForPartnerOrgWSRequest:
-      type: object
-      description: Request object for getting the claim keys belonging to the authenticated partner organization.
-    LicenseUsageType:
-      type: object
-      description: List of licenses available for the client organization
-      properties:
-        addOnLicenseType:
-          $ref: '#/components/schemas/AddOnLicenseEnum'
-        additionalPerceptionFeatures:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/PerceptionTypeEnum'
-          uniqueItems: true
         claimKeyUuid:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        cloudArchiveDays:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        createdOn:
+        contractEndDate:
           type:
           - string
           - 'null'
-          format: date-time
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        deviceUuid:
+        contractStartDate:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        firstAssignedDate:
+        createdDate:
           type:
           - string
           - 'null'
-          format: date-time
-        license:
-          $ref: '#/components/schemas/AddOnLicenseEnum'
-        licenseFamily:
-          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
-        licenseToUnassignEmailState:
-          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
-        maxDeleteDate:
+        externalUuid:
           type:
           - string
           - 'null'
-          format: date-time
-        orgUuid:
+        poNumber:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        perceptionTypes:
+    License_GetDeviceLicensesForClientOrgWSResponse:
+      type: object
+      description: Response object containing list of device licenses available for a client organization.
+      properties:
+        deviceLicenses:
           type:
           - array
           - 'null'
+          description: List of device licenses available for the client organization
           items:
-            $ref: '#/components/schemas/PerceptionTypeEnum'
-          uniqueItems: true
-        priorClaimKeyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        productCode:
-          type:
-          - string
-          - 'null'
-        productType:
-          $ref: '#/components/schemas/ProductTypeEnum'
-        state:
-          $ref: '#/components/schemas/LicenseStateEnum'
-        trial:
-          type:
-          - boolean
-          - 'null'
-        updatedOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    DeviceLicenseFamilyEnum:
-      type: string
-      enum:
-      - CAMERA
-      - CAMERA_MS
-      - VIDEO_INTERCOM
-      - AUDIO_GATEWAY
-      - ENVIRONMENTAL_SENSOR
-      - ENVIRONMENTAL_GATEWAY
-    Integration_GetApiTokensWSResponse:
-      type: object
-      description: Response object containing API tokens.
-      properties:
-        apiTokens:
-          type:
-          - array
-          - 'null'
-          description: List of API tokens
-          items:
-            $ref: '#/components/schemas/ApiTokenType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Integration_RevokeApiTokenWSResponse:
-      type: object
-      description: Response object for revoking an API token.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Partner_CustomizeClientWSRequest:
-      type: object
-      description: Request object for customizing client settings and configurations.
-      properties:
-        clientOrgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        customizations:
-          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
-    StatusTypeEnum:
-      type: string
-      enum:
-      - SUCCESS
-      - FAILURE
-    Partner_ClientCustomizationsType:
-      type: object
-      description: Client-specific customization settings for partner management.
-      properties:
-        forceLowBandwidthOnAllCameras:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to force low bandwidth on all cameras
-          example: false
-        inactivityTimeout:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Inactivity timeout in minutes
-          example: 30
-    HardwareVariationEnum:
-      type: string
-      enum:
-      - RASPBERRY_PI_3
-      - CAMERA_R1
-      - CAMERA_R2
-      - CAMERA_R2_LONG_RANGE
-      - CAMERA_R2_180
-      - CAMERA_R3
-      - CAMERA_R4
-      - CAMERA_R100
-      - CAMERA_R120
-      - CAMERA_R170
-      - CAMERA_R200
-      - CAMERA_R500
-      - CAMERA_R510
-      - CAMERA_R520
-      - CAMERA_R600
-      - SENSOR_ASSET_TAG_T1
-      - SENSOR_DOOR_D1
-      - SENSOR_DOOR_D20
-      - SENSOR_ENVIRONMENTAL_E1
-      - SENSOR_ENVIRONMENTAL_E15
-      - SENSOR_ENVIRONMENTAL_E2
-      - SENSOR_MOTION_M1
-      - SENSOR_MOTION_M15
-      - GATEWAY_A1
-      - GATEWAY_A100
-      - GATEWAY_ENVIRONMENTAL_E50
-      - CAMERA_R220
-      - CAMERA_R230
-      - CAMERA_R36S
-      - CAMERA_R410
-      - CAMERA_R540
-      - CAMERA_R545
-      - BADGE_READER_DR1
-      - BADGE_READER_DR40
-      - BADGE_READER_DR20
-      - DOOR_CONTROLLER_DC1
-      - DOOR_CONTROLLER_DC20
-      - DOOR_CONTROLLER_DC10
-      - ETHERNET_TESTER_ET1
-      - IO_BOARD_TB1
-      - BLE_BUTTON_B10
-      - BLE_BUTTON_B15
-      - CAMERA_THIRD_PARTY_RELAY
-      - CAMERA_THIRD_PARTY_NVR
-      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
-      - NVR_N100
-      - CAMERA_R130
-      - NVR_N500
-      - CAMERA_R150
-      - ROBOT_RC1
-      - CAMERA_R210
-      - CAMERA_R650
-      - UNSPECIFIED
-    Partner_GetShipmentsWSResponse:
-      type: object
-      description: Response object containing client shipments within the specified time range.
-      properties:
-        customerShipmentList:
-          type:
-          - array
-          - 'null'
-          description: List of customer shipments
-          items:
-            $ref: '#/components/schemas/CustomerShipmentType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    UserStatusEnumType:
-      type: string
-      enum:
-      - JOINED
-      - PENDING
-      - INACTIVE
-      - UNKNOWN
-    ShippedItemType:
-      type:
-      - object
-      - 'null'
-      properties:
-        partNumber:
-          type:
-          - string
-          - 'null'
-        quantityShipped:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        serialNumber:
-          type:
-          - string
-          - 'null'
-    Partner_UpdateManuallySendLicenseExpirationEmailWSRequest:
-      type: object
-      description: Request object for updating manual license expiration email settings for an organization.
-      properties:
-        manuallySendLicenseExpirationEmail:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to manually send license expiration emails
-          example: true
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Partner_GetListOfAllClientDevicesRequest:
-      type: object
-      description: Request object for getting list of all client devices.
-    AspectRatio:
-      type: object
-      properties:
-        height:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        width:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    CustomerShipmentEmailStateEnum:
-      type: string
-      enum:
-      - SHIPPING_CONFIRMATION_SUCCESS
-      - SHIPPING_CONFIRMATION_FAILURE
-      - SHIPPING_SHIPPED_SUCCESS
-      - SHIPPING_SHIPPED_FAILURE
-      - UNKNOWN
-    RegionOfInterestGroup:
-      type: object
-      properties:
-        inclusive:
-          type:
-          - boolean
-          - 'null'
-          description: If true, regions in this group include specified activities. If false, regions in this group exclude specified activities.
-        regionsOfInterest:
-          type:
-          - array
-          - 'null'
-          description: Regions of interest that belong to the group. Group must have at least one region specified.
-          items:
-            $ref: '#/components/schemas/RegionOfInterest'
-        type:
-          $ref: '#/components/schemas/RegionOfInterestGroupTypeEnum'
-    Partner_GetListOfAllClientDevicesResponse:
-      type: object
-      description: Response object containing list of all client devices.
-      properties:
-        listOfAllClientDevices:
-          type:
-          - array
-          - 'null'
-          description: List of all client devices
-          items:
-            $ref: '#/components/schemas/DeviceTypeV2'
-    UploadTargetEnum:
-      type: string
-      enum:
-      - '0'
-      - '1'
-      - '2'
-    MfaTokenTypeEnum:
-      type: string
-      enum:
-      - EMAIL
-      - SMS
-      - VIRTUAL_MFA
-      - FIDO
-    ProductTypeEnum:
-      type: string
-      enum:
-      - DEVICE
-      - ALERT_MONITORING
-      - ACCESS_CONTROL
-      - GUEST_MANAGEMENT
-      - LICENSE_USAGE
-      - UNKNOWN
-    Partner_GetPartnerClientsStatusMapWSResponse:
-      type: object
-      description: Response object containing partner clients status map with device connection counts.
-      properties:
-        clientDeviceStatusMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/Partner_ConnectionCountType'
-            description: Map of client UUIDs to device type connection counts
-          description: Map of client UUIDs to device type connection counts
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    CustomerShipmentStateEnum:
-      type: string
-      enum:
-      - CREATED
-      - SHIPPED
-      - DELIVERED
-      - RETURN_REGISTERED
-      - RETURN_SENT
-      - RETURN_DELIVERED
-      - COMPLETE
-      - UNKNOWN
-    Partner_CreatePartnerClientWSRequest:
-      type: object
-      description: Request object for creating a new partner client account.
-      properties:
-        clientContactEmail:
-          type:
-          - string
-          - 'null'
-          description: Email address of the client contact person
-          example: john.smith@acme.com
-        clientContactName:
-          type:
-          - string
-          - 'null'
-          description: Name of the client contact person
-          example: John Smith
-        clientOrgName:
-          type:
-          - string
-          - 'null'
-          description: Name of the client organization
-          example: Acme Corporation
-        suppressWelcomeEmail:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to suppress sending welcome email to the client
-          example: false
-    PerceptionTypeEnum:
-      type: string
-      enum:
-      - PEOPLE_COUNTING
-      - FACE_COUNTING_UNIQUE
-      - FACE_COUNTING_NONUNIQUE
-      - ENGAGMENT_COUNTING
-      - FACE_RECOGNITION
-      - LICENSEPLATE_RECOGNITION
-      - VEHICLE_COUNTING
-      - OCCUPANCY_COUNTING
-      - UNKNOWN
-    Partner_ReassignDeviceOrgWSResponse:
-      type: object
-      description: Response object containing the status of device reassignment operations.
-      properties:
-        statuses:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/OperationStatus'
-          description: Map of device serial numbers to their reassignment operation status
-    DeviceTypeEnum:
-      type: string
-      enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
-      - UNKNOWN
+            $ref: '#/components/schemas/DeviceLicenseType'
     DeviceTypeV2:
       type: object
       description: List of all client devices
@@ -2924,742 +3660,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Partner_ClientDeviceCustomizationsType:
-      type: object
-      description: Client device-specific customization settings for partner management.
-      properties:
-        forceLowBandwidthOnAllCameras:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to force low bandwidth on all cameras
-          example: false
-        inactivityTimeout:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Inactivity timeout in minutes
-          example: 30
-    Partner_GetPartnerClientsStatusMapWSRequest:
-      type: object
-      description: Request object for getting partner clients status map.
-    Integration_GetPartnerApiTokensWSRequest:
-      type: object
-    Partner_CreatePartnerClientWSResponse:
-      type: object
-      description: Response object containing the result of creating a partner client account.
-      properties:
-        clientOrgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        responseStatus:
-          $ref: '#/components/schemas/Partner_PartnerWebResponseStatusEnum'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    CameraMountingDirectionEnum:
-      type: string
-      enum:
-      - DOWN
-      - UP
-      - SIDEWAYS
-      - UNKNOWN
-    License_GetDeviceLicensesForClientOrgWSRequest:
-      type: object
-      description: Request object for getting list of device licenses available for a client organization.
-      properties:
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_GetDeviceLicensesForClientOrgWSResponse:
-      type: object
-      description: Response object containing list of device licenses available for a client organization.
-      properties:
-        deviceLicenses:
-          type:
-          - array
-          - 'null'
-          description: List of device licenses available for the client organization
-          items:
-            $ref: '#/components/schemas/DeviceLicenseType'
-    Partner_GetPartnerClientsWSRequest:
-      type: object
-      description: Request object for getting all partner clients.
-    Partner_DeleteClientWebRequest:
-      type: object
-      description: Request object for deleting a partner client account.
-      properties:
-        clientOrgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    DeviceLicenseType:
-      type: object
-      description: List of device licenses available for the client organization
-      properties:
-        claimKeyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        createdOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        features:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/LicenseFeature'
-          uniqueItems: true
-        firstAssignedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        licenseFamily:
-          $ref: '#/components/schemas/DeviceLicenseFamilyEnum'
-        licenseToUnassignEmailState:
-          $ref: '#/components/schemas/LicenseToUnassignEmailStateEnum'
-        licenseType:
-          $ref: '#/components/schemas/LicenseEnum'
-        maxDeleteDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        priorClaimKeyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        productCode:
-          type:
-          - string
-          - 'null'
-        productType:
-          $ref: '#/components/schemas/ProductTypeEnum'
-        state:
-          $ref: '#/components/schemas/LicenseStateEnum'
-        trial:
-          type:
-          - boolean
-          - 'null'
-        updatedOn:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Partner_CustomizeClientDeviceWSResponse:
-      type: object
-      description: Response object containing the applied client device customization settings.
-      properties:
-        customizations:
-          $ref: '#/components/schemas/Partner_ClientCustomizationsType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Partner_PartnerWebResponseStatusEnum:
-      type: string
-      description: Status responses for partner web operations.
-      enum:
-      - BASIC_AUTH_FAILED
-      - PASSWORD_MISMATCH
-      - USER_EXISTS
-      - CLIENT_EXISTS
-      - USER_NOT_FOUND
-      - BAD_INPUT
-      - SUCCESS
-      - PASSWORD_TOO_SHORT
-    Integration_GetApiTokenApplicationsWSRequest:
-      type: object
-    Partner_UpdateManuallySendLicenseExpirationEmailWSResponse:
-      type: object
-      description: Response object for updating manual license expiration email settings.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    OperationStatus:
-      type: object
-      description: Map of device serial numbers to their reassignment operation status
-      properties:
-        message:
-          type:
-          - string
-          - 'null'
-        status:
-          $ref: '#/components/schemas/StatusTypeEnum'
-    RhombusAppEnum:
-      type: string
-      enum:
-      - PARTNER
-      - CONSOLE
-      - RHOMBUS_KEY
-      - UNKNOWN
-    PermyriadRect:
-      type: object
-      properties:
-        h:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        size:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        w:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        x:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        y:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    PartnerOrgClaimKey:
-      type: object
-      description: List of claim keys belonging to the partner organization
-      properties:
-        accountAdminId:
-          type:
-          - string
-          - 'null'
-        accountName:
-          type:
-          - string
-          - 'null'
-        claimKeyUuid:
-          type:
-          - string
-          - 'null'
-        contractEndDate:
-          type:
-          - string
-          - 'null'
-        contractStartDate:
-          type:
-          - string
-          - 'null'
-        createdDate:
-          type:
-          - string
-          - 'null'
-        externalUuid:
-          type:
-          - string
-          - 'null'
-        poNumber:
-          type:
-          - string
-          - 'null'
-    CustomerShipmentCategoryEnum:
-      type: string
-      enum:
-      - RMA
-      - PURCHASE_ORDER
-      - TRIAL
-      - UNKNOWN
-    SalesforceLicenseStartDateTimeAndEndDateTime:
-      type:
-      - object
-      - 'null'
-      properties:
-        contractEndDateTime:
-          type:
-          - string
-          - 'null'
-        contractStartDateTime:
-          type:
-          - string
-          - 'null'
-    Partner_GetPartnerClientsWSResponse:
-      type: object
-      description: Response object containing list of partner clients.
-      properties:
-        clients:
-          type:
-          - array
-          - 'null'
-          description: List of partner clients
-          items:
-            $ref: '#/components/schemas/Partner_PartnerClientWebType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Partner_RegisterDealWSRequest:
-      type: object
-      description: Request object for registering a deal with partner details.
-      properties:
-        details:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-            description: Map of deal details with key-value pairs
-          description: Map of deal details with key-value pairs
-    Partner_RegisterDealWSResponse:
-      type: object
-      description: Response object containing the result of registering a deal.
-      properties:
-        clients:
-          type:
-          - array
-          - 'null'
-          description: List of partner clients associated with the registered deal
-          items:
-            $ref: '#/components/schemas/Partner_PartnerClientWebType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Partner_GetListOfControlledHardwareRequest:
-      type: object
-      description: Request object for getting list of controlled hardware.
-    LicenseEnum:
-      type: string
-      enum:
-      - STARTER
-      - STANDARD
-      - ENTERPRISE
-      - LEGACY
-    Org_CreatePendingRegistrationRequest:
-      type: object
-      description: Request object for creating pending hardware registration.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        serialNumber:
-          type:
-          - string
-          - 'null'
-          description: Serial number of the hardware device
-          example: RH123456789
-        wifiPsk:
-          type:
-          - array
-          - 'null'
-          description: WiFi pre-shared key for the device
-          items:
-            type:
-            - string
-            - 'null'
-            format: byte
-            description: WiFi pre-shared key for the device
-        wifiSsid:
-          type:
-          - string
-          - 'null'
-          description: WiFi SSID for the device
-          example: Office_WiFi
-    Device_config_settings_ExternalVideoResolution:
-      type: object
-      properties:
-        height:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        width:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    CameraMeteringConfigType:
-      type: object
-      properties:
-        rotation:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        table:
-          type:
-          - string
-          - 'null'
-    WrappedRhombusOrgUserType:
-      type: object
-      description: List of users in the organization
-      properties:
-        accessibleRhombusApps:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RhombusAppEnum'
-          uniqueItems: true
-        accountOwner:
-          type:
-          - boolean
-          - 'null'
-        bypassSaml:
-          type:
-          - boolean
-          - 'null'
-        changePasswordOnLogin:
-          type:
-          - boolean
-          - 'null'
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        deleted:
-          type:
-          - boolean
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-        emailCaseSensitive:
-          type:
-          - string
-          - 'null'
-        emailVerified:
-          type:
-          - boolean
-          - 'null'
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        mfaEnabled:
-          type:
-          - boolean
-          - 'null'
-        mfaTokenType:
-          $ref: '#/components/schemas/MfaTokenTypeEnum'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUserCustomizationFlags:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        passwordSet:
-          type:
-          - boolean
-          - 'null'
-        restrictToAllowedLoginIps:
-          type:
-          - boolean
-          - 'null'
-        rhombusUserUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        status:
-          $ref: '#/components/schemas/UserStatusEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Integration_RevokeApiTokenWSRequest:
-      type: object
-      description: Request object for revoking an API token.
-      properties:
-        tokenUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    FrontendEqualizerSettings:
-      type: object
-      properties:
-        frequency:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        gain:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        q:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    CameraInactivitySettingsType:
-      type: object
-      properties:
-        object_type:
-          $ref: '#/components/schemas/InactivityObjectTypeEnum'
-        roi:
-          $ref: '#/components/schemas/RegionPolygonType'
-        threshold_ms:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Partner_GetClientDevicesWSRequest:
-      type: object
-      description: Request object for getting devices for a specific client organization.
-      properties:
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    CameraHumanLoiteringSettingsType:
-      type: object
-      properties:
-        roi:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RegionPolygonType'
-    License_claimkey_GetClaimKeysForPartnerOrgWSResponse:
-      type: object
-      description: Response object containing the claim keys belonging to the authenticated partner organization.
-      properties:
-        claimKeys:
-          type:
-          - array
-          - 'null'
-          description: List of claim keys belonging to the partner organization
-          items:
-            $ref: '#/components/schemas/PartnerOrgClaimKey'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    InactivityObjectTypeEnum:
-      type: string
-      enum:
-      - HUMAN
-      - VEHICLE
-    ApiTokenAuthTypeEnum:
-      type: string
-      description: Authentication type for the API token
-      enum:
-      - API_TOKEN
-      - CERT
-    Integration_GetApiTokenApplicationsWSResponse:
-      type: object
-      properties:
-        applications:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ApiTokenApplicationType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Partner_GetShipmentsWSRequest:
-      type: object
-      description: Request object for getting client shipments within a time range.
-      properties:
-        clientOrgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        endTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time for shipment search (seconds since epoch)
-          example: 1640995200
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time for shipment search (seconds since epoch)
-          example: 1640908800
-    RegionCoordinateType:
-      type: object
-      properties:
-        x:
-          type:
-          - number
-          - 'null'
-          format: float
-        y:
-          type:
-          - number
-          - 'null'
-          format: float
-    RegionConfigType:
-      type:
-      - object
-      - 'null'
-      properties:
-        inverted:
-          type:
-          - boolean
-          - 'null'
-        polygons:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RegionPolygonType'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

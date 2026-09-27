@@ -172,6 +172,85 @@ paths:
       - Occupancy Webservice
 components:
   schemas:
+    TimeWindowSeconds:
+      type: object
+      description: List of uptime windows for the device
+      properties:
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Occupancysensor_GetMinimalOccupancySensorStatesWSRequest:
+      type: object
+      description: Request object for getting minimal occupancy sensor states for all sensors in organization.
+    Occupancysensor_GetMinimalOccupancySensorStatesWSResponse:
+      type: object
+      description: Response object containing minimal occupancy sensor states for all sensors in organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        occupancySensorStates:
+          type:
+          - array
+          - 'null'
+          description: List of minimal occupancy sensor states
+          items:
+            $ref: '#/components/schemas/Occupancysensor_MinimalOccupancySensorStateType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Occupancysensor_UpdateOccupancySensorDetailsWSResponse:
+      type: object
+      description: Response object for updating occupancy sensor details.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Sensor_GetSensorPresenceWindowsWSResponse:
+      type: object
+      description: Response object containing stored video information for a sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        presenceWindows:
+          type:
+          - array
+          - 'null'
+          description: List of presence windows for the sensor
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     HardwareVariationEnum:
       type: string
       enum:
@@ -228,87 +307,13 @@ components:
       - CAMERA_R210
       - CAMERA_R650
       - UNSPECIFIED
-    Occupancysensor_MotionSensorHealthEnum:
+    OccupancyStatusEnum:
       type: string
-      description: Motion sensor health status.
-      enum:
-      - RED
-      - GREEN
-    OccupancyStateEnum:
-      type: string
+      description: Current occupancy status of the sensor
       enum:
       - VACANT
       - MOVEMENT
       - OCCUPIED
-    TimeWindowSeconds:
-      type: object
-      description: List of uptime windows for the device
-      properties:
-        durationSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Occupancysensor_MotionSensorHealthDetailsEnum:
-      type: string
-      description: Detailed motion sensor health status.
-      enum:
-      - NO_HEARTBEAT
-      - FIRMWARE_BEHIND
-      - NONE
-    Occupancysensor_UpdateOccupancySensorDetailsWSResponse:
-      type: object
-      description: Response object for updating occupancy sensor details.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Occupancysensor_GetOccupancyEventsForSensorWSRequest:
-      type: object
-      description: Request object for getting occupancy events for a specific sensor.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Filter events created after this timestamp (milliseconds since epoch)
-          example: 1640908800000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Filter events created before this timestamp (milliseconds since epoch)
-          example: 1640995200000
-        limit:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Maximum number of events to return
-          example: 100
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     OccupancyEventType:
       type: object
       description: List of occupancy events for the sensor
@@ -394,6 +399,82 @@ components:
           - integer
           - 'null'
           format: int64
+    Occupancysensor_MotionSensorHealthEnum:
+      type: string
+      description: Motion sensor health status.
+      enum:
+      - RED
+      - GREEN
+    Occupancysensor_MotionSensorHealthDetailsEnum:
+      type: string
+      description: Detailed motion sensor health status.
+      enum:
+      - NO_HEARTBEAT
+      - FIRMWARE_BEHIND
+      - NONE
+    OccupancyStateEnum:
+      type: string
+      enum:
+      - VACANT
+      - MOVEMENT
+      - OCCUPIED
+    Sensor_GetSensorPresenceWindowsWSRequest:
+      type: object
+      description: Request object for retrieving stored video information for a sensor.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds for the presence window query
+          example: 3600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the presence window query
+          example: 1640995200
+    Occupancysensor_GetOccupancyEventsForSensorWSRequest:
+      type: object
+      description: Request object for getting occupancy events for a specific sensor.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created after this timestamp (milliseconds since epoch)
+          example: 1640908800000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Filter events created before this timestamp (milliseconds since epoch)
+          example: 1640995200000
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of events to return
+          example: 100
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Occupancysensor_UpdateOccupancySensorDetailsWSRequest:
       type: object
       description: Request object for updating occupancy sensor details with selective update flags.
@@ -542,6 +623,29 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Occupancysensor_GetOccupancyEventsForSensorWSResponse:
+      type: object
+      description: Response object containing occupancy events for a specific sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        events:
+          type:
+          - array
+          - 'null'
+          description: List of occupancy events for the sensor
+          items:
+            $ref: '#/components/schemas/OccupancyEventType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Occupancysensor_MinimalOccupancySensorStateType:
       type: object
       description: Minimal state information for occupancy sensors including health, location, and sensor data.
@@ -680,110 +784,6 @@ components:
             '
           example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
           pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-    Sensor_GetSensorPresenceWindowsWSResponse:
-      type: object
-      description: Response object containing stored video information for a sensor.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        presenceWindows:
-          type:
-          - array
-          - 'null'
-          description: List of presence windows for the sensor
-          items:
-            $ref: '#/components/schemas/TimeWindowSeconds'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Occupancysensor_GetOccupancyEventsForSensorWSResponse:
-      type: object
-      description: Response object containing occupancy events for a specific sensor.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        events:
-          type:
-          - array
-          - 'null'
-          description: List of occupancy events for the sensor
-          items:
-            $ref: '#/components/schemas/OccupancyEventType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Occupancysensor_GetMinimalOccupancySensorStatesWSRequest:
-      type: object
-      description: Request object for getting minimal occupancy sensor states for all sensors in organization.
-    Sensor_GetSensorPresenceWindowsWSRequest:
-      type: object
-      description: Request object for retrieving stored video information for a sensor.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Duration in seconds for the presence window query
-          example: 3600
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in seconds for the presence window query
-          example: 1640995200
-    Occupancysensor_GetMinimalOccupancySensorStatesWSResponse:
-      type: object
-      description: Response object containing minimal occupancy sensor states for all sensors in organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        occupancySensorStates:
-          type:
-          - array
-          - 'null'
-          description: List of minimal occupancy sensor states
-          items:
-            $ref: '#/components/schemas/Occupancysensor_MinimalOccupancySensorStateType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    OccupancyStatusEnum:
-      type: string
-      description: Current occupancy status of the sensor
-      enum:
-      - VACANT
-      - MOVEMENT
-      - OCCUPIED
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

@@ -213,45 +213,22 @@ components:
           format: DeviceFacetUuid
           description: RUUID with optional appended facet information
           example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    Feature_UpdateDeviceFeaturesWSRequest:
+    Feature_GetDeviceFeaturesListWSRequest:
       type: object
-      description: Request object for updating enabled features for a device.
+      description: Request object for retrieving enabled features for multiple devices in an organization.
       properties:
-        deviceUuid:
+        deviceUuids:
           type:
-          - string
+          - array
           - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        featureMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
+          description: List of device UUIDs to retrieve features for
+          items:
             type:
-            - boolean
+            - string
             - 'null'
-            description: Map of device features to their new enabled/disabled status
-          description: Map of device features to their new enabled/disabled status
-    Feature_GetDeviceFeaturesWSResponse:
-      type: object
-      description: Response object containing enabled features for a device.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        features:
-          $ref: '#/components/schemas/Feature_DeviceFeaturesType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
     Feature_GetDeviceFeaturesListWSResponse:
       type: object
       description: Response object containing enabled features for multiple devices in an organization.
@@ -275,22 +252,138 @@ components:
           type:
           - string
           - 'null'
-    Feature_UpdateDeviceFeaturesWSResponse:
+    FeatureCompatabilityType:
       type: object
-      description: Response object for updating enabled features for a device.
+      description: List of feature compatibility information
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        betaRolloutOrgFlag:
           type:
           - string
           - 'null'
-        warningMsg:
+        deviceFeatureEnablement:
+          $ref: '#/components/schemas/DeviceFeatureEnum'
+        featureName:
           type:
           - string
           - 'null'
+        generatedActivities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        hardwareDefaultMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+        requiredFirmwareVersion:
+          type:
+          - string
+          - 'null'
+        requiredLicenses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LicenseEnum'
+        supportedHardware:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HardwareVariationEnum'
+    Feature_UpdateDeviceFeaturesWSRequest:
+      type: object
+      description: Request object for updating enabled features for a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        featureMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
+            description: Map of device features to their new enabled/disabled status
+          description: Map of device features to their new enabled/disabled status
+    Feature_GetDeviceEventTypesWSResponse:
+      type: object
+      description: Response object containing possible event types for a device based on enabled features.
+      properties:
+        eventTypes:
+          type:
+          - array
+          - 'null'
+          description: List of possible event types for the device
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+    HardwareVariationEnum:
+      type: string
+      enum:
+      - RASPBERRY_PI_3
+      - CAMERA_R1
+      - CAMERA_R2
+      - CAMERA_R2_LONG_RANGE
+      - CAMERA_R2_180
+      - CAMERA_R3
+      - CAMERA_R4
+      - CAMERA_R100
+      - CAMERA_R120
+      - CAMERA_R170
+      - CAMERA_R200
+      - CAMERA_R500
+      - CAMERA_R510
+      - CAMERA_R520
+      - CAMERA_R600
+      - SENSOR_ASSET_TAG_T1
+      - SENSOR_DOOR_D1
+      - SENSOR_DOOR_D20
+      - SENSOR_ENVIRONMENTAL_E1
+      - SENSOR_ENVIRONMENTAL_E15
+      - SENSOR_ENVIRONMENTAL_E2
+      - SENSOR_MOTION_M1
+      - SENSOR_MOTION_M15
+      - GATEWAY_A1
+      - GATEWAY_A100
+      - GATEWAY_ENVIRONMENTAL_E50
+      - CAMERA_R220
+      - CAMERA_R230
+      - CAMERA_R36S
+      - CAMERA_R410
+      - CAMERA_R540
+      - CAMERA_R545
+      - BADGE_READER_DR1
+      - BADGE_READER_DR40
+      - BADGE_READER_DR20
+      - DOOR_CONTROLLER_DC1
+      - DOOR_CONTROLLER_DC20
+      - DOOR_CONTROLLER_DC10
+      - ETHERNET_TESTER_ET1
+      - IO_BOARD_TB1
+      - BLE_BUTTON_B10
+      - BLE_BUTTON_B15
+      - CAMERA_THIRD_PARTY_RELAY
+      - CAMERA_THIRD_PARTY_NVR
+      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
+      - NVR_N100
+      - CAMERA_R130
+      - NVR_N500
+      - CAMERA_R150
+      - ROBOT_RC1
+      - CAMERA_R210
+      - CAMERA_R650
+      - UNSPECIFIED
     ActivityEnum:
       type: string
       enum:
@@ -514,13 +607,22 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    LicenseEnum:
-      type: string
-      enum:
-      - STARTER
-      - STANDARD
-      - ENTERPRISE
-      - LEGACY
+    Feature_UpdateDeviceFeaturesWSResponse:
+      type: object
+      description: Response object for updating enabled features for a device.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     DeviceFeatureEnum:
       type: string
       enum:
@@ -546,22 +648,6 @@ components:
       - BADGE_READER_ENTERPRISE_CLOUD_ARCHIVING
       - OBJECT_SEARCH
       - UNKNOWN
-    Feature_GetDeviceFeaturesListWSRequest:
-      type: object
-      description: Request object for retrieving enabled features for multiple devices in an organization.
-      properties:
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device UUIDs to retrieve features for
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
     Feature_GetDeviceFeaturesWSRequest:
       type: object
       description: Request object for retrieving enabled features for a device.
@@ -573,27 +659,43 @@ components:
           format: DeviceFacetUuid
           description: RUUID with optional appended facet information
           example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    FeatureCompatabilityType:
+    Feature_GetDeviceFeaturesWSResponse:
       type: object
-      description: List of feature compatibility information
+      description: Response object containing enabled features for a device.
       properties:
-        betaRolloutOrgFlag:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-        deviceFeatureEnablement:
-          $ref: '#/components/schemas/DeviceFeatureEnum'
-        featureName:
+        features:
+          $ref: '#/components/schemas/Feature_DeviceFeaturesType'
+        warningMsg:
           type:
           - string
           - 'null'
-        generatedActivities:
+    LicenseEnum:
+      type: string
+      enum:
+      - STARTER
+      - STANDARD
+      - ENTERPRISE
+      - LEGACY
+    Feature_DeviceFeaturesType:
+      type: object
+      description: Device features configuration with feature enablement mapping.
+      properties:
+        deviceUuid:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-        hardwareDefaultMap:
+          format: DeviceFacetUuid
+          description: RUUID with optional appended facet information
+          example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        featureMap:
           type:
           - object
           - 'null'
@@ -601,22 +703,11 @@ components:
             type:
             - boolean
             - 'null'
-        requiredFirmwareVersion:
-          type:
-          - string
-          - 'null'
-        requiredLicenses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/LicenseEnum'
-        supportedHardware:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/HardwareVariationEnum'
+            description: Map of device features to their enabled/disabled status
+          description: Map of device features to their enabled/disabled status
+    Feature_GetFeatureCompatabilityMatrixWSRequest:
+      type: object
+      description: Request object for retrieving the feature compatibility matrix.
     Feature_GetFeatureCompatabilityMatrixWSResponse:
       type: object
       description: Response object containing the feature compatibility matrix.
@@ -640,97 +731,6 @@ components:
           type:
           - string
           - 'null'
-    Feature_GetDeviceEventTypesWSResponse:
-      type: object
-      description: Response object containing possible event types for a device based on enabled features.
-      properties:
-        eventTypes:
-          type:
-          - array
-          - 'null'
-          description: List of possible event types for the device
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-    Feature_GetFeatureCompatabilityMatrixWSRequest:
-      type: object
-      description: Request object for retrieving the feature compatibility matrix.
-    Feature_DeviceFeaturesType:
-      type: object
-      description: Device features configuration with feature enablement mapping.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: DeviceFacetUuid
-          description: RUUID with optional appended facet information
-          example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        featureMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - boolean
-            - 'null'
-            description: Map of device features to their enabled/disabled status
-          description: Map of device features to their enabled/disabled status
-    HardwareVariationEnum:
-      type: string
-      enum:
-      - RASPBERRY_PI_3
-      - CAMERA_R1
-      - CAMERA_R2
-      - CAMERA_R2_LONG_RANGE
-      - CAMERA_R2_180
-      - CAMERA_R3
-      - CAMERA_R4
-      - CAMERA_R100
-      - CAMERA_R120
-      - CAMERA_R170
-      - CAMERA_R200
-      - CAMERA_R500
-      - CAMERA_R510
-      - CAMERA_R520
-      - CAMERA_R600
-      - SENSOR_ASSET_TAG_T1
-      - SENSOR_DOOR_D1
-      - SENSOR_DOOR_D20
-      - SENSOR_ENVIRONMENTAL_E1
-      - SENSOR_ENVIRONMENTAL_E15
-      - SENSOR_ENVIRONMENTAL_E2
-      - SENSOR_MOTION_M1
-      - SENSOR_MOTION_M15
-      - GATEWAY_A1
-      - GATEWAY_A100
-      - GATEWAY_ENVIRONMENTAL_E50
-      - CAMERA_R220
-      - CAMERA_R230
-      - CAMERA_R36S
-      - CAMERA_R410
-      - CAMERA_R540
-      - CAMERA_R545
-      - BADGE_READER_DR1
-      - BADGE_READER_DR40
-      - BADGE_READER_DR20
-      - DOOR_CONTROLLER_DC1
-      - DOOR_CONTROLLER_DC20
-      - DOOR_CONTROLLER_DC10
-      - ETHERNET_TESTER_ET1
-      - IO_BOARD_TB1
-      - BLE_BUTTON_B10
-      - BLE_BUTTON_B15
-      - CAMERA_THIRD_PARTY_RELAY
-      - CAMERA_THIRD_PARTY_NVR
-      - CAMERA_THIRD_PARTY_NVR_MULTISENSOR
-      - NVR_N100
-      - CAMERA_R130
-      - NVR_N500
-      - CAMERA_R150
-      - ROBOT_RC1
-      - CAMERA_R210
-      - CAMERA_R650
-      - UNSPECIFIED
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

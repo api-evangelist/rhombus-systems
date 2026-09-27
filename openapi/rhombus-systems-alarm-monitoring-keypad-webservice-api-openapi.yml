@@ -205,6 +205,22 @@ paths:
       - Alarm Monitoring Keypad Webservice
 components:
   schemas:
+    Keypad_UpdateKeypadResponse:
+      type: object
+      description: Response object for updating keypad settings.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Keypad_GetKeypadsForOrgWSResponse:
       type: object
       description: Response object containing all registered keypads for an organization.
@@ -228,38 +244,17 @@ components:
           type:
           - string
           - 'null'
-    Keypad_UpdateKeypadResponse:
+    Keypad_UnregisterKeypadRequest:
       type: object
-      description: Response object for updating keypad settings.
+      description: Request object for unregistering a keypad.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        keypadUuid:
           type:
           - string
           - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Keypad_ClaimKeypadActivationTokenResponse:
-      type: object
-      description: Response object for claiming a keypad activation token.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     KeypadConfigType:
       type: object
       description: List of all registered keypads for the organization
@@ -383,65 +378,45 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Keypad_UnregisterKeypadRequest:
+    Keypad_UnregisterKeypadResponse:
       type: object
-      description: Request object for unregistering a keypad.
+      description: Response object for unregistering a keypad.
       properties:
-        keypadUuid:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    QualifiedAddressType:
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Keypad_GetKeypadsForLocationWSResponse:
       type: object
-      description: Qualified address information for the keypad location
+      description: Response object containing all registered keypads for a specific location.
       properties:
-        addressLine2:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          description: apt, suite, or unit
-        addressline1:
+        keypads:
+          type:
+          - array
+          - 'null'
+          description: List of all registered keypads for the specified location
+          items:
+            $ref: '#/components/schemas/KeypadConfigType'
+        warningMsg:
           type:
           - string
           - 'null'
-          description: street address
-        administrativeArea:
-          type:
-          - string
-          - 'null'
-          description: state
-        locality:
-          type:
-          - string
-          - 'null'
-          description: city
-        postalCode:
-          type:
-          - string
-          - 'null'
-          description: zip code
-        regionCode:
-          type:
-          - string
-          - 'null'
-          description: country
-    Keypad_GetKeypadsForOrgWSRequest:
-      type: object
-      description: Request object for getting all registered keypads for an organization.
-    KeypadConnectionStateEnum:
-      type: string
-      enum:
-      - ONLINE
-      - OFFLINE
-    KeypadPlatformEnum:
-      type: string
-      description: The keypad platform (IOS or ANDROID)
-      enum:
-      - ANDROID
-      - IOS
     Keypad_UpdateKeypadRequest:
       type: object
       description: Request object for updating keypad settings and configuration.
@@ -562,22 +537,11 @@ components:
           - 'null'
           description: Whether the video wall UUID has been updated
           example: false
-    Keypad_UnregisterKeypadResponse:
-      type: object
-      description: Response object for unregistering a keypad.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+    KeypadConnectionStateEnum:
+      type: string
+      enum:
+      - ONLINE
+      - OFFLINE
     Keypad_GetKeypadsForLocationWSRequest:
       type: object
       description: Request object for getting all registered keypads for a specific location.
@@ -589,9 +553,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Keypad_GetKeypadsForLocationWSResponse:
+    Keypad_ClaimKeypadActivationTokenResponse:
       type: object
-      description: Response object containing all registered keypads for a specific location.
+      description: Response object for claiming a keypad activation token.
       properties:
         error:
           type:
@@ -601,13 +565,6 @@ components:
           type:
           - string
           - 'null'
-        keypads:
-          type:
-          - array
-          - 'null'
-          description: List of all registered keypads for the specified location
-          items:
-            $ref: '#/components/schemas/KeypadConfigType'
         warningMsg:
           type:
           - string
@@ -647,6 +604,49 @@ components:
             '
           example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
           pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    Keypad_GetKeypadsForOrgWSRequest:
+      type: object
+      description: Request object for getting all registered keypads for an organization.
+    KeypadPlatformEnum:
+      type: string
+      description: The keypad platform (IOS or ANDROID)
+      enum:
+      - ANDROID
+      - IOS
+    QualifiedAddressType:
+      type: object
+      description: Qualified address information for the keypad location
+      properties:
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: apt, suite, or unit
+        addressline1:
+          type:
+          - string
+          - 'null'
+          description: street address
+        administrativeArea:
+          type:
+          - string
+          - 'null'
+          description: state
+        locality:
+          type:
+          - string
+          - 'null'
+          description: city
+        postalCode:
+          type:
+          - string
+          - 'null'
+          description: zip code
+        regionCode:
+          type:
+          - string
+          - 'null'
+          description: country
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

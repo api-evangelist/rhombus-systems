@@ -403,38 +403,17 @@ paths:
       - Alert Monitoring Webservice
 components:
   schemas:
-    EmergencyContact:
+    Alertmonitoring_LocationStatusWSRequest:
       type: object
+      description: Request to retrieve alarm monitoring status for a specific location.
       properties:
-        name:
+        locationUuid:
           type:
           - string
           - 'null'
-          description: The name of the emergency contact.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: The phone number for this emergency contact.
-      required:
-      - name
-      - phoneNumber
-    Alertmonitoring_DisableLocationResponse:
-      type: object
-      description: Response indicating the result of disabling alert monitoring for a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Alertmonitoring_CreatePinForNoonlightWSResponse:
       type: object
       description: Response containing the generated PIN for alert monitoring.
@@ -457,166 +436,70 @@ components:
           type:
           - string
           - 'null'
-    Alertmonitoring_DismissThreatCaseWSRequest:
+    Alertmonitoring_CancelThreatCaseWSResponse:
       type: object
-      description: Request to dismiss a threat case in alert monitoring.
+      description: Response indicating the result of canceling a threat case.
       properties:
-        uuid:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-      required:
-      - uuid
-    Alertmonitoring_NoonlightWSSettings:
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the threat case cancellation was successful
+          example: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    TripwireSettings:
       type: object
-      description: Web service settings for Noonlight integration with alert monitoring.
       properties:
-        acceptedTermsOfService:
-          type:
-          - boolean
-          - 'null'
-        badgeAuthDisablesMonitoring:
-          type:
-          - boolean
-          - 'null'
-        defaultDelay:
+        intervalSeconds:
           type:
           - integer
           - 'null'
           format: int32
-        defaultEmergencyContact:
-          $ref: '#/components/schemas/EmergencyContact'
-        defaultPromptTheme:
-          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
-        deleted:
-          type:
-          - boolean
-          - 'null'
-        disabledOnMs:
+          description: Window duration in seconds.
+          minimum: 1
+        threshold:
           type:
           - integer
           - 'null'
-          format: int64
-          description: The timestamp when Noonlight integration was disabled in milliseconds since epoch.
-        emergencyContacts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EmergencyResponseContactsScheduleType'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        enabledOnMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: The timestamp when Noonlight integration was enabled in milliseconds since epoch.
-        entryInstructions:
-          type:
-          - string
-          - 'null'
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        manualEscalationSettings:
-          $ref: '#/components/schemas/NoonlightScheduleType'
-        modifiedByEmail:
-          type:
-          - string
-          - 'null'
-        modifiedByIntegration:
+          format: int32
+          description: The number of events needed to trip.
+          minimum: 1
+      required:
+      - intervalSeconds
+      - threshold
+    Alertmonitoring_OrgStatusWSResponse:
+      type: object
+      description: Response containing alarm monitoring status for all locations in an organization.
+      properties:
+        error:
           type:
           - boolean
           - 'null'
-        modifiedByMetadata:
+        errorMsg:
           type:
           - string
           - 'null'
-        modifiedByUuid:
+        locationStatuses:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/MonitoringEnableStatus'
+          description: Map of location UUIDs to their monitoring enable status
+        warningMsg:
           type:
           - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        modifiedTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        monitoringMode:
-          $ref: '#/components/schemas/MonitoringModeEnum'
-        oneTimePauses:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NoonlightScheduleType'
-        oneTimeSchedules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NoonlightScheduleType'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        pins:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AlertMonitoringPinType'
-          uniqueItems: true
-        rules:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        schedules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NoonlightScheduleType'
-        status:
-          $ref: '#/components/schemas/MonitoringEnableStatus'
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        talkdownEnabled:
-          type:
-          - boolean
           - 'null'
     Alertmonitoring_DisableLocationRequest:
       type: object
@@ -664,34 +547,41 @@ components:
           - 'null'
           description: Custom PIN code to be created
           example: '5678'
-    NoonlightPromptThemeEnum:
-      type: string
-      enum:
-      - THREAT
-      - HUMAN
-    Alertmonitoring_CreatePinForNoonlightWSRequest:
+    Alertmonitoring_EscalateThreatCaseToAlarmWSRequest:
       type: object
-      description: Request to create a PIN for alert monitoring at a specific location.
+      description: Request to escalate a threat case to an alarm for alert monitoring.
       properties:
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the PIN
-          example: PIN for main entrance access
-        locationUuid:
+        uuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        name:
+      required:
+      - uuid
+    Alertmonitoring_CreateCustomPinForNoonlightWSResponse:
+      type: object
+      description: Response indicating the result of creating a custom PIN for alert monitoring.
+      properties:
+        alreadyExists:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the PIN already exists
+          example: false
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          description: Name for the PIN
-          example: Main Entrance PIN
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Alertmonitoring_LocationStatusWSResponse:
       type: object
       description: Response containing alarm monitoring status for a specific location.
@@ -710,82 +600,75 @@ components:
           type:
           - string
           - 'null'
-    Alertmonitoring_LocationStatusWSRequest:
+    NoonlightScheduleType:
       type: object
-      description: Request to retrieve alarm monitoring status for a specific location.
       properties:
-        locationUuid:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        escalationDelayMinutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        monitoredDevices:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        promptTheme:
+          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
+        promptTitle:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Alertmonitoring_OrgStatusWSRequest:
-      type: object
-      description: Request to retrieve alarm monitoring status for all locations in an organization.
-      properties:
-        includeDeleted:
+        sirenSettings:
           type:
-          - boolean
+          - object
           - 'null'
-          description: If true, includes alert monitoring settings that were soft deleted in the response.
-          example: false
-    Alertmonitoring_EnableLocationResponse:
-      type: object
-      description: Response indicating successful enabling of alert monitoring for a location.
-      properties:
-        error:
+          additionalProperties:
+            $ref: '#/components/schemas/AMSirenSettingsType'
+        triggerSet:
           type:
-          - boolean
+          - array
           - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Alertmonitoring_DeletePinForNoonlightWSRequest:
-      type: object
-      description: Request to delete a PIN for alert monitoring at a specific location.
-      properties:
-        locationUuid:
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        tripwire:
+          $ref: '#/components/schemas/TripwireSettings'
+        uuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        pin:
-          type:
-          - string
-          - 'null'
-          description: PIN code to be deleted
-          example: '1234'
-    Alertmonitoring_CancelThreatCaseWSResponse:
-      type: object
-      description: Response indicating the result of canceling a threat case.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        success:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates whether the threat case cancellation was successful
-          example: true
-        warningMsg:
-          type:
-          - string
-          - 'null'
+        verifiedThreatSiren:
+          $ref: '#/components/schemas/AMSirenSettingsType'
     ActivityEnum:
       type: string
       enum:
@@ -1009,18 +892,19 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    AlertMonitoringPinType:
+    Alertmonitoring_DeletePinForNoonlightWSResponse:
       type: object
+      description: Response indicating the result of deleting a PIN for alert monitoring.
       properties:
-        description:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        pin:
+        warningMsg:
           type:
           - string
           - 'null'
@@ -1041,44 +925,47 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Alertmonitoring_CreateCustomPinForNoonlightWSResponse:
+    AMSirenSettingsType:
       type: object
-      description: Response indicating the result of creating a custom PIN for alert monitoring.
       properties:
-        alreadyExists:
+        audioGateways:
           type:
-          - boolean
+          - array
           - 'null'
-          description: Indicates whether the PIN already exists
-          example: false
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Alertmonitoring_CancelThreatCaseWSRequest:
-      type: object
-      description: Request to cancel a threat case in alert monitoring.
-      properties:
-        uuid:
+          description: UUIDs of audio gateways used to play this siren.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clipUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The duration (in seconds) to loop the clip audio for the siren.
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of times to play the clip audio for the siren.
       required:
-      - uuid
-    Alertmonitoring_EscalateThreatCaseToAlarmWSResponse:
+      - audioGateways
+      - clipUuid
+    Alertmonitoring_DismissThreatCaseWSResponse:
       type: object
-      description: Response indicating the result of escalating a threat case to an alarm.
+      description: Response indicating the result of dismissing a threat case.
       properties:
         error:
           type:
@@ -1088,14 +975,145 @@ components:
           type:
           - string
           - 'null'
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the threat case dismissal was successful
+          example: true
         warningMsg:
           type:
           - string
           - 'null'
-    EmergencyResponseContactsScheduleType:
+    Alertmonitoring_EnableLocationRequest:
       type: object
+      description: Request to enable alert monitoring for a specific location.
       properties:
-        deviceUuids:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pin:
+          type:
+          - string
+          - 'null'
+          description: The PIN code required to enable alert monitoring.
+    Alertmonitoring_NoonlightWSSettings:
+      type: object
+      description: Web service settings for Noonlight integration with alert monitoring.
+      properties:
+        acceptedTermsOfService:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesMonitoring:
+          type:
+          - boolean
+          - 'null'
+        defaultDelay:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        defaultEmergencyContact:
+          $ref: '#/components/schemas/EmergencyContact'
+        defaultPromptTheme:
+          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        disabledOnMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The timestamp when Noonlight integration was disabled in milliseconds since epoch.
+        emergencyContacts:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmergencyResponseContactsScheduleType'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledOnMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The timestamp when Noonlight integration was enabled in milliseconds since epoch.
+        entryInstructions:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        manualEscalationSettings:
+          $ref: '#/components/schemas/NoonlightScheduleType'
+        modifiedByEmail:
+          type:
+          - string
+          - 'null'
+        modifiedByIntegration:
+          type:
+          - boolean
+          - 'null'
+        modifiedByMetadata:
+          type:
+          - string
+          - 'null'
+        modifiedByUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        modifiedTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        monitoringMode:
+          $ref: '#/components/schemas/MonitoringModeEnum'
+        oneTimePauses:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        oneTimeSchedules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pins:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AlertMonitoringPinType'
+          uniqueItems: true
+        rules:
           type:
           - array
           - 'null'
@@ -1106,44 +1124,93 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
-        emergencyContactList:
+          uniqueItems: true
+        schedules:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/EmergencyContact'
-        scheduleUuid:
+            $ref: '#/components/schemas/NoonlightScheduleType'
+        status:
+          $ref: '#/components/schemas/MonitoringEnableStatus'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        talkdownEnabled:
+          type:
+          - boolean
+          - 'null'
+    AlertMonitoringPinType:
+      type: object
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        pin:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_DismissThreatCaseWSRequest:
+      type: object
+      description: Request to dismiss a threat case in alert monitoring.
+      properties:
+        uuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Alertmonitoring_GetNoonlightSettingsForLocationWSResponse:
+      required:
+      - uuid
+    NoonlightPromptThemeEnum:
+      type: string
+      enum:
+      - THREAT
+      - HUMAN
+    Alertmonitoring_CreatePinForNoonlightWSRequest:
       type: object
-      description: Response containing alert monitoring settings for a specific location.
+      description: Request to create a PIN for alert monitoring at a specific location.
       properties:
-        alertMonitoringSettings:
-          $ref: '#/components/schemas/Alertmonitoring_NoonlightWSSettings'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        description:
           type:
           - string
           - 'null'
-        previousVersions:
-          type:
-          - array
-          - 'null'
-          description: List of previous versions of the alert monitoring settings
-          items:
-            $ref: '#/components/schemas/NoonlightVersionedSettingsType'
-        warningMsg:
+          description: Description of the PIN
+          example: PIN for main entrance access
+        locationUuid:
           type:
           - string
           - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name for the PIN
+          example: Main Entrance PIN
+    MonitoringModeEnum:
+      type: string
+      enum:
+      - MANUAL
+      - SCHEDULED
+      - UNKNOWN
     MonitoringEnableStatus:
       type: object
       description: Map of location UUIDs to their monitoring enable status
@@ -1188,9 +1255,9 @@ components:
             - integer
             - 'null'
             format: int64
-    Alertmonitoring_DismissThreatCaseWSResponse:
+    Alertmonitoring_EnableLocationResponse:
       type: object
-      description: Response indicating the result of dismissing a threat case.
+      description: Response indicating successful enabling of alert monitoring for a location.
       properties:
         error:
           type:
@@ -1200,52 +1267,10 @@ components:
           type:
           - string
           - 'null'
-        success:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates whether the threat case dismissal was successful
-          example: true
         warningMsg:
           type:
           - string
           - 'null'
-    Alertmonitoring_OrgStatusWSResponse:
-      type: object
-      description: Response containing alarm monitoring status for all locations in an organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        locationStatuses:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/MonitoringEnableStatus'
-          description: Map of location UUIDs to their monitoring enable status
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Alertmonitoring_EscalateThreatCaseToAlarmWSRequest:
-      type: object
-      description: Request to escalate a threat case to an alarm for alert monitoring.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-      required:
-      - uuid
     NoonlightVersionedSettingsType:
       type: object
       description: Updated alert monitoring settings configuration for the location
@@ -1380,89 +1405,9 @@ components:
           type:
           - boolean
           - 'null'
-    AMSirenSettingsType:
+    Alertmonitoring_EscalateThreatCaseToAlarmWSResponse:
       type: object
-      properties:
-        audioGateways:
-          type:
-          - array
-          - 'null'
-          description: UUIDs of audio gateways used to play this siren.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The duration (in seconds) to loop the clip audio for the siren.
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The number of times to play the clip audio for the siren.
-      required:
-      - audioGateways
-      - clipUuid
-    MonitoringModeEnum:
-      type: string
-      enum:
-      - MANUAL
-      - SCHEDULED
-      - UNKNOWN
-    Alertmonitoring_EnableLocationRequest:
-      type: object
-      description: Request to enable alert monitoring for a specific location.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        pin:
-          type:
-          - string
-          - 'null'
-          description: The PIN code required to enable alert monitoring.
-    TripwireSettings:
-      type: object
-      properties:
-        intervalSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Window duration in seconds.
-          minimum: 1
-        threshold:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The number of events needed to trip.
-          minimum: 1
-      required:
-      - intervalSeconds
-      - threshold
-    Alertmonitoring_DeletePinForNoonlightWSResponse:
-      type: object
-      description: Response indicating the result of deleting a PIN for alert monitoring.
+      description: Response indicating the result of escalating a threat case to an alarm.
       properties:
         error:
           type:
@@ -1476,44 +1421,42 @@ components:
           type:
           - string
           - 'null'
-    NoonlightScheduleType:
+    EmergencyContact:
       type: object
       properties:
-        audioGateways:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        escalationDelayMinutes:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        monitoredDevices:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        promptTheme:
-          $ref: '#/components/schemas/NoonlightPromptThemeEnum'
-        promptTitle:
+        name:
           type:
           - string
           - 'null'
+          description: The name of the emergency contact.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for this emergency contact.
+      required:
+      - name
+      - phoneNumber
+    EmergencyResponseContactsScheduleType:
+      type: object
+      properties:
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        emergencyContactList:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmergencyContact'
         scheduleUuid:
           type:
           - string
@@ -1521,21 +1464,37 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        sirenSettings:
+    Alertmonitoring_DeletePinForNoonlightWSRequest:
+      type: object
+      description: Request to delete a PIN for alert monitoring at a specific location.
+      properties:
+        locationUuid:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/AMSirenSettingsType'
-        triggerSet:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        pin:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        tripwire:
-          $ref: '#/components/schemas/TripwireSettings'
+          description: PIN code to be deleted
+          example: '1234'
+    Alertmonitoring_OrgStatusWSRequest:
+      type: object
+      description: Request to retrieve alarm monitoring status for all locations in an organization.
+      properties:
+        includeDeleted:
+          type:
+          - boolean
+          - 'null'
+          description: If true, includes alert monitoring settings that were soft deleted in the response.
+          example: false
+    Alertmonitoring_CancelThreatCaseWSRequest:
+      type: object
+      description: Request to cancel a threat case in alert monitoring.
+      properties:
         uuid:
           type:
           - string
@@ -1543,8 +1502,49 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        verifiedThreatSiren:
-          $ref: '#/components/schemas/AMSirenSettingsType'
+      required:
+      - uuid
+    Alertmonitoring_DisableLocationResponse:
+      type: object
+      description: Response indicating the result of disabling alert monitoring for a location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Alertmonitoring_GetNoonlightSettingsForLocationWSResponse:
+      type: object
+      description: Response containing alert monitoring settings for a specific location.
+      properties:
+        alertMonitoringSettings:
+          $ref: '#/components/schemas/Alertmonitoring_NoonlightWSSettings'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        previousVersions:
+          type:
+          - array
+          - 'null'
+          description: List of previous versions of the alert monitoring settings
+          items:
+            $ref: '#/components/schemas/NoonlightVersionedSettingsType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
