@@ -311,6 +311,118 @@ paths:
       - OAuth Webservice
 components:
   schemas:
+    NewCookie:
+      type:
+      - object
+      - 'null'
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+        domain:
+          type:
+          - string
+          - 'null'
+        expiry:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        httpOnly:
+          type:
+          - boolean
+          - 'null'
+        maxAge:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+        sameSite:
+          $ref: '#/components/schemas/JakartaSameSiteEnum'
+        secure:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Oauth_GetApplicationByClientIdWSResponse:
+      type: object
+      description: Response object containing OAuth application details.
+      properties:
+        application:
+          $ref: '#/components/schemas/OAuthApplication'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Oauth_OAuthApplicationWSResponse:
+      type: object
+      description: Response object containing OAuth application credentials.
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        clientSecret:
+          type:
+          - string
+          - 'null'
+          description: OAuth client secret
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    StatusType:
+      type:
+      - object
+      - 'null'
+      properties:
+        family:
+          $ref: '#/components/schemas/JakartaFamilyEnum'
+        reasonPhrase:
+          type:
+          - string
+          - 'null'
+        statusCode:
+          type:
+          - integer
+          - 'null'
+          format: int32
     JakartaFamilyEnum:
       type: string
       enum:
@@ -320,78 +432,6 @@ components:
       - CLIENT_ERROR
       - SERVER_ERROR
       - OTHER
-    MediaType:
-      type: object
-      properties:
-        charset:
-          type:
-          - object
-          - 'null'
-          properties:
-            registered:
-              type:
-              - boolean
-              - 'null'
-        concrete:
-          type:
-          - boolean
-          - 'null'
-        parameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        qualityValue:
-          type:
-          - number
-          - 'null'
-          format: double
-        subtype:
-          type:
-          - string
-          - 'null'
-        subtypeSuffix:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        wildcardSubtype:
-          type:
-          - boolean
-          - 'null'
-        wildcardType:
-          type:
-          - boolean
-          - 'null'
-    Oauth_GetAllApplicationsForOrgWSResponse:
-      type: object
-      description: Response object containing all OAuth applications for an organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        oauthApplications:
-          type:
-          - array
-          - 'null'
-          description: List of OAuth applications for the organization
-          items:
-            $ref: '#/components/schemas/OAuthApplication'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     Response:
       type:
       - object
@@ -585,146 +625,58 @@ components:
               type:
               - boolean
               - 'null'
-    BaseApiResponse:
+    MediaType:
       type: object
-      description: Base response object denoting success, or failure with a reason, for an endpoint.
       properties:
-        error:
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        concrete:
           type:
           - boolean
           - 'null'
-        errorMsg:
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        qualityValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        subtype:
           type:
           - string
           - 'null'
-        warningMsg:
+        subtypeSuffix:
           type:
           - string
           - 'null'
-    Oauth_GetApplicationByClientIdWSResponse:
-      type: object
-      description: Response object containing OAuth application details.
-      properties:
-        application:
-          $ref: '#/components/schemas/OAuthApplication'
-        error:
+        type:
+          type:
+          - string
+          - 'null'
+        wildcardSubtype:
           type:
           - boolean
           - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Oauth_OAuthApplicationWSRequest:
-      type: object
-      description: Request object for OAuth application management.
-      properties:
-        clientId:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        contactEmail:
-          type:
-          - string
-          - 'null'
-          description: Contact email for the OAuth application
-          example: admin@myapp.com
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the OAuth application
-          example: Integration app for accessing Rhombus API
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the OAuth application
-          example: My Integration App
-        redirectUri:
-          type:
-          - string
-          - 'null'
-          description: OAuth redirect URI
-          example: https://myapp.com/oauth/callback
-        tokenEndpointAuthMethod:
-          type:
-          - string
-          - 'null'
-          description: OAuth token endpoint auth method. 'none' registers a PUBLIC (PKCE-only) client with no secret; omit or 'client_secret_basic'/'client_secret_post' for a confidential client.
-          example: none
-    Oauth_OAuthApplicationWSResponse:
-      type: object
-      description: Response object containing OAuth application credentials.
-      properties:
-        clientId:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        clientSecret:
-          type:
-          - string
-          - 'null'
-          description: OAuth client secret
-        error:
+        wildcardType:
           type:
           - boolean
           - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    UriBuilder:
-      type:
-      - object
-      - 'null'
-    JakartaSameSiteEnum:
-      type: string
-      enum:
-      - NONE
-      - LAX
-      - STRICT
-    StatusType:
-      type:
-      - object
-      - 'null'
-      properties:
-        family:
-          $ref: '#/components/schemas/JakartaFamilyEnum'
-        reasonPhrase:
-          type:
-          - string
-          - 'null'
-        statusCode:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Oauth_GetApplicationByClientIdWSRequest:
+    Oauth_GetAllApplicationsForOrgWSRequest:
       type: object
-      description: Request object for getting OAuth application by client ID.
-      properties:
-        clientId:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+      description: Request object for getting all OAuth applications for an organization.
     Link:
       type:
       - object
@@ -765,56 +717,6 @@ components:
           format: uri
         uriBuilder:
           $ref: '#/components/schemas/UriBuilder'
-    NewCookie:
-      type:
-      - object
-      - 'null'
-      properties:
-        comment:
-          type:
-          - string
-          - 'null'
-        domain:
-          type:
-          - string
-          - 'null'
-        expiry:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        httpOnly:
-          type:
-          - boolean
-          - 'null'
-        maxAge:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        name:
-          type:
-          - string
-          - 'null'
-        path:
-          type:
-          - string
-          - 'null'
-        sameSite:
-          $ref: '#/components/schemas/JakartaSameSiteEnum'
-        secure:
-          type:
-          - boolean
-          - 'null'
-        value:
-          type:
-          - string
-          - 'null'
-        version:
-          type:
-          - integer
-          - 'null'
-          format: int32
     EntityTag:
       type:
       - object
@@ -828,9 +730,6 @@ components:
           type:
           - boolean
           - 'null'
-    Oauth_GetAllApplicationsForOrgWSRequest:
-      type: object
-      description: Request object for getting all OAuth applications for an organization.
     OAuthApplication:
       type: object
       description: OAuth application details
@@ -877,6 +776,107 @@ components:
           type:
           - string
           - 'null'
+    BaseApiResponse:
+      type: object
+      description: Base response object denoting success, or failure with a reason, for an endpoint.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Oauth_GetApplicationByClientIdWSRequest:
+      type: object
+      description: Request object for getting OAuth application by client ID.
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    JakartaSameSiteEnum:
+      type: string
+      enum:
+      - NONE
+      - LAX
+      - STRICT
+    Oauth_GetAllApplicationsForOrgWSResponse:
+      type: object
+      description: Response object containing all OAuth applications for an organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        oauthApplications:
+          type:
+          - array
+          - 'null'
+          description: List of OAuth applications for the organization
+          items:
+            $ref: '#/components/schemas/OAuthApplication'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    UriBuilder:
+      type:
+      - object
+      - 'null'
+    Oauth_OAuthApplicationWSRequest:
+      type: object
+      description: Request object for OAuth application management.
+      properties:
+        clientId:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        contactEmail:
+          type:
+          - string
+          - 'null'
+          description: Contact email for the OAuth application
+          example: admin@myapp.com
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the OAuth application
+          example: Integration app for accessing Rhombus API
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the OAuth application
+          example: My Integration App
+        redirectUri:
+          type:
+          - string
+          - 'null'
+          description: OAuth redirect URI
+          example: https://myapp.com/oauth/callback
+        tokenEndpointAuthMethod:
+          type:
+          - string
+          - 'null'
+          description: OAuth token endpoint auth method. 'none' registers a PUBLIC (PKCE-only) client with no secret; omit or 'client_secret_basic'/'client_secret_post' for a confidential client.
+          example: none
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

@@ -285,98 +285,6 @@ components:
           - integer
           - 'null'
           format: int64
-    MediaType:
-      type: object
-      properties:
-        charset:
-          type:
-          - object
-          - 'null'
-          properties:
-            registered:
-              type:
-              - boolean
-              - 'null'
-        concrete:
-          type:
-          - boolean
-          - 'null'
-        parameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        qualityValue:
-          type:
-          - number
-          - 'null'
-          format: double
-        subtype:
-          type:
-          - string
-          - 'null'
-        subtypeSuffix:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        wildcardSubtype:
-          type:
-          - boolean
-          - 'null'
-        wildcardType:
-          type:
-          - boolean
-          - 'null'
-    FormDataContentDisposition:
-      type: object
-      properties:
-        creationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        fileName:
-          type:
-          - string
-          - 'null'
-        modificationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        name:
-          type:
-          - string
-          - 'null'
-        parameters:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        readDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        size:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          type:
-          - string
-          - 'null'
     ParameterizedHeader:
       type:
       - object
@@ -394,6 +302,102 @@ components:
           type:
           - string
           - 'null'
+    Help_TriageDeviceWSRequest:
+      type: object
+      description: Request object for triaging device connection/recording issues.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        startDateSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start date in seconds for triage analysis
+          example: 1642233600
+    Help_TriageDeviceWSResponse:
+      type: object
+      description: Response object containing device triage diagnostic information.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        firmwareUpdates:
+          type:
+          - array
+          - 'null'
+          description: List of firmware update diagnostic events
+          items:
+            $ref: '#/components/schemas/DiagnosticEventType'
+        hardwareFailureEvents:
+          type:
+          - array
+          - 'null'
+          description: List of hardware failure diagnostic events
+          items:
+            $ref: '#/components/schemas/DiagnosticEventType'
+        message:
+          type:
+          - string
+          - 'null'
+          description: Triage analysis message
+          example: Device appears to be functioning normally
+        presenceWindows:
+          type:
+          - array
+          - 'null'
+          description: List of device presence time windows
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        suggestedArticles:
+          type:
+          - array
+          - 'null'
+          description: List of suggested help articles for the device issue
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of suggested help articles for the device issue
+        uptimeWindows:
+          type:
+          - array
+          - 'null'
+          description: List of device uptime time windows
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Help_SendFeedbackWSRequest:
+      type: object
+      description: Request object for sending system feedback.
+      properties:
+        feedback:
+          type:
+          - string
+          - 'null'
+          description: Feedback message about the system
+          example: The new interface is much more user-friendly!
+    Providers:
+      type:
+      - object
+      - 'null'
+    MessageBodyWorkers:
+      type:
+      - object
+      - 'null'
     Help_CreateTicketWSRequest:
       type: object
       description: Request object for creating a support ticket.
@@ -444,27 +448,460 @@ components:
           - 'null'
           description: Subject of the support ticket
           example: Camera connectivity issue
-    FormDataBodyPart:
+    Help_TicketInformation:
+      type: object
+      description: Information about a support ticket.
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the ticket was created
+          example: '2024-01-15T10:30:00Z'
+        id:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Unique identifier for the support ticket
+          example: 12345
+        status:
+          type:
+          - string
+          - 'null'
+          description: Current status of the support ticket
+          example: Open
+        subject:
+          type:
+          - string
+          - 'null'
+          description: Subject of the support ticket
+          example: Camera connectivity issue
+    ContentDisposition:
+      type: object
+      properties:
+        attachment:
+          type:
+          - boolean
+          - 'null'
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        filename:
+          type:
+          - string
+          - 'null'
+        formData:
+          type:
+          - boolean
+          - 'null'
+        inline:
+          type:
+          - boolean
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    Help_ShippingAddress:
+      type: object
+      description: Shipping address information for RMA returns.
+      properties:
+        returnAddressCity:
+          type:
+          - string
+          - 'null'
+          description: City for return shipping
+          example: San Francisco
+        returnAddressCountry:
+          type:
+          - string
+          - 'null'
+          description: Country for return shipping
+          example: United States
+        returnAddressPostalCode:
+          type:
+          - string
+          - 'null'
+          description: Postal code for return shipping
+          example: '94105'
+        returnAddressState:
+          type:
+          - string
+          - 'null'
+          description: State/province for return shipping
+          example: CA
+        returnAddressStreet:
+          type:
+          - string
+          - 'null'
+          description: Street address for return shipping
+          example: 123 Main Street
+    FormDataContentDisposition:
+      type: object
+      properties:
+        creationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        fileName:
+          type:
+          - string
+          - 'null'
+        modificationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          type:
+          - string
+          - 'null'
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        readDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        size:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        type:
+          type:
+          - string
+          - 'null'
+    DiagnosticEventType:
+      type: object
+      description: List of diagnostic events
+      properties:
+        activity:
+          $ref: '#/components/schemas/DiagnosticActivityEnum'
+        apMac:
+          type:
+          - string
+          - 'null'
+        asi:
+          type:
+          - string
+          - 'null'
+        componentCompositeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        componentUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        connectionUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        defaultInterface:
+          type:
+          - string
+          - 'null'
+        defaultInterfaceMac:
+          type:
+          - string
+          - 'null'
+        deviceName:
+          type:
+          - string
+          - 'null'
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        firmwareVersion:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        reportingDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rssi:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ssid:
+          type:
+          - string
+          - 'null'
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        wifiSignalStrength:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Help_CreateTicketWSResponse:
+      type: object
+      description: Response object for creating a support ticket.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failureReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for failure if ticket creation was unsuccessful
+          example: Invalid email address
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the ticket creation was successful
+          example: true
+        ticketId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ID of the created support ticket
+          example: 12345
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Help_GetOpenTicketsV2WSResponse:
+      type: object
+      description: Response object containing open support tickets V2 with organization and user tickets.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        tickets:
+          type:
+          - array
+          - 'null'
+          description: List of organization support tickets
+          items:
+            $ref: '#/components/schemas/Help_TicketInformation'
+        userTickets:
+          type:
+          - array
+          - 'null'
+          description: List of user-specific support tickets
+          items:
+            $ref: '#/components/schemas/Help_TicketInformation'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Help_ProcessRMAWSRequest:
+      type: object
+      description: Request object for processing a Return Merchandise Authorization (RMA).
+      properties:
+        contactName:
+          type:
+          - string
+          - 'null'
+          description: Contact name for the RMA
+          example: John Doe
+        contactPhoneNumber:
+          type:
+          - string
+          - 'null'
+          description: Contact phone number for the RMA
+          example: +1-555-123-4567
+        deviceName:
+          type:
+          - string
+          - 'null'
+          description: Name of the device for RMA
+          example: Rhombus Camera Pro
+        problem:
+          type:
+          - string
+          - 'null'
+          description: Description of the problem with the device
+          example: Camera not recording properly
+        returnShippingAddress:
+          $ref: '#/components/schemas/Help_ShippingAddress'
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the device
+          example: RHCAM123456789
+    Help_SendFeedbackWSResponse:
+      type: object
+      description: Response object for sending system feedback.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failureReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for failure if feedback sending was unsuccessful
+          example: Invalid feedback content
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the feedback was sent successfully
+          example: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Help_ProcessRMAWSResponse:
+      type: object
+      description: Response object for processing a Return Merchandise Authorization (RMA).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failureReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for failure if RMA processing was unsuccessful
+          example: Invalid serial number
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the RMA processing was successful
+          example: true
+        ticketId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: ID of the RMA ticket created
+          example: 12345
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    FormDataMultiPart:
       type:
       - object
       - 'null'
       properties:
-        content:
+        bodyParts:
           type:
-          - object
+          - array
           - 'null'
+          items:
+            $ref: '#/components/schemas/BodyPart'
         contentDisposition:
           $ref: '#/components/schemas/ContentDisposition'
         entity:
           type:
           - object
           - 'null'
-        fileName:
+        fields:
           type:
-          - string
+          - object
           - 'null'
-        formDataContentDisposition:
-          $ref: '#/components/schemas/FormDataContentDisposition'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/FormDataBodyPart'
         headers:
           type:
           - object
@@ -486,10 +923,6 @@ components:
           $ref: '#/components/schemas/MediaType'
         messageBodyWorkers:
           $ref: '#/components/schemas/MessageBodyWorkers'
-        name:
-          type:
-          - string
-          - 'null'
         parameterizedHeaders:
           type:
           - object
@@ -509,42 +942,6 @@ components:
           $ref: '#/components/schemas/MultiPart'
         providers:
           $ref: '#/components/schemas/Providers'
-        simple:
-          type:
-          - boolean
-          - 'null'
-        value:
-          type:
-          - string
-          - 'null'
-    Help_GetOpenTicketsWSRequest:
-      type: object
-      description: Request object for retrieving open support tickets with pagination.
-      properties:
-        pageNumber:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Page number used for paginated response. If empty, the search will return the first page.
-    Help_TriageDeviceWSRequest:
-      type: object
-      description: Request object for triaging device connection/recording issues.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        startDateSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start date in seconds for triage analysis
-          example: 1642233600
     BodyPart:
       type:
       - object
@@ -596,40 +993,54 @@ components:
           $ref: '#/components/schemas/MultiPart'
         providers:
           $ref: '#/components/schemas/Providers'
-    Help_CreateTicketWSResponse:
+    MediaType:
       type: object
-      description: Response object for creating a support ticket.
       properties:
-        error:
+        charset:
+          type:
+          - object
+          - 'null'
+          properties:
+            registered:
+              type:
+              - boolean
+              - 'null'
+        concrete:
           type:
           - boolean
           - 'null'
-        errorMsg:
+        parameters:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        qualityValue:
+          type:
+          - number
+          - 'null'
+          format: double
+        subtype:
           type:
           - string
           - 'null'
-        failureReason:
+        subtypeSuffix:
           type:
           - string
           - 'null'
-          description: Reason for failure if ticket creation was unsuccessful
-          example: Invalid email address
-        success:
+        type:
+          type:
+          - string
+          - 'null'
+        wildcardSubtype:
           type:
           - boolean
           - 'null'
-          description: Whether the ticket creation was successful
-          example: true
-        ticketId:
+        wildcardType:
           type:
-          - integer
-          - 'null'
-          format: int32
-          description: ID of the created support ticket
-          example: 12345
-        warningMsg:
-          type:
-          - string
+          - boolean
           - 'null'
     DiagnosticActivityEnum:
       type: string
@@ -764,217 +1175,6 @@ components:
       - LOCAL_RECORDING_INTERRUPTED
       - LOCAL_RECORDING_RECOVERED
       - UNKNOWN
-    ContentDisposition:
-      type: object
-      properties:
-        attachment:
-          type:
-          - boolean
-          - 'null'
-        charset:
-          type:
-          - object
-          - 'null'
-          properties:
-            registered:
-              type:
-              - boolean
-              - 'null'
-        creationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        filename:
-          type:
-          - string
-          - 'null'
-        formData:
-          type:
-          - boolean
-          - 'null'
-        inline:
-          type:
-          - boolean
-          - 'null'
-        modificationDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        name:
-          type:
-          - string
-          - 'null'
-        readDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        size:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        type:
-          type:
-          - string
-          - 'null'
-    Help_GetOpenTicketsV2WSRequest:
-      type: object
-      description: Request object for retrieving open support tickets V2 with time range filtering.
-      properties:
-        endTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering tickets
-          example: 1642319999999
-        startTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for filtering tickets
-          example: 1642233600000
-    Help_SendFeedbackWSResponse:
-      type: object
-      description: Response object for sending system feedback.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        failureReason:
-          type:
-          - string
-          - 'null'
-          description: Reason for failure if feedback sending was unsuccessful
-          example: Invalid feedback content
-        success:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the feedback was sent successfully
-          example: true
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Help_SendFeedbackWSRequest:
-      type: object
-      description: Request object for sending system feedback.
-      properties:
-        feedback:
-          type:
-          - string
-          - 'null'
-          description: Feedback message about the system
-          example: The new interface is much more user-friendly!
-    Providers:
-      type:
-      - object
-      - 'null'
-    Help_ProcessRMAWSResponse:
-      type: object
-      description: Response object for processing a Return Merchandise Authorization (RMA).
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        failureReason:
-          type:
-          - string
-          - 'null'
-          description: Reason for failure if RMA processing was unsuccessful
-          example: Invalid serial number
-        success:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the RMA processing was successful
-          example: true
-        ticketId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: ID of the RMA ticket created
-          example: 12345
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Help_TriageDeviceWSResponse:
-      type: object
-      description: Response object containing device triage diagnostic information.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        firmwareUpdates:
-          type:
-          - array
-          - 'null'
-          description: List of firmware update diagnostic events
-          items:
-            $ref: '#/components/schemas/DiagnosticEventType'
-        hardwareFailureEvents:
-          type:
-          - array
-          - 'null'
-          description: List of hardware failure diagnostic events
-          items:
-            $ref: '#/components/schemas/DiagnosticEventType'
-        message:
-          type:
-          - string
-          - 'null'
-          description: Triage analysis message
-          example: Device appears to be functioning normally
-        presenceWindows:
-          type:
-          - array
-          - 'null'
-          description: List of device presence time windows
-          items:
-            $ref: '#/components/schemas/TimeWindowSeconds'
-        suggestedArticles:
-          type:
-          - array
-          - 'null'
-          description: List of suggested help articles for the device issue
-          items:
-            type:
-            - string
-            - 'null'
-            description: List of suggested help articles for the device issue
-        uptimeWindows:
-          type:
-          - array
-          - 'null'
-          description: List of device uptime time windows
-          items:
-            $ref: '#/components/schemas/TimeWindowSeconds'
-        warningMsg:
-          type:
-          - string
-          - 'null'
     DeviceTypeEnum:
       type: string
       enum:
@@ -993,66 +1193,107 @@ components:
       - NVR
       - ROBOT
       - UNKNOWN
-    Help_GetOpenTicketsV2WSResponse:
+    Help_GetOpenTicketsV2WSRequest:
       type: object
-      description: Response object containing open support tickets V2 with organization and user tickets.
+      description: Request object for retrieving open support tickets V2 with time range filtering.
       properties:
-        error:
+        endTimeMs:
           type:
-          - boolean
+          - integer
           - 'null'
-        errorMsg:
+          format: int64
+          description: End time in milliseconds for filtering tickets
+          example: 1642319999999
+        startTimeMs:
           type:
-          - string
+          - integer
           - 'null'
-        tickets:
-          type:
-          - array
-          - 'null'
-          description: List of organization support tickets
-          items:
-            $ref: '#/components/schemas/Help_TicketInformation'
-        userTickets:
-          type:
-          - array
-          - 'null'
-          description: List of user-specific support tickets
-          items:
-            $ref: '#/components/schemas/Help_TicketInformation'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Help_TicketInformation:
+          format: int64
+          description: Start time in milliseconds for filtering tickets
+          example: 1642233600000
+    Help_GetOpenTicketsWSRequest:
       type: object
-      description: Information about a support ticket.
+      description: Request object for retrieving open support tickets with pagination.
       properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the ticket was created
-          example: '2024-01-15T10:30:00Z'
-        id:
+        pageNumber:
           type:
           - integer
           - 'null'
           format: int32
-          description: Unique identifier for the support ticket
-          example: 12345
-        status:
+          description: Page number used for paginated response. If empty, the search will return the first page.
+    FormDataBodyPart:
+      type:
+      - object
+      - 'null'
+      properties:
+        content:
+          type:
+          - object
+          - 'null'
+        contentDisposition:
+          $ref: '#/components/schemas/ContentDisposition'
+        entity:
+          type:
+          - object
+          - 'null'
+        fileName:
           type:
           - string
           - 'null'
-          description: Current status of the support ticket
-          example: Open
-        subject:
+        formDataContentDisposition:
+          $ref: '#/components/schemas/FormDataContentDisposition'
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        messageBodyWorkers:
+          $ref: '#/components/schemas/MessageBodyWorkers'
+        name:
           type:
           - string
           - 'null'
-          description: Subject of the support ticket
-          example: Camera connectivity issue
+        parameterizedHeaders:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ParameterizedHeader'
+          properties:
+            empty:
+              type:
+              - boolean
+              - 'null'
+        parent:
+          $ref: '#/components/schemas/MultiPart'
+        providers:
+          $ref: '#/components/schemas/Providers'
+        simple:
+          type:
+          - boolean
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
     MultiPart:
       type:
       - object
@@ -1108,144 +1349,6 @@ components:
               - 'null'
         providers:
           $ref: '#/components/schemas/Providers'
-    Help_ShippingAddress:
-      type: object
-      description: Shipping address information for RMA returns.
-      properties:
-        returnAddressCity:
-          type:
-          - string
-          - 'null'
-          description: City for return shipping
-          example: San Francisco
-        returnAddressCountry:
-          type:
-          - string
-          - 'null'
-          description: Country for return shipping
-          example: United States
-        returnAddressPostalCode:
-          type:
-          - string
-          - 'null'
-          description: Postal code for return shipping
-          example: '94105'
-        returnAddressState:
-          type:
-          - string
-          - 'null'
-          description: State/province for return shipping
-          example: CA
-        returnAddressStreet:
-          type:
-          - string
-          - 'null'
-          description: Street address for return shipping
-          example: 123 Main Street
-    MessageBodyWorkers:
-      type:
-      - object
-      - 'null'
-    DiagnosticEventType:
-      type: object
-      description: List of diagnostic events
-      properties:
-        activity:
-          $ref: '#/components/schemas/DiagnosticActivityEnum'
-        apMac:
-          type:
-          - string
-          - 'null'
-        asi:
-          type:
-          - string
-          - 'null'
-        componentCompositeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        componentUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        connectionUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        defaultInterface:
-          type:
-          - string
-          - 'null'
-        defaultInterfaceMac:
-          type:
-          - string
-          - 'null'
-        deviceName:
-          type:
-          - string
-          - 'null'
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        firmwareVersion:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        reportingDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        rssi:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ssid:
-          type:
-          - string
-          - 'null'
-        timestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        wifiSignalStrength:
-          type:
-          - integer
-          - 'null'
-          format: int32
     Help_GetOpenTicketsWSResponse:
       type: object
       description: Response object containing open support tickets with pagination information.
@@ -1287,109 +1390,6 @@ components:
           type:
           - string
           - 'null'
-    FormDataMultiPart:
-      type:
-      - object
-      - 'null'
-      properties:
-        bodyParts:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BodyPart'
-        contentDisposition:
-          $ref: '#/components/schemas/ContentDisposition'
-        entity:
-          type:
-          - object
-          - 'null'
-        fields:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/FormDataBodyPart'
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          properties:
-            empty:
-              type:
-              - boolean
-              - 'null'
-        mediaType:
-          $ref: '#/components/schemas/MediaType'
-        messageBodyWorkers:
-          $ref: '#/components/schemas/MessageBodyWorkers'
-        parameterizedHeaders:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ParameterizedHeader'
-          properties:
-            empty:
-              type:
-              - boolean
-              - 'null'
-        parent:
-          $ref: '#/components/schemas/MultiPart'
-        providers:
-          $ref: '#/components/schemas/Providers'
-    Help_ProcessRMAWSRequest:
-      type: object
-      description: Request object for processing a Return Merchandise Authorization (RMA).
-      properties:
-        contactName:
-          type:
-          - string
-          - 'null'
-          description: Contact name for the RMA
-          example: John Doe
-        contactPhoneNumber:
-          type:
-          - string
-          - 'null'
-          description: Contact phone number for the RMA
-          example: +1-555-123-4567
-        deviceName:
-          type:
-          - string
-          - 'null'
-          description: Name of the device for RMA
-          example: Rhombus Camera Pro
-        problem:
-          type:
-          - string
-          - 'null'
-          description: Description of the problem with the device
-          example: Camera not recording properly
-        returnShippingAddress:
-          $ref: '#/components/schemas/Help_ShippingAddress'
-        serialNumber:
-          type:
-          - string
-          - 'null'
-          description: Serial number of the device
-          example: RHCAM123456789
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

@@ -168,303 +168,6 @@ paths:
       - Logistics Webservice
 components:
   schemas:
-    Internal_GetActiveRMAsWSResponse:
-      type: object
-      properties:
-        activeRmasList:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Logistics_GetRMAsWSResponse:
-      type: object
-      description: Response object containing RMAs (Return Merchandise Authorizations).
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        rmaList:
-          type:
-          - array
-          - 'null'
-          description: List of RMAs (Return Merchandise Authorizations)
-          items:
-            $ref: '#/components/schemas/RMAType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Logistics_GetRMAsWSRequest:
-      type: object
-      description: Request object for getting RMAs (Return Merchandise Authorizations).
-    RMAStatusEnum:
-      type: string
-      enum:
-      - INITIATED
-      - PENDING
-      - APPROVED
-      - INPROGRESS
-      - COMPLETE
-      - RETURN
-      - STOLEN
-      - OPERATIONAL
-      - FULFILLMENT_ERROR
-    Internal_GetActiveRMAsWSRequest:
-      type: object
-    ErrorCodeOrMessageEnum:
-      type: string
-      enum:
-      - BADGE_READER_UNKNOWN
-      - DEAD_OR_MISSING_BATTERY
-      - DOORBELL_BUTTON_ISSUE
-      - ERROR_2
-      - ERROR_4
-      - ERROR_5
-      - ERROR_24
-      - ERROR_28
-      - ERROR_30
-      - ERROR_39
-      - ERROR_74
-      - ERROR_84
-      - FOREIGN_HARDWARE
-      - BAD_SD_BLOCKS
-      - NEVER_LEFT_BUSY_STATE
-      - HARDWARE_DAMAGE
-      - HEAVY_HARDWARE_DAMAGE
-      - WATER_DAMAGE
-      - VIDEO_HARDWARE_FAILURE
-      - ENCRYPTED_CONTAINER_FAILURE_CREATE
-      - ENCRYPTED_CONTAINER_FAILURE_OPEN
-      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
-      - LIGHT_SENSOR
-      - SD_CARD_UNKOWN
-      - SD_CARD_READER_BROKEN
-      - POWER_ISSUES
-      - RS485_ISSUE
-      - CUT_FILTER
-      - QUALITY_OR_PERFORMANCE
-      - NETWORK_ISSUES
-      - UNKNOWN
-      - ILLEGIBLE_SERIAL_COMM
-      - NO_SERIAL_COMM
-      - COSMETIC_DAMAGE
-      - FIRMWARE_REFLASH_REQUIRED
-      - IR_RING_OVERHEATED
-      - REGISTERED_SENSOR
-      - UNDISCOVERED_ISSUE
-      - FOCUS_ISSUES
-      - POTENTIAL_MANUFACTURING_DEFECT
-      - NO_FAULT_FOUND
-      - FDT_COMMAND_LINE_ERROR
-      - KERNEL_PANIC
-      - GET_DTB_FAILED
-      - BOOTS_TO_AMBOOT
-    ShipmentMethodEnum:
-      type: string
-      enum:
-      - GROUND
-      - EXPEDITED
-      - OVERNIGHT
-    CustomerShipmentType:
-      type: object
-      description: List of customer shipments
-      properties:
-        ait-aitTrackingNumber:
-          type:
-          - string
-          - 'null'
-        ait-carrierTrackingNumber:
-          type:
-          - string
-          - 'null'
-        ait-depositorOrderNumber:
-          type:
-          - string
-          - 'null'
-        ait-destinationAddress:
-          type:
-          - string
-          - 'null'
-        ait-isIngramDistributorShipment:
-          type:
-          - boolean
-          - 'null'
-        ait-shipmentDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        ait-shippedItems:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ShippedItemType'
-        interchangeControlNumber:
-          type:
-          - string
-          - 'null'
-        lastStateUpdateSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        rhombus-additionalEmails:
-          type:
-          - string
-          - 'null'
-        rhombus-chosenCarrierName:
-          type:
-          - string
-          - 'null'
-        rhombus-claimKeyToLicenseMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-            uniqueItems: true
-        rhombus-claimKeyToLicenseMapV2:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/SalesforceLicenseStartDateTimeAndEndDateTime'
-        rhombus-customerEmails:
-          type:
-          - string
-          - 'null'
-        rhombus-customerName:
-          type:
-          - string
-          - 'null'
-        rhombus-orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        rhombus-partnerOrgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        rhombus-purchaseOrderNumber:
-          type:
-          - string
-          - 'null'
-        rhombus-rmaReturnTrackingNumber:
-          type:
-          - string
-          - 'null'
-        rhombus-rmaUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        rhombus-rmaUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        rhombus-salesForceOpportunityId:
-          type:
-          - string
-          - 'null'
-        rhombus-zendeskTicketNumber:
-          type:
-          - string
-          - 'null'
-        shipmentCategory:
-          $ref: '#/components/schemas/CustomerShipmentCategoryEnum'
-        shipmentEmailState:
-          $ref: '#/components/schemas/CustomerShipmentEmailStateEnum'
-        shipmentState:
-          $ref: '#/components/schemas/CustomerShipmentStateEnum'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    RMARequest:
-      type: object
-      properties:
-        formSubmitted:
-          type:
-          - boolean
-          - 'null'
-        requestUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        rmaOpportunityId:
-          type:
-          - string
-          - 'null'
-        salesforceAccountId:
-          type:
-          - string
-          - 'null'
-        salesforcePartnerContactId:
-          type:
-          - string
-          - 'null'
-        salesforcePartnerId:
-          type:
-          - string
-          - 'null'
-    Internal_GetWarrantyApprovedRMAsWSRequest:
-      type: object
     AdvancedRMAType:
       type: object
       properties:
@@ -496,26 +199,66 @@ components:
           type:
           - boolean
           - 'null'
-    SalesforceLicenseStartDateTimeAndEndDateTime:
+    Internal_GetActiveRMAsWSRequest:
+      type: object
+    RMARequest:
+      type: object
+      properties:
+        formSubmitted:
+          type:
+          - boolean
+          - 'null'
+        requestUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rmaOpportunityId:
+          type:
+          - string
+          - 'null'
+        salesforceAccountId:
+          type:
+          - string
+          - 'null'
+        salesforcePartnerContactId:
+          type:
+          - string
+          - 'null'
+        salesforcePartnerId:
+          type:
+          - string
+          - 'null'
+    ShippedItemType:
       type:
       - object
       - 'null'
       properties:
-        contractEndDateTime:
+        partNumber:
           type:
           - string
           - 'null'
-        contractStartDateTime:
+        quantityShipped:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        serialNumber:
           type:
           - string
           - 'null'
-    CustomerShipmentEmailStateEnum:
+    CustomerShipmentStateEnum:
       type: string
       enum:
-      - SHIPPING_CONFIRMATION_SUCCESS
-      - SHIPPING_CONFIRMATION_FAILURE
-      - SHIPPING_SHIPPED_SUCCESS
-      - SHIPPING_SHIPPED_FAILURE
+      - CREATED
+      - SHIPPED
+      - DELIVERED
+      - RETURN_REGISTERED
+      - RETURN_SENT
+      - RETURN_DELIVERED
+      - COMPLETE
       - UNKNOWN
     RMAType:
       type: object
@@ -785,21 +528,334 @@ components:
           - integer
           - 'null'
           format: int32
-    ShippedItemType:
+    SalesforceLicenseStartDateTimeAndEndDateTime:
       type:
       - object
       - 'null'
       properties:
-        partNumber:
+        contractEndDateTime:
           type:
           - string
           - 'null'
-        quantityShipped:
+        contractStartDateTime:
+          type:
+          - string
+          - 'null'
+    Logistics_GetShipmentsWSRequest:
+      type: object
+      description: Request object for getting shipments within a time range.
+      properties:
+        endTimeSec:
           type:
           - integer
           - 'null'
-          format: int32
-        serialNumber:
+          format: int64
+          description: End time in seconds (Unix timestamp)
+          example: 1641081600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds (Unix timestamp)
+          example: 1640995200
+    ShipmentMethodEnum:
+      type: string
+      enum:
+      - GROUND
+      - EXPEDITED
+      - OVERNIGHT
+    RMAStatusEnum:
+      type: string
+      enum:
+      - INITIATED
+      - PENDING
+      - APPROVED
+      - INPROGRESS
+      - COMPLETE
+      - RETURN
+      - STOLEN
+      - OPERATIONAL
+      - FULFILLMENT_ERROR
+    CustomerShipmentCategoryEnum:
+      type: string
+      enum:
+      - RMA
+      - PURCHASE_ORDER
+      - TRIAL
+      - UNKNOWN
+    Internal_GetWarrantyApprovedRMAsWSRequest:
+      type: object
+    CustomerShipmentEmailStateEnum:
+      type: string
+      enum:
+      - SHIPPING_CONFIRMATION_SUCCESS
+      - SHIPPING_CONFIRMATION_FAILURE
+      - SHIPPING_SHIPPED_SUCCESS
+      - SHIPPING_SHIPPED_FAILURE
+      - UNKNOWN
+    Internal_GetActiveRMAsWSResponse:
+      type: object
+      properties:
+        activeRmasList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    CustomerShipmentType:
+      type: object
+      description: List of customer shipments
+      properties:
+        ait-aitTrackingNumber:
+          type:
+          - string
+          - 'null'
+        ait-carrierTrackingNumber:
+          type:
+          - string
+          - 'null'
+        ait-depositorOrderNumber:
+          type:
+          - string
+          - 'null'
+        ait-destinationAddress:
+          type:
+          - string
+          - 'null'
+        ait-isIngramDistributorShipment:
+          type:
+          - boolean
+          - 'null'
+        ait-shipmentDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        ait-shippedItems:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ShippedItemType'
+        interchangeControlNumber:
+          type:
+          - string
+          - 'null'
+        lastStateUpdateSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        rhombus-additionalEmails:
+          type:
+          - string
+          - 'null'
+        rhombus-chosenCarrierName:
+          type:
+          - string
+          - 'null'
+        rhombus-claimKeyToLicenseMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+            uniqueItems: true
+        rhombus-claimKeyToLicenseMapV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/SalesforceLicenseStartDateTimeAndEndDateTime'
+        rhombus-customerEmails:
+          type:
+          - string
+          - 'null'
+        rhombus-customerName:
+          type:
+          - string
+          - 'null'
+        rhombus-orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-partnerOrgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-purchaseOrderNumber:
+          type:
+          - string
+          - 'null'
+        rhombus-rmaReturnTrackingNumber:
+          type:
+          - string
+          - 'null'
+        rhombus-rmaUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-rmaUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombus-salesForceOpportunityId:
+          type:
+          - string
+          - 'null'
+        rhombus-zendeskTicketNumber:
+          type:
+          - string
+          - 'null'
+        shipmentCategory:
+          $ref: '#/components/schemas/CustomerShipmentCategoryEnum'
+        shipmentEmailState:
+          $ref: '#/components/schemas/CustomerShipmentEmailStateEnum'
+        shipmentState:
+          $ref: '#/components/schemas/CustomerShipmentStateEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Logistics_GetRMAsWSResponse:
+      type: object
+      description: Response object containing RMAs (Return Merchandise Authorizations).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        rmaList:
+          type:
+          - array
+          - 'null'
+          description: List of RMAs (Return Merchandise Authorizations)
+          items:
+            $ref: '#/components/schemas/RMAType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ErrorCodeOrMessageEnum:
+      type: string
+      enum:
+      - BADGE_READER_UNKNOWN
+      - DEAD_OR_MISSING_BATTERY
+      - DOORBELL_BUTTON_ISSUE
+      - ERROR_2
+      - ERROR_4
+      - ERROR_5
+      - ERROR_24
+      - ERROR_28
+      - ERROR_30
+      - ERROR_39
+      - ERROR_74
+      - ERROR_84
+      - FOREIGN_HARDWARE
+      - BAD_SD_BLOCKS
+      - NEVER_LEFT_BUSY_STATE
+      - HARDWARE_DAMAGE
+      - HEAVY_HARDWARE_DAMAGE
+      - WATER_DAMAGE
+      - VIDEO_HARDWARE_FAILURE
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - LIGHT_SENSOR
+      - SD_CARD_UNKOWN
+      - SD_CARD_READER_BROKEN
+      - POWER_ISSUES
+      - RS485_ISSUE
+      - CUT_FILTER
+      - QUALITY_OR_PERFORMANCE
+      - NETWORK_ISSUES
+      - UNKNOWN
+      - ILLEGIBLE_SERIAL_COMM
+      - NO_SERIAL_COMM
+      - COSMETIC_DAMAGE
+      - FIRMWARE_REFLASH_REQUIRED
+      - IR_RING_OVERHEATED
+      - REGISTERED_SENSOR
+      - UNDISCOVERED_ISSUE
+      - FOCUS_ISSUES
+      - POTENTIAL_MANUFACTURING_DEFECT
+      - NO_FAULT_FOUND
+      - FDT_COMMAND_LINE_ERROR
+      - KERNEL_PANIC
+      - GET_DTB_FAILED
+      - BOOTS_TO_AMBOOT
+    Logistics_GetShipmentsWSResponse:
+      type: object
+      description: Response object containing shipments within the specified time range.
+      properties:
+        customerShipmentList:
+          type:
+          - array
+          - 'null'
+          description: List of customer shipments within the specified time range
+          items:
+            $ref: '#/components/schemas/CustomerShipmentType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
           type:
           - string
           - 'null'
@@ -828,65 +884,9 @@ components:
             - 'null'
             format: int32
           uniqueItems: true
-    CustomerShipmentStateEnum:
-      type: string
-      enum:
-      - CREATED
-      - SHIPPED
-      - DELIVERED
-      - RETURN_REGISTERED
-      - RETURN_SENT
-      - RETURN_DELIVERED
-      - COMPLETE
-      - UNKNOWN
-    Logistics_GetShipmentsWSResponse:
+    Logistics_GetRMAsWSRequest:
       type: object
-      description: Response object containing shipments within the specified time range.
-      properties:
-        customerShipmentList:
-          type:
-          - array
-          - 'null'
-          description: List of customer shipments within the specified time range
-          items:
-            $ref: '#/components/schemas/CustomerShipmentType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    CustomerShipmentCategoryEnum:
-      type: string
-      enum:
-      - RMA
-      - PURCHASE_ORDER
-      - TRIAL
-      - UNKNOWN
-    Logistics_GetShipmentsWSRequest:
-      type: object
-      description: Request object for getting shipments within a time range.
-      properties:
-        endTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in seconds (Unix timestamp)
-          example: 1641081600
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in seconds (Unix timestamp)
-          example: 1640995200
+      description: Request object for getting RMAs (Return Merchandise Authorizations).
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

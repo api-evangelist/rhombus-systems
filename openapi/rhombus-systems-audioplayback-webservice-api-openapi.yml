@@ -237,17 +237,88 @@ paths:
       - AudioPlayback Webservice
 components:
   schemas:
-    Audioplayback_GetAudioUploadMetadataForOrgWSResponse:
+    Audioplayback_PlayAudioUploadWSResponse:
       type: object
-      description: Response containing audio upload metadata for organization.
+      description: Response from playing an uploaded audio clip.
       properties:
-        audioUploadMetadata:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        success:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if audio playback was successful
+          example: true
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Audioplayback_CancelLoopingAudioPlaybackWSRequest:
+      type: object
+      description: Request to cancel looping audio playback on audio devices.
+      properties:
+        audioDevices:
           type:
           - array
           - 'null'
-          description: List of audio upload metadata for the organization
+          description: List of audio device UUIDs to cancel looping playback on
           items:
-            $ref: '#/components/schemas/AudioUploadMetadataType'
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    Audioplayback_PlayAudioUploadWSRequest:
+      type: object
+      description: Request to play an uploaded audio clip through audio devices.
+      properties:
+        audioGatewayUuids:
+          type:
+          - array
+          - 'null'
+          description: List of audio gateway device UUIDs to play audio through
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        audioUploadUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Duration in seconds to loop the audio playback
+          example: 30
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of times to play the audio clip
+          example: 1
+    Audioplayback_GetAudioUploadMetadataForOrgWSRequest:
+      type: object
+      description: Request to get audio upload metadata for organization.
+    Audioplayback_UpdateAudioUploadMetadataWSResponse:
+      type: object
+      description: Response from updating audio upload metadata.
+      properties:
         error:
           type:
           - boolean
@@ -311,71 +382,28 @@ components:
           type:
           - string
           - 'null'
-    Audioplayback_GetAudioUploadMetadataForOrgWSRequest:
+    Audioplayback_DeleteAudioUploadMetadataWSRequest:
       type: object
-      description: Request to get audio upload metadata for organization.
-    Audioplayback_CancelLoopingAudioPlaybackWSResponse:
-      type: object
-      description: Response from canceling looping audio playback.
+      description: Request to delete audio upload metadata.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        audioUploadUuid:
           type:
           - string
           - 'null'
-        successMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - boolean
-            - 'null'
-            description: Map of audio device UUIDs to success status for canceling playback
-          description: Map of audio device UUIDs to success status for canceling playback
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Audioplayback_UpdateAudioUploadMetadataWSResponse:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Audioplayback_GetAudioUploadMetadataForOrgWSResponse:
       type: object
-      description: Response from updating audio upload metadata.
+      description: Response containing audio upload metadata for organization.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Audioplayback_CancelLoopingAudioPlaybackWSRequest:
-      type: object
-      description: Request to cancel looping audio playback on audio devices.
-      properties:
-        audioDevices:
+        audioUploadMetadata:
           type:
           - array
           - 'null'
-          description: List of audio device UUIDs to cancel looping playback on
+          description: List of audio upload metadata for the organization
           items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    Audioplayback_PlayAudioUploadWSResponse:
-      type: object
-      description: Response from playing an uploaded audio clip.
-      properties:
+            $ref: '#/components/schemas/AudioUploadMetadataType'
         error:
           type:
           - boolean
@@ -384,16 +412,33 @@ components:
           type:
           - string
           - 'null'
-        success:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates if audio playback was successful
-          example: true
         warningMsg:
           type:
           - string
           - 'null'
+    Audioplayback_UpdateAudioUploadMetadataWSRequest:
+      type: object
+      description: Request to update audio upload metadata.
+      properties:
+        audioUploadUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        newDescription:
+          type:
+          - string
+          - 'null'
+          description: New description for the audio clip
+          example: Updated welcome message for visitors
+        newDisplayName:
+          type:
+          - string
+          - 'null'
+          description: New display name for the audio clip
+          example: Updated Welcome Message
     Audioplayback_UploadAudioTextWSRequest:
       type: object
       description: Request to upload text for audio synthesis.
@@ -428,77 +473,32 @@ components:
           - 'null'
           description: Voice ID for text-to-speech synthesis
           example: en-US-Neural2-F
-    Audioplayback_UpdateAudioUploadMetadataWSRequest:
+    Audioplayback_CancelLoopingAudioPlaybackWSResponse:
       type: object
-      description: Request to update audio upload metadata.
+      description: Response from canceling looping audio playback.
       properties:
-        audioUploadUuid:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        newDescription:
+        successMap:
           type:
-          - string
+          - object
           - 'null'
-          description: New description for the audio clip
-          example: Updated welcome message for visitors
-        newDisplayName:
-          type:
-          - string
-          - 'null'
-          description: New display name for the audio clip
-          example: Updated Welcome Message
-    Audioplayback_PlayAudioUploadWSRequest:
-      type: object
-      description: Request to play an uploaded audio clip through audio devices.
-      properties:
-        audioGatewayUuids:
-          type:
-          - array
-          - 'null'
-          description: List of audio gateway device UUIDs to play audio through
-          items:
+          additionalProperties:
             type:
-            - string
+            - boolean
             - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        audioUploadUuid:
+            description: Map of audio device UUIDs to success status for canceling playback
+          description: Map of audio device UUIDs to success status for canceling playback
+        warningMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        loopDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Duration in seconds to loop the audio playback
-          example: 30
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Number of times to play the audio clip
-          example: 1
-    Audioplayback_DeleteAudioUploadMetadataWSRequest:
-      type: object
-      description: Request to delete audio upload metadata.
-      properties:
-        audioUploadUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     Audioplayback_UploadAudioTextWSResponse:
       type: object
       description: Response from uploading text for audio synthesis.

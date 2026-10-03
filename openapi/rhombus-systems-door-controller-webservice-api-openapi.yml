@@ -105,6 +105,40 @@ paths:
       - Door Controller Webservice
 components:
   schemas:
+    Doorcontroller_RegisterDiscoveredRhombusReaderWSResponse:
+      type: object
+      description: Response object for registering a Rhombus reader discovered by a door controller.
+    Doorcontroller_RegisterDiscoveredRhombusReaderWSRequest:
+      type: object
+      description: Request object for registering a Rhombus reader discovered by a door controller.
+      properties:
+        boardNum:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Board number for the reader connection
+          example: 1
+        doorControllerUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        portNum:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Port number for the reader connection
+          example: 0
+        serialNumber:
+          type:
+          - string
+          - 'null'
+          description: Serial number of the discovered Rhombus reader
+          example: RR-12345678
     Doorcontroller_UpdateDoorControllerDetailsWSRequest:
       type: object
       description: Request object for updating details for a door controller.
@@ -183,40 +217,6 @@ components:
           example: AAAAAAAAAAAAAAAAAAAAAA
       required:
       - uuid
-    Doorcontroller_RegisterDiscoveredRhombusReaderWSResponse:
-      type: object
-      description: Response object for registering a Rhombus reader discovered by a door controller.
-    Doorcontroller_RegisterDiscoveredRhombusReaderWSRequest:
-      type: object
-      description: Request object for registering a Rhombus reader discovered by a door controller.
-      properties:
-        boardNum:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Board number for the reader connection
-          example: 1
-        doorControllerUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        portNum:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Port number for the reader connection
-          example: 0
-        serialNumber:
-          type:
-          - string
-          - 'null'
-          description: Serial number of the discovered Rhombus reader
-          example: RR-12345678
     Doorcontroller_UpdateDoorControllerDetailsWSResponse:
       type: object
       description: Response object for updating details for a door controller.

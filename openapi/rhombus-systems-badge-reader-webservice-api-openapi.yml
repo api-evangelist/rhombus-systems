@@ -106,6 +106,12 @@ paths:
       - Badge Reader Webservice
 components:
   schemas:
+    Common_devices_RebootDeviceWSResponse_RebootResult:
+      type: string
+      description: Result of the reboot operation
+      enum:
+      - REBOOT_SENT
+      - DEVICE_OFFLINE
     Badgereader_DeleteBadgeReaderWSResponse:
       type: object
       description: Response from deleting a badge reader device.
@@ -124,12 +130,28 @@ components:
           type:
           - string
           - 'null'
-    Common_devices_RebootDeviceWSResponse_RebootResult:
+    Common_devices_RebootDeviceWSResponse:
+      type: object
+      description: Response indicating the result of rebooting a device.
+      properties:
+        result:
+          $ref: '#/components/schemas/Common_devices_RebootDeviceWSResponse_RebootResult'
+    WebResponseStatusEnum:
       type: string
-      description: Result of the reboot operation
+      description: Status of the unregister operation
       enum:
-      - REBOOT_SENT
-      - DEVICE_OFFLINE
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - SAME_PASSWORD
+      - USER_EXISTS
+      - USER_NOT_FOUND
+      - DEVICE_NOT_FOUND
+      - POLICY_NOT_FOUND
+      - LOCATION_NOT_FOUND
+      - ORG_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
     Badgereader_DeleteBadgeReaderWSRequest:
       type: object
       description: Request to delete a badge reader device.
@@ -163,28 +185,6 @@ components:
           example: AAAAAAAAAAAAAAAAAAAAAA
       required:
       - badgeReaderUuid
-    Common_devices_RebootDeviceWSResponse:
-      type: object
-      description: Response indicating the result of rebooting a device.
-      properties:
-        result:
-          $ref: '#/components/schemas/Common_devices_RebootDeviceWSResponse_RebootResult'
-    WebResponseStatusEnum:
-      type: string
-      description: Status of the unregister operation
-      enum:
-      - BASIC_AUTH_FAILED
-      - PASSWORD_MISMATCH
-      - SAME_PASSWORD
-      - USER_EXISTS
-      - USER_NOT_FOUND
-      - DEVICE_NOT_FOUND
-      - POLICY_NOT_FOUND
-      - LOCATION_NOT_FOUND
-      - ORG_NOT_FOUND
-      - BAD_INPUT
-      - SUCCESS
-      - PASSWORD_TOO_SHORT
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

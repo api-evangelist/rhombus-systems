@@ -169,20 +169,6 @@ paths:
       - Door Webservice
 components:
   schemas:
-    TimeWindowSeconds:
-      type: object
-      description: List of uptime windows for the device
-      properties:
-        durationSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int64
     DoorEventType:
       type: object
       description: List of door open/close events for the sensor
@@ -259,38 +245,55 @@ components:
           - integer
           - 'null'
           format: int64
-    Door_GetMinimalDoorStatesWSResponse:
+    Sensor_GetSensorPresenceWindowsWSRequest:
       type: object
-      description: Response object containing basic state information for all door sensors.
+      description: Request object for retrieving stored video information for a sensor.
       properties:
-        doorStates:
-          type:
-          - array
-          - 'null'
-          description: List of minimal door state information for all door sensors
-          items:
-            $ref: '#/components/schemas/Door_MinimalDoorStateType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        deviceUuid:
           type:
           - string
           - 'null'
-        warningMsg:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
           type:
-          - string
+          - integer
           - 'null'
-    Door_DoorHealthEnum:
-      type: string
-      description: Enumeration of health status for door sensors.
-      enum:
-      - GREEN
-      - RED
+          format: int64
+          description: Duration in seconds for the presence window query
+          example: 3600
+        startTimeSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in seconds for the presence window query
+          example: 1640995200
+    TimeWindowSeconds:
+      type: object
+      description: List of uptime windows for the device
+      properties:
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int64
     Door_GetMinimalDoorStatesWSRequest:
       type: object
       description: Request object for retrieving basic state information for all door sensors.
+    DoorStateEnum:
+      type: string
+      description: Filter events by door state
+      enum:
+      - OPEN
+      - CLOSED
+      - AJAR
     Door_MinimalDoorStateType:
       type: object
       description: Minimal state information for a door sensor.
@@ -570,36 +573,40 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Sensor_GetSensorPresenceWindowsWSResponse:
+    Door_GetDoorEventsForSensorWSRequest:
       type: object
-      description: Response object containing stored video information for a sensor.
+      description: Request object for retrieving door open/close events for a door sensor.
       properties:
-        error:
+        createdAfterMs:
           type:
-          - boolean
+          - integer
           - 'null'
-        errorMsg:
+          format: int64
+          description: Timestamp in milliseconds to get events created after this time
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Timestamp in milliseconds to get events created before this time
+          example: 1640995200000
+        limit:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Maximum number of events to return
+          example: 100
+        sensorUuid:
           type:
           - string
           - 'null'
-        presenceWindows:
-          type:
-          - array
-          - 'null'
-          description: List of presence windows for the sensor
-          items:
-            $ref: '#/components/schemas/TimeWindowSeconds'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    DoorStatusEnum:
-      type: string
-      description: Door state for door sensor webhooks
-      enum:
-      - OPEN
-      - CLOSED
-      - AJAR
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        stateFilter:
+          $ref: '#/components/schemas/DoorStateEnum'
     HardwareVariationEnum:
       type: string
       enum:
@@ -656,38 +663,6 @@ components:
       - CAMERA_R210
       - CAMERA_R650
       - UNSPECIFIED
-    Door_DoorHealthDetailsEnum:
-      type: string
-      description: Enumeration of specific health details for door sensors.
-      enum:
-      - FIRMWARE_BEHIND
-      - NO_HEARTBEAT
-      - NONE
-    Sensor_GetSensorPresenceWindowsWSRequest:
-      type: object
-      description: Request object for retrieving stored video information for a sensor.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Duration in seconds for the presence window query
-          example: 3600
-        startTimeSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in seconds for the presence window query
-          example: 1640995200
     Door_UpdateDoorSensorDetailsWSResponse:
       type: object
       description: Response object for updating details for a door sensor.
@@ -727,47 +702,72 @@ components:
           type:
           - string
           - 'null'
-    DoorStateEnum:
+    Door_GetMinimalDoorStatesWSResponse:
+      type: object
+      description: Response object containing basic state information for all door sensors.
+      properties:
+        doorStates:
+          type:
+          - array
+          - 'null'
+          description: List of minimal door state information for all door sensors
+          items:
+            $ref: '#/components/schemas/Door_MinimalDoorStateType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Door_DoorHealthEnum:
       type: string
-      description: Filter events by door state
+      description: Enumeration of health status for door sensors.
+      enum:
+      - GREEN
+      - RED
+    Door_DoorHealthDetailsEnum:
+      type: string
+      description: Enumeration of specific health details for door sensors.
+      enum:
+      - FIRMWARE_BEHIND
+      - NO_HEARTBEAT
+      - NONE
+    Sensor_GetSensorPresenceWindowsWSResponse:
+      type: object
+      description: Response object containing stored video information for a sensor.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        presenceWindows:
+          type:
+          - array
+          - 'null'
+          description: List of presence windows for the sensor
+          items:
+            $ref: '#/components/schemas/TimeWindowSeconds'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DoorStatusEnum:
+      type: string
+      description: Door state for door sensor webhooks
       enum:
       - OPEN
       - CLOSED
       - AJAR
-    Door_GetDoorEventsForSensorWSRequest:
-      type: object
-      description: Request object for retrieving door open/close events for a door sensor.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp in milliseconds to get events created after this time
-          example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Timestamp in milliseconds to get events created before this time
-          example: 1640995200000
-        limit:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Maximum number of events to return
-          example: 100
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        stateFilter:
-          $ref: '#/components/schemas/DoorStateEnum'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

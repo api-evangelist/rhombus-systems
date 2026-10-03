@@ -554,14 +554,299 @@ paths:
       - Export Webservice
 components:
   schemas:
-    ReportScopeEnum:
-      type: string
-      description: Scope of the report to reset
-      enum:
-      - REGION
-      - DEVICE
-      - LOCATION
-      - ORG
+    Export_ExportPeopleEventsWSRequest:
+      type: object
+      description: Request object for exporting people detection events with time interval filtering.
+      properties:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering people events
+          example: 1641081600000
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering people events
+          example: 1640995200000
+    Export_ExportInventoryWSRequest:
+      type: object
+      description: Request object for exporting device inventory information to CSV format.
+      properties:
+        cameraUuids:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          description: List of camera UUIDs to export (deprecated, use deviceUuids instead)
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            deprecated: true
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to export inventory for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    TimeInterval:
+      type: object
+      properties:
+        endMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        startMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Export_ExportProximityEventsWSRequest:
+      type: object
+      description: Request object for exporting proximity events with time filtering and tag selection.
+      properties:
+        createBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          writeOnly: true
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering proximity events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering proximity events
+          example: 1641081600000
+        tagUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportDoorEventsWSRequest:
+      type: object
+      description: Request object for exporting door sensor events with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering door events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering door events
+          example: 1641081600000
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportUptimeWSRequest:
+      type: object
+      description: Request object for exporting device uptime reports with configurable time ranges and granularity.
+      properties:
+        cameraUuids:
+          type:
+          - array
+          - 'null'
+          deprecated: true
+          description: Use deviceUuids instead
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            deprecated: true
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to export uptime reports for
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        endDateTime:
+          type:
+          - string
+          - 'null'
+          description: End date and time for the uptime report
+          example: '2024-01-31T23:59:59Z'
+        granularity:
+          $ref: '#/components/schemas/JavaTimeUnitEnum'
+        startDateTime:
+          type:
+          - string
+          - 'null'
+          description: Start date and time for the uptime report
+          example: '2024-01-01T00:00:00Z'
+    Export_ExportCountReportsWSRequest:
+      type: object
+      description: Request object for exporting count reports with configurable intervals, scopes, and time ranges.
+      properties:
+        endDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Enter the ending date in in ISO 8601 format
+          example: '2024-07-17T00:00:00Z'
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End datetime as a UNIX timestamp in milliseconds
+          example: 1721416242907
+          minimum: 0
+        interval:
+          $ref: '#/components/schemas/ReportIntervalEnum'
+        scope:
+          $ref: '#/components/schemas/ReportScopeEnum'
+        startDate:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Enter the starting date in ISO 8601 format
+          example: '2024-07-17T00:00:00Z'
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start datetime as a UNIX timestamp in milliseconds
+          example: 1719861042000
+          minimum: 0
+        timeZone:
+          type:
+          - string
+          - 'null'
+          description: String of timezone for bucketing
+          example: America/Los_Angeles
+        type:
+          $ref: '#/components/schemas/ReportTypeEnum'
+        uuidList:
+          type:
+          - array
+          - 'null'
+          description: Enter the UUID of device(s) or location(s)
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+      required:
+      - endTimeMs
+      - interval
+      - scope
+      - startTimeMs
+      - type
+    Export_ExportDiagnosticEventsWSRequest:
+      type: object
+      description: Request object for exporting diagnostic events with time interval filtering.
+      properties:
+        endInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time interval in milliseconds for filtering diagnostic events
+          example: 1641081600000
+        startInterval:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time interval in milliseconds for filtering diagnostic events
+          example: 1640995200000
+    Export_ExportClimateEventsWSRequest:
+      type: object
+      description: Request object for exporting climate sensor events with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering climate events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering climate events
+          example: 1641081600000
+        sensorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportEnvironmentalGatewayEventsWSRequest:
+      type: object
+      description: Request object for exporting environmental gateway events with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Start time in milliseconds for filtering environmental gateway events
+          example: 1640995200000
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End time in milliseconds for filtering environmental gateway events
+          example: 1641081600000
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     AuditActionEnum:
       type: string
       enum:
@@ -1053,24 +1338,6 @@ components:
       - INCIDENT_REPORT_DELETE
       - INCIDENT_REPORT_UPDATED
       - UNKNOWN
-    Export_ExportPeopleEventsWSRequest:
-      type: object
-      description: Request object for exporting people detection events with time interval filtering.
-      properties:
-        endInterval:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time interval in milliseconds for filtering people events
-          example: 1641081600000
-        startInterval:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time interval in milliseconds for filtering people events
-          example: 1640995200000
     Export_ExportUsersWSRequest:
       type: object
       description: Request object for exporting user information to CSV format.
@@ -1087,6 +1354,48 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
+    Export_ExportMotionEventsWSRequest:
+      type: object
+      description: Request object for exporting motion events from motion sensors with time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: After datetime provided as a UNIX timestamp in milliseconds
+          example: 1640995200000
+          minimum: 0
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Before datetime provided as a UNIX timestamp in milliseconds
+          example: 1641081600000
+          minimum: 0
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+      required:
+      - deviceUuid
+    ReportTypeEnum:
+      type: string
+      description: Type of report to receive
+      enum:
+      - CROWD
+      - PEOPLE
+      - FACES
+      - MOTION
+      - BANDWIDTH
+      - VEHICLES
+      - LICENSEPLATES
+      - ALERTS
+      - DWELL
     JavaTimeUnitEnum:
       type: string
       description: Time granularity for the uptime report
@@ -1178,81 +1487,6 @@ components:
             - string
             - 'null'
             description: Query events by vehicle labels. Query fields are additive queries (returned events satisfy at least one of the query fields)
-    TimeInterval:
-      type: object
-      properties:
-        endMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        startMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Export_ExportInventoryWSRequest:
-      type: object
-      description: Request object for exporting device inventory information to CSV format.
-      properties:
-        cameraUuids:
-          type:
-          - array
-          - 'null'
-          deprecated: true
-          description: List of camera UUIDs to export (deprecated, use deviceUuids instead)
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            deprecated: true
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device UUIDs to export inventory for
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    Export_ExportAuditEventsWSRequest:
-      type: object
-      description: Request object for exporting audit events to CSV format with filtering options.
-      properties:
-        endInterval:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time interval in milliseconds for filtering audit events
-          example: 1641081600000
-        excludeActions:
-          type:
-          - array
-          - 'null'
-          description: If not empty, events with actions specified in the list are filtered out. If both include and exclude actions are specified, exclude actions are ignored.
-          items:
-            $ref: '#/components/schemas/AuditActionEnum'
-        includeActions:
-          type:
-          - array
-          - 'null'
-          description: If not empty, only events with actions specified in the list are included. If both include and exclude actions are specified, exclude actions are ignored.
-          items:
-            $ref: '#/components/schemas/AuditActionEnum'
-        startInterval:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time interval in milliseconds for filtering audit events
-          example: 1640995200000
     Export_ExportVehicleEventsWSRequest:
       type: object
       description: Request object for exporting vehicle events with filtering by time, devices, labels, and plate numbers.
@@ -1306,34 +1540,46 @@ components:
             - 'null'
             description: List of license plate numbers to filter by
             example: '["ABC123","XYZ789"]'
-    Export_ExportDiagnosticEventsWSRequest:
+    Export_ExportAuditEventsWSRequest:
       type: object
-      description: Request object for exporting diagnostic events with time interval filtering.
+      description: Request object for exporting audit events to CSV format with filtering options.
       properties:
         endInterval:
           type:
           - integer
           - 'null'
           format: int64
-          description: End time interval in milliseconds for filtering diagnostic events
+          description: End time interval in milliseconds for filtering audit events
           example: 1641081600000
+        excludeActions:
+          type:
+          - array
+          - 'null'
+          description: If not empty, events with actions specified in the list are filtered out. If both include and exclude actions are specified, exclude actions are ignored.
+          items:
+            $ref: '#/components/schemas/AuditActionEnum'
+        includeActions:
+          type:
+          - array
+          - 'null'
+          description: If not empty, only events with actions specified in the list are included. If both include and exclude actions are specified, exclude actions are ignored.
+          items:
+            $ref: '#/components/schemas/AuditActionEnum'
         startInterval:
           type:
           - integer
           - 'null'
           format: int64
-          description: Start time interval in milliseconds for filtering diagnostic events
+          description: Start time interval in milliseconds for filtering audit events
           example: 1640995200000
-    ReportIntervalEnum:
+    ReportScopeEnum:
       type: string
-      description: Report interval for filtering face events
+      description: Scope of the report to reset
       enum:
-      - MINUTELY
-      - QUARTERHOURLY
-      - HOURLY
-      - DAILY
-      - WEEKLY
-      - MONTHLY
+      - REGION
+      - DEVICE
+      - LOCATION
+      - ORG
     Export_ExportProximityLocomotionEventsWSRequest:
       type: object
       description: Request object for exporting proximity locomotion events with time filtering and tag selection.
@@ -1365,173 +1611,20 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Export_ExportClimateEventsWSRequest:
-      type: object
-      description: Request object for exporting climate sensor events with time filtering.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for filtering climate events
-          example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering climate events
-          example: 1641081600000
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ReportTypeEnum:
-      type: string
-      description: Type of report to receive
-      enum:
-      - CROWD
-      - PEOPLE
-      - FACES
-      - MOTION
-      - BANDWIDTH
-      - VEHICLES
-      - LICENSEPLATES
-      - ALERTS
-      - DWELL
-    Export_ExportDoorEventsWSRequest:
-      type: object
-      description: Request object for exporting door sensor events with time filtering.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for filtering door events
-          example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering door events
-          example: 1641081600000
-        sensorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Export_ExportProximityEventsWSRequest:
-      type: object
-      description: Request object for exporting proximity events with time filtering and tag selection.
-      properties:
-        createBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          writeOnly: true
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for filtering proximity events
-          example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering proximity events
-          example: 1641081600000
-        tagUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Export_ExportEnvironmentalGatewayEventsWSRequest:
-      type: object
-      description: Request object for exporting environmental gateway events with time filtering.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start time in milliseconds for filtering environmental gateway events
-          example: 1640995200000
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End time in milliseconds for filtering environmental gateway events
-          example: 1641081600000
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     StreamingOutput:
       type:
       - object
       - 'null'
-    Export_ExportUptimeWSRequest:
-      type: object
-      description: Request object for exporting device uptime reports with configurable time ranges and granularity.
-      properties:
-        cameraUuids:
-          type:
-          - array
-          - 'null'
-          deprecated: true
-          description: Use deviceUuids instead
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            deprecated: true
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device UUIDs to export uptime reports for
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        endDateTime:
-          type:
-          - string
-          - 'null'
-          description: End date and time for the uptime report
-          example: '2024-01-31T23:59:59Z'
-        granularity:
-          $ref: '#/components/schemas/JavaTimeUnitEnum'
-        startDateTime:
-          type:
-          - string
-          - 'null'
-          description: Start date and time for the uptime report
-          example: '2024-01-01T00:00:00Z'
+    ReportIntervalEnum:
+      type: string
+      description: Report interval for filtering face events
+      enum:
+      - MINUTELY
+      - QUARTERHOURLY
+      - HOURLY
+      - DAILY
+      - WEEKLY
+      - MONTHLY
     Export_ExportPeopleCountEventsWSRequest:
       type: object
       description: Request object for exporting people count events with time interval filtering.
@@ -1550,99 +1643,6 @@ components:
           format: int64
           description: Start time interval in milliseconds for filtering people count events
           example: 1640995200000
-    Export_ExportCountReportsWSRequest:
-      type: object
-      description: Request object for exporting count reports with configurable intervals, scopes, and time ranges.
-      properties:
-        endDate:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-          description: Enter the ending date in in ISO 8601 format
-          example: '2024-07-17T00:00:00Z'
-        endTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End datetime as a UNIX timestamp in milliseconds
-          example: 1721416242907
-          minimum: 0
-        interval:
-          $ref: '#/components/schemas/ReportIntervalEnum'
-        scope:
-          $ref: '#/components/schemas/ReportScopeEnum'
-        startDate:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-          description: Enter the starting date in ISO 8601 format
-          example: '2024-07-17T00:00:00Z'
-        startTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Start datetime as a UNIX timestamp in milliseconds
-          example: 1719861042000
-          minimum: 0
-        timeZone:
-          type:
-          - string
-          - 'null'
-          description: String of timezone for bucketing
-          example: America/Los_Angeles
-        type:
-          $ref: '#/components/schemas/ReportTypeEnum'
-        uuidList:
-          type:
-          - array
-          - 'null'
-          description: Enter the UUID of device(s) or location(s)
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-      required:
-      - endTimeMs
-      - interval
-      - scope
-      - startTimeMs
-      - type
-    Export_ExportMotionEventsWSRequest:
-      type: object
-      description: Request object for exporting motion events from motion sensors with time filtering.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: After datetime provided as a UNIX timestamp in milliseconds
-          example: 1640995200000
-          minimum: 0
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Before datetime provided as a UNIX timestamp in milliseconds
-          example: 1641081600000
-          minimum: 0
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-      required:
-      - deviceUuid
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

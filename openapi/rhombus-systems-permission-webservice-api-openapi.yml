@@ -370,9 +370,50 @@ paths:
       - Permission Webservice
 components:
   schemas:
-    Permission_GetPermissionsForCurrentUserWSRequest:
+    Permission_UpdatePermissionGroupWSResponse:
       type: object
-      description: Request object for getting permissions for the current user.
+      description: Response object for updating a permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_GetPermissionsForCurrentPartnerWSRequest:
+      type: object
+      description: Request object for getting permissions for the current partner user.
+    Permission_UpdatePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object for updating a partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_GetPermissionGroupsWSRequest:
+      type: object
+      description: Request object for getting all permission groups in the organization.
+    Permission_CreatePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for creating a new partner permission group.
+      properties:
+        partnerPermissionGroup:
+          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
     Permission_GetPermissionsForCurrentUserWSResponse:
       type: object
       description: Response object containing comprehensive permission information for the current user including functionality, device, location, and granular access maps.
@@ -479,97 +520,6 @@ components:
           type:
           - string
           - 'null'
-    PartnerFunctionalityEnum:
-      type: string
-      enum:
-      - CREATE_CLIENT
-      - DELETE_CLIENT
-      - DEAL_ADMINISTRATION
-      - REMOTE_REGISTER_DEVICE
-      - ORG_ADMINISTRATION
-      - AUTH_ADMINISTRATION
-      - DOOR_ACCESS_ADMINISTRATION
-      - USER_ADMINISTRATION
-      - REPORT_ADMINISTRATION
-      - NOTIFICATION_ADMINISTRATION
-      - LICENSE_ADMINISTRATION
-      - RECEIVE_EMAILS
-      - API_ADMINISTRATION
-      - INTEGRATION_ADMINISTRATION
-      - DATA_EXFILTRATION
-      - CLIP_MANAGEMENT
-      - UNKNOWN
-    Permission_GetPermissionGroupsWSRequest:
-      type: object
-      description: Request object for getting all permission groups in the organization.
-    Permission_GetPermissionsForCurrentPartnerWSResponse:
-      type: object
-      description: Response object containing partner permission information including functionality lists, client permissions, and group details.
-      properties:
-        assignablePermissionGroups:
-          type:
-          - array
-          - 'null'
-          description: Set of partner permission group UUIDs the user can assign to other users
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clientFunctionalityList:
-          type:
-          - array
-          - 'null'
-          description: List of client functionalities the user has access to
-          items:
-            $ref: '#/components/schemas/FunctionalityEnum'
-        clientPermissionMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PartnerPermissionEnum'
-          description: Map of client UUIDs to partner permission levels
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        functionalityList:
-          type:
-          - array
-          - 'null'
-          description: List of partner functionalities the user has access to
-          items:
-            $ref: '#/components/schemas/PartnerFunctionalityEnum'
-        permissionGroupName:
-          type:
-          - string
-          - 'null'
-          description: Name of the partner user's permission group
-          example: Partner Administrator
-        superAdmin:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the partner user has super admin privileges
-          example: false
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_CreatePermissionGroupWSRequest:
-      type: object
-      description: Request object for creating a new permission group.
-      properties:
-        userPermissionGroup:
-          $ref: '#/components/schemas/UserPermissionGroupType'
     Permission_DeletePartnerPermissionGroupWSRequest:
       type: object
       description: Request object for deleting a partner permission group.
@@ -581,39 +531,41 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    FunctionalityEnum:
-      type: string
-      enum:
-      - DEVICE_ADMINISTRATION
-      - ORG_ADMINISTRATION
-      - AUTH_ADMINISTRATION
-      - FIRMWARE_ADMINISTRATION
-      - DOOR_ACCESS_ADMINISTRATION
-      - CAMERA_ADMINISTRATION
-      - REGISTER_DEVICES
-      - DELETE_DEVICES
-      - LOCATION_ADMINISTRATION
-      - POLICY_ADMINISTRATION
-      - USER_ADMINISTRATION
-      - REPORT_ADMINISTRATION
-      - NOTIFICATION_ADMINISTRATION
-      - LICENSE_ADMINISTRATION
-      - RECEIVE_EMAILS
-      - MANAGE_FACES
-      - MANAGE_LICENSEPLATES
-      - API_ADMINISTRATION
-      - INTEGRATION_ADMINISTRATION
-      - DATA_EXFILTRATION
-      - ALERT_MONITORING_ADMINISTRATION
-      - ALERT_MONITORING_VIEWONLY
-      - ALERT_MONITORING_OPERATOR
-      - GUEST_MANAGEMENT_ADMINISTRATION
-      - GUEST_MANAGEMENT_VIEWONLY
-      - CLIP_MANAGEMENT
-      - VIEW_SAVED_VIDEO
-      - VIEW_AND_MANAGE_SAVED_VIDEO
-      - CLLM_ADMINISTRATION
-      - UNKNOWN
+    Permission_DeletePermissionGroupWSResponse:
+      type: object
+      description: Response object for deleting a permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_DeletePartnerPermissionGroupWSResponse:
+      type: object
+      description: Response object for deleting a partner permission group.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Permission_GetPermissionsForCurrentUserWSRequest:
+      type: object
+      description: Request object for getting permissions for the current user.
     Permission_GetPartnerPermissionGroupWSResponse:
       type: object
       description: Response object containing partner permission groups and client permission group mappings.
@@ -664,22 +616,6 @@ components:
           description: List of partner permission groups
           items:
             $ref: '#/components/schemas/PartnerUserPermissionGroupType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_DeletePartnerPermissionGroupWSResponse:
-      type: object
-      description: Response object for deleting a partner permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
         warningMsg:
           type:
           - string
@@ -741,67 +677,6 @@ components:
           type:
           - string
           - 'null'
-    Permission_DeletePermissionGroupWSResponse:
-      type: object
-      description: Response object for deleting a permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_DeletePermissionGroupWSRequest:
-      type: object
-      description: Request object for deleting a permission group.
-      properties:
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    PartnerPermissionEnum:
-      type: string
-      enum:
-      - DEFAULT
-      - CUSTOM
-    Permission_CreatePermissionGroupWSResponse:
-      type: object
-      description: Response object containing the UUID of the created permission group.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Permission_UpdatePermissionGroupWSRequest:
-      type: object
-      description: Request object for updating an existing permission group.
-      properties:
-        userPermissionGroup:
-          $ref: '#/components/schemas/UserPermissionGroupType'
     UserPermissionGroupType:
       type: object
       description: Updated permission group configuration
@@ -926,34 +801,59 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Permission_CreatePartnerPermissionGroupWSRequest:
+    Permission_GetPartnerPermissionGroupsWSRequest:
       type: object
-      description: Request object for creating a new partner permission group.
-      properties:
-        partnerPermissionGroup:
-          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
-    PermissionEnum:
+      description: Request object for getting partner permission groups for the organization.
+    FunctionalityEnum:
       type: string
       enum:
-      - READONLY
-      - ADMIN
-      - LIVEONLY
-    Permission_UpdatePartnerPermissionGroupWSResponse:
+      - DEVICE_ADMINISTRATION
+      - ORG_ADMINISTRATION
+      - AUTH_ADMINISTRATION
+      - FIRMWARE_ADMINISTRATION
+      - DOOR_ACCESS_ADMINISTRATION
+      - CAMERA_ADMINISTRATION
+      - REGISTER_DEVICES
+      - DELETE_DEVICES
+      - LOCATION_ADMINISTRATION
+      - POLICY_ADMINISTRATION
+      - USER_ADMINISTRATION
+      - REPORT_ADMINISTRATION
+      - NOTIFICATION_ADMINISTRATION
+      - LICENSE_ADMINISTRATION
+      - RECEIVE_EMAILS
+      - MANAGE_FACES
+      - MANAGE_LICENSEPLATES
+      - API_ADMINISTRATION
+      - INTEGRATION_ADMINISTRATION
+      - DATA_EXFILTRATION
+      - ALERT_MONITORING_ADMINISTRATION
+      - ALERT_MONITORING_VIEWONLY
+      - ALERT_MONITORING_OPERATOR
+      - GUEST_MANAGEMENT_ADMINISTRATION
+      - GUEST_MANAGEMENT_VIEWONLY
+      - CLIP_MANAGEMENT
+      - VIEW_SAVED_VIDEO
+      - VIEW_AND_MANAGE_SAVED_VIDEO
+      - CLLM_ADMINISTRATION
+      - UNKNOWN
+    Permission_UpdatePermissionGroupWSRequest:
       type: object
-      description: Response object for updating a partner permission group.
+      description: Request object for updating an existing permission group.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
+        userPermissionGroup:
+          $ref: '#/components/schemas/UserPermissionGroupType'
+    Permission_DeletePermissionGroupWSRequest:
+      type: object
+      description: Request object for deleting a permission group.
+      properties:
+        groupUuid:
           type:
           - string
           - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Permission_CreatePartnerPermissionGroupWSResponse:
       type: object
       description: Response object containing the UUID of the created partner permission group.
@@ -977,9 +877,91 @@ components:
           type:
           - string
           - 'null'
-    Permission_UpdatePermissionGroupWSResponse:
+    Permission_GetPermissionsForCurrentPartnerWSResponse:
       type: object
-      description: Response object for updating a permission group.
+      description: Response object containing partner permission information including functionality lists, client permissions, and group details.
+      properties:
+        assignablePermissionGroups:
+          type:
+          - array
+          - 'null'
+          description: Set of partner permission group UUIDs the user can assign to other users
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clientFunctionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of client functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/FunctionalityEnum'
+        clientPermissionMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PartnerPermissionEnum'
+          description: Map of client UUIDs to partner permission levels
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        functionalityList:
+          type:
+          - array
+          - 'null'
+          description: List of partner functionalities the user has access to
+          items:
+            $ref: '#/components/schemas/PartnerFunctionalityEnum'
+        permissionGroupName:
+          type:
+          - string
+          - 'null'
+          description: Name of the partner user's permission group
+          example: Partner Administrator
+        superAdmin:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the partner user has super admin privileges
+          example: false
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    PartnerFunctionalityEnum:
+      type: string
+      enum:
+      - CREATE_CLIENT
+      - DELETE_CLIENT
+      - DEAL_ADMINISTRATION
+      - REMOTE_REGISTER_DEVICE
+      - ORG_ADMINISTRATION
+      - AUTH_ADMINISTRATION
+      - DOOR_ACCESS_ADMINISTRATION
+      - USER_ADMINISTRATION
+      - REPORT_ADMINISTRATION
+      - NOTIFICATION_ADMINISTRATION
+      - LICENSE_ADMINISTRATION
+      - RECEIVE_EMAILS
+      - API_ADMINISTRATION
+      - INTEGRATION_ADMINISTRATION
+      - DATA_EXFILTRATION
+      - CLIP_MANAGEMENT
+      - UNKNOWN
+    Permission_CreatePermissionGroupWSResponse:
+      type: object
+      description: Response object containing the UUID of the created permission group.
       properties:
         error:
           type:
@@ -989,22 +971,22 @@ components:
           type:
           - string
           - 'null'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         warningMsg:
           type:
           - string
           - 'null'
-    Permission_GetPartnerPermissionGroupsWSRequest:
-      type: object
-      description: Request object for getting partner permission groups for the organization.
-    Permission_UpdatePartnerPermissionGroupWSRequest:
-      type: object
-      description: Request object for updating an existing partner permission group.
-      properties:
-        partnerPermissionGroup:
-          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
-    Permission_GetPermissionsForCurrentPartnerWSRequest:
-      type: object
-      description: Request object for getting permissions for the current partner user.
+    PartnerPermissionEnum:
+      type: string
+      enum:
+      - DEFAULT
+      - CUSTOM
     PartnerUserPermissionGroupType:
       type: object
       description: Updated partner permission group configuration
@@ -1085,6 +1067,24 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Permission_CreatePermissionGroupWSRequest:
+      type: object
+      description: Request object for creating a new permission group.
+      properties:
+        userPermissionGroup:
+          $ref: '#/components/schemas/UserPermissionGroupType'
+    PermissionEnum:
+      type: string
+      enum:
+      - READONLY
+      - ADMIN
+      - LIVEONLY
+    Permission_UpdatePartnerPermissionGroupWSRequest:
+      type: object
+      description: Request object for updating an existing partner permission group.
+      properties:
+        partnerPermissionGroup:
+          $ref: '#/components/schemas/PartnerUserPermissionGroupType'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

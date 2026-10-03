@@ -145,9 +145,6 @@ components:
       properties:
         config:
           $ref: '#/components/schemas/TvOsConfigType'
-    Tvos_GetTvOsConfigsForOrgWsRequest:
-      type: object
-      description: Request object for getting all tvOs configurations for the organization.
     TvOsConfigType:
       type: object
       description: tvOs configuration to update
@@ -177,28 +174,13 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Tvos_GetTvOsConfigWsRequest:
+    Tvos_GetTvOsConfigsForOrgWsRequest:
       type: object
-      description: Request object for getting a specific tvOs configuration.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Tvos_GetTvOsConfigsForOrgWsResponse:
+      description: Request object for getting all tvOs configurations for the organization.
+    Tvos_UpdateTvOsConfigWsResponse:
       type: object
-      description: Response object containing all tvOs configurations for the organization.
+      description: Response object for updating a tvOs configuration.
       properties:
-        configs:
-          type:
-          - array
-          - 'null'
-          description: List of tvOs configurations for the organization
-          items:
-            $ref: '#/components/schemas/TvOsConfigType'
         error:
           type:
           - boolean
@@ -229,10 +211,28 @@ components:
           type:
           - string
           - 'null'
-    Tvos_UpdateTvOsConfigWsResponse:
+    Tvos_GetTvOsConfigWsRequest:
       type: object
-      description: Response object for updating a tvOs configuration.
+      description: Request object for getting a specific tvOs configuration.
       properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Tvos_GetTvOsConfigsForOrgWsResponse:
+      type: object
+      description: Response object containing all tvOs configurations for the organization.
+      properties:
+        configs:
+          type:
+          - array
+          - 'null'
+          description: List of tvOs configurations for the organization
+          items:
+            $ref: '#/components/schemas/TvOsConfigType'
         error:
           type:
           - boolean
