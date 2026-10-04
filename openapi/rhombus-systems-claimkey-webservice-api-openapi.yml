@@ -139,6 +139,59 @@ paths:
       - ClaimKey Webservice
 components:
   schemas:
+    License_claimkey_FindClaimKeysByClientOrgWSResponse:
+      type: object
+      properties:
+        claimKeys:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BaseClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    License_claimkey_FindClaimKeysByOrgWSRequest:
+      type: object
+      properties:
+        claimKeySearchFilter:
+          $ref: '#/components/schemas/ClaimKeySearchFilter'
+    License_claimkey_GetClaimKeyWSRequest:
+      type: object
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClaimKeyReturnEvent:
+      type: object
+      properties:
+        returnedProductQuantities:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int32
+        timestamp:
+          type:
+          - string
+          - 'null'
+          format: date-time
     ClaimKeySearchFilter:
       type: object
       properties:
@@ -160,44 +213,11 @@ components:
           items:
             $ref: '#/components/schemas/ClaimKeyStateEnum'
           uniqueItems: true
-    License_claimkey_FindClaimKeysByOrgWSRequest:
-      type: object
-      properties:
-        claimKeySearchFilter:
-          $ref: '#/components/schemas/ClaimKeySearchFilter'
-    License_claimkey_FindClaimKeysByOrgWSResponse:
-      type: object
-      properties:
-        claimKeys:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BaseClaimKey'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ClaimKeyStateEnum:
+    ClaimKeyTypeEnum:
       type: string
       enum:
-      - CREATED
-      - CLAIMING_PENDING
-      - CLAIMING_IN_PROGRESS
-      - CLAIMING_FAILED
-      - CLAIMED
-      - EXPIRED_UNCLAIMED
-      - EXPIRED
-      - RETURNED
-      - RENEWED
+      - NEW
+      - RENEWAL
     BaseClaimKey:
       type: object
       discriminator:
@@ -282,6 +302,39 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    License_claimkey_FindClaimKeysByOrgWSResponse:
+      type: object
+      properties:
+        claimKeys:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/BaseClaimKey'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ClaimKeyStateEnum:
+      type: string
+      enum:
+      - CREATED
+      - CLAIMING_PENDING
+      - CLAIMING_IN_PROGRESS
+      - CLAIMING_FAILED
+      - CLAIMED
+      - EXPIRED_UNCLAIMED
+      - EXPIRED
+      - RETURNED
+      - RENEWED
     ClaimKeyExpirationEmailStateEnum:
       type: string
       enum:
@@ -314,28 +367,6 @@ components:
       - GRACE_PERIOD_EMAILS_IN_PROGRESS
       - GRACE_PERIOD_EMAILS_COMPLETED
       - UNKNOWN
-    ClaimKeyTypeEnum:
-      type: string
-      enum:
-      - NEW
-      - RENEWAL
-    ClaimKeyReturnEvent:
-      type: object
-      properties:
-        returnedProductQuantities:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - integer
-            - 'null'
-            format: int32
-        timestamp:
-          type:
-          - string
-          - 'null'
-          format: date-time
     License_claimkey_GetClaimKeyWSResponse:
       type: object
       properties:
@@ -365,37 +396,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    License_claimkey_GetClaimKeyWSRequest:
-      type: object
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    License_claimkey_FindClaimKeysByClientOrgWSResponse:
-      type: object
-      properties:
-        claimKeys:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/BaseClaimKey'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

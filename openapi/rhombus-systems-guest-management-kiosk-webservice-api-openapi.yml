@@ -95,12 +95,6 @@ components:
           type:
           - string
           - 'null'
-    Kiosk_UpdateKioskSelectiveRequest:
-      type: object
-      description: Request object for selectively updating kiosk settings.
-      properties:
-        kioskUpdate:
-          $ref: '#/components/schemas/KioskSelectiveUpdate'
     KioskSelectiveUpdate:
       type: object
       description: Selective update information for the kiosk
@@ -186,6 +180,12 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Kiosk_UpdateKioskSelectiveRequest:
+      type: object
+      description: Request object for selectively updating kiosk settings.
+      properties:
+        kioskUpdate:
+          $ref: '#/components/schemas/KioskSelectiveUpdate'
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

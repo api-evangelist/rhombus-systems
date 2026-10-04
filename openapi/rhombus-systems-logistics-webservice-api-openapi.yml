@@ -168,6 +168,61 @@ paths:
       - Logistics Webservice
 components:
   schemas:
+    CustomerShipmentStateEnum:
+      type: string
+      enum:
+      - CREATED
+      - SHIPPED
+      - DELIVERED
+      - RETURN_REGISTERED
+      - RETURN_SENT
+      - RETURN_DELIVERED
+      - COMPLETE
+      - UNKNOWN
+    Logistics_GetShipmentsWSResponse:
+      type: object
+      description: Response object containing shipments within the specified time range.
+      properties:
+        customerShipmentList:
+          type:
+          - array
+          - 'null'
+          description: List of customer shipments within the specified time range
+          items:
+            $ref: '#/components/schemas/CustomerShipmentType'
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Logistics_GetRMAsWSRequest:
+      type: object
+      description: Request object for getting RMAs (Return Merchandise Authorizations).
+    ShipmentMethodEnum:
+      type: string
+      enum:
+      - GROUND
+      - EXPEDITED
+      - OVERNIGHT
+    RMAStatusEnum:
+      type: string
+      enum:
+      - INITIATED
+      - PENDING
+      - APPROVED
+      - INPROGRESS
+      - COMPLETE
+      - RETURN
+      - STOLEN
+      - OPERATIONAL
+      - FULFILLMENT_ERROR
     AdvancedRMAType:
       type: object
       properties:
@@ -199,8 +254,6 @@ components:
           type:
           - boolean
           - 'null'
-    Internal_GetActiveRMAsWSRequest:
-      type: object
     RMARequest:
       type: object
       properties:
@@ -231,35 +284,6 @@ components:
           type:
           - string
           - 'null'
-    ShippedItemType:
-      type:
-      - object
-      - 'null'
-      properties:
-        partNumber:
-          type:
-          - string
-          - 'null'
-        quantityShipped:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        serialNumber:
-          type:
-          - string
-          - 'null'
-    CustomerShipmentStateEnum:
-      type: string
-      enum:
-      - CREATED
-      - SHIPPED
-      - DELIVERED
-      - RETURN_REGISTERED
-      - RETURN_SENT
-      - RETURN_DELIVERED
-      - COMPLETE
-      - UNKNOWN
     RMAType:
       type: object
       description: List of RMAs (Return Merchandise Authorizations)
@@ -528,16 +552,30 @@ components:
           - integer
           - 'null'
           format: int32
-    SalesforceLicenseStartDateTimeAndEndDateTime:
+    Internal_GetWarrantyApprovedRMAsWSRequest:
+      type: object
+    CustomerShipmentCategoryEnum:
+      type: string
+      enum:
+      - RMA
+      - PURCHASE_ORDER
+      - TRIAL
+      - UNKNOWN
+    ShippedItemType:
       type:
       - object
       - 'null'
       properties:
-        contractEndDateTime:
+        partNumber:
           type:
           - string
           - 'null'
-        contractStartDateTime:
+        quantityShipped:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        serialNumber:
           type:
           - string
           - 'null'
@@ -559,41 +597,104 @@ components:
           format: int64
           description: Start time in seconds (Unix timestamp)
           example: 1640995200
-    ShipmentMethodEnum:
-      type: string
-      enum:
-      - GROUND
-      - EXPEDITED
-      - OVERNIGHT
-    RMAStatusEnum:
-      type: string
-      enum:
-      - INITIATED
-      - PENDING
-      - APPROVED
-      - INPROGRESS
-      - COMPLETE
-      - RETURN
-      - STOLEN
-      - OPERATIONAL
-      - FULFILLMENT_ERROR
-    CustomerShipmentCategoryEnum:
-      type: string
-      enum:
-      - RMA
-      - PURCHASE_ORDER
-      - TRIAL
-      - UNKNOWN
-    Internal_GetWarrantyApprovedRMAsWSRequest:
+    Logistics_GetRMAsWSResponse:
       type: object
-    CustomerShipmentEmailStateEnum:
+      description: Response object containing RMAs (Return Merchandise Authorizations).
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        rmaList:
+          type:
+          - array
+          - 'null'
+          description: List of RMAs (Return Merchandise Authorizations)
+          items:
+            $ref: '#/components/schemas/RMAType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ErrorCodeOrMessageEnum:
       type: string
       enum:
-      - SHIPPING_CONFIRMATION_SUCCESS
-      - SHIPPING_CONFIRMATION_FAILURE
-      - SHIPPING_SHIPPED_SUCCESS
-      - SHIPPING_SHIPPED_FAILURE
+      - BADGE_READER_UNKNOWN
+      - DEAD_OR_MISSING_BATTERY
+      - DOORBELL_BUTTON_ISSUE
+      - ERROR_2
+      - ERROR_4
+      - ERROR_5
+      - ERROR_24
+      - ERROR_28
+      - ERROR_30
+      - ERROR_39
+      - ERROR_74
+      - ERROR_84
+      - FOREIGN_HARDWARE
+      - BAD_SD_BLOCKS
+      - NEVER_LEFT_BUSY_STATE
+      - HARDWARE_DAMAGE
+      - HEAVY_HARDWARE_DAMAGE
+      - WATER_DAMAGE
+      - VIDEO_HARDWARE_FAILURE
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - LIGHT_SENSOR
+      - SD_CARD_UNKOWN
+      - SD_CARD_READER_BROKEN
+      - POWER_ISSUES
+      - RS485_ISSUE
+      - CUT_FILTER
+      - QUALITY_OR_PERFORMANCE
+      - NETWORK_ISSUES
       - UNKNOWN
+      - ILLEGIBLE_SERIAL_COMM
+      - NO_SERIAL_COMM
+      - COSMETIC_DAMAGE
+      - FIRMWARE_REFLASH_REQUIRED
+      - IR_RING_OVERHEATED
+      - REGISTERED_SENSOR
+      - UNDISCOVERED_ISSUE
+      - FOCUS_ISSUES
+      - POTENTIAL_MANUFACTURING_DEFECT
+      - NO_FAULT_FOUND
+      - FDT_COMMAND_LINE_ERROR
+      - KERNEL_PANIC
+      - GET_DTB_FAILED
+      - BOOTS_TO_AMBOOT
+    Internal_GetActiveRMAsWSRequest:
+      type: object
+    Internal_GetWarrantyApprovedRMAsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+        zendeskTickets:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          uniqueItems: true
     Internal_GetActiveRMAsWSResponse:
       type: object
       properties:
@@ -618,6 +719,27 @@ components:
           - string
           - 'null'
         warningMsg:
+          type:
+          - string
+          - 'null'
+    CustomerShipmentEmailStateEnum:
+      type: string
+      enum:
+      - SHIPPING_CONFIRMATION_SUCCESS
+      - SHIPPING_CONFIRMATION_FAILURE
+      - SHIPPING_SHIPPED_SUCCESS
+      - SHIPPING_SHIPPED_FAILURE
+      - UNKNOWN
+    SalesforceLicenseStartDateTimeAndEndDateTime:
+      type:
+      - object
+      - 'null'
+      properties:
+        contractEndDateTime:
+          type:
+          - string
+          - 'null'
+        contractStartDateTime:
           type:
           - string
           - 'null'
@@ -765,128 +887,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Logistics_GetRMAsWSResponse:
-      type: object
-      description: Response object containing RMAs (Return Merchandise Authorizations).
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        rmaList:
-          type:
-          - array
-          - 'null'
-          description: List of RMAs (Return Merchandise Authorizations)
-          items:
-            $ref: '#/components/schemas/RMAType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ErrorCodeOrMessageEnum:
-      type: string
-      enum:
-      - BADGE_READER_UNKNOWN
-      - DEAD_OR_MISSING_BATTERY
-      - DOORBELL_BUTTON_ISSUE
-      - ERROR_2
-      - ERROR_4
-      - ERROR_5
-      - ERROR_24
-      - ERROR_28
-      - ERROR_30
-      - ERROR_39
-      - ERROR_74
-      - ERROR_84
-      - FOREIGN_HARDWARE
-      - BAD_SD_BLOCKS
-      - NEVER_LEFT_BUSY_STATE
-      - HARDWARE_DAMAGE
-      - HEAVY_HARDWARE_DAMAGE
-      - WATER_DAMAGE
-      - VIDEO_HARDWARE_FAILURE
-      - ENCRYPTED_CONTAINER_FAILURE_CREATE
-      - ENCRYPTED_CONTAINER_FAILURE_OPEN
-      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
-      - LIGHT_SENSOR
-      - SD_CARD_UNKOWN
-      - SD_CARD_READER_BROKEN
-      - POWER_ISSUES
-      - RS485_ISSUE
-      - CUT_FILTER
-      - QUALITY_OR_PERFORMANCE
-      - NETWORK_ISSUES
-      - UNKNOWN
-      - ILLEGIBLE_SERIAL_COMM
-      - NO_SERIAL_COMM
-      - COSMETIC_DAMAGE
-      - FIRMWARE_REFLASH_REQUIRED
-      - IR_RING_OVERHEATED
-      - REGISTERED_SENSOR
-      - UNDISCOVERED_ISSUE
-      - FOCUS_ISSUES
-      - POTENTIAL_MANUFACTURING_DEFECT
-      - NO_FAULT_FOUND
-      - FDT_COMMAND_LINE_ERROR
-      - KERNEL_PANIC
-      - GET_DTB_FAILED
-      - BOOTS_TO_AMBOOT
-    Logistics_GetShipmentsWSResponse:
-      type: object
-      description: Response object containing shipments within the specified time range.
-      properties:
-        customerShipmentList:
-          type:
-          - array
-          - 'null'
-          description: List of customer shipments within the specified time range
-          items:
-            $ref: '#/components/schemas/CustomerShipmentType'
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Internal_GetWarrantyApprovedRMAsWSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-        zendeskTickets:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          uniqueItems: true
-    Logistics_GetRMAsWSRequest:
-      type: object
-      description: Request object for getting RMAs (Return Merchandise Authorizations).
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

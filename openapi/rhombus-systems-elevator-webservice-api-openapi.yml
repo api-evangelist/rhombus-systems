@@ -233,52 +233,20 @@ paths:
       - Elevator Webservice
 components:
   schemas:
-    FirstInSourceEnum:
-      type: string
-      enum:
-      - CONFIG_MANUAL_OVERRIDE
-      - CONFIG_REQUIREMENT_CHANGE
-      - CONFIG_MEMBERSHIP
-      - SCHEDULED_RESET
-      - LOCAL_BADGE_EVENT
-      - LOCKDOWN
-      - UNKNOWN
-    SupportAuthorityEventOriginator:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          grantedToInternalEntityUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          grantedToName:
-            type:
-            - string
-            - 'null'
-          supportAuthorityUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          supportUserEmail:
-            type:
-            - string
-            - 'null'
-          supportUsername:
-            type:
-            - string
-            - 'null'
+    Component_AddAccessControlledElevatorLandingLabelWSRequest:
+      type: object
       properties:
-        type:
-          $ref: '#/components/schemas/EventOriginatorEnum'
+        accessControlledElevatorLandingUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        label:
+          type:
+          - string
+          - 'null'
     AccessControlledElevatorLanding:
       type: object
       description: The updated elevator landing after applying the first-in state.
@@ -414,20 +382,16 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Component_RemoveAccessControlledElevatorLandingLabelWSRequest:
-      type: object
-      properties:
-        accessControlledElevatorLandingUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        label:
-          type:
-          - string
-          - 'null'
+    ManualAccessStateChangeEnum:
+      type: string
+      enum:
+      - DOOR_STATE_OVERRIDE
+      - CANCELLED_DOOR_STATE_OVERRIDE
+    AccessControlledDoorStateEnumType:
+      type: string
+      enum:
+      - UNLOCKED
+      - ACCESS_CONTROLLED
     AccessStateSourceEnum:
       type: string
       enum:
@@ -439,145 +403,92 @@ components:
       - LOCKDOWN
       - PRIVACY
       - UNKNOWN
-    FirstInFirmwareStatusEnum:
+    Component_GetAccessControlledElevatorLandingLabelsForOrgWSResponse:
+      type: object
+      properties:
+        accessControlledElevatorLandingLabels:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+            uniqueItems: true
+    EventOriginatorEnum:
       type: string
       enum:
-      - DISABLED
-      - NOT_CONFIGURED
-      - REQUIRED
-      - SATISFIED
+      - USER
+      - SUPPORT_AUTHORITY
+      - API_TOKEN
+      - RULE
+      - COMPONENT_COMPOSITE_EVENT
+      - GUEST_PASS
+      - DEVICE_SERVICE
       - UNKNOWN
-    FirstInState:
+    Component_FindAccessControlledElevatorLandingsByLocationWSResponse:
       type: object
       properties:
-        originator:
-          $ref: '#/components/schemas/BaseEventOriginator'
-        requestedAtMillis:
+        accessControlledElevatorLandings:
           type:
-          - integer
+          - array
           - 'null'
-          format: int64
-        state:
-          $ref: '#/components/schemas/FirstInStatusEnum'
-    ComponentCompositeEnumType:
-      type: string
-      enum:
-      - AccessControlledDoor
-      - AccessControlledElevator
-      - AccessControlledElevatorLanding
-    ComponentCompositeEventOriginator:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          componentCompositeName:
-            type:
-            - string
-            - 'null'
-          componentCompositeUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          correlationId:
-            type:
-            - string
-            - 'null'
-          eventUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          originator:
-            $ref: '#/components/schemas/BaseEventOriginator'
-      properties:
-        type:
-          $ref: '#/components/schemas/EventOriginatorEnum'
-    Component_AddAccessControlledElevatorLandingLabelWSRequest:
-      type: object
-      properties:
-        accessControlledElevatorLandingUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        label:
-          type:
-          - string
-          - 'null'
-    ManualAccessStateChangeEnum:
-      type: string
-      enum:
-      - DOOR_STATE_OVERRIDE
-      - CANCELLED_DOOR_STATE_OVERRIDE
-    UserEventOriginator:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          userEmail:
-            type:
-            - string
-            - 'null'
-          userUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          username:
-            type:
-            - string
-            - 'null'
-      properties:
-        type:
-          $ref: '#/components/schemas/EventOriginatorEnum'
-    Component_AddAccessControlledElevatorLandingLabelWSResponse:
-      type: object
-    FirstInShadow:
-      type: object
-      properties:
-        originator:
-          $ref: '#/components/schemas/BaseEventOriginator'
-        source:
-          $ref: '#/components/schemas/FirstInSourceEnum'
-        state:
-          $ref: '#/components/schemas/FirstInFirmwareStatusEnum'
-        stateUpdateEventTimestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    Component_FindAccessControlledElevatorLandingsByLocationWSRequest:
-      type: object
-      properties:
+          items:
+            $ref: '#/components/schemas/AccessControlledElevatorLanding'
         lastEvaluatedKey:
           type:
           - string
           - 'null'
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        maxPageSize:
-          type:
-          - integer
-          - 'null'
-          format: int32
+    ComponentCompositeShadowEnum:
+      type: string
+      enum:
+      - AccessControlledDoorShadow
+      - AccessControlledElevatorLandingShadow
+    SupportAuthorityEventOriginator:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          grantedToInternalEntityUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          grantedToName:
+            type:
+            - string
+            - 'null'
+          supportAuthorityUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          supportUserEmail:
+            type:
+            - string
+            - 'null'
+          supportUsername:
+            type:
+            - string
+            - 'null'
+      properties:
+        type:
+          $ref: '#/components/schemas/EventOriginatorEnum'
+    FirstInStatusEnum:
+      type: string
+      enum:
+      - REQUIRED
+      - SATISFIED
     BaseAccessStateOverride:
       type: object
       discriminator:
@@ -592,9 +503,7 @@ components:
           format: int64
         type:
           $ref: '#/components/schemas/ManualAccessStateChangeEnum'
-    Component_GetAccessControlledElevatorLandingLabelsForOrgWSRequest:
-      type: object
-    Component_FindAccessControlledElevatorLandingShadowsByLocationWSRequest:
+    Component_FindAccessControlledElevatorLandingsByLocationWSRequest:
       type: object
       properties:
         lastEvaluatedKey:
@@ -634,6 +543,201 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/EventOriginatorEnum'
+    GuestPassEventOriginator:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          guestPassName:
+            type:
+            - string
+            - 'null'
+          guestPassUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        type:
+          $ref: '#/components/schemas/EventOriginatorEnum'
+    FirstInState:
+      type: object
+      properties:
+        originator:
+          $ref: '#/components/schemas/BaseEventOriginator'
+        requestedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        state:
+          $ref: '#/components/schemas/FirstInStatusEnum'
+    UserEventOriginator:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          userEmail:
+            type:
+            - string
+            - 'null'
+          userUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          username:
+            type:
+            - string
+            - 'null'
+      properties:
+        type:
+          $ref: '#/components/schemas/EventOriginatorEnum'
+    ApiTokenEventOriginator:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          tokenName:
+            type:
+            - string
+            - 'null'
+          tokenUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        type:
+          $ref: '#/components/schemas/EventOriginatorEnum'
+    BaseEventOriginator:
+      type: object
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/SupportAuthorityEventOriginator'
+      - $ref: '#/components/schemas/ApiTokenEventOriginator'
+      - $ref: '#/components/schemas/UserEventOriginator'
+      - $ref: '#/components/schemas/RuleEventOriginator'
+      - $ref: '#/components/schemas/ComponentCompositeEventOriginator'
+      - $ref: '#/components/schemas/GuestPassEventOriginator'
+      - $ref: '#/components/schemas/DeviceServiceEventOriginator'
+      properties:
+        type:
+          $ref: '#/components/schemas/EventOriginatorEnum'
+    DeviceServiceEventOriginator:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          deviceUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          serviceName:
+            type:
+            - string
+            - 'null'
+      properties:
+        type:
+          $ref: '#/components/schemas/EventOriginatorEnum'
+    Component_RemoveAccessControlledElevatorLandingLabelWSResponse:
+      type: object
+    ComponentCompositeEventOriginator:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          componentCompositeName:
+            type:
+            - string
+            - 'null'
+          componentCompositeUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          correlationId:
+            type:
+            - string
+            - 'null'
+          eventUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          originator:
+            $ref: '#/components/schemas/BaseEventOriginator'
+      properties:
+        type:
+          $ref: '#/components/schemas/EventOriginatorEnum'
+    Component_RemoveAccessControlledElevatorLandingLabelWSRequest:
+      type: object
+      properties:
+        accessControlledElevatorLandingUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        label:
+          type:
+          - string
+          - 'null'
+    ComponentCompositeEnumType:
+      type: string
+      enum:
+      - AccessControlledDoor
+      - AccessControlledElevator
+      - AccessControlledElevatorLanding
+    FirstInShadow:
+      type: object
+      properties:
+        originator:
+          $ref: '#/components/schemas/BaseEventOriginator'
+        source:
+          $ref: '#/components/schemas/FirstInSourceEnum'
+        state:
+          $ref: '#/components/schemas/FirstInFirmwareStatusEnum'
+        stateUpdateEventTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    FirstInSourceEnum:
+      type: string
+      enum:
+      - CONFIG_MANUAL_OVERRIDE
+      - CONFIG_REQUIREMENT_CHANGE
+      - CONFIG_MEMBERSHIP
+      - SCHEDULED_RESET
+      - LOCAL_BADGE_EVENT
+      - LOCKDOWN
+      - UNKNOWN
     AccessControlledElevatorLandingShadow:
       type: object
       properties:
@@ -669,28 +773,27 @@ components:
           - integer
           - 'null'
           format: int64
-    DeviceServiceEventOriginator:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          deviceUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          serviceName:
-            type:
-            - string
-            - 'null'
+    Component_FindAccessControlledElevatorLandingShadowsWSRequest:
+      type: object
       properties:
-        type:
-          $ref: '#/components/schemas/EventOriginatorEnum'
-    Component_FindAccessControlledElevatorLandingShadowsByLocationWSResponse:
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+        maxPageSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    FirstInFirmwareStatusEnum:
+      type: string
+      enum:
+      - DISABLED
+      - NOT_CONFIGURED
+      - REQUIRED
+      - SATISFIED
+      - UNKNOWN
+    Component_FindAccessControlledElevatorLandingShadowsWSResponse:
       type: object
       properties:
         lastEvaluatedKey:
@@ -717,112 +820,7 @@ components:
           - integer
           - 'null'
           format: int64
-    Component_GetAccessControlledElevatorLandingLabelsForOrgWSResponse:
-      type: object
-      properties:
-        accessControlledElevatorLandingLabels:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-            uniqueItems: true
-    AccessControlledDoorStateEnumType:
-      type: string
-      enum:
-      - UNLOCKED
-      - ACCESS_CONTROLLED
-    ComponentCompositeShadowEnum:
-      type: string
-      enum:
-      - AccessControlledDoorShadow
-      - AccessControlledElevatorLandingShadow
-    Component_RemoveAccessControlledElevatorLandingLabelWSResponse:
-      type: object
-    FirstInStatusEnum:
-      type: string
-      enum:
-      - REQUIRED
-      - SATISFIED
-    BaseEventOriginator:
-      type: object
-      discriminator:
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/SupportAuthorityEventOriginator'
-      - $ref: '#/components/schemas/ApiTokenEventOriginator'
-      - $ref: '#/components/schemas/UserEventOriginator'
-      - $ref: '#/components/schemas/RuleEventOriginator'
-      - $ref: '#/components/schemas/ComponentCompositeEventOriginator'
-      - $ref: '#/components/schemas/GuestPassEventOriginator'
-      - $ref: '#/components/schemas/DeviceServiceEventOriginator'
-      properties:
-        type:
-          $ref: '#/components/schemas/EventOriginatorEnum'
-    GuestPassEventOriginator:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          guestPassName:
-            type:
-            - string
-            - 'null'
-          guestPassUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        type:
-          $ref: '#/components/schemas/EventOriginatorEnum'
-    Component_FindAccessControlledElevatorLandingShadowsWSRequest:
-      type: object
-      properties:
-        lastEvaluatedKey:
-          type:
-          - string
-          - 'null'
-        maxPageSize:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    EventOriginatorEnum:
-      type: string
-      enum:
-      - USER
-      - SUPPORT_AUTHORITY
-      - API_TOKEN
-      - RULE
-      - COMPONENT_COMPOSITE_EVENT
-      - GUEST_PASS
-      - DEVICE_SERVICE
-      - UNKNOWN
-    Component_FindAccessControlledElevatorLandingsByLocationWSResponse:
-      type: object
-      properties:
-        accessControlledElevatorLandings:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AccessControlledElevatorLanding'
-        lastEvaluatedKey:
-          type:
-          - string
-          - 'null'
-    Component_FindAccessControlledElevatorLandingShadowsWSResponse:
+    Component_FindAccessControlledElevatorLandingShadowsByLocationWSResponse:
       type: object
       properties:
         lastEvaluatedKey:
@@ -835,27 +833,29 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/AccessControlledElevatorLandingShadow'
-    ApiTokenEventOriginator:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          tokenName:
-            type:
-            - string
-            - 'null'
-          tokenUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
+    Component_AddAccessControlledElevatorLandingLabelWSResponse:
+      type: object
+    Component_GetAccessControlledElevatorLandingLabelsForOrgWSRequest:
+      type: object
+    Component_FindAccessControlledElevatorLandingShadowsByLocationWSRequest:
+      type: object
       properties:
-        type:
-          $ref: '#/components/schemas/EventOriginatorEnum'
+        lastEvaluatedKey:
+          type:
+          - string
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        maxPageSize:
+          type:
+          - integer
+          - 'null'
+          format: int32
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

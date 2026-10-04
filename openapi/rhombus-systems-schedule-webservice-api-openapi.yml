@@ -436,52 +436,9 @@ paths:
       - Schedule Webservice
 components:
   schemas:
-    Schedule_CreateRelativeDateTimeIntervalsScheduleWSRequest:
+    Schedule_FindAbsoluteScheduleWSResponse:
       type: object
-      description: Request object for creating a relative datetime intervals schedule.
-      properties:
-        schedule:
-          $ref: '#/components/schemas/RelativeDateTimeIntervalsScheduleType'
-    Schedule_GetSchedulesWSRequest:
-      type: object
-      description: Request object for getting all schedules.
-    Schedule_FindWeeklyScheduleWSRequest:
-      type: object
-      description: Request object for finding a weekly schedule.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Schedule_FindRelativeDateTimeIntervalsScheduleWSRequest:
-      type: object
-      description: Request object for finding a relative datetime intervals schedule.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Schedule_CreateWeeklyScheduleWSRequest:
-      type: object
-      description: Request object for creating a weekly schedule.
-      properties:
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-    Schedule_CreateAbsoluteScheduleWSRequest:
-      type: object
-      description: Request object for creating an absolute schedule.
-      properties:
-        schedule:
-          $ref: '#/components/schemas/AbsoluteSecondsScheduleType'
-    Schedule_FindWeeklyScheduleWSResponse:
-      type: object
-      description: Response object for finding a weekly schedule.
+      description: Response object for finding an absolute schedule.
       properties:
         error:
           type:
@@ -492,14 +449,84 @@ components:
           - string
           - 'null'
         schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+          $ref: '#/components/schemas/AbsoluteSecondsScheduleType'
         warningMsg:
           type:
           - string
           - 'null'
-    Schedule_CreateWeeklyScheduleWSResponse:
+    AbsoluteSecondsIntervalType:
       type: object
-      description: Response object for creating a weekly schedule.
+      properties:
+        b:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        e:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    Schedule_GetScheduleDataV2WSRequest:
+      type: object
+      description: Request object for getting schedule data v2.
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AbsoluteSecondsScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          intervalList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/AbsoluteSecondsIntervalType'
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateRelativeDateTimeIntervalsScheduleWSResponse:
+      type: object
+      description: Response object for creating a relative datetime intervals schedule.
       properties:
         error:
           type:
@@ -520,24 +547,6 @@ components:
           type:
           - string
           - 'null'
-    LocalDateTimeIntervalType:
-      type:
-      - object
-      - 'null'
-      properties:
-        localEndDateTime:
-          type:
-          - string
-          - 'null'
-          description: Interval end time in 'yyyy-MM-ddTHH:mm:ss' format. Interval end time is exclusive.
-        localStartDateTime:
-          type:
-          - string
-          - 'null'
-          description: Interval start time in 'yyyy-MM-ddTHH:mm:ss' format. Interval start time is inclusive.
-      required:
-      - localEndDateTime
-      - localStartDateTime
     Schedule_WeeklyRepeatingScheduleDataType:
       type: object
       description: Weekly repeating schedule data type with usage information.
@@ -684,216 +693,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Schedule_FindAbsoluteScheduleWSResponse:
-      type: object
-      description: Response object for finding an absolute schedule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        schedule:
-          $ref: '#/components/schemas/AbsoluteSecondsScheduleType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Schedule_CreateRelativeDateTimeIntervalsScheduleWSResponse:
-      type: object
-      description: Response object for creating a relative datetime intervals schedule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_DeleteScheduleWSRequest:
-      type: object
-      description: Request object for deleting a schedule used for policy creation.
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Schedule_FindAbsoluteScheduleWSRequest:
-      type: object
-      description: Request object for finding an absolute schedule.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Schedule_CreateRelativeScheduleWSResponse:
-      type: object
-      description: Response object for creating a relative schedule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    RealtimeRelativeSecondsScheduleType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          pastSeconds:
-            type:
-            - integer
-            - 'null'
-            format: int32
-      properties:
-        internalWriteOnly:
-          type:
-          - boolean
-          - 'null'
-        mutable:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        oneTimeUse:
-          type:
-          - boolean
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        strategy:
-          $ref: '#/components/schemas/ScheduleStrategyEnum'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Schedule_FindRelativeScheduleWSRequest:
-      type: object
-      description: Request object for finding a relative schedule.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_DeleteScheduleWSResponse:
-      type: object
-      description: Response object for deleting a schedule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Schedule_CreateRelativeScheduleWSRequest:
-      type: object
-      description: Request object for creating a relative schedule.
-      properties:
-        schedule:
-          $ref: '#/components/schemas/RealtimeRelativeSecondsScheduleType'
-    RelativeDateTimeIntervalsScheduleType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          intervals:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/LocalDateTimeIntervalType'
-      properties:
-        internalWriteOnly:
-          type:
-          - boolean
-          - 'null'
-        mutable:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        oneTimeUse:
-          type:
-          - boolean
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        strategy:
-          $ref: '#/components/schemas/ScheduleStrategyEnum'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     Schedule_GetScheduleDataWSResponse:
       type: object
       description: Response object for getting schedule data.
@@ -917,42 +716,47 @@ components:
           description: List of weekly schedule data
           items:
             $ref: '#/components/schemas/Schedule_WeeklyRepeatingScheduleDataType'
-    Schedule_FindRelativeDateTimeIntervalsScheduleWSResponse:
+    Policy_DeleteScheduleWSRequest:
       type: object
-      description: Response object for finding a relative datetime intervals schedule.
+      description: Request object for deleting a schedule used for policy creation.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        scheduleUuid:
           type:
           - string
           - 'null'
-        schedule:
-          $ref: '#/components/schemas/RelativeDateTimeIntervalsScheduleType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Schedule_FindRelativeScheduleWSResponse:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_FindRelativeScheduleWSRequest:
       type: object
-      description: Response object for finding a relative schedule.
+      description: Request object for finding a relative schedule.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
+        uuid:
           type:
           - string
           - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WeeklyMinuteIntervalType:
+      type: object
+      properties:
+        minuteOfWeekStart:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Schedule_CreateWeeklyScheduleWSRequest:
+      type: object
+      description: Request object for creating a weekly schedule.
+      properties:
         schedule:
-          $ref: '#/components/schemas/RealtimeRelativeSecondsScheduleType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
     WeeklyRepeatingScheduleType:
       type:
       - object
@@ -999,27 +803,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Schedule_GetScheduleDataV2WSRequest:
+    Schedule_GetScheduleDataV2WSResponse:
       type: object
-      description: Request object for getting schedule data v2.
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ScheduleStrategyEnum:
-      type: string
-      enum:
-      - WEEKLY_REPEATING_MINUTES
-      - ABSOLUTE_SECONDS
-      - REALTIME_RELATIVE_SECONDS
-      - RELATIVE_DATETIME_INTERVALS
-    Schedule_CreateAbsoluteScheduleWSResponse:
-      type: object
-      description: Response object for creating an absolute schedule.
+      description: Response object for getting schedule data v2.
       properties:
         error:
           type:
@@ -1029,17 +815,12 @@ components:
           type:
           - string
           - 'null'
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
         warningMsg:
           type:
           - string
           - 'null'
+        weeklyScheduleData:
+          $ref: '#/components/schemas/Schedule_WeeklyRepeatingScheduleDataType'
     Schedule_GetSchedulesWSResponse:
       type: object
       description: Response object for getting all schedules.
@@ -1084,22 +865,15 @@ components:
           description: List of weekly repeating schedules
           items:
             $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-    WeeklyMinuteIntervalType:
+    Schedule_CreateRelativeDateTimeIntervalsScheduleWSRequest:
       type: object
+      description: Request object for creating a relative datetime intervals schedule.
       properties:
-        minuteOfWeekStart:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        minuteOfWeekStop:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Schedule_GetScheduleDataV2WSResponse:
+        schedule:
+          $ref: '#/components/schemas/RelativeDateTimeIntervalsScheduleType'
+    Policy_DeleteScheduleWSResponse:
       type: object
-      description: Response object for getting schedule data v2.
+      description: Response object for deleting a schedule.
       properties:
         error:
           type:
@@ -1113,34 +887,260 @@ components:
           type:
           - string
           - 'null'
-        weeklyScheduleData:
-          $ref: '#/components/schemas/Schedule_WeeklyRepeatingScheduleDataType'
-    AbsoluteSecondsIntervalType:
+    Schedule_CreateRelativeScheduleWSRequest:
       type: object
+      description: Request object for creating a relative schedule.
       properties:
-        b:
+        schedule:
+          $ref: '#/components/schemas/RealtimeRelativeSecondsScheduleType'
+    Schedule_FindAbsoluteScheduleWSRequest:
+      type: object
+      description: Request object for finding an absolute schedule.
+      properties:
+        uuid:
           type:
-          - integer
+          - string
           - 'null'
-          format: int64
-        e:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateRelativeScheduleWSResponse:
+      type: object
+      description: Response object for creating a relative schedule.
+      properties:
+        error:
           type:
-          - integer
+          - boolean
           - 'null'
-          format: int64
-    AbsoluteSecondsScheduleType:
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    LocalDateTimeIntervalType:
+      type:
+      - object
+      - 'null'
+      properties:
+        localEndDateTime:
+          type:
+          - string
+          - 'null'
+          description: Interval end time in 'yyyy-MM-ddTHH:mm:ss' format. Interval end time is exclusive.
+        localStartDateTime:
+          type:
+          - string
+          - 'null'
+          description: Interval start time in 'yyyy-MM-ddTHH:mm:ss' format. Interval start time is inclusive.
+      required:
+      - localEndDateTime
+      - localStartDateTime
+    RelativeDateTimeIntervalsScheduleType:
       type:
       - object
       - 'null'
       allOf:
       - type: object
         properties:
-          intervalList:
+          intervals:
             type:
             - array
             - 'null'
             items:
-              $ref: '#/components/schemas/AbsoluteSecondsIntervalType'
+              $ref: '#/components/schemas/LocalDateTimeIntervalType'
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateAbsoluteScheduleWSResponse:
+      type: object
+      description: Response object for creating an absolute schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_FindWeeklyScheduleWSResponse:
+      type: object
+      description: Response object for finding a weekly schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_FindRelativeDateTimeIntervalsScheduleWSRequest:
+      type: object
+      description: Request object for finding a relative datetime intervals schedule.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateWeeklyScheduleWSResponse:
+      type: object
+      description: Response object for creating a weekly schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_FindWeeklyScheduleWSRequest:
+      type: object
+      description: Request object for finding a weekly schedule.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Schedule_CreateAbsoluteScheduleWSRequest:
+      type: object
+      description: Request object for creating an absolute schedule.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/AbsoluteSecondsScheduleType'
+    ScheduleStrategyEnum:
+      type: string
+      enum:
+      - WEEKLY_REPEATING_MINUTES
+      - ABSOLUTE_SECONDS
+      - REALTIME_RELATIVE_SECONDS
+      - RELATIVE_DATETIME_INTERVALS
+    Schedule_FindRelativeDateTimeIntervalsScheduleWSResponse:
+      type: object
+      description: Response object for finding a relative datetime intervals schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedule:
+          $ref: '#/components/schemas/RelativeDateTimeIntervalsScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Schedule_GetSchedulesWSRequest:
+      type: object
+      description: Request object for getting all schedules.
+    Schedule_FindRelativeScheduleWSResponse:
+      type: object
+      description: Response object for finding a relative schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedule:
+          $ref: '#/components/schemas/RealtimeRelativeSecondsScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RealtimeRelativeSecondsScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          pastSeconds:
+            type:
+            - integer
+            - 'null'
+            format: int32
       properties:
         internalWriteOnly:
           type:

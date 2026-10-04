@@ -1816,35 +1816,111 @@ paths:
       - Policy Webservice
 components:
   schemas:
-    Policy_DeleteVideoIntercomPolicyWSRequest:
+    Policy_DeleteProximityPolicyWSResponse:
       type: object
-      description: Request object for deleting a video intercom policy.
+      description: Response object for deleting a proximity policy.
       properties:
-        policyUuid:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    DoorPolicyType:
+      type: object
+      description: List of door sensor policies using the schedule
+      properties:
+        defaultAjarThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_UpdateOccupancyPolicyWSRequest:
-      type: object
-      description: Request object for updating an occupancy policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalOccupancyPolicyType'
-    CameraScheduledTriggerType:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
+        scheduledTriggers:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/CameraTriggerType'
-          uniqueItems: true
+            $ref: '#/components/schemas/DoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_MinimalCameraPolicyV2Type:
+      type: object
+      description: Updated camera policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalCameraScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetTrackPauseSettingsWSRequest:
+      type: object
+      description: Request object for listing active per-track alert snoozes. Org is resolved from the principal.
+    Policy_ExternalAudioTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        threshold:
+          type:
+          - number
+          - 'null'
+          format: float
     Policy_GetClimatePoliciesWSResponse:
       type: object
       description: Response object containing all climate policies in the organization.
@@ -1868,45 +1944,9 @@ components:
           type:
           - string
           - 'null'
-    Policy_UpdateDoorPolicyWSRequest:
+    Policy_MinimalOccupancyPolicyType:
       type: object
-      description: Request object for updating a door sensor policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalDoorPolicyType'
-    Policy_ExternalVideoIntercomScheduledTriggerType:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_ExternalVideoIntercomTriggerType'
-          uniqueItems: true
-    Policy_CreateAudioPolicyWSRequest:
-      type: object
-      description: Request object for creating an audio policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalAudioPolicyType'
-    VideoIntercomScheduledTriggerType:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/VideoIntercomTriggerType'
-          uniqueItems: true
-    Policy_MinimalProximityPolicyType:
-      type: object
-      description: Updated proximity policy configuration
+      description: Updated occupancy policy configuration
       properties:
         description:
           type:
@@ -1928,7 +1968,7 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Policy_MinimalProximityScheduledTriggerType'
+            $ref: '#/components/schemas/Policy_MinimalOccupancyScheduledTriggerType'
         uuid:
           type:
           - string
@@ -1936,6 +1976,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetClimatePoliciesWSRequest:
+      type: object
+      description: Request object for getting all climate policies in the organization.
     Policy_CreateProximityPolicyWSResponse:
       type: object
       properties:
@@ -1958,91 +2001,60 @@ components:
           type:
           - string
           - 'null'
-    Policy_DeleteAccessControlledDoorPolicyWSRequest:
+    Policy_UpdateAudioPolicyWSResponse:
       type: object
-      description: Request object for deleting an access controlled door policy.
+      description: Response object for updating an audio policy.
       properties:
-        policyUuid:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    OccupancyPolicyType:
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ProximityScheduledTriggerType:
       type: object
-      description: List of occupancy policies using the schedule
       properties:
-        description:
+        departureThresholdSec:
           type:
-          - string
+          - integer
           - 'null'
-        name:
+          format: int32
+        egressThresholdMetersMap:
           type:
-          - string
+          - object
           - 'null'
-        orgUuid:
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: double
+        ingressThresholdMetersMap:
           type:
-          - string
+          - object
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
+          additionalProperties:
+            type:
+            - number
+            - 'null'
+            format: double
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/OccupancyScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_CreatePolicyAddendumForLocationResponse:
+            $ref: '#/components/schemas/ProximityTriggerType'
+          uniqueItems: true
+    Policy_GetProximityPoliciesWSRequest:
       type: object
-      description: Response object for creating a policy addendum for a location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_CreateAudioPolicyWSResponse:
-      type: object
-      description: Response object containing the UUID of the created audio policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_GetVideoIntercomPoliciesWSRequest:
-      type: object
-      description: Request object for getting all video intercom policies in the organization.
+      description: Request object for getting all proximity policies in the organization.
     Policy_GetCameraPoliciesWSResponse:
       type: object
       description: Response object containing all camera policies in the organization.
@@ -2066,7 +2078,115 @@ components:
           type:
           - string
           - 'null'
-    Policy_MinimalAudioScheduledTriggerType:
+    Policy_UpdateVideoIntercomPolicyWSRequest:
+      type: object
+      description: Request object for updating a video intercom policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalVideoIntercomPolicyType'
+    Policy_GetPoliciesUsingScheduleWSRequest:
+      type: object
+      description: Request object for getting all policies that use a specific schedule.
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetPolicyAddendumsWSRequest:
+      type: object
+      description: Request object for getting policy addendums.
+    WeeklyRepeatingScheduleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          intervalList:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/WeeklyMinuteIntervalType'
+      properties:
+        internalWriteOnly:
+          type:
+          - boolean
+          - 'null'
+        mutable:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        oneTimeUse:
+          type:
+          - boolean
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        strategy:
+          $ref: '#/components/schemas/ScheduleStrategyEnum'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_FindSchedulesWSRequest:
+      type: object
+      description: Request object for finding all schedules in the organization.
+    AudioScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioTriggerType'
+          uniqueItems: true
+    Policy_UpdateVideoIntercomPolicyWSResponse:
+      type: object
+      description: Response object for updating a video intercom policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteVideoIntercomPolicyWSRequest:
+      type: object
+      description: Request object for deleting a video intercom policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_MinimalCameraScheduledTriggerType:
       type: object
       properties:
         scheduleUuid:
@@ -2081,11 +2201,50 @@ components:
           - array
           - 'null'
           items:
+            $ref: '#/components/schemas/CameraTriggerType'
+          uniqueItems: true
+    Policy_ExternalAudioPolicyType:
+      type: object
+      description: List of audio policies in the organization
+      properties:
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
             $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
           uniqueItems: true
-    Policy_DeleteAccessControlledDoorPolicyWSResponse:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteCameraPolicyWSResponse:
       type: object
-      description: Response object for deleting an access controlled door policy.
+      description: Response object for deleting a camera policy.
       properties:
         error:
           type:
@@ -2099,6 +2258,83 @@ components:
           type:
           - string
           - 'null'
+    Policy_CreateAccessControlledDoorPolicyWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_PauseAlertPolicyWSResponse:
+      type: object
+      description: Response object for pausing alert policies.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteAudioPolicyWSRequest:
+      type: object
+      description: Request object for deleting an audio policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateAudioPolicyWSRequest:
+      type: object
+      description: Request object for updating an audio policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalAudioPolicyType'
+    Policy_MinimalDoorScheduledTriggerType:
+      type: object
+      properties:
+        ajarThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
     Policy_GetPoliciesUsingScheduleWSResponse:
       type: object
       description: Response object containing all policies that use a specific schedule, organized by policy type.
@@ -2171,6 +2407,177 @@ components:
           type:
           - string
           - 'null'
+    Policy_CreateVideoIntercomPolicyWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    OccupancyScheduledTriggerType:
+      type: object
+      properties:
+        occupancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        vacancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Policy_GetOccupancyPoliciesWSRequest:
+      type: object
+      description: Request object for getting all occupancy policies in the organization.
+    Policy_UpdateClimatePolicyWSResponse:
+      type: object
+      description: Response object for updating a climate policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateProximityPolicyWSResponse:
+      type: object
+      description: Response object for updating a proximity policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_PauseTrackAlertsWSRequest:
+      type: object
+      description: Request object for pausing/resuming track alerts for a single reID stableTrackId on a device.
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds to pause track alerts
+          example: 3600
+        policyAlertUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for when to begin the pause
+          example: 1640995200
+        trackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: reID stableTrackId to pause track alerts for
+    Policy_GetPolicyPauseSettingsWSRequest:
+      type: object
+      description: Request object for getting policy pause settings.
+    Policy_UpdateProximityPolicyWSRequest:
+      type: object
+      description: Request object for updating a proximity policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalProximityPolicyType'
+    Policy_GetAudioPoliciesWSRequest:
+      type: object
+      description: Request object for getting all audio policies in the organization.
+    ClimateTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        threshold:
+          type:
+          - number
+          - 'null'
+          format: float
+    Policy_MinimalAudioPolicyType:
+      type: object
+      description: Updated audio policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalAudioScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     Policy_DeleteCameraPolicyWSRequest:
       type: object
       description: Request object for deleting a camera policy.
@@ -2182,400 +2589,60 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    CameraPolicyV2Type:
+    Policy_FindSchedulesWSResponse:
       type: object
-      description: List of camera policies using the schedule
+      description: Response object containing all schedules in the organization.
       properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        schedules:
+          type:
+          - array
+          - 'null'
+          description: List of schedules in the organization
+          items:
+            $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteOccupancyPolicyWSRequest:
+      type: object
+      description: Request object for deleting an occupancy policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ProximityPolicyType:
+      type: object
+      description: List of proximity policies in the organization
+      properties:
+        defaultDepartureThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
         defaultTriggers:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/CameraTriggerType'
+            $ref: '#/components/schemas/ProximityTriggerType'
           uniqueItems: true
         description:
           type:
           - string
           - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CameraScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_UpdateDoorPolicyWSResponse:
-      type: object
-      description: Response object for updating a door sensor policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_UpdateVideoIntercomPolicyWSRequest:
-      type: object
-      description: Request object for updating a video intercom policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalVideoIntercomPolicyType'
-    ProximityTriggerType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        locationUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_DeleteScheduleWSResponse:
-      type: object
-      description: Response object for deleting a schedule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_MinimalCameraScheduledTriggerType:
-      type: object
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CameraTriggerType'
-          uniqueItems: true
-    Policy_DeletePolicyPauseSettingWSResponse:
-      type: object
-      description: Response object for deleting a policy pause setting.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_UpdateScheduleWSResponse:
-      type: object
-      description: Response object for updating a schedule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_DeleteDoorPolicyWSRequest:
-      type: object
-      description: Request object for deleting a door sensor policy.
-      properties:
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_GetVideoIntercomPoliciesWSResponse:
-      type: object
-      description: Response object containing all video intercom policies in the organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policies:
-          type:
-          - array
-          - 'null'
-          description: List of video intercom policies in the organization
-          items:
-            $ref: '#/components/schemas/Policy_ExternalVideoIntercomPolicyType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    WeeklyMinuteIntervalType:
-      type: object
-      properties:
-        minuteOfWeekStart:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        minuteOfWeekStop:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Policy_CreateClimatePolicyWSResponse:
-      type: object
-      description: Response object containing the UUID of the created climate policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_UpdateClimatePolicyWSRequest:
-      type: object
-      description: Request object for updating a climate policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalClimatePolicyType'
-    Policy_GetPoliciesUsingScheduleWSRequest:
-      type: object
-      description: Request object for getting all policies that use a specific schedule.
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_DeleteAudioPolicyWSResponse:
-      type: object
-      description: Response object for deleting an audio policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_CreateVideoIntercomPolicyWSRequest:
-      type: object
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalVideoIntercomPolicyType'
-    Policy_GetAccessControlledDoorPoliciesWSRequest:
-      type: object
-      description: Request object for getting all access controlled door policies in the organization.
-    Policy_DeleteDevicePolicyAddendumsWSRequest:
-      type: object
-      description: Request object for deleting device policy addendums.
-      properties:
-        uuids:
-          type:
-          - array
-          - 'null'
-          description: List of device policy addendum UUIDs to delete
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_CreateCameraPolicyWSResponse:
-      type: object
-      description: Response object containing the UUID of the created camera policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_MinimalAccessControlledDoorPolicyType:
-      type: object
-      description: Updated access controlled door policy configuration
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_MinimalAccessControlledDoorScheduledTriggerType:
-      type: object
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-    Policy_GetProximityPoliciesWSRequest:
-      type: object
-      description: Request object for getting all proximity policies in the organization.
-    Policy_ExternalAudioTriggerType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        threshold:
-          type:
-          - number
-          - 'null'
-          format: float
-    Policy_CreatePolicyAddendumsForDevicesResponse:
-      type: object
-      description: Response object for creating policy addendums for multiple devices.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_UpdateAudioPolicyWSResponse:
-      type: object
-      description: Response object for updating an audio policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ProximityScheduledTriggerType:
-      type: object
-      properties:
-        departureThresholdSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
         egressThresholdMetersMap:
           type:
           - object
@@ -2594,23 +2661,6 @@ components:
             - number
             - 'null'
             format: double
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ProximityTriggerType'
-          uniqueItems: true
-    AccessControlledDoorPolicyType:
-      type: object
-      description: List of access controlled door policies using the schedule
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
         name:
           type:
           - string
@@ -2627,7 +2677,7 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/AccessControlledDoorScheduledTriggerType'
+            $ref: '#/components/schemas/ProximityScheduledTriggerType'
         uuid:
           type:
           - string
@@ -2635,68 +2685,12 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_UpdateOccupancyPolicyWSResponse:
+    Policy_UpdateScheduleWSRequest:
       type: object
-      description: Response object for updating an occupancy policy.
+      description: Request object for updating a schedule used for policy creation.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_DeleteVideoIntercomPolicyWSResponse:
-      type: object
-      description: Response object for deleting a video intercom policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_GetAccessControlledDoorPoliciesWSResponse:
-      type: object
-      description: Response object containing all access controlled door policies in the organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policies:
-          type:
-          - array
-          - 'null'
-          description: List of access controlled door policies in the organization
-          items:
-            $ref: '#/components/schemas/AccessControlledDoorPolicyType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
     Policy_ExternalVideoIntercomTriggerType:
       type: object
       properties:
@@ -2756,64 +2750,15 @@ components:
             - string
             - 'null'
           uniqueItems: true
-    Policy_UpdateAccessControlledDoorPolicyWSResponse:
+    Policy_CreateDoorPolicyWSRequest:
       type: object
-      description: Response object for updating an access controlled door policy.
+      description: Request object for creating a door sensor policy.
       properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_DeleteCameraPolicyWSResponse:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalDoorPolicyType'
+    Policy_MinimalProximityPolicyType:
       type: object
-      description: Response object for deleting a camera policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_GetProximityPoliciesWSResponse:
-      type: object
-      description: Response object containing all proximity policies in the organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policies:
-          type:
-          - array
-          - 'null'
-          description: List of proximity policies in the organization
-          items:
-            $ref: '#/components/schemas/ProximityPolicyType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_ExternalVideoIntercomPolicyType:
-      type: object
-      description: List of video intercom policies in the organization
+      description: Updated proximity policy configuration
       properties:
         description:
           type:
@@ -2835,7 +2780,7 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/Policy_ExternalVideoIntercomScheduledTriggerType'
+            $ref: '#/components/schemas/Policy_MinimalProximityScheduledTriggerType'
         uuid:
           type:
           - string
@@ -2843,23 +2788,49 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_CreatePolicyAddendumsForDevicesRequest:
+    Policy_CreateClimatePolicyWSResponse:
       type: object
-      description: Request object for creating policy addendums for multiple devices.
+      description: Response object containing the UUID of the created climate policy.
       properties:
-        activities:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteDoorPolicyWSRequest:
+      type: object
+      description: Request object for deleting a door sensor policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteDevicePolicyAddendumsWSRequest:
+      type: object
+      description: Request object for deleting device policy addendums.
+      properties:
+        uuids:
           type:
           - array
           - 'null'
-          description: Set of activities to include in the policy addendums
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device UUIDs to create policy addendums for
+          description: List of device policy addendum UUIDs to delete
           items:
             type:
             - string
@@ -2867,44 +2838,7 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Duration in seconds for the policy addendums
-          example: 3600
-        scheduledTimestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Scheduled timestamp in seconds for the policy addendums
-          example: 1640995200
-    Policy_GetOccupancyPoliciesWSResponse:
-      type: object
-      description: Response object containing all occupancy policies in the organization.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policies:
-          type:
-          - array
-          - 'null'
-          description: List of occupancy policies in the organization
-          items:
-            $ref: '#/components/schemas/OccupancyPolicyType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    AccessControlledDoorScheduledTriggerType:
+    CameraScheduledTriggerType:
       type: object
       properties:
         schedule:
@@ -2914,155 +2848,11 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ActivityEnum'
+            $ref: '#/components/schemas/CameraTriggerType'
           uniqueItems: true
-    Policy_CreateCameraPolicyWSRequest:
+    Policy_CreatePolicyAddendumsForDevicesResponse:
       type: object
-      description: Request object for creating a camera policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalCameraPolicyV2Type'
-    VideoIntercomPolicyType:
-      type: object
-      description: List of video intercom policies using the schedule
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/VideoIntercomScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    WeeklyRepeatingScheduleType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          intervalList:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/WeeklyMinuteIntervalType'
-      properties:
-        internalWriteOnly:
-          type:
-          - boolean
-          - 'null'
-        mutable:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        oneTimeUse:
-          type:
-          - boolean
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        strategy:
-          $ref: '#/components/schemas/ScheduleStrategyEnum'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_MinimalOccupancyScheduledTriggerType:
-      type: object
-      properties:
-        occupancyThresholdSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        vacancyThresholdSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Policy_DeleteClimatePolicyWSRequest:
-      type: object
-      description: Request object for deleting a climate policy.
-      properties:
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    OccupancyScheduledTriggerType:
-      type: object
-      properties:
-        occupancyThresholdSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        vacancyThresholdSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Policy_DeleteClimatePolicyWSResponse:
-      type: object
-      description: Response object for deleting a climate policy.
+      description: Response object for creating policy addendums for multiple devices.
       properties:
         error:
           type:
@@ -3076,59 +2866,20 @@ components:
           type:
           - string
           - 'null'
-    Policy_CreateProximityPolicyWSRequest:
+    ScheduledIntervalType:
       type: object
+      description: Map of location UUIDs to snooze intervals
       properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalProximityPolicyType'
-    Policy_GetAudioPoliciesWSResponse:
-      type: object
-      description: Response object containing all audio policies in the organization.
-      properties:
-        error:
+        durationSecs:
           type:
-          - boolean
+          - integer
           - 'null'
-        errorMsg:
+          format: int64
+        timestampSec:
           type:
-          - string
+          - integer
           - 'null'
-        policies:
-          type:
-          - array
-          - 'null'
-          description: List of audio policies in the organization
-          items:
-            $ref: '#/components/schemas/Policy_ExternalAudioPolicyType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_MinimalDoorPolicyType:
-      type: object
-      description: Updated door sensor policy configuration
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_MinimalDoorScheduledTriggerType'
+          format: int64
         uuid:
           type:
           - string
@@ -3136,203 +2887,72 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_CreateDoorPolicyWSResponse:
-      type: object
-      description: Response object containing the UUID of the created door sensor policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_UpdateCameraPolicyWSRequest:
-      type: object
-      description: Request object for updating a camera policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalCameraPolicyV2Type'
-    Policy_GetDoorPoliciesWSRequest:
-      type: object
-      description: Request object for getting all door sensor policies in the organization.
-    Policy_UpdateAccessControlledDoorPolicyWSRequest:
-      type: object
-      description: Request object for updating an access controlled door policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorPolicyType'
     Policy_CreateScheduleWSRequest:
       type: object
       description: Request object for creating a schedule to be used for policy creation.
       properties:
         schedule:
           $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-    Policy_MinimalOccupancyPolicyType:
+    Policy_GetDoorPoliciesWSResponse:
       type: object
-      description: Updated occupancy policy configuration
+      description: Response object containing all door sensor policies in the organization.
       properties:
-        description:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
           type:
           - string
           - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
+        policies:
           type:
           - array
           - 'null'
+          description: List of door sensor policies in the organization
           items:
-            $ref: '#/components/schemas/Policy_MinimalOccupancyScheduledTriggerType'
-        uuid:
+            $ref: '#/components/schemas/DoorPolicyType'
+        warningMsg:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_UpdateScheduleWSRequest:
+    Policy_CreateAccessControlledDoorPolicyWSRequest:
       type: object
-      description: Request object for updating a schedule used for policy creation.
-      properties:
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-    Policy_GetPolicyPauseSettingsWSRequest:
-      type: object
-      description: Request object for getting policy pause settings.
-    Policy_CreateDoorPolicyWSRequest:
-      type: object
-      description: Request object for creating a door sensor policy.
       properties:
         policy:
-          $ref: '#/components/schemas/Policy_MinimalDoorPolicyType'
-    ClimatePolicyType:
+          $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorPolicyType'
+    Policy_DeleteOccupancyPolicyWSResponse:
       type: object
-      description: List of climate policies using the schedule
+      description: Response object for deleting an occupancy policy.
       properties:
-        backoffAlertSecs:
+        error:
           type:
-          - object
+          - boolean
           - 'null'
-          additionalProperties:
-            type:
-            - integer
-            - 'null'
-            format: int64
-        defaultTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClimateTriggerType'
-          uniqueItems: true
-        description:
+        errorMsg:
           type:
           - string
           - 'null'
-        name:
+        warningMsg:
           type:
           - string
           - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClimateScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_GetPolicyAddendumsWSRequest:
+    Policy_CreatePolicyAddendumForLocationResponse:
       type: object
-      description: Request object for getting policy addendums.
-    DoorPolicyType:
-      type: object
-      description: List of door sensor policies using the schedule
+      description: Response object for creating a policy addendum for a location.
       properties:
-        defaultAjarThresholdSec:
+        error:
           type:
-          - integer
+          - boolean
           - 'null'
-          format: int32
-        defaultTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        description:
+        errorMsg:
           type:
           - string
           - 'null'
-        name:
+        warningMsg:
           type:
           - string
           - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DoorScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_DeleteOccupancyPolicyWSRequest:
-      type: object
-      description: Request object for deleting an occupancy policy.
-      properties:
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     CameraTriggerType:
       type: object
       properties:
@@ -3409,6 +3029,124 @@ components:
             - string
             - 'null'
           uniqueItems: true
+    Policy_DeleteLocationPolicyAddendumWSRequest:
+      type: object
+      description: Request object for deleting a location policy addendum.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetAudioPoliciesWSResponse:
+      type: object
+      description: Response object containing all audio policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of audio policies in the organization
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetPolicyPauseSettingsWSResponse:
+      type: object
+      description: Response object containing policy pause settings for locations, devices, and component composites.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policiesPausedForComponentCompositesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of component composite UUIDs to their paused policy scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of component composite UUIDs to their paused policy scheduled intervals
+        policiesPausedForDevicesMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to their paused policy scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of device UUIDs to their paused policy scheduled intervals
+        policiesPausedForLocationsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location UUIDs to their paused policy scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of location UUIDs to their paused policy scheduled intervals
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_MinimalAccessControlledDoorPolicyType:
+      type: object
+      description: Updated access controlled door policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     AudioPolicyType:
       type: object
       description: List of audio policies using the schedule
@@ -3448,6 +3186,654 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateCameraPolicyWSResponse:
+      type: object
+      description: Response object containing the UUID of the created camera policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreateProximityPolicyWSRequest:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalProximityPolicyType'
+    DoorScheduledTriggerType:
+      type: object
+      properties:
+        ajarThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+    Policy_UpdateAccessControlledDoorPolicyWSRequest:
+      type: object
+      description: Request object for updating an access controlled door policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorPolicyType'
+    Policy_MinimalAudioScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
+          uniqueItems: true
+    ProximityTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        locationUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_ExternalVideoIntercomPolicyType:
+      type: object
+      description: List of video intercom policies in the organization
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateOccupancyPolicyWSResponse:
+      type: object
+      description: Response object for updating an occupancy policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetVideoIntercomPoliciesWSResponse:
+      type: object
+      description: Response object containing all video intercom policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of video intercom policies in the organization
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    TrackPauseScopeEnum:
+      type: string
+      description: Whether the snooze targets a single device or a whole location
+      enum:
+      - DEVICE
+      - LOCATION
+    Policy_GetVideoIntercomPoliciesWSRequest:
+      type: object
+      description: Request object for getting all video intercom policies in the organization.
+    OccupancyPolicyType:
+      type: object
+      description: List of occupancy policies using the schedule
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/OccupancyScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateClimatePolicyWSRequest:
+      type: object
+      description: Request object for updating a climate policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalClimatePolicyType'
+    Policy_MinimalProximityScheduledTriggerType:
+      type: object
+      properties:
+        departureThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProximityTriggerType'
+          uniqueItems: true
+    Policy_GetAccessControlledDoorPoliciesWSResponse:
+      type: object
+      description: Response object containing all access controlled door policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of access controlled door policies in the organization
+          items:
+            $ref: '#/components/schemas/AccessControlledDoorPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteVideoIntercomPolicyWSResponse:
+      type: object
+      description: Response object for deleting a video intercom policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreateOccupancyPolicyWSRequest:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalOccupancyPolicyType'
+    Policy_CreateDoorPolicyWSResponse:
+      type: object
+      description: Response object containing the UUID of the created door sensor policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeletePolicyPauseSettingWSRequest:
+      type: object
+      description: Request object for deleting a policy pause setting.
+      properties:
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateAccessControlledDoorPolicyWSResponse:
+      type: object
+      description: Response object for updating an access controlled door policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteAccessControlledDoorPolicyWSRequest:
+      type: object
+      description: Request object for deleting an access controlled door policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AudioTriggerType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        threshold:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Policy_MinimalOccupancyScheduledTriggerType:
+      type: object
+      properties:
+        occupancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        vacancyThresholdSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Policy_UpdateCameraPolicyWSResponse:
+      type: object
+      description: Response object for updating a camera policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    ClimatePolicyType:
+      type: object
+      description: List of climate policies using the schedule
+      properties:
+        backoffAlertSecs:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - integer
+            - 'null'
+            format: int64
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateTriggerType'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteClimatePolicyWSResponse:
+      type: object
+      description: Response object for deleting a climate policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteDoorPolicyWSResponse:
+      type: object
+      description: Response object for deleting a door sensor policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateDoorPolicyWSRequest:
+      type: object
+      description: Request object for updating a door sensor policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalDoorPolicyType'
+    Policy_MinimalVideoIntercomScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomTriggerType'
+          uniqueItems: true
+    AccessControlledDoorPolicyType:
+      type: object
+      description: List of access controlled door policies using the schedule
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AccessControlledDoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_CreateAudioPolicyWSRequest:
+      type: object
+      description: Request object for creating an audio policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalAudioPolicyType'
+    Policy_GetCameraPoliciesWSRequest:
+      type: object
+      description: Request object for getting all camera policies in the organization.
+    Policy_CreateVideoIntercomPolicyWSRequest:
+      type: object
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalVideoIntercomPolicyType'
+    Policy_DeletePolicyPauseSettingWSResponse:
+      type: object
+      description: Response object for deleting a policy pause setting.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_MinimalDoorPolicyType:
+      type: object
+      description: Updated door sensor policy configuration
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_MinimalDoorScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_GetPolicyAddendumsWSResponse:
+      type: object
+      description: Response object containing policy addendums for devices and locations.
+      properties:
+        deviceAddendumsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of device UUIDs to their policy addendum scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of device UUIDs to their policy addendum scheduled intervals
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        locationAddendumsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            description: Map of location UUIDs to their policy addendum scheduled intervals
+            items:
+              $ref: '#/components/schemas/ScheduledIntervalType'
+          description: Map of location UUIDs to their policy addendum scheduled intervals
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreateOccupancyPolicyWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Policy_TrackPauseEntry:
       type: object
       description: A single active or scheduled per-track alert snooze.
@@ -3498,44 +3884,127 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    ProximityPolicyType:
+    Policy_DeleteAccessControlledDoorPolicyWSResponse:
       type: object
-      description: List of proximity policies in the organization
+      description: Response object for deleting an access controlled door policy.
       properties:
-        defaultDepartureThresholdSec:
+        error:
           type:
-          - integer
+          - boolean
           - 'null'
-          format: int32
-        defaultTriggers:
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_ExternalAudioScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ProximityTriggerType'
+            $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
           uniqueItems: true
+    Policy_PauseAlertPolicyWSRequest:
+      type: object
+      description: Request object for pausing alert policies for specified locations, devices, and components.
+      properties:
+        componentCompositeUuids:
+          type:
+          - array
+          - 'null'
+          description: List of component composite UUIDs to pause alert policies for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        deviceUuids:
+          type:
+          - array
+          - 'null'
+          description: List of device UUIDs to pause alert policies for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds to pause alert policies
+          example: 3600
+        locationUuids:
+          type:
+          - array
+          - 'null'
+          description: List of location UUIDs to pause alert policies for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for when to pause alert policies
+          example: 1640995200
+    Policy_DeleteProximityPolicyWSRequest:
+      type: object
+      description: Request object for deleting a proximity policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_MinimalClimateScheduledTriggerType:
+      type: object
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateTriggerType'
+          uniqueItems: true
+    Policy_GetAccessControlledDoorPoliciesWSRequest:
+      type: object
+      description: Request object for getting all access controlled door policies in the organization.
+    VideoIntercomPolicyType:
+      type: object
+      description: List of video intercom policies using the schedule
+      properties:
         description:
           type:
           - string
           - 'null'
-        egressThresholdMetersMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - number
-            - 'null'
-            format: double
-        ingressThresholdMetersMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - number
-            - 'null'
-            format: double
         name:
           type:
           - string
@@ -3552,7 +4021,7 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ProximityScheduledTriggerType'
+            $ref: '#/components/schemas/VideoIntercomScheduledTriggerType'
         uuid:
           type:
           - string
@@ -3560,62 +4029,51 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_GetAudioPoliciesWSRequest:
+    ScheduleStrategyEnum:
+      type: string
+      enum:
+      - WEEKLY_REPEATING_MINUTES
+      - ABSOLUTE_SECONDS
+      - REALTIME_RELATIVE_SECONDS
+      - RELATIVE_DATETIME_INTERVALS
+    Policy_CreatePolicyAddendumsForDevicesRequest:
       type: object
-      description: Request object for getting all audio policies in the organization.
-    Policy_DeleteLocationPolicyAddendumWSResponse:
-      type: object
-      description: Response object for deleting a location policy addendum.
+      description: Request object for creating policy addendums for multiple devices.
       properties:
-        error:
+        activities:
           type:
-          - boolean
+          - array
           - 'null'
-        errorMsg:
+          description: Set of activities to include in the policy addendums
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        deviceUuids:
           type:
-          - string
+          - array
           - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_UpdateProximityPolicyWSResponse:
-      type: object
-      description: Response object for updating a proximity policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ScheduledIntervalType:
-      type: object
-      description: Map of location UUIDs to snooze intervals
-      properties:
-        durationSecs:
+          description: List of device UUIDs to create policy addendums for
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSec:
           type:
           - integer
           - 'null'
           format: int64
-        timestampSec:
+          description: Duration in seconds for the policy addendums
+          example: 3600
+        scheduledTimestampSec:
           type:
           - integer
           - 'null'
           format: int64
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
+          description: Scheduled timestamp in seconds for the policy addendums
+          example: 1640995200
     ActivityEnum:
       type: string
       enum:
@@ -3839,292 +4297,6 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    Policy_CreateAccessControlledDoorPolicyWSRequest:
-      type: object
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalAccessControlledDoorPolicyType'
-    Policy_MinimalCameraPolicyV2Type:
-      type: object
-      description: Updated camera policy configuration
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_MinimalCameraScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_GetClimatePoliciesWSRequest:
-      type: object
-      description: Request object for getting all climate policies in the organization.
-    Policy_PauseAlertPolicyWSResponse:
-      type: object
-      description: Response object for pausing alert policies.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    TrackPauseScopeEnum:
-      type: string
-      description: Whether the snooze targets a single device or a whole location
-      enum:
-      - DEVICE
-      - LOCATION
-    Policy_GetPolicyAddendumsWSResponse:
-      type: object
-      description: Response object containing policy addendums for devices and locations.
-      properties:
-        deviceAddendumsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of device UUIDs to their policy addendum scheduled intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of device UUIDs to their policy addendum scheduled intervals
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        locationAddendumsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of location UUIDs to their policy addendum scheduled intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of location UUIDs to their policy addendum scheduled intervals
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_PauseAlertPolicyWSRequest:
-      type: object
-      description: Request object for pausing alert policies for specified locations, devices, and components.
-      properties:
-        componentCompositeUuids:
-          type:
-          - array
-          - 'null'
-          description: List of component composite UUIDs to pause alert policies for
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceUuids:
-          type:
-          - array
-          - 'null'
-          description: List of device UUIDs to pause alert policies for
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Duration in seconds to pause alert policies
-          example: 3600
-        locationUuids:
-          type:
-          - array
-          - 'null'
-          description: List of location UUIDs to pause alert policies for
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTimestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Scheduled timestamp in seconds for when to pause alert policies
-          example: 1640995200
-    Policy_DeleteDevicePolicyAddendumsWSResponse:
-      type: object
-      description: Response object for deleting device policy addendums.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    ClimateScheduledTriggerType:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClimateTriggerType'
-          uniqueItems: true
-    Policy_CreateOccupancyPolicyWSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    DoorScheduledTriggerType:
-      type: object
-      properties:
-        ajarThresholdSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-    Policy_DeletePolicyPauseSettingWSRequest:
-      type: object
-      description: Request object for deleting a policy pause setting.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_UpdateCameraPolicyWSResponse:
-      type: object
-      description: Response object for updating a camera policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_DeleteProximityPolicyWSResponse:
-      type: object
-      description: Response object for deleting a proximity policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_GetTrackPauseSettingsWSRequest:
-      type: object
-      description: Request object for listing active per-track alert snoozes. Org is resolved from the principal.
-    Policy_MinimalVideoIntercomScheduledTriggerType:
-      type: object
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_ExternalVideoIntercomTriggerType'
-          uniqueItems: true
     Policy_CreateScheduleWSResponse:
       type: object
       description: Response object containing the UUID of the created schedule.
@@ -4148,140 +4320,47 @@ components:
           type:
           - string
           - 'null'
-    Policy_GetDoorPoliciesWSResponse:
+    Policy_PauseTrackAlertsForLocationWSRequest:
       type: object
-      description: Response object containing all door sensor policies in the organization.
+      description: Request object for pausing/resuming track alerts for a single reID stableTrackId across a location.
       properties:
-        error:
+        durationSec:
           type:
-          - boolean
+          - integer
           - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policies:
-          type:
-          - array
-          - 'null'
-          description: List of door sensor policies in the organization
-          items:
-            $ref: '#/components/schemas/DoorPolicyType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_GetOccupancyPoliciesWSRequest:
-      type: object
-      description: Request object for getting all occupancy policies in the organization.
-    Policy_ExternalAudioPolicyType:
-      type: object
-      description: List of audio policies in the organization
-      properties:
-        defaultTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
-          uniqueItems: true
-        description:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
+          format: int64
+          description: Duration in seconds to pause track alerts
+          example: 3600
+        locationUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_ExternalAudioScheduledTriggerType'
-        uuid:
+        policyAlertUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_UpdateProximityPolicyWSRequest:
-      type: object
-      description: Request object for updating a proximity policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalProximityPolicyType'
-    Policy_CreateClimatePolicyWSRequest:
-      type: object
-      description: Request object for creating a climate policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalClimatePolicyType'
-    Policy_MinimalAudioPolicyType:
-      type: object
-      description: Updated audio policy configuration
-      properties:
-        description:
+        scheduledTimestampSec:
           type:
-          - string
+          - integer
           - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTriggers:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_MinimalAudioScheduledTriggerType'
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_ExternalAudioScheduledTriggerType:
-      type: object
-      properties:
-        schedule:
-          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Policy_ExternalAudioTriggerType'
-          uniqueItems: true
-    AudioTriggerType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        threshold:
+          format: int64
+          description: Scheduled timestamp in seconds for when to begin the pause
+          example: 1640995200
+        trackId:
           type:
           - integer
           - 'null'
           format: int32
-    Policy_UpdateClimatePolicyWSResponse:
+          description: reID stableTrackId to pause track alerts for
+    Policy_DeleteDevicePolicyAddendumsWSResponse:
       type: object
-      description: Response object for updating a climate policy.
+      description: Response object for deleting device policy addendums.
       properties:
         error:
           type:
@@ -4295,14 +4374,107 @@ components:
           type:
           - string
           - 'null'
-    Policy_MinimalDoorScheduledTriggerType:
+    Policy_DeleteClimatePolicyWSRequest:
+      type: object
+      description: Request object for deleting a climate policy.
+      properties:
+        policyUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_UpdateOccupancyPolicyWSRequest:
+      type: object
+      description: Request object for updating an occupancy policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalOccupancyPolicyType'
+    Policy_DeleteScheduleWSRequest:
+      type: object
+      description: Request object for deleting a schedule used for policy creation.
+      properties:
+        scheduleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteLocationPolicyAddendumWSResponse:
+      type: object
+      description: Response object for deleting a location policy addendum.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetDoorPoliciesWSRequest:
+      type: object
+      description: Request object for getting all door sensor policies in the organization.
+    Policy_UpdateDoorPolicyWSResponse:
+      type: object
+      description: Response object for updating a door sensor policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_UpdateCameraPolicyWSRequest:
+      type: object
+      description: Request object for updating a camera policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalCameraPolicyV2Type'
+    Policy_UpdateScheduleWSResponse:
+      type: object
+      description: Response object for updating a schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    WeeklyMinuteIntervalType:
       type: object
       properties:
-        ajarThresholdSec:
+        minuteOfWeekStart:
           type:
           - integer
           - 'null'
           format: int32
+        minuteOfWeekStop:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Policy_MinimalAccessControlledDoorScheduledTriggerType:
+      type: object
+      properties:
         scheduleUuid:
           type:
           - string
@@ -4316,6 +4488,174 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+    Policy_GetTrackPauseSettingsWSResponse:
+      type: object
+      description: Response object listing active and scheduled per-track alert snoozes across devices and locations.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        trackPauses:
+          type:
+          - array
+          - 'null'
+          description: All active or scheduled per-track snoozes for the org, across device and location scope
+          items:
+            $ref: '#/components/schemas/Policy_TrackPauseEntry'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_GetOccupancyPoliciesWSResponse:
+      type: object
+      description: Response object containing all occupancy policies in the organization.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        policies:
+          type:
+          - array
+          - 'null'
+          description: List of occupancy policies in the organization
+          items:
+            $ref: '#/components/schemas/OccupancyPolicyType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_DeleteAudioPolicyWSResponse:
+      type: object
+      description: Response object for deleting an audio policy.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreateClimatePolicyWSRequest:
+      type: object
+      description: Request object for creating a climate policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalClimatePolicyType'
+    CameraPolicyV2Type:
+      type: object
+      description: List of camera policies using the schedule
+      properties:
+        defaultTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CameraTriggerType'
+          uniqueItems: true
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTriggers:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CameraScheduledTriggerType'
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_DeleteScheduleWSResponse:
+      type: object
+      description: Response object for deleting a schedule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Policy_CreatePolicyAddendumForLocationRequest:
+      type: object
+      description: Request object for creating a policy addendum for a location.
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          description: Set of activities to include in the policy addendum
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Duration in seconds for the policy addendum
+          example: 3600
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scheduledTimestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Scheduled timestamp in seconds for the policy addendum
+          example: 1640995200
+    ClimateScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClimateTriggerType'
           uniqueItems: true
     Policy_MinimalClimatePolicyType:
       type: object
@@ -4358,87 +4698,7 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_DeleteDoorPolicyWSResponse:
-      type: object
-      description: Response object for deleting a door sensor policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_DeleteOccupancyPolicyWSResponse:
-      type: object
-      description: Response object for deleting an occupancy policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_CreateAccessControlledDoorPolicyWSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_UpdateAudioPolicyWSRequest:
-      type: object
-      description: Request object for updating an audio policy.
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalAudioPolicyType'
-    Policy_GetCameraPoliciesWSRequest:
-      type: object
-      description: Request object for getting all camera policies in the organization.
-    Policy_MinimalClimateScheduledTriggerType:
-      type: object
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClimateTriggerType'
-          uniqueItems: true
-    AudioScheduledTriggerType:
+    AccessControlledDoorScheduledTriggerType:
       type: object
       properties:
         schedule:
@@ -4448,11 +4708,29 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/AudioTriggerType'
+            $ref: '#/components/schemas/ActivityEnum'
           uniqueItems: true
-    Policy_FindSchedulesWSResponse:
+    VideoIntercomScheduledTriggerType:
       type: object
-      description: Response object containing all schedules in the organization.
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/VideoIntercomTriggerType'
+          uniqueItems: true
+    Policy_CreateCameraPolicyWSRequest:
+      type: object
+      description: Request object for creating a camera policy.
+      properties:
+        policy:
+          $ref: '#/components/schemas/Policy_MinimalCameraPolicyV2Type'
+    Policy_GetProximityPoliciesWSResponse:
+      type: object
+      description: Response object containing all proximity policies in the organization.
       properties:
         error:
           type:
@@ -4462,74 +4740,17 @@ components:
           type:
           - string
           - 'null'
-        schedules:
+        policies:
           type:
           - array
           - 'null'
-          description: List of schedules in the organization
+          description: List of proximity policies in the organization
           items:
-            $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+            $ref: '#/components/schemas/ProximityPolicyType'
         warningMsg:
           type:
           - string
           - 'null'
-    Policy_DeleteScheduleWSRequest:
-      type: object
-      description: Request object for deleting a schedule used for policy creation.
-      properties:
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_CreateOccupancyPolicyWSRequest:
-      type: object
-      properties:
-        policy:
-          $ref: '#/components/schemas/Policy_MinimalOccupancyPolicyType'
-    Policy_FindSchedulesWSRequest:
-      type: object
-      description: Request object for finding all schedules in the organization.
-    Policy_PauseTrackAlertsForLocationWSRequest:
-      type: object
-      description: Request object for pausing/resuming track alerts for a single reID stableTrackId across a location.
-      properties:
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Duration in seconds to pause track alerts
-          example: 3600
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        policyAlertUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTimestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Scheduled timestamp in seconds for when to begin the pause
-          example: 1640995200
-        trackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: reID stableTrackId to pause track alerts for
     Policy_MinimalVideoIntercomPolicyType:
       type: object
       description: Updated video intercom policy configuration
@@ -4562,6 +4783,18 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Policy_ExternalVideoIntercomScheduledTriggerType:
+      type: object
+      properties:
+        schedule:
+          $ref: '#/components/schemas/WeeklyRepeatingScheduleType'
+        triggerSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Policy_ExternalVideoIntercomTriggerType'
+          uniqueItems: true
     VideoIntercomTriggerType:
       type: object
       properties:
@@ -4621,86 +4854,9 @@ components:
             - string
             - 'null'
           uniqueItems: true
-    Policy_DeleteLocationPolicyAddendumWSRequest:
+    Policy_CreateAudioPolicyWSResponse:
       type: object
-      description: Request object for deleting a location policy addendum.
-      properties:
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_UpdateVideoIntercomPolicyWSResponse:
-      type: object
-      description: Response object for updating a video intercom policy.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_GetTrackPauseSettingsWSResponse:
-      type: object
-      description: Response object listing active and scheduled per-track alert snoozes across devices and locations.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        trackPauses:
-          type:
-          - array
-          - 'null'
-          description: All active or scheduled per-track snoozes for the org, across device and location scope
-          items:
-            $ref: '#/components/schemas/Policy_TrackPauseEntry'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_DeleteAudioPolicyWSRequest:
-      type: object
-      description: Request object for deleting an audio policy.
-      properties:
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ScheduleStrategyEnum:
-      type: string
-      enum:
-      - WEEKLY_REPEATING_MINUTES
-      - ABSOLUTE_SECONDS
-      - REALTIME_RELATIVE_SECONDS
-      - RELATIVE_DATETIME_INTERVALS
-    ClimateTriggerType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        threshold:
-          type:
-          - number
-          - 'null'
-          format: float
-    Policy_CreateVideoIntercomPolicyWSResponse:
-      type: object
+      description: Response object containing the UUID of the created audio policy.
       properties:
         error:
           type:
@@ -4721,162 +4877,6 @@ components:
           type:
           - string
           - 'null'
-    Policy_CreatePolicyAddendumForLocationRequest:
-      type: object
-      description: Request object for creating a policy addendum for a location.
-      properties:
-        activities:
-          type:
-          - array
-          - 'null'
-          description: Set of activities to include in the policy addendum
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Duration in seconds for the policy addendum
-          example: 3600
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTimestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Scheduled timestamp in seconds for the policy addendum
-          example: 1640995200
-    Policy_MinimalProximityScheduledTriggerType:
-      type: object
-      properties:
-        departureThresholdSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        scheduleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ProximityTriggerType'
-          uniqueItems: true
-    Policy_DeleteProximityPolicyWSRequest:
-      type: object
-      description: Request object for deleting a proximity policy.
-      properties:
-        policyUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Policy_GetPolicyPauseSettingsWSResponse:
-      type: object
-      description: Response object containing policy pause settings for locations, devices, and component composites.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        policiesPausedForComponentCompositesMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of component composite UUIDs to their paused policy scheduled intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of component composite UUIDs to their paused policy scheduled intervals
-        policiesPausedForDevicesMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of device UUIDs to their paused policy scheduled intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of device UUIDs to their paused policy scheduled intervals
-        policiesPausedForLocationsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            description: Map of location UUIDs to their paused policy scheduled intervals
-            items:
-              $ref: '#/components/schemas/ScheduledIntervalType'
-          description: Map of location UUIDs to their paused policy scheduled intervals
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Policy_PauseTrackAlertsWSRequest:
-      type: object
-      description: Request object for pausing/resuming track alerts for a single reID stableTrackId on a device.
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Duration in seconds to pause track alerts
-          example: 3600
-        policyAlertUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scheduledTimestampSec:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Scheduled timestamp in seconds for when to begin the pause
-          example: 1640995200
-        trackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: reID stableTrackId to pause track alerts for
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

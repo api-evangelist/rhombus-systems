@@ -501,105 +501,19 @@ paths:
       - Service Management Integrations Webservice
 components:
   schemas:
-    DeviceIntegrationSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        latitude:
-          type:
-          - number
-          - 'null'
-          format: double
-        longitude:
-          type:
-          - number
-          - 'null'
-          format: double
-        name:
-          type:
-          - string
-          - 'null'
-    InnerRangeConsoleSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        apiKey:
-          type:
-          - string
-          - 'null'
-        createSeekPoints:
-          type:
-          - boolean
-          - 'null'
-        doorInfoMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/InnerRangeDoorInfoType'
-        skyTunnelSN:
-          type:
-          - string
-          - 'null'
-        tokenValid:
-          type:
-          - boolean
-          - 'null'
-    GoogleType:
+    HoneywellOnGuardType:
       type:
       - object
       - 'null'
       allOf:
       - type: object
         properties:
-          allowUserStorage:
-            type:
-            - boolean
-            - 'null'
-          apiToken:
-            type:
-            - string
-            - 'null'
-          defaultAlertFolderId:
-            type:
-            - string
-            - 'null'
-          defaultAlertFolderName:
-            type:
-            - string
-            - 'null'
-          defaultFolderId:
-            type:
-            - string
-            - 'null'
-          defaultFolderName:
-            type:
-            - string
-            - 'null'
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          saveAllAlerts:
-            type:
-            - boolean
-            - 'null'
-          saveClips:
-            type:
-            - boolean
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-          userSettingsMap:
+          deploymentToSettingsMap:
             type:
             - object
             - 'null'
             additionalProperties:
-              $ref: '#/components/schemas/GoogleUserSettings'
+              $ref: '#/components/schemas/OnGuardDeploymentSettings'
       properties:
         enabled:
           type:
@@ -627,12 +541,52 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    ShellyDevicePermissionEnum:
-      type: string
-      enum:
-      - AUTHORIZED
-      - UNAUTHORIZED
-      - UNKNOWN
+    InformacastType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     EnvoyCustomField:
       type: object
       properties:
@@ -644,162 +598,83 @@ components:
           type:
           - string
           - 'null'
-    ToastRestaurantSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        locationName:
-          type:
-          - string
-          - 'null'
-          description: The location name of the restaurant from Toast
-        restaurantName:
-          type:
-          - string
-          - 'null'
-          description: The name of the restaurant from Toast, e.g. COFFEE CAN
-        serviceAreaSettingsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/GenericPosSettings'
-          description: Collection of service area settings for this restaurant
-    ButterflymxPanelInfoType:
-      type:
-      - object
-      - 'null'
-      description: A HashMap of <Panel Id, ButterflymxPanelInfoType>.
-      properties:
-        assignedCameraList:
-          type:
-          - array
-          - 'null'
-          description: The list of Rhombus Camera RUUIDs.
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        buildingId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The ButterflyMx Building Id.
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        panelName:
-          type:
-          - string
-          - 'null'
-          description: The ButterflyMx Panel Name.
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-    ButterflyMXType:
+    GuestManagementType:
       type:
       - object
       - 'null'
       allOf:
       - type: object
         properties:
-          alertUnauthorizedFaces:
+          locationSettingsMap:
             type:
-            - boolean
+            - object
             - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/LocationSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdateToastIntegrationV2WSRequest:
+      type: object
+      properties:
+        restaurantGuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        toastSettings:
+          $ref: '#/components/schemas/IToastType'
+    OpenAIType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
           apiToken:
             type:
             - string
             - 'null'
-          badgeAuthDisablesAlarmMonitoring:
+          baseUrl:
             type:
-            - boolean
+            - string
             - 'null'
-          badgeFaceVerificationMode:
-            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
-          buildingWebhookIdMap:
+            description: The base url for any OpenAI Chat Completions compliant API. For example, to use Gemini models, set this to 'https://generativelanguage.googleapis.com/v1beta/openai/'.  If left blank, we will try to use OpenAI models.
+          defaultModel:
             type:
-            - object
+            - string
             - 'null'
-            additionalProperties:
-              type:
-              - string
-              - 'null'
-              description: 'A HashMap of <ButterflyMx Building Id, Webhook Id>. '
-            description: 'A HashMap of <ButterflyMx Building Id, Webhook Id>. '
-          createAccessAnomalyAlerts:
-            type:
-            - boolean
-            - 'null'
-          createSeekPoints:
-            type:
-            - boolean
-            - 'null'
-          doorInfoMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
-          doorsValidated:
-            type:
-            - boolean
-            - 'null'
-          identifyFacesFromBadge:
-            type:
-            - boolean
-            - 'null'
-          indexFaces:
-            type:
-            - boolean
-            - 'null'
-          misconfiguredDoors:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          panelInfoMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/ButterflymxPanelInfoType'
-            description: A HashMap of <Panel Id, ButterflymxPanelInfoType>.
+            description: The model identifier to use as a default model.  This is provider specific and typically found on model card pages. For example, set to 'gemini-2.0-flash' to use the Gemini 2.0 Flash model.  Currently we require a model with vision capabilities for this integration.
           refreshToken:
             type:
             - string
-            - 'null'
-          rhombusToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          saveClips:
-            type:
-            - boolean
             - 'null'
           tokenValid:
             type:
@@ -832,18 +707,217 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    WebhookInfo:
+    PosIntegrationInfoType:
       type: object
+      description: A HashMap of <Service Area Guid, PosIntegrationInfoType>. This stores the Pos Information and assigned cameras.
       properties:
-        webhookDisabled:
+        assignedCameraList:
           type:
-          - boolean
+          - array
           - 'null'
-        webhookSecret:
+          description: A list of camera guids from Rhombus that are assigned to the Pos device.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        posName:
           type:
           - string
           - 'null'
-    SecurityZoneInfoType:
+          description: The name of the Pos device.
+    GenericPosType:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    ShellyDeviceTypeEnum:
+      type: string
+      enum:
+      - RELAY
+      - LIGHT
+      - ROLLER
+      - INPUT
+    BadgeIntegrationDefaultOptions:
+      type:
+      - object
+      - 'null'
+      properties:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesAlarmMonitoring:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        defaultOptionsEnabled:
+          type:
+          - boolean
+          - 'null'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+    SignatureApiType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_GetCalendlyEventDetailsWSResponse:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        endTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        startTimeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Integration_GetToastServiceAreasWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        serviceAreas:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GenericPosType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Integration_UpdateOrgIntegrationsWSResponse:
+      type: object
+      description: Response object for updating organization integrations.
+      properties:
+        authError:
+          type:
+          - boolean
+          - 'null'
+          description: Whether an authentication error occurred during update
+          example: false
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        failedGuids:
+          type:
+          - array
+          - 'null'
+          description: List of GUIDs that failed to update
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of GUIDs that failed to update
+        misconfiguredDoors:
+          type:
+          - array
+          - 'null'
+          description: List of door names that are assigned to multiple Rhombus locations
+          items:
+            type:
+            - string
+            - 'null'
+            description: List of door names that are assigned to multiple Rhombus locations
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    EnvoyLocationInfoType:
       type:
       - object
       - 'null'
@@ -859,60 +933,15 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
-        isParentZone:
-          type:
-          - boolean
-          - 'null'
-        securityZoneName:
+        locationName:
           type:
           - string
           - 'null'
-        zoneAddress:
-          type:
-          - string
-          - 'null'
-        zoneId:
-          type:
-          - string
-          - 'null'
-        zoneParentId:
-          type:
-          - string
-          - 'null'
-    OmnialertType:
+    DiceType:
       type:
       - object
       - 'null'
-      allOf:
-      - type: object
-        properties:
-          associatedCameras:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-            uniqueItems: true
-          saveClips:
-            type:
-            - boolean
-            - 'null'
-          triggerNotification:
-            type:
-            - boolean
-            - 'null'
-          webhookToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
+      allOf: []
       properties:
         enabled:
           type:
@@ -940,107 +969,33 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Integration_UpdateEnvoyIntegrationV2WSRequest:
-      type: object
-      description: Request object for updating Envoy V2 integration settings with enhanced visitor management features.
-      properties:
-        envoySettings:
-          $ref: '#/components/schemas/IEnvoyType'
-    IToastType:
-      type: object
-      properties:
-        currentToastRestaurantGuid:
-          type:
-          - string
-          - 'null'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        restaurantSettingsMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/ToastRestaurantSettings'
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    PimlocBaseAPIUrlEnum:
-      type: string
-      enum:
-      - US
-      - EU
-    MicrosoftTeamsType:
+    EnvoyUserSettings:
       type:
       - object
       - 'null'
-      allOf:
-      - type: object
-        properties:
-          adminConsent:
-            type:
-            - boolean
-            - 'null'
-          allowUserNotifications:
-            type:
-            - boolean
-            - 'null'
-          microsoftTeamSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/MicrosoftTeamsChannelSettings'
-          microsoftTeamsUserSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/MicrosoftTeamsUserSettings'
-          tenantId:
-            type:
-            - string
-            - 'null'
       properties:
-        enabled:
+        guestsEnabled:
           type:
           - boolean
           - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
+        packagesEnabled:
           type:
-          - object
+          - boolean
           - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
+    IntegrationAuditEvent:
+      type: object
+      properties:
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        integrationAuditEvent:
+          $ref: '#/components/schemas/IntegrationAuditEventEnum'
+        user:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
         userUuid:
           type:
           - string
@@ -1048,13 +1003,67 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Integration_GetToastServiceAreasWSRequest:
-      type: object
+    BadgeIntegrationSettings:
+      type:
+      - object
+      - 'null'
       properties:
-        restaurantGuid:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesAlarmMonitoring:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        misconfiguredDoors:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - integer
+            - 'null'
+            format: int32
+        placeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placeName:
           type:
           - string
           - 'null'
+        rhombusToken:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+        webhookId:
+          type:
+          - integer
+          - 'null'
+          format: int32
     AvigilonAltaType:
       type:
       - object
@@ -1199,136 +1208,440 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    WebhookMapEntry:
+    Integration_GetOrgIntegrationsV2WSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        orgIntegrationV2:
+          $ref: '#/components/schemas/IBaseIntegrationType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    HoneywellElementsType:
       type:
       - object
       - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiKey:
+            type:
+            - string
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          baseUrl:
+            type:
+            - string
+            - 'null'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          siteId:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
       properties:
-        orgId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        webhookId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    EnvoySettings:
-      type: object
-      description: Envoy visitor management integration settings to update
-      properties:
-        createSeekPoints:
-          type:
-          - boolean
-          - 'null'
         enabled:
           type:
           - boolean
           - 'null'
-        enabledTimestampMs:
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
           type:
-          - integer
+          - object
           - 'null'
-          format: int64
-        enablingUser:
-          type:
-          - string
-          - 'null'
-        enablingUserUuid:
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        envoyIntegrationInstalled:
-          type:
-          - boolean
-          - 'null'
-        indexFaces:
-          type:
-          - boolean
-          - 'null'
-        locationInfoMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/EnvoyLocationInfoType'
-        migrated:
-          type:
-          - boolean
-          - 'null'
-        refreshToken:
-          type:
-          - string
-          - 'null'
-        saveClips:
-          type:
-          - boolean
-          - 'null'
-    ToastSettings:
-      type: object
-      description: Toast POS integration settings to update
-      properties:
-        currentToastRestaurantGuid:
-          type:
-          - string
-          - 'null'
-          description: The current restaurant guid you want to use
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        enabledTimestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        enablingUser:
-          type:
-          - string
-          - 'null'
-        enablingUserUuid:
+        userUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        migrated:
+    AperioType:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        enabled:
           type:
           - boolean
           - 'null'
-        posInfoMap:
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
           type:
           - object
           - 'null'
           additionalProperties:
-            $ref: '#/components/schemas/PosIntegrationInfoType'
-          description: A HashMap of <Service Area Guid, PosIntegrationInfoType>. This stores the Pos Information and assigned cameras.
-        toastRestaurantInfoMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/ToastRestaurantInfo'
-          description: A HashMap of <Restaurant Guid, ToastRestaurantInfo>. This stores the information for each restaurant.
-    IntegrationAuditEvent:
-      type: object
-      properties:
-        enabledTimestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        integrationAuditEvent:
-          $ref: '#/components/schemas/IntegrationAuditEventEnum'
-        user:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
           type:
           - string
           - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ButterflymxPanelInfoType:
+      type:
+      - object
+      - 'null'
+      description: A HashMap of <Panel Id, ButterflymxPanelInfoType>.
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          description: The list of Rhombus Camera RUUIDs.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        buildingId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The ButterflyMx Building Id.
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        panelName:
+          type:
+          - string
+          - 'null'
+          description: The ButterflyMx Panel Name.
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    ZapierType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          zapierWebhooks:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ZapierWebhookSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    GenericPosSettings:
+      type:
+      - object
+      - 'null'
+      description: Collection of service area settings for this restaurant
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          description: A list of camera uuids from Rhombus that are assigned to the PoS device
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        posName:
+          type:
+          - string
+          - 'null'
+          description: The name of the point of sale device
+    ToastRestaurantInfo:
+      type: object
+      description: A HashMap of <Restaurant Guid, ToastRestaurantInfo>. This stores the information for each restaurant.
+      properties:
+        locationName:
+          type:
+          - string
+          - 'null'
+          description: The location name of the restaurant from Toast
+        restaurantName:
+          type:
+          - string
+          - 'null'
+          description: The name of the restaurant from Toast. e.g., COFFEE CAN
+    RaptorType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          clientId:
+            type:
+            - string
+            - 'null'
+          clientSecret:
+            type:
+            - string
+            - 'null'
+          clientUid:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Integration_UpdateToastIntegrationWSRequest:
+      type: object
+      description: Request object for updating Toast POS integration settings.
+      properties:
+        toastSettings:
+          $ref: '#/components/schemas/ToastSettings'
+    Integration_GetCalendlyEventDetailsWSRequest:
+      type: object
+      properties:
+        eventUuid:
+          type:
+          - string
+          - 'null'
+    Integration_InitiateOAuthWSResponse:
+      type: object
+      description: Response object containing OAuth redirect URL.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+          description: OAuth redirect URL for authentication
+          example: https://oauth.provider.com/auth?client_id=123&redirect_uri=callback
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    OmnialertType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          associatedCameras:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+            uniqueItems: true
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          triggerNotification:
+            type:
+            - boolean
+            - 'null'
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         userUuid:
           type:
           - string
@@ -1446,314 +1759,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    Integration_GetOrgIntegrationsV2WSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        orgIntegrationV2:
-          $ref: '#/components/schemas/IBaseIntegrationType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    IntegrationAuditEventEnum:
-      type: string
-      enum:
-      - UPDATE
-      - DELETE
-    Integration_UpdateOrgIntegrationsWSResponse:
-      type: object
-      description: Response object for updating organization integrations.
-      properties:
-        authError:
-          type:
-          - boolean
-          - 'null'
-          description: Whether an authentication error occurred during update
-          example: false
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        failedGuids:
-          type:
-          - array
-          - 'null'
-          description: List of GUIDs that failed to update
-          items:
-            type:
-            - string
-            - 'null'
-            description: List of GUIDs that failed to update
-        misconfiguredDoors:
-          type:
-          - array
-          - 'null'
-          description: List of door names that are assigned to multiple Rhombus locations
-          items:
-            type:
-            - string
-            - 'null'
-            description: List of door names that are assigned to multiple Rhombus locations
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    GenericPosType:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-    Integration_UpdateToastIntegrationV2WSRequest:
-      type: object
-      properties:
-        restaurantGuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        toastSettings:
-          $ref: '#/components/schemas/IToastType'
-    ZapierType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          zapierWebhooks:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/ZapierWebhookSettings'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ToastType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          currentToastRestaurantGuid:
-            type:
-            - string
-            - 'null'
-          restaurantSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/ToastRestaurantSettings'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Integration_GetCalendlyEventDetailsWSRequest:
-      type: object
-      properties:
-        eventUuid:
-          type:
-          - string
-          - 'null'
-    ZapierWebhookSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        backoffSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        doorState:
-          $ref: '#/components/schemas/DoorStatusEnum'
-        humidityLowerThreshold:
-          type:
-          - number
-          - 'null'
-          format: float
-        humidityUpperThreshold:
-          type:
-          - number
-          - 'null'
-          format: float
-        tempLowerThreshold:
-          type:
-          - number
-          - 'null'
-          format: float
-        tempUpperThreshold:
-          type:
-          - number
-          - 'null'
-          format: float
-        url:
-          type:
-          - string
-          - 'null'
-        uuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        zapEnum:
-          $ref: '#/components/schemas/ZapierEnum'
-      required:
-      - url
-      - zapEnum
-    WebhooksType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          activityWebhooks:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              type:
-              - string
-              - 'null'
-          activityWebhooksV2:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/WebhookInfo'
-          diagnosticWebhooks:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              type:
-              - string
-              - 'null'
-          diagnosticWebhooksV2:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/WebhookInfo'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ToastRestaurantInfo:
-      type: object
-      description: A HashMap of <Restaurant Guid, ToastRestaurantInfo>. This stores the information for each restaurant.
-      properties:
-        locationName:
-          type:
-          - string
-          - 'null'
-          description: The location name of the restaurant from Toast
-        restaurantName:
-          type:
-          - string
-          - 'null'
-          description: The name of the restaurant from Toast. e.g., COFFEE CAN
     IEnvoyType:
       type: object
       description: Envoy V2 integration settings to update
@@ -1860,6 +1865,87 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    EnvoySettings:
+      type: object
+      description: Envoy visitor management integration settings to update
+      properties:
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enablingUser:
+          type:
+          - string
+          - 'null'
+        enablingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        envoyIntegrationInstalled:
+          type:
+          - boolean
+          - 'null'
+        indexFaces:
+          type:
+          - boolean
+          - 'null'
+        locationInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/EnvoyLocationInfoType'
+        migrated:
+          type:
+          - boolean
+          - 'null'
+        refreshToken:
+          type:
+          - string
+          - 'null'
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+    ShellyDevicePermissionEnum:
+      type: string
+      enum:
+      - AUTHORIZED
+      - UNAUTHORIZED
+      - UNKNOWN
+    LocationSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        associatedCameras:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        printBadge:
+          type:
+          - boolean
+          - 'null'
     EnvoyInvite:
       type: object
       properties:
@@ -1903,6 +1989,560 @@ components:
           type:
           - boolean
           - 'null'
+    Integration_GetToastServiceAreasWSRequest:
+      type: object
+      properties:
+        restaurantGuid:
+          type:
+          - string
+          - 'null'
+    DoorStatusEnum:
+      type: string
+      description: Door state for door sensor webhooks
+      enum:
+      - OPEN
+      - CLOSED
+      - AJAR
+    PlaceOsType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          apiUrl:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          triggerNotification:
+            type:
+            - boolean
+            - 'null'
+          webhookSignatureSecret:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    Integration_UpdateEnvoyIntegrationV2WSRequest:
+      type: object
+      description: Request object for updating Envoy V2 integration settings with enhanced visitor management features.
+      properties:
+        envoySettings:
+          $ref: '#/components/schemas/IEnvoyType'
+    WebhookInfo:
+      type: object
+      properties:
+        webhookDisabled:
+          type:
+          - boolean
+          - 'null'
+        webhookSecret:
+          type:
+          - string
+          - 'null'
+    Integration_UpdateEnvoyIntegrationWSRequest:
+      type: object
+      description: Request object for updating Envoy visitor management integration settings.
+      properties:
+        envoySettings:
+          $ref: '#/components/schemas/EnvoySettings'
+    InnerRangeConsoleSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        apiKey:
+          type:
+          - string
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/InnerRangeDoorInfoType'
+        skyTunnelSN:
+          type:
+          - string
+          - 'null'
+        tokenValid:
+          type:
+          - boolean
+          - 'null'
+    Integration_CreateEnvoyInviteWSRequest:
+      type: object
+      properties:
+        invitation:
+          $ref: '#/components/schemas/EnvoyInvite'
+    MicrosoftTeamsChannelSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        botInstallationId:
+          type:
+          - string
+          - 'null'
+        channelId:
+          type:
+          - string
+          - 'null'
+        installingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        sendChannelNotifications:
+          type:
+          - boolean
+          - 'null'
+    ProDataKeyType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          alertUnauthorizedFaces:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          badgeAuthDisablesAlarmMonitoring:
+            type:
+            - boolean
+            - 'null'
+          badgeFaceVerificationMode:
+            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+          createAccessAnomalyAlerts:
+            type:
+            - boolean
+            - 'null'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          identifyFacesFromBadge:
+            type:
+            - boolean
+            - 'null'
+          indexFaces:
+            type:
+            - boolean
+            - 'null'
+          misconfiguredDoors:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+          organizationId:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          systemId:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          webhookId:
+            type:
+            - string
+            - 'null'
+          webhookSignatureSecret:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ToastType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          currentToastRestaurantGuid:
+            type:
+            - string
+            - 'null'
+          restaurantSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ToastRestaurantSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    NineOneOneCellularType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          bearerToken:
+            type:
+            - string
+            - 'null'
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          securityZoneMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/SecurityZoneInfoType'
+          triggerNotification:
+            type:
+            - boolean
+            - 'null'
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          zonesValidated:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    GoogleType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          allowUserStorage:
+            type:
+            - boolean
+            - 'null'
+          apiToken:
+            type:
+            - string
+            - 'null'
+          defaultAlertFolderId:
+            type:
+            - string
+            - 'null'
+          defaultAlertFolderName:
+            type:
+            - string
+            - 'null'
+          defaultFolderId:
+            type:
+            - string
+            - 'null'
+          defaultFolderName:
+            type:
+            - string
+            - 'null'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          saveAllAlerts:
+            type:
+            - boolean
+            - 'null'
+          saveClips:
+            type:
+            - boolean
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+          userSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/GoogleUserSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PimlocBaseAPIUrlEnum:
+      type: string
+      enum:
+      - US
+      - EU
     DeviceIntegrationType:
       type:
       - object
@@ -1943,64 +2583,28 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    KisiType:
+    MicrosoftTeamsUserSettings:
       type:
       - object
       - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiSecretKey:
-            type:
-            - string
-            - 'null'
-          defaultOptions:
-            $ref: '#/components/schemas/BadgeIntegrationDefaultOptions'
-          doorsValidated:
-            type:
-            - boolean
-            - 'null'
-          placeToSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/BadgeIntegrationSettings'
       properties:
-        enabled:
+        botInstallationId:
+          type:
+          - string
+          - 'null'
+        chatId:
+          type:
+          - string
+          - 'null'
+        refreshToken:
+          type:
+          - string
+          - 'null'
+        sendUserNotifications:
           type:
           - boolean
           - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ShellyDevice:
-      type:
-      - object
-      - 'null'
-      properties:
-        canSendCommands:
-          $ref: '#/components/schemas/ShellyDevicePermissionEnum'
-        channels:
+        teamIds:
           type:
           - array
           - 'null'
@@ -2008,215 +2612,15 @@ components:
             type:
             - string
             - 'null'
-        deviceType:
-          $ref: '#/components/schemas/ShellyDeviceTypeEnum'
-        hostUrl:
+        userId:
           type:
           - string
           - 'null'
-        isOnline:
-          type:
-          - boolean
-          - 'null'
-        temperature:
-          type:
-          - number
-          - 'null'
-          format: double
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        voltage:
-          type:
-          - number
-          - 'null'
-          format: double
-    GenericPosSettings:
-      type:
-      - object
-      - 'null'
-      description: Collection of service area settings for this restaurant
-      properties:
-        assignedCameraList:
-          type:
-          - array
-          - 'null'
-          description: A list of camera uuids from Rhombus that are assigned to the PoS device
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        posName:
-          type:
-          - string
-          - 'null'
-          description: The name of the point of sale device
-    OpenAIType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiToken:
-            type:
-            - string
-            - 'null'
-          baseUrl:
-            type:
-            - string
-            - 'null'
-            description: The base url for any OpenAI Chat Completions compliant API. For example, to use Gemini models, set this to 'https://generativelanguage.googleapis.com/v1beta/openai/'.  If left blank, we will try to use OpenAI models.
-          defaultModel:
-            type:
-            - string
-            - 'null'
-            description: The model identifier to use as a default model.  This is provider specific and typically found on model card pages. For example, set to 'gemini-2.0-flash' to use the Gemini 2.0 Flash model.  Currently we require a model with vision capabilities for this integration.
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    DiceType:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    LumeoType:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    AperioType:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    OpentechAllianceDoorInfoType:
+    BadgeIntegrationDoorInfoType:
       type:
       - object
       - 'null'
       properties:
-        actionGroupId:
-          type:
-          - string
-          - 'null'
         assignedCameraList:
           type:
           - array
@@ -2265,6 +2669,293 @@ components:
             '
           example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
           pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    LumeoType:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    GoogleUserSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        defaultAlertFolderId:
+          type:
+          - string
+          - 'null'
+        defaultAlertFolderName:
+          type:
+          - string
+          - 'null'
+        defaultFolderId:
+          type:
+          - string
+          - 'null'
+        defaultFolderName:
+          type:
+          - string
+          - 'null'
+        refreshToken:
+          type:
+          - string
+          - 'null'
+        saveAllAlerts:
+          type:
+          - boolean
+          - 'null'
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+        tokenValid:
+          type:
+          - boolean
+          - 'null'
+    ToastSettings:
+      type: object
+      description: Toast POS integration settings to update
+      properties:
+        currentToastRestaurantGuid:
+          type:
+          - string
+          - 'null'
+          description: The current restaurant guid you want to use
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        enabledTimestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        enablingUser:
+          type:
+          - string
+          - 'null'
+        enablingUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        migrated:
+          type:
+          - boolean
+          - 'null'
+        posInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PosIntegrationInfoType'
+          description: A HashMap of <Service Area Guid, PosIntegrationInfoType>. This stores the Pos Information and assigned cameras.
+        toastRestaurantInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/ToastRestaurantInfo'
+          description: A HashMap of <Restaurant Guid, ToastRestaurantInfo>. This stores the information for each restaurant.
+    Integration_BaseIntegrationWSRequest:
+      type: object
+      description: Base request object for integration operations.
+    OpentechAllianceType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiKey:
+            type:
+            - string
+            - 'null'
+          apiSecret:
+            type:
+            - string
+            - 'null'
+          facilityToSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/OpentechAllianceFacilitySettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WebhooksType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          activityWebhooks:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+          activityWebhooksV2:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/WebhookInfo'
+          diagnosticWebhooks:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+          diagnosticWebhooksV2:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/WebhookInfo'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    MicrosoftTeamsType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          adminConsent:
+            type:
+            - boolean
+            - 'null'
+          allowUserNotifications:
+            type:
+            - boolean
+            - 'null'
+          microsoftTeamSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/MicrosoftTeamsChannelSettings'
+          microsoftTeamsUserSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/MicrosoftTeamsUserSettings'
+          tenantId:
+            type:
+            - string
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     BrivoType:
       type:
       - object
@@ -2400,28 +3091,136 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    PosIntegrationInfoType:
-      type: object
-      description: A HashMap of <Service Area Guid, PosIntegrationInfoType>. This stores the Pos Information and assigned cameras.
+    ParPOSType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          accessToken:
+            type:
+            - string
+            - 'null'
+          locationTokenMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+          serverUrl:
+            type:
+            - string
+            - 'null'
       properties:
-        assignedCameraList:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WebhookMapEntry:
+      type:
+      - object
+      - 'null'
+      properties:
+        orgId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        webhookId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    BadgeFaceVerificationModeEnum:
+      type: string
+      enum:
+      - 'OFF'
+      - SHADOW
+      - SUPERVISED
+      - AUTO
+    ToastRestaurantSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        locationName:
+          type:
+          - string
+          - 'null'
+          description: The location name of the restaurant from Toast
+        restaurantName:
+          type:
+          - string
+          - 'null'
+          description: The name of the restaurant from Toast, e.g. COFFEE CAN
+        serviceAreaSettingsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/GenericPosSettings'
+          description: Collection of service area settings for this restaurant
+    EnvoyPersonInfo:
+      type: object
+      properties:
+        email:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        locationIds:
           type:
           - array
           - 'null'
-          description: A list of camera guids from Rhombus that are assigned to the Pos device.
           items:
             type:
             - string
             - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        posName:
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        name:
           type:
           - string
           - 'null'
-          description: The name of the Pos device.
-    HoneywellElementsType:
+        type:
+          type:
+          - string
+          - 'null'
+    ButterflyMXType:
       type:
       - object
       - 'null'
@@ -2431,10 +3230,6 @@ components:
           alertUnauthorizedFaces:
             type:
             - boolean
-            - 'null'
-          apiKey:
-            type:
-            - string
             - 'null'
           apiToken:
             type:
@@ -2446,10 +3241,16 @@ components:
             - 'null'
           badgeFaceVerificationMode:
             $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
-          baseUrl:
+          buildingWebhookIdMap:
             type:
-            - string
+            - object
             - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              description: 'A HashMap of <ButterflyMx Building Id, Webhook Id>. '
+            description: 'A HashMap of <ButterflyMx Building Id, Webhook Id>. '
           createAccessAnomalyAlerts:
             type:
             - boolean
@@ -2484,6 +3285,13 @@ components:
               type:
               - string
               - 'null'
+          panelInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ButterflymxPanelInfoType'
+            description: A HashMap of <Panel Id, ButterflymxPanelInfoType>.
           refreshToken:
             type:
             - string
@@ -2498,10 +3306,6 @@ components:
           saveClips:
             type:
             - boolean
-            - 'null'
-          siteId:
-            type:
-            - string
             - 'null'
           tokenValid:
             type:
@@ -2534,14 +3338,45 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    ZapierEnum:
-      type: string
-      description: Zapier integration type
-      enum:
-      - BUTTON_EVENTS
-      - DOOR_SENSOR_EVENTS
-      - ENVIRONMENTAL_SENSOR_EVENTS
-      - RULE_EVENTS
+    IToastType:
+      type: object
+      properties:
+        currentToastRestaurantGuid:
+          type:
+          - string
+          - 'null'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        restaurantSettingsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/ToastRestaurantSettings'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
     BoulevardType:
       type:
       - object
@@ -2620,340 +3455,6 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    ProDataKeyType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          alertUnauthorizedFaces:
-            type:
-            - boolean
-            - 'null'
-          apiToken:
-            type:
-            - string
-            - 'null'
-          badgeAuthDisablesAlarmMonitoring:
-            type:
-            - boolean
-            - 'null'
-          badgeFaceVerificationMode:
-            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
-          createAccessAnomalyAlerts:
-            type:
-            - boolean
-            - 'null'
-          createSeekPoints:
-            type:
-            - boolean
-            - 'null'
-          doorInfoMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
-          doorsValidated:
-            type:
-            - boolean
-            - 'null'
-          identifyFacesFromBadge:
-            type:
-            - boolean
-            - 'null'
-          indexFaces:
-            type:
-            - boolean
-            - 'null'
-          misconfiguredDoors:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          organizationId:
-            type:
-            - string
-            - 'null'
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          rhombusToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          saveClips:
-            type:
-            - boolean
-            - 'null'
-          systemId:
-            type:
-            - string
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-          webhookId:
-            type:
-            - string
-            - 'null'
-          webhookSignatureSecret:
-            type:
-            - string
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    NineOneOneCellularType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          bearerToken:
-            type:
-            - string
-            - 'null'
-          saveClips:
-            type:
-            - boolean
-            - 'null'
-          securityZoneMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/SecurityZoneInfoType'
-          triggerNotification:
-            type:
-            - boolean
-            - 'null'
-          webhookToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          zonesValidated:
-            type:
-            - boolean
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    LocationSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        associatedCameras:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        printBadge:
-          type:
-          - boolean
-          - 'null'
-    BadgeIntegrationDefaultOptions:
-      type:
-      - object
-      - 'null'
-      properties:
-        alertUnauthorizedFaces:
-          type:
-          - boolean
-          - 'null'
-        badgeAuthDisablesAlarmMonitoring:
-          type:
-          - boolean
-          - 'null'
-        createSeekPoints:
-          type:
-          - boolean
-          - 'null'
-        defaultOptionsEnabled:
-          type:
-          - boolean
-          - 'null'
-        identifyFacesFromBadge:
-          type:
-          - boolean
-          - 'null'
-        saveClips:
-          type:
-          - boolean
-          - 'null'
-    MicrosoftTeamsUserSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        botInstallationId:
-          type:
-          - string
-          - 'null'
-        chatId:
-          type:
-          - string
-          - 'null'
-        refreshToken:
-          type:
-          - string
-          - 'null'
-        sendUserNotifications:
-          type:
-          - boolean
-          - 'null'
-        teamIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        userId:
-          type:
-          - string
-          - 'null'
-    BaseApiResponse:
-      type: object
-      description: Base response object denoting success, or failure with a reason, for an endpoint.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Integration_GetCalendlyEventDetailsWSResponse:
-      type: object
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-        endTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        startTimeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Integration_InitiateOAuthWSResponse:
-      type: object
-      description: Response object containing OAuth redirect URL.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        redirectUrl:
-          type:
-          - string
-          - 'null'
-          description: OAuth redirect URL for authentication
-          example: https://oauth.provider.com/auth?client_id=123&redirect_uri=callback
-        warningMsg:
-          type:
-          - string
-          - 'null'
     Integration_InitiateOAuthWSRequest:
       type: object
       description: Request object for initiating OAuth authentication flow.
@@ -2975,769 +3476,25 @@ components:
           - string
           - 'null'
           description: Rhombus organization user UUID
-    EnvoyUserSettings:
+    DeviceIntegrationSettings:
       type:
       - object
       - 'null'
       properties:
-        guestsEnabled:
+        latitude:
           type:
-          - boolean
+          - number
           - 'null'
-        packagesEnabled:
+          format: double
+        longitude:
           type:
-          - boolean
+          - number
           - 'null'
-    PimlocType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          baseAPIUrl:
-            $ref: '#/components/schemas/PimlocBaseAPIUrlEnum'
-          clientId:
-            type:
-            - string
-            - 'null'
-          clientSecret:
-            type:
-            - string
-            - 'null'
-          rhombusToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          validCredentials:
-            type:
-            - boolean
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
+          format: double
+        name:
           type:
           - string
           - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    OpentechAllianceFacilitySettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        alertUnauthorizedFaces:
-          type:
-          - boolean
-          - 'null'
-        createSeekPoints:
-          type:
-          - boolean
-          - 'null'
-        doorInfoMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/OpentechAllianceDoorInfoType'
-        identifyFacesFromBadge:
-          type:
-          - boolean
-          - 'null'
-        saveClips:
-          type:
-          - boolean
-          - 'null'
-    GoogleUserSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        defaultAlertFolderId:
-          type:
-          - string
-          - 'null'
-        defaultAlertFolderName:
-          type:
-          - string
-          - 'null'
-        defaultFolderId:
-          type:
-          - string
-          - 'null'
-        defaultFolderName:
-          type:
-          - string
-          - 'null'
-        refreshToken:
-          type:
-          - string
-          - 'null'
-        saveAllAlerts:
-          type:
-          - boolean
-          - 'null'
-        saveClips:
-          type:
-          - boolean
-          - 'null'
-        tokenValid:
-          type:
-          - boolean
-          - 'null'
-    GuestManagementType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          locationSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/LocationSettings'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    InnerRangeType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiToken:
-            type:
-            - string
-            - 'null'
-          consoleToSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/InnerRangeConsoleSettings'
-          createSeekPoints:
-            type:
-            - boolean
-            - 'null'
-          doorInfoMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/InnerRangeDoorInfoType'
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          skyTunnelSN:
-            type:
-            - string
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Integration_BaseIntegrationWSRequest:
-      type: object
-      description: Base request object for integration operations.
-    ParPOSType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          accessToken:
-            type:
-            - string
-            - 'null'
-          locationTokenMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              type:
-              - string
-              - 'null'
-          serverUrl:
-            type:
-            - string
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    DoorStatusEnum:
-      type: string
-      description: Door state for door sensor webhooks
-      enum:
-      - OPEN
-      - CLOSED
-      - AJAR
-    GeneaType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          alertUnauthorizedFaces:
-            type:
-            - boolean
-            - 'null'
-          apiToken:
-            type:
-            - string
-            - 'null'
-          badgeAuthDisablesAlarmMonitoring:
-            type:
-            - boolean
-            - 'null'
-          badgeFaceVerificationMode:
-            $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
-          createAccessAnomalyAlerts:
-            type:
-            - boolean
-            - 'null'
-          createSeekPoints:
-            type:
-            - boolean
-            - 'null'
-          doorInfoMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
-          doorsValidated:
-            type:
-            - boolean
-            - 'null'
-          identifyFacesFromBadge:
-            type:
-            - boolean
-            - 'null'
-          indexFaces:
-            type:
-            - boolean
-            - 'null'
-          misconfiguredDoors:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          rhombusToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          saveClips:
-            type:
-            - boolean
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-          webhookSignatureSecret:
-            type:
-            - string
-            - 'null'
-          webhookUuid:
-            type:
-            - string
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    InformacastType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiToken:
-            type:
-            - string
-            - 'null'
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    BadgeFaceVerificationModeEnum:
-      type: string
-      enum:
-      - 'OFF'
-      - SHADOW
-      - SUPERVISED
-      - AUTO
-    Integration_CreateEnvoyInviteWSRequest:
-      type: object
-      properties:
-        invitation:
-          $ref: '#/components/schemas/EnvoyInvite'
-    Integration_UpdateToastIntegrationWSRequest:
-      type: object
-      description: Request object for updating Toast POS integration settings.
-      properties:
-        toastSettings:
-          $ref: '#/components/schemas/ToastSettings'
-    RaptorType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiToken:
-            type:
-            - string
-            - 'null'
-          clientId:
-            type:
-            - string
-            - 'null'
-          clientSecret:
-            type:
-            - string
-            - 'null'
-          clientUid:
-            type:
-            - string
-            - 'null'
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    BadgeIntegrationSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        alertUnauthorizedFaces:
-          type:
-          - boolean
-          - 'null'
-        badgeAuthDisablesAlarmMonitoring:
-          type:
-          - boolean
-          - 'null'
-        createSeekPoints:
-          type:
-          - boolean
-          - 'null'
-        doorInfoMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
-        identifyFacesFromBadge:
-          type:
-          - boolean
-          - 'null'
-        misconfiguredDoors:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - integer
-            - 'null'
-            format: int32
-        placeId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        placeName:
-          type:
-          - string
-          - 'null'
-        rhombusToken:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        saveClips:
-          type:
-          - boolean
-          - 'null'
-        webhookId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    MicrosoftTeamsChannelSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        botInstallationId:
-          type:
-          - string
-          - 'null'
-        channelId:
-          type:
-          - string
-          - 'null'
-        installingUserUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        sendChannelNotifications:
-          type:
-          - boolean
-          - 'null'
-    Integration_UpdateEnvoyIntegrationWSRequest:
-      type: object
-      description: Request object for updating Envoy visitor management integration settings.
-      properties:
-        envoySettings:
-          $ref: '#/components/schemas/EnvoySettings'
-    ShellyDeviceTypeEnum:
-      type: string
-      enum:
-      - RELAY
-      - LIGHT
-      - ROLLER
-      - INPUT
-    ShellyType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          canSendDiagnosticNotifications:
-            type:
-            - boolean
-            - 'null'
-          diagnosticQuietPeriodSecs:
-            type:
-            - integer
-            - 'null'
-            format: int32
-          shellyDeviceMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/ShellyDevice'
-          thirdPartyDeviceToLocationMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-          webhookToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    FlicType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiKey:
-            type:
-            - string
-            - 'null'
-          apiSecret:
-            type:
-            - string
-            - 'null'
-          associatedLocations:
-            type:
-            - array
-            - 'null'
-            items:
-              type:
-              - string
-              - 'null'
-              format: RUUID
-              description: base 64 (url-safe) uuid string
-              example: AAAAAAAAAAAAAAAAAAAAAA
-            uniqueItems: true
-          moduleUploaded:
-            type:
-            - boolean
-            - 'null'
-          webhookId:
-            type:
-            - string
-            - 'null'
-          webhookToken:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     InnerRangeDoorInfoType:
       type:
       - object
@@ -3799,6 +3556,239 @@ components:
             '
           example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
           pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    KisiType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiSecretKey:
+            type:
+            - string
+            - 'null'
+          defaultOptions:
+            $ref: '#/components/schemas/BadgeIntegrationDefaultOptions'
+          doorsValidated:
+            type:
+            - boolean
+            - 'null'
+          placeToSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/BadgeIntegrationSettings'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    IBaseIntegrationType:
+      type: object
+      discriminator:
+        propertyName: integration
+      oneOf:
+      - $ref: '#/components/schemas/AperioType'
+      - $ref: '#/components/schemas/AvigilonAltaType'
+      - $ref: '#/components/schemas/BoulevardType'
+      - $ref: '#/components/schemas/BrivoType'
+      - $ref: '#/components/schemas/ButterflyMXType'
+      - $ref: '#/components/schemas/DeviceIntegrationType'
+      - $ref: '#/components/schemas/DiceType'
+      - $ref: '#/components/schemas/EnvoyType'
+      - $ref: '#/components/schemas/FlicType'
+      - $ref: '#/components/schemas/GeneaType'
+      - $ref: '#/components/schemas/GoogleType'
+      - $ref: '#/components/schemas/GuestManagementType'
+      - $ref: '#/components/schemas/HoneywellElementsType'
+      - $ref: '#/components/schemas/InformacastType'
+      - $ref: '#/components/schemas/InnerRangeType'
+      - $ref: '#/components/schemas/KisiType'
+      - $ref: '#/components/schemas/LumeoType'
+      - $ref: '#/components/schemas/MicrosoftTeamsType'
+      - $ref: '#/components/schemas/NineOneOneCellularType'
+      - $ref: '#/components/schemas/OmnialertType'
+      - $ref: '#/components/schemas/OpenAIType'
+      - $ref: '#/components/schemas/OpentechAllianceType'
+      - $ref: '#/components/schemas/PimlocType'
+      - $ref: '#/components/schemas/PlaceOsType'
+      - $ref: '#/components/schemas/ProDataKeyType'
+      - $ref: '#/components/schemas/RaptorType'
+      - $ref: '#/components/schemas/ShellyType'
+      - $ref: '#/components/schemas/ToastType'
+      - $ref: '#/components/schemas/WebhooksType'
+      - $ref: '#/components/schemas/ZapierType'
+      - $ref: '#/components/schemas/ParPOSType'
+      - $ref: '#/components/schemas/HoneywellOnGuardType'
+      - $ref: '#/components/schemas/HoneywellNetBoxType'
+      - $ref: '#/components/schemas/SignatureApiType'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OnGuardDeploymentSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        badgeAuthDisablesAlarmMonitoring:
+          type:
+          - boolean
+          - 'null'
+        badgeFaceVerificationMode:
+          $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
+        createAccessAnomalyAlerts:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        displayName:
+          type:
+          - string
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
+        doorsValidated:
+          type:
+          - boolean
+          - 'null'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        misconfiguredDoors:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        presharedSecret:
+          type:
+          - string
+          - 'null'
+        rhombusToken:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+    ZapierWebhookSettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        backoffSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        doorState:
+          $ref: '#/components/schemas/DoorStatusEnum'
+        humidityLowerThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        humidityUpperThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        tempLowerThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        tempUpperThreshold:
+          type:
+          - number
+          - 'null'
+          format: float
+        url:
+          type:
+          - string
+          - 'null'
+        uuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        zapEnum:
+          $ref: '#/components/schemas/ZapierEnum'
+      required:
+      - url
+      - zapEnum
     HoneywellNetBoxType:
       type:
       - object
@@ -3904,47 +3894,9 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    IntegrationEnum:
-      type: string
-      enum:
-      - AVIGILON_ALTA
-      - BOULEVARD
-      - BRIVO
-      - BUTTERFLY_MX
-      - DEVICE_INTEGRATION
-      - DICE
-      - ENVOY
-      - FLIC
-      - GENEA
-      - GOOGLE
-      - HONEYWELL_ELEMENTS
-      - GUEST_MANAGEMENT
-      - INFORMACAST
-      - INNER_RANGE
-      - KISI
-      - LUMEO
-      - MICROSOFT_TEAMS
-      - OMNIALERT
-      - OPENAI
-      - OPENTECH_ALLIANCE
-      - PIMLOC
-      - PLACE_OS
-      - PRODATAKEY
-      - SHELLY
-      - TOAST
-      - WEBHOOKS
-      - ZAPIER
-      - RAPTOR
-      - NINEONEONE_CELLULAR
-      - SLACK
-      - APERIO
-      - PAR_POS
-      - HONEYWELL_ONGUARD
-      - HONEYWELL_NETBOX
-      - SIGNATURE_API
-      - UNKNOWN
-    Integration_GetToastServiceAreasWSResponse:
+    BaseApiResponse:
       type: object
+      description: Base response object denoting success, or failure with a reason, for an endpoint.
       properties:
         error:
           type:
@@ -3954,17 +3906,441 @@ components:
           type:
           - string
           - 'null'
-        serviceAreas:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GenericPosType'
         warningMsg:
           type:
           - string
           - 'null'
-    PlaceOsType:
+    InnerRangeType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiToken:
+            type:
+            - string
+            - 'null'
+          consoleToSettingsMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/InnerRangeConsoleSettings'
+          createSeekPoints:
+            type:
+            - boolean
+            - 'null'
+          doorInfoMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/InnerRangeDoorInfoType'
+          refreshToken:
+            type:
+            - string
+            - 'null'
+          skyTunnelSN:
+            type:
+            - string
+            - 'null'
+          tokenValid:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    SecurityZoneInfoType:
+      type:
+      - object
+      - 'null'
+      properties:
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        isParentZone:
+          type:
+          - boolean
+          - 'null'
+        securityZoneName:
+          type:
+          - string
+          - 'null'
+        zoneAddress:
+          type:
+          - string
+          - 'null'
+        zoneId:
+          type:
+          - string
+          - 'null'
+        zoneParentId:
+          type:
+          - string
+          - 'null'
+    ShellyType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          canSendDiagnosticNotifications:
+            type:
+            - boolean
+            - 'null'
+          diagnosticQuietPeriodSecs:
+            type:
+            - integer
+            - 'null'
+            format: int32
+          shellyDeviceMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              $ref: '#/components/schemas/ShellyDevice'
+          thirdPartyDeviceToLocationMap:
+            type:
+            - object
+            - 'null'
+            additionalProperties:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ShellyDevice:
+      type:
+      - object
+      - 'null'
+      properties:
+        canSendCommands:
+          $ref: '#/components/schemas/ShellyDevicePermissionEnum'
+        channels:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        deviceType:
+          $ref: '#/components/schemas/ShellyDeviceTypeEnum'
+        hostUrl:
+          type:
+          - string
+          - 'null'
+        isOnline:
+          type:
+          - boolean
+          - 'null'
+        temperature:
+          type:
+          - number
+          - 'null'
+          format: double
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        voltage:
+          type:
+          - number
+          - 'null'
+          format: double
+    PimlocType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          baseAPIUrl:
+            $ref: '#/components/schemas/PimlocBaseAPIUrlEnum'
+          clientId:
+            type:
+            - string
+            - 'null'
+          clientSecret:
+            type:
+            - string
+            - 'null'
+          rhombusToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          validCredentials:
+            type:
+            - boolean
+            - 'null'
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    IntegrationAuditEventEnum:
+      type: string
+      enum:
+      - UPDATE
+      - DELETE
+    FlicType:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          apiKey:
+            type:
+            - string
+            - 'null'
+          apiSecret:
+            type:
+            - string
+            - 'null'
+          associatedLocations:
+            type:
+            - array
+            - 'null'
+            items:
+              type:
+              - string
+              - 'null'
+              format: RUUID
+              description: base 64 (url-safe) uuid string
+              example: AAAAAAAAAAAAAAAAAAAAAA
+            uniqueItems: true
+          moduleUploaded:
+            type:
+            - boolean
+            - 'null'
+          webhookId:
+            type:
+            - string
+            - 'null'
+          webhookToken:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        integrationAuditMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/IntegrationAuditEvent'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    OpentechAllianceFacilitySettings:
+      type:
+      - object
+      - 'null'
+      properties:
+        alertUnauthorizedFaces:
+          type:
+          - boolean
+          - 'null'
+        createSeekPoints:
+          type:
+          - boolean
+          - 'null'
+        doorInfoMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/OpentechAllianceDoorInfoType'
+        identifyFacesFromBadge:
+          type:
+          - boolean
+          - 'null'
+        saveClips:
+          type:
+          - boolean
+          - 'null'
+    OpentechAllianceDoorInfoType:
+      type:
+      - object
+      - 'null'
+      properties:
+        actionGroupId:
+          type:
+          - string
+          - 'null'
+        assignedCameraList:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        clipDuration:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        doorName:
+          type:
+          - string
+          - 'null'
+        leadingSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        remoteUnlock:
+          type:
+          - boolean
+          - 'null'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+    ZapierEnum:
+      type: string
+      description: Zapier integration type
+      enum:
+      - BUTTON_EVENTS
+      - DOOR_SENSOR_EVENTS
+      - ENVIRONMENTAL_SENSOR_EVENTS
+      - RULE_EVENTS
+    GeneaType:
       type:
       - object
       - 'null'
@@ -3976,10 +4352,6 @@ components:
             - boolean
             - 'null'
           apiToken:
-            type:
-            - string
-            - 'null'
-          apiUrl:
             type:
             - string
             - 'null'
@@ -4042,386 +4414,14 @@ components:
             type:
             - boolean
             - 'null'
-          triggerNotification:
-            type:
-            - boolean
-            - 'null'
           webhookSignatureSecret:
             type:
             - string
             - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    BadgeIntegrationDoorInfoType:
-      type:
-      - object
-      - 'null'
-      properties:
-        assignedCameraList:
-          type:
-          - array
-          - 'null'
-          items:
+          webhookUuid:
             type:
             - string
             - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        clipDuration:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        doorName:
-          type:
-          - string
-          - 'null'
-        leadingSeconds:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        remoteUnlock:
-          type:
-          - boolean
-          - 'null'
-        subLocationsHierarchyKey:
-          type:
-          - string
-          - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-    OpentechAllianceType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiKey:
-            type:
-            - string
-            - 'null'
-          apiSecret:
-            type:
-            - string
-            - 'null'
-          facilityToSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/OpentechAllianceFacilitySettings'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    IBaseIntegrationType:
-      type: object
-      discriminator:
-        propertyName: integration
-      oneOf:
-      - $ref: '#/components/schemas/AperioType'
-      - $ref: '#/components/schemas/AvigilonAltaType'
-      - $ref: '#/components/schemas/BoulevardType'
-      - $ref: '#/components/schemas/BrivoType'
-      - $ref: '#/components/schemas/ButterflyMXType'
-      - $ref: '#/components/schemas/DeviceIntegrationType'
-      - $ref: '#/components/schemas/DiceType'
-      - $ref: '#/components/schemas/EnvoyType'
-      - $ref: '#/components/schemas/FlicType'
-      - $ref: '#/components/schemas/GeneaType'
-      - $ref: '#/components/schemas/GoogleType'
-      - $ref: '#/components/schemas/GuestManagementType'
-      - $ref: '#/components/schemas/HoneywellElementsType'
-      - $ref: '#/components/schemas/InformacastType'
-      - $ref: '#/components/schemas/InnerRangeType'
-      - $ref: '#/components/schemas/KisiType'
-      - $ref: '#/components/schemas/LumeoType'
-      - $ref: '#/components/schemas/MicrosoftTeamsType'
-      - $ref: '#/components/schemas/NineOneOneCellularType'
-      - $ref: '#/components/schemas/OmnialertType'
-      - $ref: '#/components/schemas/OpenAIType'
-      - $ref: '#/components/schemas/OpentechAllianceType'
-      - $ref: '#/components/schemas/PimlocType'
-      - $ref: '#/components/schemas/PlaceOsType'
-      - $ref: '#/components/schemas/ProDataKeyType'
-      - $ref: '#/components/schemas/RaptorType'
-      - $ref: '#/components/schemas/ShellyType'
-      - $ref: '#/components/schemas/ToastType'
-      - $ref: '#/components/schemas/WebhooksType'
-      - $ref: '#/components/schemas/ZapierType'
-      - $ref: '#/components/schemas/ParPOSType'
-      - $ref: '#/components/schemas/HoneywellOnGuardType'
-      - $ref: '#/components/schemas/HoneywellNetBoxType'
-      - $ref: '#/components/schemas/SignatureApiType'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    EnvoyLocationInfoType:
-      type:
-      - object
-      - 'null'
-      properties:
-        assignedCameraList:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        locationName:
-          type:
-          - string
-          - 'null'
-    OnGuardDeploymentSettings:
-      type:
-      - object
-      - 'null'
-      properties:
-        alertUnauthorizedFaces:
-          type:
-          - boolean
-          - 'null'
-        badgeAuthDisablesAlarmMonitoring:
-          type:
-          - boolean
-          - 'null'
-        badgeFaceVerificationMode:
-          $ref: '#/components/schemas/BadgeFaceVerificationModeEnum'
-        createAccessAnomalyAlerts:
-          type:
-          - boolean
-          - 'null'
-        createSeekPoints:
-          type:
-          - boolean
-          - 'null'
-        displayName:
-          type:
-          - string
-          - 'null'
-        doorInfoMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/BadgeIntegrationDoorInfoType'
-        doorsValidated:
-          type:
-          - boolean
-          - 'null'
-        identifyFacesFromBadge:
-          type:
-          - boolean
-          - 'null'
-        misconfiguredDoors:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        presharedSecret:
-          type:
-          - string
-          - 'null'
-        rhombusToken:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        saveClips:
-          type:
-          - boolean
-          - 'null'
-    EnvoyPersonInfo:
-      type: object
-      properties:
-        email:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - string
-          - 'null'
-        locationIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        locations:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-    SignatureApiType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          apiToken:
-            type:
-            - string
-            - 'null'
-          refreshToken:
-            type:
-            - string
-            - 'null'
-          tokenValid:
-            type:
-            - boolean
-            - 'null'
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        integrationAuditMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/IntegrationAuditEvent'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    HoneywellOnGuardType:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          deploymentToSettingsMap:
-            type:
-            - object
-            - 'null'
-            additionalProperties:
-              $ref: '#/components/schemas/OnGuardDeploymentSettings'
       properties:
         enabled:
           type:

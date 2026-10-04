@@ -436,19 +436,17 @@ paths:
       - User Webservice
 components:
   schemas:
-    NotificationEnumType:
-      type: string
-      enum:
-      - SMS
-      - EMAIL
-      - APP
-      - SLACK
-      - MICROSOFT_TEAMS
-      - BROWSER
-      - UNKNOWN
-    User_UpdateUserNotificationSettingsWSRequest:
+    UserPermissionType:
       type: object
+      description: List of user permissions
       properties:
+        groupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         orgUuid:
           type:
           - string
@@ -456,10 +454,320 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        receiveHealthNotifications:
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    NotificationTimeFrameRow:
+      type: object
+      properties:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        devices:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+          uniqueItems: true
+        diagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        locationOnly:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        locationOnlyActivities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        locationOnlyDiagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        promptUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+    NotificationTimeFrame:
+      type: object
+      properties:
+        days:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
+          uniqueItems: true
+        interval:
+          $ref: '#/components/schemas/MinuteOfDayIntervalType'
+        mediums:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationEnumType'
+          uniqueItems: true
+        rows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationTimeFrameRow'
+    User_GetUsersInOrgWSRequest:
+      type: object
+      description: Request object for getting all users in the organization.
+    User_AssignEmailToUserWSResponse:
+      type: object
+      description: Response object for assigning an email to a user.
+    RhombusSecureMobileCredentialProvisioningRulesType:
+      type: object
+      properties:
+        endDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+        maxMobileCredsAllowed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        startDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+    StaticEpochSecondsProvisioner:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          value:
+            type:
+            - integer
+            - 'null'
+            format: int64
+      properties:
+        type:
+          type: string
+    RhombusAppEnum:
+      type: string
+      enum:
+      - PARTNER
+      - CONSOLE
+      - RHOMBUS_KEY
+      - UNKNOWN
+    DiagnosticActivityEnum:
+      type: string
+      enum:
+      - CAMERA_CONNECTED
+      - CAMERA_DISCONNECTED
+      - STARTUP
+      - GATEWAY_CONNECTED
+      - GATEWAY_DISCONNECTED
+      - UPDATE_STARTED
+      - UPDATE_FIRMWARE_DOWNLOADED
+      - UPDATE_FIRMWARE_APPLIED
+      - UPDATE_STARTING_REBOOT
+      - UPDATE_FAILED_MD5_MISMATCH
+      - UPDATE_FAILED_ACCESS_DENIED
+      - UPDATE_FAILED_MITM
+      - UPDATE_FAILED_CONNNECTION_REFUSED
+      - UPDATE_FAILED_CONNNECTION_TIMEOUT
+      - UPDATE_FAILED_CONNECTION_REFUSED
+      - UPDATE_FAILED_CONNECTION_TIMEOUT
+      - UPDATE_FAILED_DNS_FAILURE
+      - UPDATE_RUNNING
+      - UPDATE_HALTED_FOR_INVESTIGATION
+      - UPDATE_HALT_CLEARED
+      - UPDATE_HALT_STATE_ACTIVE
+      - UPDATE_REFUSED_HALTED
+      - BLE_CONNECTED
+      - BLE_CONNECTION_FAILED
+      - BLE_DISCONNECTED
+      - BLE_OP_SUCCESS
+      - BLE_OP_FAILURE
+      - UPLOAD_CLIP_SUCCESS
+      - UPLOAD_CLIP_FAILURE
+      - NOTIFICATION_FAILURE
+      - USB_FAILURE_REBOOT
+      - PERSISTENT_STORAGE_FAILURE
+      - PING
+      - FORCED_REBOOT
+      - AUTO_REBOOT
+      - AUDIO_HARDWARE_NOT_DETECTED
+      - ENCRYPTED_CONTAINER_FAILURE_CREATE
+      - ENCRYPTED_CONTAINER_FAILURE_OPEN
+      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
+      - VIDEO_HARDWARE_FAILURE
+      - WIFI_NETWORK_CHANGED
+      - AI_ENGINE_DOWNLOADED
+      - AI_ENGINE_DOWNLOAD_FAILED_MD5_MISMATCH
+      - AI_ENGINE_CONFIGURED
+      - AI_ENGINE_CONFIGURATION_FAILED
+      - MITM_FAILURE
+      - SERVER_RECONNECT
+      - AP_CHANGED
+      - WATCHDOG_KILLED_AGENT
+      - WATCHDOG_DID_RESET
+      - CLIMATE_OFFLINE
+      - CLIMATE_ONLINE
+      - CLIMATE_LOW_BATTERY
+      - CLIMATE_PROBE_CONNECTED
+      - CLIMATE_PROBE_DISCONNECTED
+      - DOOR_OFFLINE
+      - DOOR_ONLINE
+      - DOOR_LOW_BATTERY
+      - OCCUPANCY_SENSOR_ONLINE
+      - OCCUPANCY_SENSOR_OFFLINE
+      - OCCUPANCY_SENSOR_LOW_BATTERY
+      - BUTTON_OFFLINE
+      - BUTTON_ONLINE
+      - BUTTON_LOW_BATTERY
+      - PROXIMITY_LOW_BATTERY
+      - ROBOT_LOW_BATTERY
+      - DOOR_CONTROLLER_CONNECTED
+      - DOOR_CONTROLLER_DISCONNECTED
+      - APERIO_LOW_BATTERY
+      - APERIO_FLAT_BATTERY
+      - APERIO_OK_BATTERY
+      - APERIO_GW_CONNECTED
+      - APERIO_GW_DISCONNECTED
+      - BADGE_READER_CONNECTED
+      - BADGE_READER_DISCONNECTED
+      - REBOOT
+      - NETWORK_INTERRUPTION
+      - OPENPATH_WEBHOOK_FAILURE
+      - TOAST_WEBHOOK_FAILURE
+      - KISI_WEBHOOK_FAILURE
+      - BRIVO_WEBHOOK_FAILURE
+      - HALO_WEBHOOK_FAILURE
+      - SALTO_WEBHOOK_FAILURE
+      - SQUARE_WEBHOOK_FAILURE
+      - BUTTERFLYMX_WEBHOOK_FAILURE
+      - ENVOY_WEBHOOK_FAILURE
+      - GENEA_WEBHOOK_FAILURE
+      - PRODATAKEY_WEBHOOK_FAILURE
+      - AMT_WEBHOOK_FAILURE
+      - PLACEOS_WEBHOOK_FAILURE
+      - OMNIALERT_WEBHOOK_FAILURE
+      - FLIC_WEBHOOK_FAILURE
+      - SHELLY_WEBHOOK_FAILURE
+      - PIMLOC_WEBHOOK_FAILURE
+      - NINEONEONECELLULAR_WEBHOOK_FAILURE
+      - HONEYWELL_ELEMENTS_WEBHOOK_FAILURE
+      - HONEYWELL_ONGUARD_WEBHOOK_FAILURE
+      - TRITON_WEBHOOK_FAILURE
+      - EXTERNAL_WEBHOOK_FAILURE
+      - CV_FAILURE
+      - NFC_HW_FAILURE
+      - CONFIG_ERROR
+      - HW_FAILURE
+      - KEYPAD_ONLINE
+      - KEYPAD_OFFLINE
+      - ALM_OVERAGE_APPROACHING
+      - ALM_OVERAGE_REACHED
+      - ALM_OVERAGE_EXCEEDED
+      - ALM_EXCESSIVE_VERIFICATIONS
+      - KIOSK_OFFLINE
+      - KIOSK_ONLINE
+      - TUNNELED_DEVICE_CONNECTED
+      - TUNNELED_DEVICE_DISCONNECTED
+      - SD_CARD_CHANGED
+      - SD_CARD_NOT_FOUND
+      - SUPERVISION_CUT_DETECTED
+      - SUPERVISION_SHORT_DETECTED
+      - SUPERVISION_INVALID_SETUP
+      - THIRD_PARTY_DEVICE_CONNECTED
+      - THIRD_PARTY_DEVICE_DISCONNECTED
+      - NVR_STREAMING_STATUS
+      - STORAGE_SM
+      - DEVICE_OFFLINE_EXTENDED
+      - DEVICE_OFFLINE_RECOVERED
+      - DEVICES_OFFLINE_THRESHOLD
+      - CLOUD_ARCHIVE_LAGGING
+      - CLOUD_ARCHIVE_RECOVERED
+      - LOCAL_RECORDING_INTERRUPTED
+      - LOCAL_RECORDING_RECOVERED
+      - UNKNOWN
+    PartnerNotificationSettingsV2:
+      type: object
+      properties:
+        allClientsSelected:
           type:
           - boolean
           - 'null'
+        clientNotificationIntervalsMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/PartnerNotificationClientSection'
+        notificationIntervalsForAllClients:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PartnerNotificationClientSection'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         smsNotificationIncludesLinks:
           type:
           - boolean
@@ -476,20 +784,6 @@ components:
           type:
           - boolean
           - 'null'
-        timeFrames:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationTimeFrame'
-        updatedSetMethodMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - boolean
-            - 'null'
         userUuid:
           type:
           - string
@@ -497,71 +791,137 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    PartnerNotificationClientSection:
+    User_UpdatePartnerWSResponse:
       type: object
       properties:
-        clientUuids:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    WrappedRhombusOrgUserType:
+      type: object
+      description: List of users in the organization
+      properties:
+        accessibleRhombusApps:
           type:
           - array
           - 'null'
           items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
+            $ref: '#/components/schemas/RhombusAppEnum'
           uniqueItems: true
-        rows:
+        accountOwner:
           type:
-          - array
+          - boolean
           - 'null'
-          items:
-            $ref: '#/components/schemas/PartnerNotificationClientSectionRow'
-    User_UpdateUserSelectiveWSRequest:
-      type: object
-      properties:
         bypassSaml:
           type:
           - boolean
+          - 'null'
+        changePasswordOnLogin:
+          type:
+          - boolean
+          - 'null'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deleted:
+          type:
+          - boolean
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        emailCaseSensitive:
+          type:
+          - string
+          - 'null'
+        emailVerified:
+          type:
+          - boolean
+          - 'null'
+        firstName:
+          type:
+          - string
+          - 'null'
+        lastName:
+          type:
+          - string
           - 'null'
         mfaEnabled:
           type:
           - boolean
           - 'null'
+        mfaTokenType:
+          $ref: '#/components/schemas/MfaTokenTypeEnum'
         name:
           type:
           - string
           - 'null'
-        notificationIntervalsV2:
+        orgUserCustomizationFlags:
           type:
-          - array
+          - object
           - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationIntervalV2Type'
-        permissionGroupUuid:
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        orgUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        passwordSet:
+          type:
+          - boolean
+          - 'null'
         restrictToAllowedLoginIps:
           type:
           - boolean
           - 'null'
-        smsPhoneNumbers:
+        rhombusUserUuid:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        summaryEmailEnabled:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        status:
+          $ref: '#/components/schemas/UserStatusEnumType'
+        updatedAtMillis:
           type:
-          - boolean
+          - integer
           - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_AssignEmailToUserWSRequest:
+      type: object
+      description: Request object for assigning an email to a user.
+      properties:
+        emailToAssign:
+          type:
+          - string
+          - 'null'
+          description: Email address to assign to the user
+          example: user@example.com
         userUuid:
           type:
           - string
@@ -667,55 +1027,65 @@ components:
           type:
           - string
           - 'null'
-    MinuteOfDayIntervalType:
+    User_UpdateUserNotificationSettingsWSResponse:
       type: object
       properties:
-        dayOfWeek:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        minuteOfDayStartInclusive:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        minuteOfDayStopExclusive:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    PartnerNotificationSettingsV2:
-      type: object
-      properties:
-        allClientsSelected:
+        error:
           type:
           - boolean
           - 'null'
-        clientNotificationIntervalsMap:
+        errorMsg:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/PartnerNotificationClientSection'
-        notificationIntervalsForAllClients:
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    User_UpdatePartnerUserNotificationSettingsWSResponse:
+      type: object
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    User_UpdateUserSelectiveWSRequest:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        notificationIntervalsV2:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/PartnerNotificationClientSection'
-        orgUuid:
+            $ref: '#/components/schemas/NotificationIntervalV2Type'
+        permissionGroupUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        smsNotificationIncludesLinks:
+        restrictToAllowedLoginIps:
           type:
           - boolean
           - 'null'
@@ -738,16 +1108,196 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    UserStatusEnumType:
+    Partner_GetPartnerUsersInOrgWSRequest:
+      type: object
+      description: Request object for getting partner users in organization.
+    NotificationEnumType:
       type: string
       enum:
-      - JOINED
-      - PENDING
-      - INACTIVE
+      - SMS
+      - EMAIL
+      - APP
+      - SLACK
+      - MICROSOFT_TEAMS
+      - BROWSER
       - UNKNOWN
-    UserPermissionType:
+    ScheduledIntervalType:
       type: object
-      description: List of user permissions
+      description: Map of location UUIDs to snooze intervals
+      properties:
+        durationSecs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        timestampSec:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_UpdateRhombusKeySettingsForUserWSResponse:
+      type: object
+      properties:
+        userRhombusKeyConfig:
+          $ref: '#/components/schemas/RhombusKeyAppConfigType'
+    User_UpdateRhombusKeySettingsForUserWSRequest:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        endDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+        maxMobileCredsAllowed:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        remoteUnlockEnabled:
+          type:
+          - boolean
+          - 'null'
+        rhombusKeyAccessEnabled:
+          type:
+          - boolean
+          - 'null'
+        startDateProvisioner:
+          $ref: '#/components/schemas/EpochSecondsProvisioner'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_GetUsersInOrgWSResponse:
+      type: object
+      description: Response object containing all users in the organization with their settings and permissions.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        notificationSettings:
+          type:
+          - array
+          - 'null'
+          description: List of user notification settings (V3)
+          items:
+            $ref: '#/components/schemas/UserNotificationSettingsV3Type'
+        notificationSettingsV2:
+          type:
+          - array
+          - 'null'
+          description: List of user notification settings (V4)
+          items:
+            $ref: '#/components/schemas/UserNotificationSettingsV4Type'
+        partners:
+          type:
+          - array
+          - 'null'
+          description: List of partner users in the organization
+          items:
+            $ref: '#/components/schemas/WrappedRhombusOrgUserType'
+        rhombusKeyAppConfigs:
+          type:
+          - array
+          - 'null'
+          description: List of Rhombus Key app configurations
+          items:
+            $ref: '#/components/schemas/RhombusKeyAppConfigType'
+        snoozeSettings:
+          type:
+          - array
+          - 'null'
+          description: List of user snooze notification settings
+          items:
+            $ref: '#/components/schemas/User_UserSnoozeNotificationSettingsType'
+        userPermissions:
+          type:
+          - array
+          - 'null'
+          description: List of user permissions
+          items:
+            $ref: '#/components/schemas/UserPermissionType'
+        users:
+          type:
+          - array
+          - 'null'
+          description: List of users in the organization
+          items:
+            $ref: '#/components/schemas/WrappedRhombusOrgUserType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    User_DeleteUserWSRequest:
+      type: object
+      description: Request object for deleting a user.
+      properties:
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    User_CreateUserWSRequest:
+      type: object
+      description: CreateUserWSRequest
+      properties:
+        accessibleRhombusApps:
+          type:
+          - array
+          - 'null'
+          description: The set of accessible Rhombus apps
+          items:
+            $ref: '#/components/schemas/RhombusAppEnum'
+          uniqueItems: true
+        email:
+          type:
+          - string
+          - 'null'
+          description: The email of the user
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the user
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        rhombusKeySettings:
+          $ref: '#/components/schemas/RhombusKeyAppSettingsType'
+        suppressRhombusKeyWelcomeEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Suppress the welcome email for the Rhombus Key mobile app if the user is provided access
+        suppressWelcomeEmail:
+          type:
+          - boolean
+          - 'null'
+          description: Suppress the welcome email
+    PartnerPermissionType:
+      type: object
+      description: List of partner permissions
       properties:
         groupUuid:
           type:
@@ -770,85 +1320,22 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    NotificationTimeFrameRow:
+    User_DeleteUserWSResponse:
       type: object
+      description: Response object for deleting a user.
       properties:
-        activities:
+        error:
           type:
-          - array
+          - boolean
           - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        devices:
+        errorMsg:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-          uniqueItems: true
-        diagnostics:
+        warningMsg:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/DiagnosticActivityEnum'
-          uniqueItems: true
-        locationOnly:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        locationOnlyActivities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        locationOnlyDiagnostics:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DiagnosticActivityEnum'
-          uniqueItems: true
-        locations:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        promptUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
     User_UpdateUserWSRequest:
       type: object
       description: Request object for updating user information and settings.
@@ -914,85 +1401,60 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    User_UpdatePartnerWSResponse:
+    RhombusKeyAppPreferencesType:
       type: object
       properties:
-        error:
+        favoriteAccessControlledDoorUuids:
           type:
-          - boolean
+          - array
           - 'null'
-        errorMsg:
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        favoriteAccessControlledElevatorUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    UserNotificationSettingsV3Type:
+      type: object
+      description: List of user notification settings (V3)
+      properties:
+        notificationIntervalsV2:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationIntervalV2Type'
+        orgUuid:
           type:
           - string
           - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    PartnerNotificationClientSectionRow:
-      type: object
-      properties:
-        activities:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        smsPhoneNumbers:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/ActivityEnum'
-          uniqueItems: true
-        days:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
-          uniqueItems: true
-        diagnostics:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DiagnosticActivityEnum'
-          uniqueItems: true
-        interval:
-          $ref: '#/components/schemas/MinuteOfDayIntervalType'
-        mediums:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationEnumType'
-          uniqueItems: true
-    MfaTokenTypeEnum:
-      type: string
-      enum:
-      - EMAIL
-      - SMS
-      - VIRTUAL_MFA
-      - FIDO
-    User_UpdateRhombusKeySettingsForUserWSRequest:
-      type: object
-      properties:
-        bypassSaml:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
           type:
           - boolean
           - 'null'
-        endDateProvisioner:
-          $ref: '#/components/schemas/EpochSecondsProvisioner'
-        maxMobileCredsAllowed:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        remoteUnlockEnabled:
-          type:
-          - boolean
-          - 'null'
-        rhombusKeyAccessEnabled:
-          type:
-          - boolean
-          - 'null'
-        startDateProvisioner:
-          $ref: '#/components/schemas/EpochSecondsProvisioner'
         userUuid:
           type:
           - string
@@ -1000,26 +1462,26 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    RhombusSecureMobileCredentialProvisioningRulesType:
+    MinuteOfDayIntervalType:
       type: object
       properties:
-        endDateProvisioner:
-          $ref: '#/components/schemas/EpochSecondsProvisioner'
-        maxMobileCredsAllowed:
+        dayOfWeek:
           type:
           - integer
           - 'null'
           format: int32
-        startDateProvisioner:
-          $ref: '#/components/schemas/EpochSecondsProvisioner'
-    User_UpdateRhombusKeySettingsForUserWSResponse:
+        minuteOfDayStartInclusive:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        minuteOfDayStopExclusive:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    User_UpdateUserNotificationSettingsWSRequest:
       type: object
-      properties:
-        userRhombusKeyConfig:
-          $ref: '#/components/schemas/RhombusKeyAppConfigType'
-    UserNotificationSettingsV4Type:
-      type: object
-      description: List of user notification settings (V4)
       properties:
         orgUuid:
           type:
@@ -1054,6 +1516,14 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/NotificationTimeFrame'
+        updatedSetMethodMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - boolean
+            - 'null'
         userUuid:
           type:
           - string
@@ -1061,77 +1531,27 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    RhombusKeyAppPreferencesType:
+    EpochSecondsProvisioner:
       type: object
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/StaticEpochSecondsProvisioner'
       properties:
-        favoriteAccessControlledDoorUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        favoriteAccessControlledElevatorUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    RhombusKeyAppSettingsType:
-      type: object
-      properties:
-        bypassSaml:
-          type:
-          - boolean
-          - 'null'
-        credentialProvisioningRules:
-          $ref: '#/components/schemas/RhombusSecureMobileCredentialProvisioningRulesType'
-        remoteUnlockEnabled:
-          type:
-          - boolean
-          - 'null'
-        rhombusKeyAccessEnabled:
-          type:
-          - boolean
-          - 'null'
-    User_UpdateUserWSResponse:
-      type: object
-      description: Response object for updating a user.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    RhombusDayOfWeekEnum:
+        type:
+          type: string
+      required:
+      - type
+    UserStatusEnumType:
       type: string
       enum:
-      - MONDAY
-      - TUESDAY
-      - WEDNESDAY
-      - THURSDAY
-      - FRIDAY
-      - SATURDAY
-      - SUNDAY
-    Partner_GetPartnerUsersInOrgWSRequest:
+      - JOINED
+      - PENDING
+      - INACTIVE
+      - UNKNOWN
+    User_UpdateUserSelectiveWSResponse:
       type: object
-      description: Request object for getting partner users in organization.
+      description: Response object for selective user updates.
     User_UserSnoozeNotificationSettingsType:
       type: object
       description: User snooze notification settings with location and device-specific snooze intervals.
@@ -1174,24 +1594,253 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    User_AssignEmailToUserWSResponse:
+    PartnerNotificationClientSectionRow:
       type: object
-      description: Response object for assigning an email to a user.
-    ScheduledIntervalType:
-      type: object
-      description: Map of location UUIDs to snooze intervals
       properties:
-        durationSecs:
+        activities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+          uniqueItems: true
+        days:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
+          uniqueItems: true
+        diagnostics:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DiagnosticActivityEnum'
+          uniqueItems: true
+        interval:
+          $ref: '#/components/schemas/MinuteOfDayIntervalType'
+        mediums:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationEnumType'
+          uniqueItems: true
+    RhombusKeyAppConfigType:
+      type: object
+      properties:
+        createdAtMillis:
           type:
           - integer
           - 'null'
           format: int64
-        timestampSec:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        preferences:
+          $ref: '#/components/schemas/RhombusKeyAppPreferencesType'
+        rhombusOrgUserUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        settings:
+          $ref: '#/components/schemas/RhombusKeyAppSettingsType'
+        updatedAtMillis:
           type:
           - integer
           - 'null'
           format: int64
-        uuid:
+    User_UpdatePartnerWSRequest:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        mfaEnabled:
+          type:
+          - boolean
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        notificationSettingsV2:
+          $ref: '#/components/schemas/PartnerNotificationSettingsV2'
+        permissionGroupUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    PartnerNotificationClientSection:
+      type: object
+      properties:
+        clientUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        rows:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/PartnerNotificationClientSectionRow'
+    MfaTokenTypeEnum:
+      type: string
+      enum:
+      - EMAIL
+      - SMS
+      - VIRTUAL_MFA
+      - FIDO
+    User_CreateUserWSResponse:
+      type: object
+      description: Response object for creating a user.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        responseStatus:
+          $ref: '#/components/schemas/WebResponseStatusEnum'
+        userUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    WebResponseStatusEnum:
+      type: string
+      description: Status of the unregister operation
+      enum:
+      - BASIC_AUTH_FAILED
+      - PASSWORD_MISMATCH
+      - SAME_PASSWORD
+      - USER_EXISTS
+      - USER_NOT_FOUND
+      - DEVICE_NOT_FOUND
+      - POLICY_NOT_FOUND
+      - LOCATION_NOT_FOUND
+      - ORG_NOT_FOUND
+      - BAD_INPUT
+      - SUCCESS
+      - PASSWORD_TOO_SHORT
+    User_UpdateUserWSResponse:
+      type: object
+      description: Response object for updating a user.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    RhombusKeyAppSettingsType:
+      type: object
+      properties:
+        bypassSaml:
+          type:
+          - boolean
+          - 'null'
+        credentialProvisioningRules:
+          $ref: '#/components/schemas/RhombusSecureMobileCredentialProvisioningRulesType'
+        remoteUnlockEnabled:
+          type:
+          - boolean
+          - 'null'
+        rhombusKeyAccessEnabled:
+          type:
+          - boolean
+          - 'null'
+    UserNotificationSettingsV4Type:
+      type: object
+      description: List of user notification settings (V4)
+      properties:
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        receiveHealthNotifications:
+          type:
+          - boolean
+          - 'null'
+        smsNotificationIncludesLinks:
+          type:
+          - boolean
+          - 'null'
+        smsPhoneNumbers:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+        summaryEmailEnabled:
+          type:
+          - boolean
+          - 'null'
+        timeFrames:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationTimeFrame'
+        userUuid:
           type:
           - string
           - 'null'
@@ -1421,649 +2070,6 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    RhombusKeyAppConfigType:
-      type: object
-      properties:
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        preferences:
-          $ref: '#/components/schemas/RhombusKeyAppPreferencesType'
-        rhombusOrgUserUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        settings:
-          $ref: '#/components/schemas/RhombusKeyAppSettingsType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    WrappedRhombusOrgUserType:
-      type: object
-      description: List of users in the organization
-      properties:
-        accessibleRhombusApps:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RhombusAppEnum'
-          uniqueItems: true
-        accountOwner:
-          type:
-          - boolean
-          - 'null'
-        bypassSaml:
-          type:
-          - boolean
-          - 'null'
-        changePasswordOnLogin:
-          type:
-          - boolean
-          - 'null'
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        deleted:
-          type:
-          - boolean
-          - 'null'
-        email:
-          type:
-          - string
-          - 'null'
-        emailCaseSensitive:
-          type:
-          - string
-          - 'null'
-        emailVerified:
-          type:
-          - boolean
-          - 'null'
-        firstName:
-          type:
-          - string
-          - 'null'
-        lastName:
-          type:
-          - string
-          - 'null'
-        mfaEnabled:
-          type:
-          - boolean
-          - 'null'
-        mfaTokenType:
-          $ref: '#/components/schemas/MfaTokenTypeEnum'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUserCustomizationFlags:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        passwordSet:
-          type:
-          - boolean
-          - 'null'
-        restrictToAllowedLoginIps:
-          type:
-          - boolean
-          - 'null'
-        rhombusUserUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        status:
-          $ref: '#/components/schemas/UserStatusEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    User_CreateUserWSRequest:
-      type: object
-      description: CreateUserWSRequest
-      properties:
-        accessibleRhombusApps:
-          type:
-          - array
-          - 'null'
-          description: The set of accessible Rhombus apps
-          items:
-            $ref: '#/components/schemas/RhombusAppEnum'
-          uniqueItems: true
-        email:
-          type:
-          - string
-          - 'null'
-          description: The email of the user
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the user
-        permissionGroupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        rhombusKeySettings:
-          $ref: '#/components/schemas/RhombusKeyAppSettingsType'
-        suppressRhombusKeyWelcomeEmail:
-          type:
-          - boolean
-          - 'null'
-          description: Suppress the welcome email for the Rhombus Key mobile app if the user is provided access
-        suppressWelcomeEmail:
-          type:
-          - boolean
-          - 'null'
-          description: Suppress the welcome email
-    User_CreateUserWSResponse:
-      type: object
-      description: Response object for creating a user.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        responseStatus:
-          $ref: '#/components/schemas/WebResponseStatusEnum'
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    PartnerPermissionType:
-      type: object
-      description: List of partner permissions
-      properties:
-        groupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    NotificationTimeFrame:
-      type: object
-      properties:
-        days:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RhombusDayOfWeekEnum'
-          uniqueItems: true
-        interval:
-          $ref: '#/components/schemas/MinuteOfDayIntervalType'
-        mediums:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationEnumType'
-          uniqueItems: true
-        rows:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationTimeFrameRow'
-    WebResponseStatusEnum:
-      type: string
-      description: Status of the unregister operation
-      enum:
-      - BASIC_AUTH_FAILED
-      - PASSWORD_MISMATCH
-      - SAME_PASSWORD
-      - USER_EXISTS
-      - USER_NOT_FOUND
-      - DEVICE_NOT_FOUND
-      - POLICY_NOT_FOUND
-      - LOCATION_NOT_FOUND
-      - ORG_NOT_FOUND
-      - BAD_INPUT
-      - SUCCESS
-      - PASSWORD_TOO_SHORT
-    User_GetUsersInOrgWSRequest:
-      type: object
-      description: Request object for getting all users in the organization.
-    DiagnosticActivityEnum:
-      type: string
-      enum:
-      - CAMERA_CONNECTED
-      - CAMERA_DISCONNECTED
-      - STARTUP
-      - GATEWAY_CONNECTED
-      - GATEWAY_DISCONNECTED
-      - UPDATE_STARTED
-      - UPDATE_FIRMWARE_DOWNLOADED
-      - UPDATE_FIRMWARE_APPLIED
-      - UPDATE_STARTING_REBOOT
-      - UPDATE_FAILED_MD5_MISMATCH
-      - UPDATE_FAILED_ACCESS_DENIED
-      - UPDATE_FAILED_MITM
-      - UPDATE_FAILED_CONNNECTION_REFUSED
-      - UPDATE_FAILED_CONNNECTION_TIMEOUT
-      - UPDATE_FAILED_CONNECTION_REFUSED
-      - UPDATE_FAILED_CONNECTION_TIMEOUT
-      - UPDATE_FAILED_DNS_FAILURE
-      - UPDATE_RUNNING
-      - UPDATE_HALTED_FOR_INVESTIGATION
-      - UPDATE_HALT_CLEARED
-      - UPDATE_HALT_STATE_ACTIVE
-      - UPDATE_REFUSED_HALTED
-      - BLE_CONNECTED
-      - BLE_CONNECTION_FAILED
-      - BLE_DISCONNECTED
-      - BLE_OP_SUCCESS
-      - BLE_OP_FAILURE
-      - UPLOAD_CLIP_SUCCESS
-      - UPLOAD_CLIP_FAILURE
-      - NOTIFICATION_FAILURE
-      - USB_FAILURE_REBOOT
-      - PERSISTENT_STORAGE_FAILURE
-      - PING
-      - FORCED_REBOOT
-      - AUTO_REBOOT
-      - AUDIO_HARDWARE_NOT_DETECTED
-      - ENCRYPTED_CONTAINER_FAILURE_CREATE
-      - ENCRYPTED_CONTAINER_FAILURE_OPEN
-      - ENCRYPTED_CONTAINER_FAILURE_MOUNT
-      - VIDEO_HARDWARE_FAILURE
-      - WIFI_NETWORK_CHANGED
-      - AI_ENGINE_DOWNLOADED
-      - AI_ENGINE_DOWNLOAD_FAILED_MD5_MISMATCH
-      - AI_ENGINE_CONFIGURED
-      - AI_ENGINE_CONFIGURATION_FAILED
-      - MITM_FAILURE
-      - SERVER_RECONNECT
-      - AP_CHANGED
-      - WATCHDOG_KILLED_AGENT
-      - WATCHDOG_DID_RESET
-      - CLIMATE_OFFLINE
-      - CLIMATE_ONLINE
-      - CLIMATE_LOW_BATTERY
-      - CLIMATE_PROBE_CONNECTED
-      - CLIMATE_PROBE_DISCONNECTED
-      - DOOR_OFFLINE
-      - DOOR_ONLINE
-      - DOOR_LOW_BATTERY
-      - OCCUPANCY_SENSOR_ONLINE
-      - OCCUPANCY_SENSOR_OFFLINE
-      - OCCUPANCY_SENSOR_LOW_BATTERY
-      - BUTTON_OFFLINE
-      - BUTTON_ONLINE
-      - BUTTON_LOW_BATTERY
-      - PROXIMITY_LOW_BATTERY
-      - ROBOT_LOW_BATTERY
-      - DOOR_CONTROLLER_CONNECTED
-      - DOOR_CONTROLLER_DISCONNECTED
-      - APERIO_LOW_BATTERY
-      - APERIO_FLAT_BATTERY
-      - APERIO_OK_BATTERY
-      - APERIO_GW_CONNECTED
-      - APERIO_GW_DISCONNECTED
-      - BADGE_READER_CONNECTED
-      - BADGE_READER_DISCONNECTED
-      - REBOOT
-      - NETWORK_INTERRUPTION
-      - OPENPATH_WEBHOOK_FAILURE
-      - TOAST_WEBHOOK_FAILURE
-      - KISI_WEBHOOK_FAILURE
-      - BRIVO_WEBHOOK_FAILURE
-      - HALO_WEBHOOK_FAILURE
-      - SALTO_WEBHOOK_FAILURE
-      - SQUARE_WEBHOOK_FAILURE
-      - BUTTERFLYMX_WEBHOOK_FAILURE
-      - ENVOY_WEBHOOK_FAILURE
-      - GENEA_WEBHOOK_FAILURE
-      - PRODATAKEY_WEBHOOK_FAILURE
-      - AMT_WEBHOOK_FAILURE
-      - PLACEOS_WEBHOOK_FAILURE
-      - OMNIALERT_WEBHOOK_FAILURE
-      - FLIC_WEBHOOK_FAILURE
-      - SHELLY_WEBHOOK_FAILURE
-      - PIMLOC_WEBHOOK_FAILURE
-      - NINEONEONECELLULAR_WEBHOOK_FAILURE
-      - HONEYWELL_ELEMENTS_WEBHOOK_FAILURE
-      - HONEYWELL_ONGUARD_WEBHOOK_FAILURE
-      - TRITON_WEBHOOK_FAILURE
-      - EXTERNAL_WEBHOOK_FAILURE
-      - CV_FAILURE
-      - NFC_HW_FAILURE
-      - CONFIG_ERROR
-      - HW_FAILURE
-      - KEYPAD_ONLINE
-      - KEYPAD_OFFLINE
-      - ALM_OVERAGE_APPROACHING
-      - ALM_OVERAGE_REACHED
-      - ALM_OVERAGE_EXCEEDED
-      - ALM_EXCESSIVE_VERIFICATIONS
-      - KIOSK_OFFLINE
-      - KIOSK_ONLINE
-      - TUNNELED_DEVICE_CONNECTED
-      - TUNNELED_DEVICE_DISCONNECTED
-      - SD_CARD_CHANGED
-      - SD_CARD_NOT_FOUND
-      - SUPERVISION_CUT_DETECTED
-      - SUPERVISION_SHORT_DETECTED
-      - SUPERVISION_INVALID_SETUP
-      - THIRD_PARTY_DEVICE_CONNECTED
-      - THIRD_PARTY_DEVICE_DISCONNECTED
-      - NVR_STREAMING_STATUS
-      - STORAGE_SM
-      - DEVICE_OFFLINE_EXTENDED
-      - DEVICE_OFFLINE_RECOVERED
-      - DEVICES_OFFLINE_THRESHOLD
-      - CLOUD_ARCHIVE_LAGGING
-      - CLOUD_ARCHIVE_RECOVERED
-      - LOCAL_RECORDING_INTERRUPTED
-      - LOCAL_RECORDING_RECOVERED
-      - UNKNOWN
-    User_GetUsersInOrgWSResponse:
-      type: object
-      description: Response object containing all users in the organization with their settings and permissions.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        notificationSettings:
-          type:
-          - array
-          - 'null'
-          description: List of user notification settings (V3)
-          items:
-            $ref: '#/components/schemas/UserNotificationSettingsV3Type'
-        notificationSettingsV2:
-          type:
-          - array
-          - 'null'
-          description: List of user notification settings (V4)
-          items:
-            $ref: '#/components/schemas/UserNotificationSettingsV4Type'
-        partners:
-          type:
-          - array
-          - 'null'
-          description: List of partner users in the organization
-          items:
-            $ref: '#/components/schemas/WrappedRhombusOrgUserType'
-        rhombusKeyAppConfigs:
-          type:
-          - array
-          - 'null'
-          description: List of Rhombus Key app configurations
-          items:
-            $ref: '#/components/schemas/RhombusKeyAppConfigType'
-        snoozeSettings:
-          type:
-          - array
-          - 'null'
-          description: List of user snooze notification settings
-          items:
-            $ref: '#/components/schemas/User_UserSnoozeNotificationSettingsType'
-        userPermissions:
-          type:
-          - array
-          - 'null'
-          description: List of user permissions
-          items:
-            $ref: '#/components/schemas/UserPermissionType'
-        users:
-          type:
-          - array
-          - 'null'
-          description: List of users in the organization
-          items:
-            $ref: '#/components/schemas/WrappedRhombusOrgUserType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    UserNotificationSettingsV3Type:
-      type: object
-      description: List of user notification settings (V3)
-      properties:
-        notificationIntervalsV2:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationIntervalV2Type'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        smsPhoneNumbers:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        summaryEmailEnabled:
-          type:
-          - boolean
-          - 'null'
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    User_UpdatePartnerWSRequest:
-      type: object
-      properties:
-        bypassSaml:
-          type:
-          - boolean
-          - 'null'
-        mfaEnabled:
-          type:
-          - boolean
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        notificationSettingsV2:
-          $ref: '#/components/schemas/PartnerNotificationSettingsV2'
-        permissionGroupUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        smsPhoneNumbers:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-        summaryEmailEnabled:
-          type:
-          - boolean
-          - 'null'
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    User_UpdateUserSelectiveWSResponse:
-      type: object
-      description: Response object for selective user updates.
-    StaticEpochSecondsProvisioner:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          value:
-            type:
-            - integer
-            - 'null'
-            format: int64
-      properties:
-        type:
-          type: string
-    RhombusAppEnum:
-      type: string
-      enum:
-      - PARTNER
-      - CONSOLE
-      - RHOMBUS_KEY
-      - UNKNOWN
-    User_AssignEmailToUserWSRequest:
-      type: object
-      description: Request object for assigning an email to a user.
-      properties:
-        emailToAssign:
-          type:
-          - string
-          - 'null'
-          description: Email address to assign to the user
-          example: user@example.com
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    User_DeleteUserWSRequest:
-      type: object
-      description: Request object for deleting a user.
-      properties:
-        userUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    User_UpdatePartnerUserNotificationSettingsWSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    User_UpdateUserNotificationSettingsWSResponse:
-      type: object
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    EpochSecondsProvisioner:
-      type: object
-      discriminator:
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/StaticEpochSecondsProvisioner'
-      properties:
-        type:
-          type: string
-      required:
-      - type
     NotificationIntervalV2Type:
       type: object
       properties:
@@ -2157,22 +2163,16 @@ components:
           - integer
           - 'null'
           format: int32
-    User_DeleteUserWSResponse:
-      type: object
-      description: Response object for deleting a user.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
+    RhombusDayOfWeekEnum:
+      type: string
+      enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

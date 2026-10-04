@@ -73,9 +73,6 @@ paths:
       - BLE Webservice
 components:
   schemas:
-    Ble_GetBaseStationsWSRequest:
-      type: object
-      description: Request to get available base stations for BLE sensors.
     Ble_GetBaseStationsWSResponse:
       type: object
       description: Response containing available base stations for BLE sensors.
@@ -104,6 +101,9 @@ components:
           type:
           - string
           - 'null'
+    Ble_GetBaseStationsWSRequest:
+      type: object
+      description: Request to get available base stations for BLE sensors.
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).

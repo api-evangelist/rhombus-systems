@@ -591,429 +591,17 @@ paths:
       - Lockdown Plan Webservice
 components:
   schemas:
-    PointType:
+    ComponentRelayOutputTypeEnum:
+      type: string
+      enum:
+      - TRANSIENT
+      - STEADY
+    Accesscontrol_lockdownplan_DisableLockdownTestModeForLocationWSResponse:
       type: object
-      properties:
-        x:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        y:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    Accesscontrol_lockdownplan_EnableLockdownTestModeForLocationWSResponse:
-      type: object
-      description: Response containing the updated lockdown state after enabling test mode.
+      description: Response containing the updated lockdown state after disabling test mode.
       properties:
         state:
           $ref: '#/components/schemas/LocationLockdownStateType'
-    BaseLockdownPlanType:
-      type: object
-      description: The requested lockdown plan.
-      discriminator:
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/LocationLockdownPlanType'
-      properties:
-        activationPlan:
-          $ref: '#/components/schemas/LockdownActivationPlanType'
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        deactivationPlan:
-          $ref: '#/components/schemas/LockdownDeactivationPlanType'
-        defaultLockdownState:
-          $ref: '#/components/schemas/DoorLockdownStateEnumType'
-        doorLockdownStateMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/DoorLockdownStateEnumType'
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        physicalAccess:
-          $ref: '#/components/schemas/LockdownPhysicalAccessType'
-        scopeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        testPlan:
-          $ref: '#/components/schemas/LockdownTestPlanType'
-        type:
-          $ref: '#/components/schemas/LockdownPlanScopeEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    LockdownDeactivationResultEnumType:
-      type: string
-      description: The result of the lockdown deactivation operation.
-      enum:
-      - SUCCESS
-      - OPTIMISTIC_CONCURRENCY
-    Accesscontrol_lockdownplan_DeleteLockdownPlanWSRequest:
-      type: object
-      description: Request to delete a specific lockdown plan by UUID.
-      properties:
-        lockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    NoOpAction:
-      type:
-      - object
-      - 'null'
-      allOf: []
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    Accesscontrol_lockdownplan_CreateLocationLockdownPlanWSRequest:
-      type: object
-      description: Request to create a new location lockdown plan.
-      properties:
-        lockdownPlan:
-          $ref: '#/components/schemas/LocationLockdownPlanType'
-    Accesscontrol_lockdownplan_DeactivateLockdownForLocationWSResponse:
-      type: object
-      description: Response containing the result of deactivating lockdown for a location.
-      properties:
-        result:
-          $ref: '#/components/schemas/LockdownDeactivationResultEnumType'
-        state:
-          $ref: '#/components/schemas/LocationLockdownStateType'
-    Accesscontrol_lockdownplan_GetOrCreateLocationLockdownStateWSRequest:
-      type: object
-      description: Request to retrieve an existing lockdown state or create one for a specific location.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ClipBoundingBoxType:
-      type: object
-      properties:
-        activity:
-          $ref: '#/components/schemas/ActivityEnum'
-        alert:
-          type:
-          - boolean
-          - 'null'
-        bottom:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        confidence:
-          type:
-          - number
-          - 'null'
-          format: float
-        croppedImageLocator:
-          type:
-          - string
-          - 'null'
-        customActivityColor:
-          $ref: '#/components/schemas/FootageSeekPointColorEnum'
-        customActivityDescription:
-          type:
-          - string
-          - 'null'
-        customActivityDisplayName:
-          type:
-          - string
-          - 'null'
-        dwelling:
-          type:
-          - boolean
-          - 'null'
-        faceName:
-          type:
-          - string
-          - 'null'
-        inMotion:
-          type:
-          - boolean
-          - 'null'
-        keypointsV2:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/PointType'
-        left:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        licensePlate:
-          type:
-          - string
-          - 'null'
-        loudness:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        objectId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        pose:
-          type:
-          - string
-          - 'null'
-        relativeSecond:
-          type:
-          - number
-          - 'null'
-          format: float
-        right:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        sensorValType:
-          $ref: '#/components/schemas/SensorValType'
-        stableTrackId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        toastOrderIdInfo:
-          $ref: '#/components/schemas/ToastOrderIdType'
-        top:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        unidentifiedFaceId:
-          type:
-          - string
-          - 'null'
-        vehicleName:
-          type:
-          - string
-          - 'null'
-    Accesscontrol_lockdownplan_FindLocationLockdownEventsWSRequest:
-      type: object
-      description: Request to find lockdown events for a specific location with optional time filtering.
-      properties:
-        createdAfterMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Returns events created after (exclusive) the specified millisecond epoch timestamp
-        createdBeforeMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Returns events created before (exclusive) the specified millisecond epoch timestamp
-        limit:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: Limits the number of returned events to the latest LIMIT events
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-      required:
-      - locationUuid
-    DoorLockdownStateEnumType:
-      type: string
-      enum:
-      - LOCKED_DOWN
-      - ACCESS_CONTROLLED
-      - UNLOCKED
-      - UNKNOWN
-    Accesscontrol_lockdownplan_FindLockdownPlansWSResponse:
-      type: object
-      description: Response containing a list of lockdown plans found in the organization.
-      properties:
-        lockdownPlans:
-          type:
-          - array
-          - 'null'
-          description: List of lockdown plans found in the organization.
-          items:
-            $ref: '#/components/schemas/BaseLockdownPlanType'
-    RemoteDoorUnlockActionType:
-      type: object
-      properties:
-        doorId:
-          type:
-          - string
-          - 'null'
-        placeId:
-          type:
-          - string
-          - 'null'
-        system:
-          $ref: '#/components/schemas/RemoteDoorUnlockSystemEnum'
-    CreateAlarmTriggerTypeEnum:
-      type: string
-      enum:
-      - PANIC_BUTTON
-      - ALARM_INTEGRATION
-    ActivityEventData:
-      type: object
-      properties:
-        activities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ActivityEnum'
-        boundingBoxes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ClipBoundingBoxType'
-        durationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    AccessControlledDoorStateEnumType:
-      type: string
-      enum:
-      - UNLOCKED
-      - ACCESS_CONTROLLED
-    GenericRelayStateEnumType:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-      - UNKNOWN
-    ReportLookbackTypeEnum:
-      type: string
-      enum:
-      - ROLLING
-      - PREVIOUS_DAY
-      - PREVIOUS_WEEK
-      - PREVIOUS_MONTH
-    Accesscontrol_lockdownplan_CreateLockdownRuleForLocationWSRequest:
-      type: object
-      description: Request to create a new lockdown rule for a specific location.
-      properties:
-        rule:
-          $ref: '#/components/schemas/Accesscontrol_lockdownplan_ExternalLockdownPlanRuleType'
-    LocationLockdownPlanType:
-      type: object
-      description: The updated location lockdown plan.
-      properties:
-        activationPlan:
-          $ref: '#/components/schemas/LockdownActivationPlanType'
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        deactivationPlan:
-          $ref: '#/components/schemas/LockdownDeactivationPlanType'
-        defaultLockdownState:
-          $ref: '#/components/schemas/DoorLockdownStateEnumType'
-        doorLockdownStateMap:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/DoorLockdownStateEnumType'
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        name:
-          type:
-          - string
-          - 'null'
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        physicalAccess:
-          $ref: '#/components/schemas/LockdownPhysicalAccessType'
-        scopeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        testPlan:
-          $ref: '#/components/schemas/LockdownTestPlanType'
-        type:
-          $ref: '#/components/schemas/LockdownPlanScopeEnumType'
-        updatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        uuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
     RuleActionType:
       type: object
       description: The action to take when this lockdown rule is triggered.
@@ -1112,131 +700,10 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/WebhookActionType'
-    RobotAction:
+    Accesscontrol_lockdownplan_DeleteLocationLockdownStateWSRequest:
       type: object
-      discriminator:
-        mapping:
-          DEPLOY: '#/components/schemas/DeployRobotAction'
-          UNKNOWN: '#/components/schemas/NoOpAction'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/DeployRobotAction'
-      - $ref: '#/components/schemas/NoOpAction'
+      description: Request to delete the lockdown state tracking for a specific location.
       properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    Accesscontrol_lockdownplan_GetLockdownRulesForLocationWSResponse:
-      type: object
-      description: Response containing a list of lockdown rules for a specific location.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        rules:
-          type:
-          - array
-          - 'null'
-          description: List of lockdown rules configured for the specified location.
-          items:
-            $ref: '#/components/schemas/Accesscontrol_lockdownplan_ExternalLockdownPlanRuleType'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    LockdownStateEventEnumType:
-      type: string
-      enum:
-      - LOCKDOWN_ACTIVATED
-      - LOCKDOWN_DEACTIVATED
-    BaseLocationLockdownEventOriginator:
-      type: object
-      discriminator:
-        propertyName: type
-      properties:
-        type:
-          $ref: '#/components/schemas/LockdownEventOriginatorEnumType'
-    SensorValType:
-      type: object
-      properties:
-        sensorBoolean:
-          type:
-          - boolean
-          - 'null'
-        sensorDouble:
-          type:
-          - number
-          - 'null'
-          format: double
-        sensorLong:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    LockdownPhysicalAccessType:
-      type: object
-      properties:
-        groupUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        userUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-    Accesscontrol_lockdownplan_FindLockdownPlansByLocationWSResponse:
-      type: object
-      description: Response containing a list of lockdown plans found for the specified location.
-      properties:
-        lockdownPlans:
-          type:
-          - array
-          - 'null'
-          description: List of lockdown plans found for the specified location.
-          items:
-            $ref: '#/components/schemas/BaseLockdownPlanType'
-    BaseLockdownStateEventType:
-      type: object
-      description: List of lockdown events found for the specified location.
-      discriminator:
-        propertyName: type
-      properties:
-        createdAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        followingTestPlan:
-          type:
-          - boolean
-          - 'null'
         locationUuid:
           type:
           - string
@@ -1244,348 +711,53 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        originator:
-          $ref: '#/components/schemas/BaseLocationLockdownEventOriginator'
-        stateChangedAtMillis:
+    CreateAlarmTriggerTypeEnum:
+      type: string
+      enum:
+      - PANIC_BUTTON
+      - ALARM_INTEGRATION
+    PointType:
+      type: object
+      properties:
+        x:
           type:
           - integer
           - 'null'
-          format: int64
-        type:
-          $ref: '#/components/schemas/LockdownStateEventEnumType'
-    LockdownDeactivationPlanType:
+          format: int32
+        y:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    Accesscontrol_lockdownplan_EnableLockdownTestModeForLocationWSResponse:
       type: object
-      properties:
-        groupUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        rhombusKeyNotificationMessage:
-          type:
-          - string
-          - 'null'
-        userUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-    CancelLoopingAudioPlaybackActionType:
-      type: object
-      properties:
-        _audioDevices:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        audioDevices:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: DeviceFacetUuid
-            description: RUUID with optional appended facet information
-            example: AAAAAAAAAAAAAAAAAAAAAA.v0
-    LockdownPlanScopeEnumType:
-      type: string
-      enum:
-      - ORG_LOCKDOWN
-      - LOCATION_LOCKDOWN
-    LockdownPlanReference:
-      type: object
-      properties:
-        lockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        scope:
-          $ref: '#/components/schemas/LockdownPlanScopeEnumType'
-        scopeUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    WebhookActionType:
-      type: object
-      properties:
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        oauthClientId:
-          type:
-          - string
-          - 'null'
-        oauthClientSecret:
-          type:
-          - string
-          - 'null'
-        oauthGrantType:
-          type:
-          - string
-          - 'null'
-        oauthScope:
-          type:
-          - string
-          - 'null'
-        oauthUrl:
-          type:
-          - string
-          - 'null'
-        webhookSecret:
-          type:
-          - string
-          - 'null'
-        webhookUrl:
-          type:
-          - string
-          - 'null'
-    IntegrationNotificationActionType:
-      type: object
-      properties:
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-        notificationEntity:
-          type:
-          - string
-          - 'null'
-        notificationTarget:
-          type:
-          - string
-          - 'null'
-    Accesscontrol_lockdownplan_ExternalLockdownPlanRuleType:
-      type: object
-      description: External representation of a lockdown plan rule configuration.
-      properties:
-        action:
-          $ref: '#/components/schemas/RuleActionType'
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        ruleFilters:
-          $ref: '#/components/schemas/RuleFilterType'
-        ruleName:
-          type:
-          - string
-          - 'null'
-          description: The name of the lockdown rule.
-        ruleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerActivity:
-          $ref: '#/components/schemas/ActivityEnum'
-    EmergencyContact:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the emergency contact.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: The phone number for this emergency contact.
-      required:
-      - name
-      - phoneNumber
-    Accesscontrol_lockdownplan_DeleteLockdownPlanWSResponse:
-      type: object
-      description: Response confirming the deletion of a lockdown plan.
-      properties:
-        lockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    DeployRobotAction:
-      type:
-      - object
-      - 'null'
-      allOf:
-      - type: object
-        properties:
-          mapUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          navType:
-            $ref: '#/components/schemas/NavigationTypeEnum'
-          pose:
-            $ref: '#/components/schemas/Pose'
-          routeUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          waypointUuid:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-      properties:
-        deviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        type:
-          $ref: '#/components/schemas/RobotActionTypeEnum'
-    Accesscontrol_lockdownplan_UpdateLocationLockdownPlanWSResponse:
-      type: object
-      description: Response containing the updated location lockdown plan.
-      properties:
-        lockdownPlan:
-          $ref: '#/components/schemas/LocationLockdownPlanType'
-    Accesscontrol_lockdownplan_CreateLockdownRuleForLocationWSResponse:
-      type: object
-      description: Response containing the UUID of the created lockdown rule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        ruleUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    CustomRuleAction:
-      type: object
-      properties:
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type:
-            - string
-            - 'null'
-        path:
-          type:
-          - string
-          - 'null'
-    Accesscontrol_lockdownplan_DisableLockdownTestModeForLocationWSResponse:
-      type: object
-      description: Response containing the updated lockdown state after disabling test mode.
+      description: Response containing the updated lockdown state after enabling test mode.
       properties:
         state:
           $ref: '#/components/schemas/LocationLockdownStateType'
-    LockdownActivationPlanType:
+    Pose:
       type: object
       properties:
-        groupUuids:
+        orientation:
           type:
           - array
           - 'null'
           items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        rhombusKeyNotificationMessage:
-          type:
-          - string
-          - 'null'
-        userUuids:
+            type: number
+            format: double
+            description: Serialized as [x, y, z, w]
+          maxItems: 4
+          minItems: 4
+        position:
           type:
           - array
           - 'null'
           items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-    ToastCheckInfo:
-      type: object
-      properties:
-        totalAmount:
-          type:
-          - number
-          - 'null'
-          format: double
+            type: number
+            format: double
+            description: Serialized as [x, y, z]
+          maxItems: 3
+          minItems: 3
     ChangeComponentCompositeAccessStateActionType:
       type: object
       properties:
@@ -1624,45 +796,10 @@ components:
           - 'null'
           format: int32
           readOnly: true
-    Accesscontrol_lockdownplan_DisableLockdownTestModeForLocationWSRequest:
-      type: object
-      description: Request to disable test mode for lockdown at a specific location.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_lockdownplan_DeactivateLockdownForLocationWSRequest:
-      type: object
-      description: Request to deactivate lockdown for a specific location with optional optimistic locking.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        stateUpdatedAtMillis:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Optional timestamp for optimistic locking to ensure the user is updating the latest record.
-    AudioPlaybackActionType:
+    LockdownPhysicalAccessType:
       type: object
       properties:
-        audioClipUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        audioGateways:
+        groupUuids:
           type:
           - array
           - 'null'
@@ -1673,35 +810,70 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
-        loopDurationSec:
+          uniqueItems: true
+        userUuids:
           type:
-          - integer
+          - array
           - 'null'
-          format: int32
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-    CreateAlarmActionType:
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+    RobotAction:
       type: object
+      discriminator:
+        mapping:
+          DEPLOY: '#/components/schemas/DeployRobotAction'
+          UNKNOWN: '#/components/schemas/NoOpAction'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/DeployRobotAction'
+      - $ref: '#/components/schemas/NoOpAction'
       properties:
-        attachMediaToActiveAlarm:
-          type:
-          - boolean
-          - 'null'
-        entryInstructions:
+        deviceUuid:
           type:
           - string
           - 'null'
-        exclusiveEmergencyContact:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    Accesscontrol_lockdownplan_FindLocationLockdownEventsWSResponse:
+      type: object
+      description: Response containing a list of lockdown events for a specific location.
+      properties:
+        events:
           type:
-          - boolean
+          - array
           - 'null'
-        exclusiveEntryInstructions:
-          type:
-          - boolean
-          - 'null'
+          description: List of lockdown events found for the specified location.
+          items:
+            $ref: '#/components/schemas/BaseLockdownStateEventType'
+    FootageSeekPointColorEnum:
+      type: string
+      enum:
+      - BLUE
+      - RED
+      - PURPLE
+      - TAN
+      - ORANGE
+      - TEAL
+      - GRAY
+      - BLACK
+    LocationLockdownStateEnumType:
+      type: string
+      enum:
+      - STANDARD_SECURITY
+      - LOCKED_DOWN
+    Accesscontrol_lockdownplan_ActivateLockdownForLocationWSRequest:
+      type: object
+      description: Request to activate lockdown for a specific location with optional optimistic locking.
+      properties:
         locationUuid:
           type:
           - string
@@ -1709,7 +881,104 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        mediaDeviceUuids:
+        lockdownPlanUuids:
+          type:
+          - array
+          - 'null'
+          description: Set of lockdown plan UUIDs to activate for the location.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        stateUpdatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Optional timestamp for optimistic locking to ensure the user is updating the latest record.
+    Accesscontrol_lockdownplan_DeactivateLockdownForLocationWSResponse:
+      type: object
+      description: Response containing the result of deactivating lockdown for a location.
+      properties:
+        result:
+          $ref: '#/components/schemas/LockdownDeactivationResultEnumType'
+        state:
+          $ref: '#/components/schemas/LocationLockdownStateType'
+    LockdownPlanScopeEnumType:
+      type: string
+      enum:
+      - ORG_LOCKDOWN
+      - LOCATION_LOCKDOWN
+    SensorValType:
+      type: object
+      properties:
+        sensorBoolean:
+          type:
+          - boolean
+          - 'null'
+        sensorDouble:
+          type:
+          - number
+          - 'null'
+          format: double
+        sensorLong:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    LockdownActivationResultEnumType:
+      type: string
+      description: The result of the lockdown activation operation.
+      enum:
+      - SUCCESS
+      - INVALID_LOCKDOWN_PLANS
+      - OPTIMISTIC_CONCURRENCY
+    IntegrationNotificationActionType:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+        notificationEntity:
+          type:
+          - string
+          - 'null'
+        notificationTarget:
+          type:
+          - string
+          - 'null'
+    CustomRuleAction:
+      type: object
+      properties:
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        path:
+          type:
+          - string
+          - 'null'
+    CustomLLMActionType:
+      type: object
+      properties:
+        deviceActivityEvents:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ActivityEventData'
+        deviceFacetUuids:
           type:
           - array
           - 'null'
@@ -1720,28 +989,126 @@ components:
             format: DeviceFacetUuid
             description: RUUID with optional appended facet information
             example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        onsiteEmergencyContact:
-          $ref: '#/components/schemas/EmergencyContact'
-        reason:
+        orgUuid:
           type:
           - string
           - 'null'
-        sirenSettings:
-          $ref: '#/components/schemas/AMSirenSettingsType'
-        subLocationsHierarchyKey:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        promptUuid:
           type:
           - string
           - 'null'
-          format: SubLocationsHierarchyKey
-          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
-
-            These substrings are separated by dots (.).
-
-            '
-          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
-          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
-        triggerType:
-          $ref: '#/components/schemas/CreateAlarmTriggerTypeEnum'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    NavigationTypeEnum:
+      type: string
+      enum:
+      - ROUTE
+      - PATROL
+      - WAYPOINT
+      - POSE
+    DoorLockdownStateEnumType:
+      type: string
+      enum:
+      - LOCKED_DOWN
+      - ACCESS_CONTROLLED
+      - UNLOCKED
+      - UNKNOWN
+    LockdownStateEventEnumType:
+      type: string
+      enum:
+      - LOCKDOWN_ACTIVATED
+      - LOCKDOWN_DEACTIVATED
+    Accesscontrol_lockdownplan_GetLockdownRulesForLocationWSRequest:
+      type: object
+      description: Request to retrieve all lockdown rules for a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_lockdownplan_GetOrCreateLocationLockdownStateWSRequest:
+      type: object
+      description: Request to retrieve an existing lockdown state or create one for a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    LockdownDeactivationResultEnumType:
+      type: string
+      description: The result of the lockdown deactivation operation.
+      enum:
+      - SUCCESS
+      - OPTIMISTIC_CONCURRENCY
+    Accesscontrol_lockdownplan_ActivateLockdownForLocationWSResponse:
+      type: object
+      description: Response containing the result of activating lockdown for a location.
+      properties:
+        result:
+          $ref: '#/components/schemas/LockdownActivationResultEnumType'
+        state:
+          $ref: '#/components/schemas/LocationLockdownStateType'
+    LocationLockdownStateType:
+      type: object
+      description: The lockdown state for the location.
+      properties:
+        activeLockdownPlans:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/LockdownPlanReference'
+          uniqueItems: true
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        followingTestPlan:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        state:
+          $ref: '#/components/schemas/LocationLockdownStateEnumType'
+        stateChangedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
     Accesscontrol_lockdownplan_FindLocationLockdownStatesWSResponse:
       type: object
       description: Response containing a list of location lockdown states.
@@ -1753,6 +1120,51 @@ components:
           description: List of location lockdown states found for the organization.
           items:
             $ref: '#/components/schemas/LocationLockdownStateType'
+    Accesscontrol_lockdownplan_DeleteLockdownPlanWSResponse:
+      type: object
+      description: Response confirming the deletion of a lockdown plan.
+      properties:
+        lockdownPlanUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_lockdownplan_FindLockdownPlansWSResponse:
+      type: object
+      description: Response containing a list of lockdown plans found in the organization.
+      properties:
+        lockdownPlans:
+          type:
+          - array
+          - 'null'
+          description: List of lockdown plans found in the organization.
+          items:
+            $ref: '#/components/schemas/BaseLockdownPlanType'
+    Accesscontrol_lockdownplan_DeleteLockdownRuleForLocationWSResponse:
+      type: object
+      description: Response indicating successful deletion of a lockdown rule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     Accesscontrol_lockdownplan_DeleteLockdownRuleForLocationWSRequest:
       type: object
       description: Request to delete a specific lockdown rule for a location.
@@ -1771,6 +1183,69 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_lockdownplan_CreateLockdownRuleForLocationWSResponse:
+      type: object
+      description: Response containing the UUID of the created lockdown rule.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        warningMsg:
+          type:
+          - string
+          - 'null'
+    Accesscontrol_lockdownplan_DisableLockdownTestModeForLocationWSRequest:
+      type: object
+      description: Request to disable test mode for lockdown at a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_lockdownplan_GetLockdownPlanWSResponse:
+      type: object
+      description: Response containing the requested lockdown plan.
+      properties:
+        lockdownPlan:
+          $ref: '#/components/schemas/BaseLockdownPlanType'
+    Accesscontrol_lockdownplan_GetLockdownRulesForLocationWSResponse:
+      type: object
+      description: Response containing a list of lockdown rules for a specific location.
+      properties:
+        error:
+          type:
+          - boolean
+          - 'null'
+        errorMsg:
+          type:
+          - string
+          - 'null'
+        rules:
+          type:
+          - array
+          - 'null'
+          description: List of lockdown rules configured for the specified location.
+          items:
+            $ref: '#/components/schemas/Accesscontrol_lockdownplan_ExternalLockdownPlanRuleType'
+        warningMsg:
+          type:
+          - string
+          - 'null'
     EmailAuditLogExportActionType:
       type: object
       properties:
@@ -1807,6 +1282,273 @@ components:
           type:
           - string
           - 'null'
+    IntegrationCommandActionType:
+      type: object
+      properties:
+        commandPayload:
+          type:
+          - string
+          - 'null'
+        delaySecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        integration:
+          $ref: '#/components/schemas/IntegrationEnum'
+    Accesscontrol_lockdownplan_FindLockdownPlansByLocationWSResponse:
+      type: object
+      description: Response containing a list of lockdown plans found for the specified location.
+      properties:
+        lockdownPlans:
+          type:
+          - array
+          - 'null'
+          description: List of lockdown plans found for the specified location.
+          items:
+            $ref: '#/components/schemas/BaseLockdownPlanType'
+    NoOpAction:
+      type:
+      - object
+      - 'null'
+      allOf: []
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    AudioPlaybackActionType:
+      type: object
+      properties:
+        audioClipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+        loopDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+    IntegrationEnum:
+      type: string
+      enum:
+      - AVIGILON_ALTA
+      - BOULEVARD
+      - BRIVO
+      - BUTTERFLY_MX
+      - DEVICE_INTEGRATION
+      - DICE
+      - ENVOY
+      - FLIC
+      - GENEA
+      - GOOGLE
+      - HONEYWELL_ELEMENTS
+      - GUEST_MANAGEMENT
+      - INFORMACAST
+      - INNER_RANGE
+      - KISI
+      - LUMEO
+      - MICROSOFT_TEAMS
+      - OMNIALERT
+      - OPENAI
+      - OPENTECH_ALLIANCE
+      - PIMLOC
+      - PLACE_OS
+      - PRODATAKEY
+      - SHELLY
+      - TOAST
+      - WEBHOOKS
+      - ZAPIER
+      - RAPTOR
+      - NINEONEONE_CELLULAR
+      - SLACK
+      - APERIO
+      - PAR_POS
+      - HONEYWELL_ONGUARD
+      - HONEYWELL_NETBOX
+      - SIGNATURE_API
+      - UNKNOWN
+    AMSirenSettingsType:
+      type: object
+      properties:
+        audioGateways:
+          type:
+          - array
+          - 'null'
+          description: UUIDs of audio gateways used to play this siren.
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        clipUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        durationSeconds:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The duration (in seconds) to loop the clip audio for the siren.
+        playCount:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of times to play the clip audio for the siren.
+      required:
+      - audioGateways
+      - clipUuid
+    BaseLockdownPlanType:
+      type: object
+      description: The requested lockdown plan.
+      discriminator:
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/LocationLockdownPlanType'
+      properties:
+        activationPlan:
+          $ref: '#/components/schemas/LockdownActivationPlanType'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deactivationPlan:
+          $ref: '#/components/schemas/LockdownDeactivationPlanType'
+        defaultLockdownState:
+          $ref: '#/components/schemas/DoorLockdownStateEnumType'
+        doorLockdownStateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/DoorLockdownStateEnumType'
+        name:
+          type:
+          - string
+          - 'null'
+        orgUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        physicalAccess:
+          $ref: '#/components/schemas/LockdownPhysicalAccessType'
+        scopeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        testPlan:
+          $ref: '#/components/schemas/LockdownTestPlanType'
+        type:
+          $ref: '#/components/schemas/LockdownPlanScopeEnumType'
+        updatedAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    AccessControlledDoorStateEnumType:
+      type: string
+      enum:
+      - UNLOCKED
+      - ACCESS_CONTROLLED
+    RemoteDoorUnlockSystemEnum:
+      type: string
+      enum:
+      - BRIVO
+      - OPENPATH
+      - KISI
+      - PLACEOS
+      - GENEA
+      - PDK
+      - INNER_RANGE
+      - RHOMBUS
+      - HONEYWELL_ELEMENTS
+      - UNKNOWN
+    ReportLookbackUnitEnum:
+      type: string
+      enum:
+      - HOURS
+      - DAYS
+      - WEEKS
+    LockdownPlanReference:
+      type: object
+      properties:
+        lockdownPlanUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        scope:
+          $ref: '#/components/schemas/LockdownPlanScopeEnumType'
+        scopeUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_lockdownplan_FindLockdownPlansWSRequest:
+      type: object
+      description: Request to search for lockdown plans across the organization.
+    GenericRelayStateEnumType:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - UNKNOWN
+    Accesscontrol_lockdownplan_UpdateLocationLockdownPlanWSResponse:
+      type: object
+      description: Response containing the updated location lockdown plan.
+      properties:
+        lockdownPlan:
+          $ref: '#/components/schemas/LocationLockdownPlanType'
     ThirdPartyStrobeSirenActionType:
       type: object
       properties:
@@ -1869,19 +1611,40 @@ components:
           type:
           - string
           - 'null'
-    ComponentRelayOutputTypeEnum:
-      type: string
-      enum:
-      - TRANSIENT
-      - STEADY
-    AMSirenSettingsType:
+    ActivityEventData:
       type: object
       properties:
-        audioGateways:
+        activities:
           type:
           - array
           - 'null'
-          description: UUIDs of audio gateways used to play this siren.
+          items:
+            $ref: '#/components/schemas/ActivityEnum'
+        boundingBoxes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ClipBoundingBoxType'
+        durationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        timestampMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+    RuleFilterType:
+      type: object
+      description: Optional filters to apply to this lockdown rule.
+      properties:
+        scheduleUuids:
+          type:
+          - array
+          - 'null'
+          description: List of schedules that apply to the rule. at least one schedule must be met to trigger this rule. If null, then this rule is enabled all the time.
           items:
             type:
             - string
@@ -1889,92 +1652,307 @@ components:
             format: RUUID
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
-          uniqueItems: true
-        clipUuid:
+        triggerBackoffSecs:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: Number of seconds to back off after rule is triggered before triggering again. I.e. this rule will only trigger once every X seconds regardless of how many triggering events occur within that window
+    ConnectAudioDeviceToMobileAppActionType:
+      type: object
+      properties:
+        audioDeviceUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        durationSeconds:
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeEnum'
+        doorUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        targetUserUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+    LockdownTestPlanType:
+      type: object
+      properties:
+        doorStateOverrideEnabled:
+          type:
+          - boolean
+          - 'null'
+        userAccessOverrideEnabled:
+          type:
+          - boolean
+          - 'null'
+    EnableDisableAudioRecordActionType:
+      type: object
+      properties:
+        audioDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        enable:
+          type:
+          - boolean
+          - 'null'
+    Accesscontrol_lockdownplan_ExternalLockdownPlanRuleType:
+      type: object
+      description: External representation of a lockdown plan rule configuration.
+      properties:
+        action:
+          $ref: '#/components/schemas/RuleActionType'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        ruleFilters:
+          $ref: '#/components/schemas/RuleFilterType'
+        ruleName:
+          type:
+          - string
+          - 'null'
+          description: The name of the lockdown rule.
+        ruleUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        triggerActivity:
+          $ref: '#/components/schemas/ActivityEnum'
+    Accesscontrol_lockdownplan_CreateLocationLockdownPlanWSResponse:
+      type: object
+      description: Response containing the created location lockdown plan.
+      properties:
+        lockdownPlan:
+          $ref: '#/components/schemas/LocationLockdownPlanType'
+    Accesscontrol_lockdownplan_FindLockdownPlansByLocationWSRequest:
+      type: object
+      description: Request to search for lockdown plans for a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ThirdPartyAudioPlaybackActionType:
+      type: object
+      properties:
+        audioFileName:
+          type:
+          - string
+          - 'null'
+        ipAddress:
+          type:
+          - string
+          - 'null'
+        loopDurationSec:
           type:
           - integer
           - 'null'
           format: int32
-          description: The duration (in seconds) to loop the clip audio for the siren.
+        password:
+          type:
+          - string
+          - 'null'
         playCount:
           type:
           - integer
           - 'null'
           format: int32
-          description: The number of times to play the clip audio for the siren.
-      required:
-      - audioGateways
-      - clipUuid
-    TriggerComponentRelayActionType:
+        proxyDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        username:
+          type:
+          - string
+          - 'null'
+    Accesscontrol_lockdownplan_CreateLockdownRuleForLocationWSRequest:
+      type: object
+      description: Request to create a new lockdown rule for a specific location.
+      properties:
+        rule:
+          $ref: '#/components/schemas/Accesscontrol_lockdownplan_ExternalLockdownPlanRuleType'
+    ActivateLocationLockdownActionType:
       type: object
       properties:
-        componentUuid:
+        locationLockdownPlanUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        outputType:
-          $ref: '#/components/schemas/ComponentRelayOutputTypeEnum'
-        overrideRelayDurationMs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        overrideRelayDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        ownerDeviceUuid:
+        locationUuid:
           type:
           - string
           - 'null'
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        state:
-          $ref: '#/components/schemas/GenericRelayStateEnumType'
-        version:
+    ToastOrderIdType:
+      type: object
+      properties:
+        employeeName:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-          readOnly: true
-    LocationLockdownStateEnumType:
+        guid:
+          type:
+          - string
+          - 'null'
+        locationName:
+          type:
+          - string
+          - 'null'
+        restaurantName:
+          type:
+          - string
+          - 'null'
+        toastCheckInfo:
+          $ref: '#/components/schemas/ToastCheckInfo'
+    Accesscontrol_lockdownplan_EnableLockdownTestModeForLocationWSRequest:
+      type: object
+      description: Request to enable test mode for lockdown at a specific location.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    Accesscontrol_lockdownplan_DeleteLockdownPlanWSRequest:
+      type: object
+      description: Request to delete a specific lockdown plan by UUID.
+      properties:
+        lockdownPlanUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ReportLookbackTypeEnum:
       type: string
       enum:
-      - STANDARD_SECURITY
-      - LOCKED_DOWN
-    RemoteDoorUnlockSystemEnum:
+      - ROLLING
+      - PREVIOUS_DAY
+      - PREVIOUS_WEEK
+      - PREVIOUS_MONTH
+    EmergencyContact:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the emergency contact.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The phone number for this emergency contact.
+      required:
+      - name
+      - phoneNumber
+    Accesscontrol_lockdownplan_GetLockdownPlanWSRequest:
+      type: object
+      description: Request to retrieve a specific lockdown plan by UUID.
+      properties:
+        lockdownPlanUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    WebhookActionType:
+      type: object
+      properties:
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        oauthClientId:
+          type:
+          - string
+          - 'null'
+        oauthClientSecret:
+          type:
+          - string
+          - 'null'
+        oauthGrantType:
+          type:
+          - string
+          - 'null'
+        oauthScope:
+          type:
+          - string
+          - 'null'
+        oauthUrl:
+          type:
+          - string
+          - 'null'
+        webhookSecret:
+          type:
+          - string
+          - 'null'
+        webhookUrl:
+          type:
+          - string
+          - 'null'
+    RemoteDoorUnlockActionType:
+      type: object
+      properties:
+        doorId:
+          type:
+          - string
+          - 'null'
+        placeId:
+          type:
+          - string
+          - 'null'
+        system:
+          $ref: '#/components/schemas/RemoteDoorUnlockSystemEnum'
+    AccessStateOverrideExpirationStrategyEnum:
       type: string
       enum:
-      - BRIVO
-      - OPENPATH
-      - KISI
-      - PLACEOS
-      - GENEA
-      - PDK
-      - INNER_RANGE
-      - RHOMBUS
-      - HONEYWELL_ELEMENTS
-      - UNKNOWN
-    LockdownEventOriginatorEnumType:
-      type: string
-      enum:
-      - USER
-      - SUPPORT_AUTHORITY
-      - API_TOKEN
-      - RULE
-      - UNKNOWN
+      - TIME_DELAY
+      - TIME_OF_DAY_LOCAL
+      - NONE
     Accesscontrol_lockdownplan_UpdateLocationLockdownPlanWSRequest:
       type: object
       description: Request to update an existing location lockdown plan with selective field updates.
@@ -2006,32 +1984,39 @@ components:
           $ref: '#/components/schemas/LockdownPhysicalAccessType'
         testPlan:
           $ref: '#/components/schemas/LockdownTestPlanType'
-    RuleFilterType:
+    Accesscontrol_lockdownplan_FindLocationLockdownStatesWSRequest:
       type: object
-      description: Optional filters to apply to this lockdown rule.
+      description: Request to find location lockdown states with optional filtering.
       properties:
-        scheduleUuids:
+        stateFilter:
           type:
           - array
           - 'null'
-          description: List of schedules that apply to the rule. at least one schedule must be met to trigger this rule. If null, then this rule is enabled all the time.
+          description: Optional filter to limit results to specific lockdown states.
           items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-        triggerBackoffSecs:
+            $ref: '#/components/schemas/LocationLockdownStateEnumType'
+    Accesscontrol_lockdownplan_FindLocationLockdownEventsWSRequest:
+      type: object
+      description: Request to find lockdown events for a specific location with optional time filtering.
+      properties:
+        createdAfterMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Returns events created after (exclusive) the specified millisecond epoch timestamp
+        createdBeforeMs:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Returns events created before (exclusive) the specified millisecond epoch timestamp
+        limit:
           type:
           - integer
           - 'null'
           format: int32
-          description: Number of seconds to back off after rule is triggered before triggering again. I.e. this rule will only trigger once every X seconds regardless of how many triggering events occur within that window
-    Accesscontrol_lockdownplan_FindLockdownPlansByLocationWSRequest:
-      type: object
-      description: Request to search for lockdown plans for a specific location.
-      properties:
+          description: Limits the number of returned events to the latest LIMIT events
         locationUuid:
           type:
           - string
@@ -2039,50 +2024,8 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-    FootageSeekPointColorEnum:
-      type: string
-      enum:
-      - BLUE
-      - RED
-      - PURPLE
-      - TAN
-      - ORANGE
-      - TEAL
-      - GRAY
-      - BLACK
-    ReportLookbackUnitEnum:
-      type: string
-      enum:
-      - HOURS
-      - DAYS
-      - WEEKS
-    AccessStateOverrideExpirationStrategyEnum:
-      type: string
-      enum:
-      - TIME_DELAY
-      - TIME_OF_DAY_LOCAL
-      - NONE
-    Accesscontrol_lockdownplan_FindLockdownPlansWSRequest:
-      type: object
-      description: Request to search for lockdown plans across the organization.
-    Accesscontrol_lockdownplan_FindLocationLockdownEventsWSResponse:
-      type: object
-      description: Response containing a list of lockdown events for a specific location.
-      properties:
-        events:
-          type:
-          - array
-          - 'null'
-          description: List of lockdown events found for the specified location.
-          items:
-            $ref: '#/components/schemas/BaseLockdownStateEventType'
-    NavigationTypeEnum:
-      type: string
-      enum:
-      - ROUTE
-      - PATROL
-      - WAYPOINT
-      - POSE
+      required:
+      - locationUuid
     ActivityEnum:
       type: string
       enum:
@@ -2306,41 +2249,97 @@ components:
       - THERMAL_VISUAL_HEAT_RISE
       - THERMAL_VISUAL_WARM_BODY
       - UNKNOWN
-    ToastOrderIdType:
+    BaseLockdownStateEventType:
       type: object
+      description: List of lockdown events found for the specified location.
+      discriminator:
+        propertyName: type
       properties:
-        employeeName:
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        followingTestPlan:
+          type:
+          - boolean
+          - 'null'
+        locationUuid:
           type:
           - string
           - 'null'
-        guid:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        orgUuid:
           type:
           - string
           - 'null'
-        locationName:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        originator:
+          $ref: '#/components/schemas/BaseLocationLockdownEventOriginator'
+        stateChangedAtMillis:
           type:
-          - string
+          - integer
           - 'null'
-        restaurantName:
-          type:
-          - string
-          - 'null'
-        toastCheckInfo:
-          $ref: '#/components/schemas/ToastCheckInfo'
-    CustomLLMActionType:
-      type: object
-      properties:
-        deviceActivityEvents:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
+          format: int64
+        type:
+          $ref: '#/components/schemas/LockdownStateEventEnumType'
+    DeployRobotAction:
+      type:
+      - object
+      - 'null'
+      allOf:
+      - type: object
+        properties:
+          mapUuid:
             type:
-            - array
+            - string
             - 'null'
-            items:
-              $ref: '#/components/schemas/ActivityEventData'
-        deviceFacetUuids:
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          navType:
+            $ref: '#/components/schemas/NavigationTypeEnum'
+          pose:
+            $ref: '#/components/schemas/Pose'
+          routeUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          waypointUuid:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+      properties:
+        deviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        type:
+          $ref: '#/components/schemas/RobotActionTypeEnum'
+    BaseLocationLockdownEventOriginator:
+      type: object
+      discriminator:
+        propertyName: type
+      properties:
+        type:
+          $ref: '#/components/schemas/LockdownEventOriginatorEnumType'
+    CancelLoopingAudioPlaybackActionType:
+      type: object
+      properties:
+        _audioDevices:
           type:
           - array
           - 'null'
@@ -2351,87 +2350,32 @@ components:
             format: DeviceFacetUuid
             description: RUUID with optional appended facet information
             example: AAAAAAAAAAAAAAAAAAAAAA.v0
-        orgUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        promptUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        timestampMs:
-          type:
-          - integer
-          - 'null'
-          format: int64
-    DeviceTypeEnum:
-      type: string
-      enum:
-      - BLE_TRACKER
-      - CAMERA
-      - DOOR_SENSOR
-      - ENVIRONMENTAL_SENSOR
-      - OCCUPANCY_SENSOR
-      - AUDIO_GATEWAY
-      - EXECUTABLE
-      - BADGE_READER
-      - DOOR_CONTROLLER
-      - BLE_BUTTON
-      - IO_BOARD
-      - ENVIRONMENTAL_GATEWAY
-      - NVR
-      - ROBOT
-      - UNKNOWN
-    EnableDisableAudioRecordActionType:
-      type: object
-      properties:
-        audioDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        enable:
-          type:
-          - boolean
-          - 'null'
-    IntegrationCommandActionType:
-      type: object
-      properties:
-        commandPayload:
-          type:
-          - string
-          - 'null'
-        delaySecs:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        integration:
-          $ref: '#/components/schemas/IntegrationEnum'
-    Accesscontrol_lockdownplan_ActivateLockdownForLocationWSRequest:
-      type: object
-      description: Request to activate lockdown for a specific location with optional optimistic locking.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        lockdownPlanUuids:
+        audioDevices:
           type:
           - array
           - 'null'
-          description: Set of lockdown plan UUIDs to activate for the location.
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+    LockdownEventOriginatorEnumType:
+      type: string
+      enum:
+      - USER
+      - SUPPORT_AUTHORITY
+      - API_TOKEN
+      - RULE
+      - UNKNOWN
+    LockdownActivationPlanType:
+      type: object
+      properties:
+        groupUuids:
+          type:
+          - array
+          - 'null'
           items:
             type:
             - string
@@ -2440,256 +2384,58 @@ components:
             description: base 64 (url-safe) uuid string
             example: AAAAAAAAAAAAAAAAAAAAAA
           uniqueItems: true
+        rhombusKeyNotificationMessage:
+          type:
+          - string
+          - 'null'
+        userUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+    RobotActionTypeEnum:
+      type: string
+      enum:
+      - DEPLOY
+      - UNKNOWN
+    ToastCheckInfo:
+      type: object
+      properties:
+        totalAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+    Accesscontrol_lockdownplan_DeactivateLockdownForLocationWSRequest:
+      type: object
+      description: Request to deactivate lockdown for a specific location with optional optimistic locking.
+      properties:
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
         stateUpdatedAtMillis:
           type:
           - integer
           - 'null'
           format: int64
           description: Optional timestamp for optimistic locking to ensure the user is updating the latest record.
-    Pose:
+    Accesscontrol_lockdownplan_GetOrCreateLocationLockdownStateWSResponse:
       type: object
+      description: Response containing the lockdown state for the specified location.
       properties:
-        orientation:
-          type:
-          - array
-          - 'null'
-          items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z, w]
-          maxItems: 4
-          minItems: 4
-        position:
-          type:
-          - array
-          - 'null'
-          items:
-            type: number
-            format: double
-            description: Serialized as [x, y, z]
-          maxItems: 3
-          minItems: 3
-    Accesscontrol_lockdownplan_DeleteLockdownRuleForLocationWSResponse:
-      type: object
-      description: Response indicating successful deletion of a lockdown rule.
-      properties:
-        error:
-          type:
-          - boolean
-          - 'null'
-        errorMsg:
-          type:
-          - string
-          - 'null'
-        warningMsg:
-          type:
-          - string
-          - 'null'
-    Accesscontrol_lockdownplan_DeleteLocationLockdownStateWSResponse:
-      type: object
-      description: Response indicating successful deletion of location lockdown state.
-    Accesscontrol_lockdownplan_DeleteLocationLockdownStateWSRequest:
-      type: object
-      description: Request to delete the lockdown state tracking for a specific location.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_lockdownplan_GetLockdownRulesForLocationWSRequest:
-      type: object
-      description: Request to retrieve all lockdown rules for a specific location.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    ConnectAudioDeviceToMobileAppActionType:
-      type: object
-      properties:
-        audioDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        deviceType:
-          $ref: '#/components/schemas/DeviceTypeEnum'
-        doorUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        targetUserUuids:
-          type:
-          - array
-          - 'null'
-          items:
-            type:
-            - string
-            - 'null'
-            format: RUUID
-            description: base 64 (url-safe) uuid string
-            example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_lockdownplan_CreateLocationLockdownPlanWSResponse:
-      type: object
-      description: Response containing the created location lockdown plan.
-      properties:
-        lockdownPlan:
-          $ref: '#/components/schemas/LocationLockdownPlanType'
-    Accesscontrol_lockdownplan_GetLockdownPlanWSResponse:
-      type: object
-      description: Response containing the requested lockdown plan.
-      properties:
-        lockdownPlan:
-          $ref: '#/components/schemas/BaseLockdownPlanType'
-    Accesscontrol_lockdownplan_EnableLockdownTestModeForLocationWSRequest:
-      type: object
-      description: Request to enable test mode for lockdown at a specific location.
-      properties:
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_lockdownplan_GetLockdownPlanWSRequest:
-      type: object
-      description: Request to retrieve a specific lockdown plan by UUID.
-      properties:
-        lockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    Accesscontrol_lockdownplan_ActivateLockdownForLocationWSResponse:
-      type: object
-      description: Response containing the result of activating lockdown for a location.
-      properties:
-        result:
-          $ref: '#/components/schemas/LockdownActivationResultEnumType'
         state:
           $ref: '#/components/schemas/LocationLockdownStateType'
-    IntegrationEnum:
-      type: string
-      enum:
-      - AVIGILON_ALTA
-      - BOULEVARD
-      - BRIVO
-      - BUTTERFLY_MX
-      - DEVICE_INTEGRATION
-      - DICE
-      - ENVOY
-      - FLIC
-      - GENEA
-      - GOOGLE
-      - HONEYWELL_ELEMENTS
-      - GUEST_MANAGEMENT
-      - INFORMACAST
-      - INNER_RANGE
-      - KISI
-      - LUMEO
-      - MICROSOFT_TEAMS
-      - OMNIALERT
-      - OPENAI
-      - OPENTECH_ALLIANCE
-      - PIMLOC
-      - PLACE_OS
-      - PRODATAKEY
-      - SHELLY
-      - TOAST
-      - WEBHOOKS
-      - ZAPIER
-      - RAPTOR
-      - NINEONEONE_CELLULAR
-      - SLACK
-      - APERIO
-      - PAR_POS
-      - HONEYWELL_ONGUARD
-      - HONEYWELL_NETBOX
-      - SIGNATURE_API
-      - UNKNOWN
-    ThirdPartyAudioPlaybackActionType:
-      type: object
-      properties:
-        audioFileName:
-          type:
-          - string
-          - 'null'
-        ipAddress:
-          type:
-          - string
-          - 'null'
-        loopDurationSec:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        password:
-          type:
-          - string
-          - 'null'
-        playCount:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        proxyDeviceUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        username:
-          type:
-          - string
-          - 'null'
-    RobotActionTypeEnum:
-      type: string
-      enum:
-      - DEPLOY
-      - UNKNOWN
-    ActivateLocationLockdownActionType:
-      type: object
-      properties:
-        locationLockdownPlanUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-        locationUuid:
-          type:
-          - string
-          - 'null'
-          format: RUUID
-          description: base 64 (url-safe) uuid string
-          example: AAAAAAAAAAAAAAAAAAAAAA
-    LockdownTestPlanType:
-      type: object
-      properties:
-        doorStateOverrideEnabled:
-          type:
-          - boolean
-          - 'null'
-        userAccessOverrideEnabled:
-          type:
-          - boolean
-          - 'null'
     ConnectAudioDeviceToPhoneNumberActionType:
       type: object
       properties:
@@ -2717,47 +2463,86 @@ components:
           type:
           - string
           - 'null'
-    Accesscontrol_lockdownplan_FindLocationLockdownStatesWSRequest:
-      type: object
-      description: Request to find location lockdown states with optional filtering.
-      properties:
-        stateFilter:
-          type:
-          - array
-          - 'null'
-          description: Optional filter to limit results to specific lockdown states.
-          items:
-            $ref: '#/components/schemas/LocationLockdownStateEnumType'
-    Accesscontrol_lockdownplan_GetOrCreateLocationLockdownStateWSResponse:
-      type: object
-      description: Response containing the lockdown state for the specified location.
-      properties:
-        state:
-          $ref: '#/components/schemas/LocationLockdownStateType'
-    LockdownActivationResultEnumType:
+    DeviceTypeEnum:
       type: string
-      description: The result of the lockdown activation operation.
       enum:
-      - SUCCESS
-      - INVALID_LOCKDOWN_PLANS
-      - OPTIMISTIC_CONCURRENCY
-    LocationLockdownStateType:
+      - BLE_TRACKER
+      - CAMERA
+      - DOOR_SENSOR
+      - ENVIRONMENTAL_SENSOR
+      - OCCUPANCY_SENSOR
+      - AUDIO_GATEWAY
+      - EXECUTABLE
+      - BADGE_READER
+      - DOOR_CONTROLLER
+      - BLE_BUTTON
+      - IO_BOARD
+      - ENVIRONMENTAL_GATEWAY
+      - NVR
+      - ROBOT
+      - UNKNOWN
+    TriggerComponentRelayActionType:
       type: object
-      description: The lockdown state for the location.
       properties:
-        activeLockdownPlans:
+        componentUuid:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/LockdownPlanReference'
-          uniqueItems: true
-        createdAtMillis:
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        outputType:
+          $ref: '#/components/schemas/ComponentRelayOutputTypeEnum'
+        overrideRelayDurationMs:
           type:
           - integer
           - 'null'
-          format: int64
-        followingTestPlan:
+          format: int32
+        overrideRelayDurationSec:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        ownerDeviceUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        state:
+          $ref: '#/components/schemas/GenericRelayStateEnumType'
+        version:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          readOnly: true
+    Accesscontrol_lockdownplan_CreateLocationLockdownPlanWSRequest:
+      type: object
+      description: Request to create a new location lockdown plan.
+      properties:
+        lockdownPlan:
+          $ref: '#/components/schemas/LocationLockdownPlanType'
+    Accesscontrol_lockdownplan_DeleteLocationLockdownStateWSResponse:
+      type: object
+      description: Response indicating successful deletion of location lockdown state.
+    CreateAlarmActionType:
+      type: object
+      properties:
+        attachMediaToActiveAlarm:
+          type:
+          - boolean
+          - 'null'
+        entryInstructions:
+          type:
+          - string
+          - 'null'
+        exclusiveEmergencyContact:
+          type:
+          - boolean
+          - 'null'
+        exclusiveEntryInstructions:
           type:
           - boolean
           - 'null'
@@ -2768,6 +2553,71 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
+        mediaDeviceUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: DeviceFacetUuid
+            description: RUUID with optional appended facet information
+            example: AAAAAAAAAAAAAAAAAAAAAA.v0
+        onsiteEmergencyContact:
+          $ref: '#/components/schemas/EmergencyContact'
+        reason:
+          type:
+          - string
+          - 'null'
+        sirenSettings:
+          $ref: '#/components/schemas/AMSirenSettingsType'
+        subLocationsHierarchyKey:
+          type:
+          - string
+          - 'null'
+          format: SubLocationsHierarchyKey
+          description: 'A sequence of one or more base 64 (url-safe) uuid substrings.
+
+            These substrings are separated by dots (.).
+
+            '
+          example: AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA.AAAAAAAAAAAAAAAAAAAAAA
+          pattern: ^([A-Za-z0-9\-_]{22})([.][A-Za-z0-9\-_]{22})*$
+        triggerType:
+          $ref: '#/components/schemas/CreateAlarmTriggerTypeEnum'
+    LocationLockdownPlanType:
+      type: object
+      description: The updated location lockdown plan.
+      properties:
+        activationPlan:
+          $ref: '#/components/schemas/LockdownActivationPlanType'
+        createdAtMillis:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        deactivationPlan:
+          $ref: '#/components/schemas/LockdownDeactivationPlanType'
+        defaultLockdownState:
+          $ref: '#/components/schemas/DoorLockdownStateEnumType'
+        doorLockdownStateMap:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/DoorLockdownStateEnumType'
+        locationUuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        name:
+          type:
+          - string
+          - 'null'
         orgUuid:
           type:
           - string
@@ -2775,18 +2625,168 @@ components:
           format: RUUID
           description: base 64 (url-safe) uuid string
           example: AAAAAAAAAAAAAAAAAAAAAA
-        state:
-          $ref: '#/components/schemas/LocationLockdownStateEnumType'
-        stateChangedAtMillis:
+        physicalAccess:
+          $ref: '#/components/schemas/LockdownPhysicalAccessType'
+        scopeUuid:
           type:
-          - integer
+          - string
           - 'null'
-          format: int64
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+        testPlan:
+          $ref: '#/components/schemas/LockdownTestPlanType'
+        type:
+          $ref: '#/components/schemas/LockdownPlanScopeEnumType'
         updatedAtMillis:
           type:
           - integer
           - 'null'
           format: int64
+        uuid:
+          type:
+          - string
+          - 'null'
+          format: RUUID
+          description: base 64 (url-safe) uuid string
+          example: AAAAAAAAAAAAAAAAAAAAAA
+    ClipBoundingBoxType:
+      type: object
+      properties:
+        activity:
+          $ref: '#/components/schemas/ActivityEnum'
+        alert:
+          type:
+          - boolean
+          - 'null'
+        bottom:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        confidence:
+          type:
+          - number
+          - 'null'
+          format: float
+        croppedImageLocator:
+          type:
+          - string
+          - 'null'
+        customActivityColor:
+          $ref: '#/components/schemas/FootageSeekPointColorEnum'
+        customActivityDescription:
+          type:
+          - string
+          - 'null'
+        customActivityDisplayName:
+          type:
+          - string
+          - 'null'
+        dwelling:
+          type:
+          - boolean
+          - 'null'
+        faceName:
+          type:
+          - string
+          - 'null'
+        inMotion:
+          type:
+          - boolean
+          - 'null'
+        keypointsV2:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/PointType'
+        left:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        licensePlate:
+          type:
+          - string
+          - 'null'
+        loudness:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        objectId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        pose:
+          type:
+          - string
+          - 'null'
+        relativeSecond:
+          type:
+          - number
+          - 'null'
+          format: float
+        right:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        sensorValType:
+          $ref: '#/components/schemas/SensorValType'
+        stableTrackId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        toastOrderIdInfo:
+          $ref: '#/components/schemas/ToastOrderIdType'
+        top:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        unidentifiedFaceId:
+          type:
+          - string
+          - 'null'
+        vehicleName:
+          type:
+          - string
+          - 'null'
+    LockdownDeactivationPlanType:
+      type: object
+      properties:
+        groupUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
+        rhombusKeyNotificationMessage:
+          type:
+          - string
+          - 'null'
+        userUuids:
+          type:
+          - array
+          - 'null'
+          items:
+            type:
+            - string
+            - 'null'
+            format: RUUID
+            description: base 64 (url-safe) uuid string
+            example: AAAAAAAAAAAAAAAAAAAAAA
+          uniqueItems: true
   securitySchemes:
     ApiKeyAuth:
       description: Your Rhombus API key. Must be accompanied by the `x-auth-scheme` header set to `api-token` (or `partner-api-token` for partner endpoints).
