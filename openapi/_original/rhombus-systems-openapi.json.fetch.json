@@ -1,0 +1,12 @@
+{
+ "url": "https://api2.rhombussystems.com/api/openapi/public.json",
+ "requested_url": "https://api2.rhombussystems.com/api/openapi/public.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 6606402,
+ "sha256": "a5a7636fefc6ca474ea67fb3cecbf927777f08b162575d6d6a3131b846b9b489",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.926), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
