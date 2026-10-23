@@ -1032,3 +1032,9 @@ x-samples-languages:
 - node
 - python
 - java
+x-provenance:
+  method: harvested
+  publisher: Rhombus Systems
+  source: https://api2.rhombussystems.com/api/openapi/public.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
